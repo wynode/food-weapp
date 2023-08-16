@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "选择店铺类型",
+  "usingComponents": {
+    "t-divider": "tdesign-miniprogram/divider/divider",
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "t-image": "/components/webp-image/index",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-radio": "tdesign-miniprogram/radio/radio",
+    "t-radio-group": "tdesign-miniprogram/radio-group/radio-group"
+  }
+}

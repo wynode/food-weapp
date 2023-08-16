@@ -1,0 +1,39 @@
+<view class="choice-shop-type">
+  <view class="cst-top">
+    <image class="cst-img" src="/assets/image/shop.png"></image>
+    <view class="cst-title">请根据您的经营性质选择店铺类型</view>
+  </view>
+  <view>
+    <t-radio-group value="{{shop_type}}" bind:change="onChange">
+      <view class="card {{shop_type == 'personal' ? 'card--active' : ''}}">
+        <t-icon wx:if="{{shop_type == 'personal'}}" name="check" t-class="card__icon" />
+        <t-radio value="personal" icon="none" borderless>
+          <view slot="content" class="cst-box">
+            <view class="cst-type">
+              <image class="cst-type-img" src="/assets/image/self_employed.png"></image>
+            </view>
+            <view class="cst-type-des">
+              <view class="cst-type-title">个体1户 </view>
+              <view class="cst-type-info">1个席位</view>
+            </view>
+          </view>
+        </t-radio>
+      </view>
+      <view class="card {{shop_type == 'enterprise' ? 'card--active' : ''}}">
+        <t-icon wx:if="{{shop_type == 'enterprise'}}" name="check" t-class="card__icon" />
+        <t-radio value="enterprise" icon="none" borderless>
+          <view slot="content" class="cst-box">
+            <view class="cst-type">
+              <image class="cst-type-img" src="/assets/image/enterprise.png"></image>
+            </view>
+            <view class="cst-type-des">
+              <view class="cst-type-title">企业 </view>
+              <view class="cst-type-info">10个席位</view>
+            </view>
+          </view>
+        </t-radio>
+      </view>
+    </t-radio-group>
+  </view>
+  <t-toast id="t-toast" />
+</view>
