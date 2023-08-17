@@ -1,4 +1,4 @@
-<t-tab-bar
+<!-- <t-tab-bar
  value="{{active}}"
  bindchange="onChange"
  split="{{false}}"
@@ -14,5 +14,5 @@
 			<view class="text">{{ item.text }}</view>
 		</view>
 	</t-tab-bar-item>
-</t-tab-bar>
-
+</t-tab-bar> -->
+<view></view>

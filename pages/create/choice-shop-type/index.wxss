@@ -1,13 +1,13 @@
 .choice-shop-type {
   display: block;
-  padding: 0 24rpx;
+  margin: 0 50rpx;
 }
 
 .cst-top {
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 30px;
+  padding-top: 60rpx;
 }
 
 .cst-img {
@@ -69,7 +69,7 @@
 
 .card {
   position: relative;
-  margin: 32rpx;
+  margin: 32rpx 0;
   border-radius: 12rpx;
   overflow: hidden;
   box-sizing: border-box;
@@ -101,19 +101,6 @@
   z-index: 1;
 }
 
-/* 横向布局 */
-.horizontal-box {
-  width: calc(100% - 64rpx);
-  display: flex;
-  align-items: center;
-  margin: 32rpx;
-}
-
-.horizontal-box .card {
-  flex: 1;
-  margin: 0;
-}
-
-.horizontal-box .card+.card {
-  margin-left: 24rpx;
+.cst-button {
+  margin-top: 120rpx;
 }

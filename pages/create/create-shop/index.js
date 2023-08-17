@@ -1,57 +1,83 @@
 import Toast from 'tdesign-miniprogram/toast/index';
-import { fetchPromotion } from '../../services/promotion/detail';
+const innerPhoneReg = '^1(?:3\\d|4[4-9]|5[0-35-9]|6[67]|7[0-8]|8\\d|9\\d)\\d{8}$';
+const innerNameReg = '^[a-zA-Z\\d\\u4e00-\\u9fa5]+$';
 
 Page({
   data: {
-    list: [],
-    banner: '',
-    time: 0,
-    showBannerDesc: false,
-    statusTag: '',
+    csForm: {
+      shopName: '',
+      shopAddress: '',
+      shopUser: '',
+      shopPhone: '',
+    },
+    submitActive: false,
   },
 
-  onLoad(query) {
-    const promotionID = parseInt(query.promotion_id);
-    this.getGoodsList(promotionID);
+  onLoad() {
+
   },
 
-  getGoodsList(promotionID) {
-    fetchPromotion(promotionID).then(
-      ({ list, banner, time, showBannerDesc, statusTag }) => {
-        const goods = list.map((item) => ({
-          ...item,
-          tags: item.tags.map((v) => v.title),
-        }));
+  formSubmit() {
+    const {
+      isLegal,
+      tips
+    } = this.onVerifyInputLegal();
+    if (isLegal) {
+      wx.navigateTo({
+        url: '/pages/create/create-new-shop/index',
+      })
+    } else {
+      Toast({
+        context: this,
+        selector: '#t-toast',
+        message: tips,
+      });
+    }
+  },
+
+  onInputValue(e) {
+    const {
+      value = ''
+    } = e.detail;
+    const {
+      item
+    } = e.currentTarget.dataset;
+    this.setData({
+      [`csForm.${item}`]: value,
+    }, () => {
+      if (Object.keys(this.data.csForm).every((item) => this.data.csForm[item])) {
         this.setData({
-          list: goods,
-          banner,
-          time,
-          showBannerDesc,
-          statusTag,
+          submitActive: true,
         });
-      },
-    );
-  },
-
-  goodClickHandle(e) {
-    const { index } = e.detail;
-    const { spuId } = this.data.list[index];
-    wx.navigateTo({ url: `/pages/goods/details/index?spuId=${spuId}` });
-  },
-
-  cardClickHandle() {
-    Toast({
-      context: this,
-      selector: '#t-toast',
-      message: '点击加购',
+      }
     });
   },
 
-  bannerClickHandle() {
-    Toast({
-      context: this,
-      selector: '#t-toast',
-      message: '点击规则详情',
-    });
+  onVerifyInputLegal() {
+    const {
+      shopUser,
+      shopPhone
+    } = this.data.csForm;
+    const prefixPhoneReg = String(this.properties.phoneReg || innerPhoneReg);
+    const prefixNameReg = String(this.properties.nameReg || innerNameReg);
+    const nameRegExp = new RegExp(prefixNameReg);
+    const phoneRegExp = new RegExp(prefixPhoneReg);
+    if (!nameRegExp.test(shopUser)) {
+      return {
+        isLegal: false,
+        tips: '负责人名称仅支持输入中文、英文（区分大小写）、数字',
+      };
+    }
+    if (!phoneRegExp.test(shopPhone)) {
+      return {
+        isLegal: false,
+        tips: '请填写正确的手机号',
+      };
+    }
+    return {
+      isLegal: true,
+      tips: '添加成功',
+    };
   },
+
 });

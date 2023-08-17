@@ -1,0 +1,56 @@
+<view>
+  <background></background>
+  <view class="create-new-shop">
+    <view>
+      <t-cell title="店铺类别" arrow hover note="{{shopTypeText}}" bind:click="shopTypePicker" />
+
+      <t-picker
+        visible="{{shopTypeVisible}}"
+        value="{{shopTypeValue}}"
+        data-key="shopType"
+        title="{{shopTypeTitle}}"
+        cancelBtn="取消"
+        confirmBtn="确认"
+        bindchange="onPickerChange"
+        bindpick="onColumnChange"
+        bindcancel="onPickerCancel"
+      >
+        <t-picker-item options="{{shopTypeList}}"></t-picker-item>
+      </t-picker>
+    </view>
+    <view class="cns-business">
+      <view class="cns-upload-box">
+        <view>营业执照</view>
+        <t-upload
+          gridConfig="{{gridConfig}}"
+          size-limit="5000"
+          mediaType="{{['image']}}"
+          max="{{1}}"
+          files="{{fileList}}"
+          bind:add="handleAdd"
+          bind:remove="handleRemove"
+        >
+        </t-upload>
+      </view>
+      <view class="cns-upload-box" style="margin-left: 50rpx">
+        <view>食品安全许可证</view>
+        <t-upload
+          gridConfig="{{gridConfig}}"
+          size-limit="5000"
+          mediaType="{{['image']}}"
+          max="{{1}}"
+          files="{{fileList}}"
+          bind:add="handleAdd"
+          bind:remove="handleRemove"
+        >
+          <view slot="add-content" class="my-upload-btn">
+            <image src="/assets/image/add_icon.png" class="my-upload-add-icon"></image>
+            <view>上传{{ uploadTitle }}</view>
+          </view>
+        </t-upload>
+      </view>
+    </view>
+  </view>
+</view>
+
+<t-toast id="t-toast"></t-toast>

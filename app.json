@@ -1,5 +1,8 @@
 {
   "pages": [
+    "pages/create/create-new-shop/index",
+    "pages/create/choice-shop-type/index",
+    "pages/create/create-shop/index",
     "pages/home/home",
     "pages/usercenter/index",
     "pages/usercenter/person-info/index",
@@ -28,8 +31,7 @@
     "pages/order/fill-tracking-no/index",
     "pages/order/delivery-detail/index",
     "pages/order/invoice/index",
-    "pages/usercenter/name-edit/index",
-    "pages/create/choice-shop-type/index"
+    "pages/usercenter/name-edit/index"
   ],
   "tabBar": {
     "custom": true,

@@ -1,3 +1,7 @@
 @import 'style/iconfont.wxss';
 
 @import 'style/theme.wxss';
+
+page {
+  --td-brand-color: #0B82FF;
+}

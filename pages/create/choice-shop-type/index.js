@@ -2,18 +2,22 @@
 
 Page({
   data: {
-    shop_type: 'enterprise',
+    shop_type: 'personal',
   },
 
   onLoad() {
     console.log(123)
   },
 
-
   onChange(e) {
-    console.log(11)
     this.setData({
       shop_type: e.detail.value
+    });
+  },
+
+  goNext(e) {
+    wx.navigateTo({
+      url: `/pages/create/create-shop/index`,
     });
   },
 });

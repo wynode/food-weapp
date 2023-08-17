@@ -1,0 +1,13 @@
+.create-new-shop {
+  padding: 32rpx 50rpx;
+}
+
+.cns-business {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cns-upload-box {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
