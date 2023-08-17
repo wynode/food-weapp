@@ -1,0 +1,14 @@
+<t-upload
+  gridConfig="{{gridConfig}}"
+  size-limit="5000"
+  mediaType="{{['image']}}"
+  max="{{1}}"
+  files="{{fileList}}"
+  bind:add="handleAdd"
+  bind:remove="handleRemove"
+>
+  <view slot="add-content" class="my-upload-box">
+    <image src="/assets/image/add_icon.png" class="my-upload-icon"></image>
+    <view class="my-upload-title">{{ uploadTitle }}</view>
+  </view>
+</t-upload>

@@ -1,3 +1,4 @@
-<view class="main_background">
-  <t-divider />
+<view class="main-background">
+  <t-divider t-class="main-divider" />
+  <image class="main-background-image" src="/assets/image/background.png"></image>
 </view>

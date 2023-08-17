@@ -24,7 +24,7 @@ Page({
     } = this.onVerifyInputLegal();
     if (isLegal) {
       wx.navigateTo({
-        url: '/pages/create/create-new-shop/index',
+        url: '/pages/create/create-shop-profile/index',
       })
     } else {
       Toast({

@@ -7,6 +7,7 @@
   font-size: 44rpx;
   font-weight: bold;
   color: #333333;
+  font-family: SimSong-Bold, SimSong;
   line-height: 80rpx;
 }
 
@@ -26,5 +27,5 @@
 }
 
 .cs-submit {
-  margin-top: 420rpx;
+  margin-top: 400rpx;
 }

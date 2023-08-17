@@ -1,0 +1,70 @@
+<view>
+  <background></background>
+  <view class="create-user">
+    <view class="cu-top-title"> 请添加店铺新员工 </view>
+    <view class="cu-top-title">需根据实际情况选择对应身份</view>
+    <view class="cu-avatar-box">
+      <view class="cu-avatar" bind:tap="handleEditAvatar">
+        <image wx:if="{{fileList[0]}}" class="cu-avatar-img" src="{{fileList[0].url}}"> </image>
+        <image wx:if="{{!fileList[0]}}" class="cu-avatar-img" src="/assets/image/shop_user.png"> </image>
+        <view class="cu-avatar-edit"> <image class="cu-avatar-icon" src="/assets/image/avatar_edit.png"></image></view>
+      </view>
+      <t-upload
+        id="avatar-upload"
+        files="{{fileList}}"
+        mediaType="{{['image']}}"
+        max="{{1}}"
+        bind:add="handleAdd"
+        style="display: none"
+      >
+      </t-upload>
+    </view>
+
+    <view class="cu-input">
+      <t-input value="{{ userName }}" placeholder="请输入员工姓名" />
+    </view>
+    <view>
+      <view class="cu-input" bind:tap="userPositionPicker">
+        <t-input suffixIcon="caret-down-small" value="{{ userPositionText }}" placeholder="请选择员工身份" disabled />
+      </view>
+      <t-picker
+        visible="{{userPositionVisible}}"
+        value="{{userPositionValue}}"
+        data-key="userPosition"
+        title="{{userPositionTitle}}"
+        cancelBtn="取消"
+        confirmBtn="确认"
+        bindchange="onPickerChange"
+        bindpick="onColumnChange"
+        bindcancel="onPickerCancel"
+      >
+        <t-picker-item options="{{userPositionList}}"></t-picker-item>
+      </t-picker>
+    </view>
+    <t-checkbox-group t-class="horizontal-box" value="{{value1}}" bind:change="onChange1">
+      <view wx:for="{{3}}" wx:key="index" class="card {{_.contain(value1, index) ? 'card--active' : ''}}">
+        <t-icon wx:if="{{_.contain(value1, index)}}" name="check" t-class="card__icon" ariaHidden="{{true}}" />
+        <t-checkbox value="{{index}}" label="多选" icon="none" borderless />
+      </view>
+    </t-checkbox-group>
+    <view class="cu-input">
+      <t-input value="{{ userPhone }}" placeholder="请输入员工联系方式" />
+    </view>
+    <view class="cu-business">
+      <view class="cu-upload-box">
+        <my-upload uploadTitle="点击上传任命书"> </my-upload>
+      </view>
+      <view class="cu-upload-box" style="margin-left: 50rpx">
+        <my-upload uploadTitle="点击上传健康证"> </my-upload>
+      </view>
+    </view>
+
+    <view class="cu-submit">
+      <t-button theme="primary" disabled="{{!submitActive}}" size="large" block bind:tap="formSubmit"
+        >立即创建</t-button
+      >
+    </view>
+  </view>
+</view>
+
+<t-toast id="t-toast"></t-toast>

@@ -1,0 +1,27 @@
+/* components/uploadImg/uploadImg.wxss */
+.my-upload-box {
+  background: #F2F4F7;
+  width: 300rpx;
+  height: 240rpx;
+  border: 2rpx dashed rgba(190, 221, 253, 0.6);
+  border-radius: 8rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+
+}
+
+.my-upload-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.my-upload-title {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 0.4);
+  line-height: 33rpx;
+  margin-top: 24rpx;
+}
