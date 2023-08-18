@@ -45,3 +45,7 @@
 .dialog__button-cancel {
   color: #aeb3b7 !important;
 }
+
+.t-divider {
+  margin: 0 !important;
+}

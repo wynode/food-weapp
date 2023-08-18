@@ -75,7 +75,7 @@
 
 .rlr-top-img {
   width: 20rpx;
-  height: 30rpx;
+  height: 32rpx;
   margin-left: 20rpx;
 }
 

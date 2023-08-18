@@ -21,6 +21,10 @@
   margin: 0 !important;
 }
 
+.t-divider {
+  margin: 0 !important;
+}
+
 .main-background .t-divider {
   margin-top: 0;
   margin-bottom: 0;

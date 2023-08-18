@@ -1,0 +1,16 @@
+{
+  "navigationBarTitleText": "报告列表",
+  "usingComponents": {
+    "t-divider": "tdesign-miniprogram/divider/divider",
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "t-image": "/components/webp-image/index",
+    "t-button": "tdesign-miniprogram/button/button",
+    "background": "/components/background/index",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-radio": "tdesign-miniprogram/radio/radio",
+    "t-progress": "tdesign-miniprogram/progress/progress",
+    "t-radio-group": "tdesign-miniprogram/radio-group/radio-group",
+    "t-tab-bar": "tdesign-miniprogram/tab-bar/tab-bar",
+    "t-tab-bar-item": "tdesign-miniprogram/tab-bar-item/tab-bar-item"
+  }
+}

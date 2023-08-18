@@ -1,10 +1,11 @@
 {
   "pages": [
-    "pages/create/report-list/index",
-    "pages/create/create-user/index",
-    "pages/create/choice-shop-type/index",
-    "pages/create/create-shop-profile/index",
-    "pages/create/create-shop/index"
+    "pages/report-profile/index",
+    "pages/report-list/index",
+    "pages/create-user/index",
+    "pages/choice-shop-type/index",
+    "pages/create-shop-profile/index",
+    "pages/create-shop/index"
   ],
   "requiredPrivateInfos": [
     "chooseAddress"

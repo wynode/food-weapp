@@ -1,0 +1,52 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="report-profile">
+    <view class="rp-record">
+      <view class="rpr-top">
+        <view class="rpr-top-left">本月日报</view>
+        <view class="rpr-top-right">
+          <view>其他月份</view>
+          <image class="rpr-top-img" src="/assets/image/right_icon.png"></image>
+        </view>
+      </view>
+      <view class="rpr-content">
+        <t-progress color="#FF3E3E" stroke-width="20" theme="circle" percentage="76" />
+        <view class="rpr-record">
+          <view class="rpr-record-item">
+            <view>合格项</view>
+            <view class="text-blue">14</view>
+          </view>
+          <view class="rpr-record-item">
+            <view>不合格项</view>
+            <view class="text-red">5</view>
+          </view>
+          <view class="rpr-record-item">
+            <view>不合格天数</view>
+            <view class="text-red">2</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="rp-list">
+      <view class="rp-item" wx:for="{{reportList}}" wx:key="index" wx:for-item="reportItem">
+        <view class="rp-item-left">
+          <view class="rpil-date">{{ reportItem.date }}</view>
+          <view class="rpil-type">{{ reportItem.dateType }}</view>
+        </view>
+        <view class="{{ reportItem.unqualifiedTotal ? 'rp-item-right-red' : 'rp-item-right'}}">
+          <view class="rpir-top">
+            <view>共{{ reportItem.total }}项</view>
+            <view wx:if="{{reportItem.unqualifiedTotal > 0}}">{{ reportItem.unqualifiedTotal }}项不合格</view>
+            <view wx:else>全部合格</view>
+          </view>
+          <view class="rpir-center">
+            {{ reportItem.submitTime }} | {{ reportItem.submitUser }} | {{ reportItem.submitType }}</view
+          >
+          <view class="rpir-bottom"> {{ reportItem.address }}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <t-toast id="t-toast" />
+</view>
