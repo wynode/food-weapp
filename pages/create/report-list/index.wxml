@@ -1,0 +1,137 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="report-list">
+    <view class="rl-top">
+      <view class="rl-top-left">
+        <view class="rl-top-logo">
+          <image class="rl-top-icon" src="/assets/image/self_employed.png"></image>
+        </view>
+        <view class="rl-top-title">早上好，花花的小店</view>
+      </view>
+      <view class="rl-top-right">
+        <image class="rl-top-bell" src="/assets/image/bell.png"></image>
+      </view>
+    </view>
+    <view class="rl-record">
+      <view class="rlr-top">
+        <view class="rlr-top-left">本月记录</view>
+        <view class="rlr-top-right">
+          <view>其他月份</view>
+          <image class="rlr-top-img" src="/assets/image/right_icon.png"></image>
+        </view>
+      </view>
+      <view class="rlr-content">
+        <t-progress color="#0B82FF" stroke-width="20" theme="circle" percentage="30" />
+        <view class="rlr-record">
+          <view class="rlr-record-item">
+            <view>本月日报</view>
+            <view>7/30</view>
+          </view>
+          <view class="rlr-record-item">
+            <view>本月周报</view>
+            <view>1/4</view>
+          </view>
+          <view class="rlr-record-item">
+            <view>本月月报</view>
+            <view>0/1</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="rl-report">
+      <view class="rlr-top">
+        <view class="rlr-top-left">全部报告（16）</view>
+        <view class="rlr-top-right">
+          <view>查看日志</view>
+          <image class="rlr-top-img" src="/assets/image/right_icon.png"></image>
+        </view>
+      </view>
+      <view class="rlr-box">
+        <view class="rlr-box-item" data-key="day" bindtap="goProfile">
+          <view class="rlb-left">
+            <image src="/assets/image/all_day.png"></image>
+          </view>
+          <view class="rlb-content">
+            <view class="rlb-center">
+              <view class="rlb-center-title">全部日报</view>
+              <view class="rlb-center-bottom">
+                <view class="rlb-center-fit">合格<text>6</text></view>
+                <view class="rlb-center-unfit">不合格<text>17</text></view>
+              </view>
+            </view>
+            <view class="rlb-right">
+              <view class="rlb-right-title"><text>7</text>份</view>
+              <image class="rlb-right-export" src="/assets/image/export.png"></image>
+            </view>
+          </view>
+        </view>
+        <view class="rlr-box-item" data-key="week" bindtap="goProfile">
+          <view class="rlb-left">
+            <image src="/assets/image/all_weak.png"></image>
+          </view>
+          <view class="rlb-content">
+            <view class="rlb-center">
+              <view class="rlb-center-title">全部周报</view>
+              <view class="rlb-center-bottom">
+                <view class="rlb-center-fit">合格<text>6</text></view>
+                <view class="rlb-center-unfit">不合格<text>17</text></view>
+              </view>
+            </view>
+            <view class="rlb-right">
+              <view class="rlb-right-title"><text>7</text>份</view>
+              <image class="rlb-right-export" src="/assets/image/export.png"></image>
+            </view>
+          </view>
+        </view>
+        <view class="rlr-box-item" data-key="month" bindtap="goProfile">
+          <view class="rlb-left">
+            <image src="/assets/image/all_month.png"></image>
+          </view>
+          <view class="rlb-content">
+            <view class="rlb-center">
+              <view class="rlb-center-title">全部月报</view>
+              <view class="rlb-center-bottom">
+                <view class="rlb-center-fit">合格<text>6</text></view>
+                <view class="rlb-center-unfit">不合格<text>17</text></view>
+              </view>
+            </view>
+            <view class="rlb-right">
+              <view class="rlb-right-title"><text>7</text>份</view>
+              <image class="rlb-right-export" src="/assets/image/export.png"></image>
+            </view>
+          </view>
+        </view>
+        <view class="rlr-box-item" data-key="bill" bindtap="goProfile">
+          <view class="rlb-left">
+            <image src="/assets/image/bill_center.png"></image>
+          </view>
+          <view class="rlb-content">
+            <view class="rlb-center">
+              <view class="rlb-center-title">票据中心</view>
+              <view class="rlb-center-bottom">
+                <view class="rlb-center-fit">合格<text>6</text></view>
+                <view class="rlb-center-unfit">不合格<text>17</text></view>
+              </view>
+            </view>
+            <view class="rlb-right">
+              <view class="rlb-right-title"><text>200</text>张</view>
+              <image class="rlb-right-export" src="/assets/image/export.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <t-toast id="t-toast" />
+  </view>
+</view>
+
+<t-tab-bar value="{{value}}" bindchange="onChange" theme="tag" split="{{false}}">
+  <t-tab-bar-item
+    wx:for="{{list}}"
+    wx:key="index"
+    value="{{item.value}}"
+    icon="{{item.icon}}"
+    ariaLabel="{{item.ariaLabel}}"
+  ></t-tab-bar-item>
+</t-tab-bar>

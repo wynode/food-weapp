@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/create/report-list/index",
     "pages/create/create-user/index",
     "pages/create/choice-shop-type/index",
     "pages/create/create-shop-profile/index",

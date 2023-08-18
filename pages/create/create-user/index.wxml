@@ -41,11 +41,10 @@
         <t-picker-item options="{{userPositionList}}"></t-picker-item>
       </t-picker>
     </view>
-    <t-checkbox-group t-class="horizontal-box" value="{{value1}}" bind:change="onChange1">
-      <view wx:for="{{3}}" wx:key="index" class="card {{_.contain(value1, index) ? 'card--active' : ''}}">
-        <t-icon wx:if="{{_.contain(value1, index)}}" name="check" t-class="card__icon" ariaHidden="{{true}}" />
-        <t-checkbox value="{{index}}" label="多选" icon="none" borderless />
-      </view>
+    <t-checkbox-group class="cu-checkbox" borderless bind:change="userRoleChange" defaultValue="{{userRole}}">
+      <t-checkbox class="cu-checkbox-item" icon="rectangle" block="{{false}}" value="day" label="日管控" />
+      <t-checkbox class="cu-checkbox-item" icon="rectangle" block="{{false}}" value="week" label="周排查" />
+      <t-checkbox class="cu-checkbox-item" icon="rectangle" block="{{false}}" value="month" label="月调度" />
     </t-checkbox-group>
     <view class="cu-input">
       <t-input value="{{ userPhone }}" placeholder="请输入员工联系方式" />
@@ -58,7 +57,14 @@
         <my-upload uploadTitle="点击上传健康证"> </my-upload>
       </view>
     </view>
-
+    <t-link
+      style="margin-bottom: 40rpx"
+      size="small"
+      theme="primary"
+      content="任命书模版点击此处下载"
+      prefixIcon="link"
+      hover
+    />
     <view class="cu-submit">
       <t-button theme="primary" disabled="{{!submitActive}}" size="large" block bind:tap="formSubmit"
         >立即创建</t-button

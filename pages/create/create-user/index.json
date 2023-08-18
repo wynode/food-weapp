@@ -13,6 +13,7 @@
     "t-picker-item": "tdesign-miniprogram/picker-item/picker-item",
     "t-checkbox": "tdesign-miniprogram/checkbox/checkbox",
     "t-checkbox-group": "tdesign-miniprogram/checkbox-group/checkbox-group",
+    "t-link": "tdesign-miniprogram/link/link",
     "t-upload": "tdesign-miniprogram/upload/upload"
   }
 }

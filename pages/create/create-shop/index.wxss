@@ -1,5 +1,6 @@
 .create-shop {
   padding: 50rpx;
+  position: relative;
 }
 
 .cs-title {

@@ -1,6 +1,7 @@
 .create-new-shop {
   padding: 32rpx 50rpx;
   padding-bottom: 80rpx;
+  position: relative;
 }
 
 .cns-business {

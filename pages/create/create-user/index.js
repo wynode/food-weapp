@@ -3,20 +3,22 @@ import Toast from 'tdesign-miniprogram/toast';
 Page({
   data: {
     fileList: [],
-    shopTypeValue: [],
-    shopTypeTitle: '',
-    shopTypeText: '',
-    shopTypeList: [{
-      label: '食品餐饮',
-      value: '食品餐饮'
-    }],
-    shopTemplateValue: [],
-    shopTemplateTitle: '',
-    shopTemplateText: '',
-    shopTemplateList: [{
-      label: '（日周月）食品销售通用模板',
-      value: '（日周月）食品销售通用模板'
-    }],
+    userPositionValue: [],
+    userPositionTitle: '',
+    userPositionText: '',
+    userPositionList: [{
+        label: '食品安全员  ',
+        value: '食品安全员'
+      },
+      {
+        label: '食品安全总监',
+        value: '食品安全总监'
+      },
+      {
+        label: '负责人',
+        value: '负责人'
+      }
+    ],
 
     gridConfig: {
       column: 1,
@@ -31,6 +33,7 @@ Page({
 
 
     value1: [0, 1],
+    userRole: [],
   },
 
   onLoad() {
@@ -50,6 +53,10 @@ Page({
   handleEditAvatar() {
     const uploadComponent = this.selectComponent('#avatar-upload')
     uploadComponent.onAddTap()
+  },
+
+  userRoleChange(e) {
+    console.log(e)
   },
 
   formSubmit() {
@@ -95,19 +102,12 @@ Page({
     });
   },
 
-  shopTypePicker() {
-    console.log(111)
-    this.setData({
-      shopTypeVisible: true,
-      shopTypeTitle: '选择店铺类别'
-    });
-  },
 
-  shopTemplatePicker() {
+  userPositionPicker() {
     console.log(111)
     this.setData({
-      shopTemplateVisible: true,
-      shopTemplateTitle: '请选择填写报告模板'
+      userPositionVisible: true,
+      userPositionTitle: '请选择员工身份'
     });
     this.setData({
       submitActive: true,

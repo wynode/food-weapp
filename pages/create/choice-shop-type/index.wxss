@@ -1,5 +1,6 @@
 .choice-shop-type {
   display: block;
+  position: relative;
   margin: 0 50rpx;
 }
 
