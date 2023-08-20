@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "日志列表",
+  "usingComponents": {
+    "t-divider": "tdesign-miniprogram/divider/divider",
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "t-image": "/components/webp-image/index",
+    "t-button": "tdesign-miniprogram/button/button",
+    "background": "/components/background/index",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-calendar": "tdesign-miniprogram/calendar/calendar"
+  }
+}

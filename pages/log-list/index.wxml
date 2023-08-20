@@ -1,0 +1,36 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="log-list">
+    <view class="ll-calendar">
+      <t-calendar
+        visible="{{visible}}"
+        minDate="{{minDate}}"
+        maxDate="{{maxDate}}"
+        value="{{calendarValue}}"
+        use-popup="{{false}}"
+        bind:select="handleSelect"
+      />
+    </view>
+    <view class="ll-list">
+      <view class="ll-item" wx:for="{{logList}}" wx:key="index" wx:for-item="logItem">
+        <view class="ll-item-left">
+          <view class="llil-date">{{ logItem.date }}</view>
+          <view class="llil-type">{{ logItem.dateType }}</view>
+        </view>
+        <view
+          class="ll-item-right {{ logItem.logType === 'day' ? 'll-item-right-day' : '' }} {{ logItem.logType === 'bill' ? 'll-item-right-bill' : '' }}"
+        >
+          <view class="llir-top">
+            <view>{{ logItem.logTypeCN }}</view>
+          </view>
+          <view class="llir-center">
+            {{ logItem.submitTime }} | {{ logItem.submitUser }} | {{ logItem.submitStatus }}</view
+          >
+          <view class="llir-bottom"> {{ logItem.address }}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <t-toast id="t-toast" />
+</view>

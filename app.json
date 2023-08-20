@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/log-list/index",
+    "pages/bill-center/index",
     "pages/report-profile/index",
     "pages/report-list/index",
     "pages/create-user/index",

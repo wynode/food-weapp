@@ -1,0 +1,39 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="bill-center">
+    <view class="bc-record">
+      <view class="bcr-top">
+        <view class="bcr-top-left">本月进货单</view>
+        <view class="bcr-top-right">
+          <view>其他月份</view>
+          <image class="bcr-top-img" src="/assets/image/right_icon.png"></image>
+        </view>
+      </view>
+    </view>
+    <view class="bc-list">
+      <view class="bc-item" wx:for="{{billList}}" wx:key="index" wx:for-item="billItem">
+        <view class="bc-item-left">
+          <view class="bcil-date">{{ billItem.date }}</view>
+          <view class="bcil-type">{{ billItem.itemType }}</view>
+        </view>
+        <view
+          class="'bc-item-right' {{ billItem.status === 'approval' ? 'bc-item-right-approval' : '' }} {{ billItem.status === 'reject' ? 'bc-item-right-reject' : '' }}"
+        >
+          <view class="bcir-top">
+            <view>共{{ billItem.title }}</view>
+          </view>
+          <view class="bcir-top2">
+            <view class="bcir-center">
+              {{ billItem.submitTime }} {{ billItem.submitUser }} {{ billItem.statusCN }}</view
+            >
+            <view class="bcir-bottom" wx:if="{{ billItem.status === 'reject' }}">
+              拒绝理由: {{ billItem.rejectReason }}</view
+            >
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <t-toast id="t-toast" />
+</view>

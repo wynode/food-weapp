@@ -1,0 +1,126 @@
+.bill-center {
+  padding: 30rpx;
+  position: relative;
+}
+
+.bcr-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.bcr-top-left {
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #333333;
+  line-height: 45rpx;
+}
+
+.bcr-top-right {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #333333;
+  line-height: 45rpx;
+  display: flex;
+  align-items: center;
+}
+
+.bcr-top-img {
+  width: 20rpx;
+  height: 32rpx;
+  margin-left: 20rpx;
+}
+
+.bc-list {
+  margin-top: 40rpx;
+}
+
+.bc-item {
+  display: flex;
+  margin-bottom: 30rpx;
+  min-height: 192rpx;
+}
+
+.bcir-top2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100rpx;
+}
+
+.bc-item-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bcil-date {
+  font-size: 48rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #333333;
+  line-height: 67rpx;
+}
+
+.bcil-type {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 0.5);
+  line-height: 45rpx;
+  margin-top: 16rpx;
+}
+
+.bc-item-right {
+  background: #0B82FF;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  flex-grow: 1;
+  margin-left: 30rpx;
+}
+
+.bc-item .bc-item-right-reject {
+  background: #FC5B5B;
+}
+
+.bc-item .bc-item-right-approval {
+  background: #636EFF;
+}
+
+.bc-item-right-red {
+  background: #FC5B5B;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  flex-grow: 1;
+  margin-left: 30rpx;
+}
+
+.bcir-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 34rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 48rpx;
+}
+
+.bcir-center {
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 42rpx;
+}
+
+.bcir-bottom {
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 42rpx;
+}
