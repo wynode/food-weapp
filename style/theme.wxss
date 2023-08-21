@@ -10,24 +10,41 @@
 }
 
 .t-cascader {
-  --td-cascader-active-color: #fa4126;
+  --td-cascader-active-color: #0B82FF;
 }
 
 .t-switch {
   --td-switch-checked-color: #34c759;
 }
 
+.t-upload {
+  --td-upload-add-color: #0B82FF;
+  --td-upload-add-bg-color: #D8D8D8;
+}
+
 .t-button {
   --td-button-font-weight: 500;
   --td-button-medium-font-size: 32rpx;
   --td-button-default-color: #fff;
-  --td-button-default-bg-color: #fa4126;
-  --td-button-default-border-color: #fa4126;
+  --td-button-default-bg-color: #0B82FF;
+  --td-button-default-border-color: #0B82FF;
   --td-button-default-disabled-color: #fff;
   --td-button-default-disabled-bg: #cccccc;
   --td-button-default-disabled-border-color: #cccccc;
-  --td-button-default-active-bg-color: #fa4126;
-  --td-button-default-active-border-color: #fa4126;
+  --td-button-default-active-bg-color: #0B82FF;
+  --td-button-default-active-border-color: #0B82FF;
+  --td-button-danger-active-bg-color: #FC5B5B;
+  --td-button-danger-active-border-color: #FC5B5B;
+  --td-button-danger-bg-color: #FC5B5B;
+  --td-button-danger-border-color: #FC5B5B;
+  --td-button-danger-color: #fff;
+  --td-button-danger-outline-active-bg-color: #FC5B5B;
+  --td-button-danger-outline-active-border-color: #FC5B5B;
+  --td-button-danger-outline-border-color: #FC5B5B;
+  --td-button-danger-outline-color: #FC5B5B;
+  --td-button-danger-outline-disabled-color: #FC5B5B;
+  --td-button-danger-text-active-bg-color: #FC5B5B;
+  --td-button-danger-text-color: #fff;
 }
 
 .t-textarea {
@@ -35,11 +52,11 @@
 }
 
 .t-checkbox {
-  --td-checkbox-icon-checked-color: #fa4126;
+  --td-checkbox-icon-checked-color: #0B82FF;
 }
 
 .dialog__button-confirm {
-  color: #fa4126 !important;
+  color: #0B82FF !important;
 }
 
 .dialog__button-cancel {

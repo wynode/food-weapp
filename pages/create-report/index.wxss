@@ -36,3 +36,91 @@
 .cr-progress {
   margin-top: 20rpx;
 }
+
+.cr-list .t-checkbox__border {
+  display: none;
+}
+
+.cr-list .t-checkbox {
+  background: #F2F4F7;
+  border-radius: 8rpx;
+  margin-top: 20rpx;
+}
+
+.cr-list .t-grid {
+  background: #F2F4F7;
+}
+
+.cr-list .t-grid-item__content {
+  border-radius: 8rpx;
+}
+
+.cric-bad .cric-bad-input {
+  height: 90rpx;
+  box-sizing: border-box;
+}
+
+.cric-bad .cric-bad-title {
+  font-size: 30rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #333333;
+  line-height: 42rpx;
+  margin: 40rpx 0 20rpx;
+}
+
+.cric-btns {
+  display: flex;
+  justify-content: space-between;
+  margin: 30rpx 0 40rpx;
+}
+
+.cric-btns .cric-btns-left {
+  width: 260rpx;
+  height: 70rpx;
+  margin: 0;
+}
+
+.cric-btns .cric-btns-right {
+  width: 260rpx;
+  height: 70rpx;
+  margin: 0;
+}
+
+.cr-list .t-checkbox {
+  padding: 20rpx;
+}
+
+.cr-item-label {
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #333333;
+  line-height: 50rpx;
+}
+
+.cns-input .t-input {
+  background: #f2f4f7;
+  border-radius: 8rpx;
+  padding: 20rpx 30rpx;
+  margin-top: 20rpx;
+}
+
+.cns-input .t-input::after {
+  height: 0;
+}
+
+.cns-input .t-icon-caret-down-small {
+  color: rgba(11, 130, 255, 0.32);
+  font-size: 60rpx;
+  height: 60rpx;
+  width: 60rpx;
+}
+
+.cns-input .t-input__control--disabled {
+  -webkit-text-fill-color: #333333;
+}
+
+/* .cric-btns .t-button::after {
+  border: none;
+} */

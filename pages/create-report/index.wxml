@@ -17,23 +17,94 @@
       track-color="rgba(11,130,255,0.1)"
       stroke-width="14"
       theme="plump"
-      label=""
+      label="{{false}}"
       percentage="80"
     />
-    <t-cell class="mb-16" title="带标题选择器" arrow hover note="{{cityText}}" bind:click="onTitlePicker" />
 
+    <view class="cns-input" bind:tap="templateTypePicker">
+      <t-input
+        suffixIcon="caret-down-small"
+        value="{{ templateTypeText }}"
+        placeholder="请选择店铺类别"
+        disabled
+        bind:click="onTitlePicker"
+      />
+    </view>
     <t-picker
-      visible="{{cityVisible}}"
-      value="{{cityValue}}"
-      data-key="city"
-      title="{{cityTitle}}"
+      visible="{{templateTypeVisible}}"
+      value="{{templateTypeValue}}"
+      data-key="templateType"
+      title="{{templateTypeTitle}}"
       cancelBtn="取消"
       confirmBtn="确认"
       bindchange="onPickerChange"
       bindpick="onColumnChange"
       bindcancel="onPickerCancel"
     >
-      <t-picker-item options="{{citys}}"></t-picker-item>
+      <t-picker-item options="{{templateTypeList}}"></t-picker-item>
     </t-picker>
+
+    <view class="cr-list">
+      <t-checkbox-group value="{{checkList}}" bind:change="onCheckChange">
+        <t-checkbox
+          wx:for="{{checkListData}}"
+          wx:key="index"
+          value="{{index}}"
+          icon="rectangle"
+          content-disabled
+          max-label-row="10"
+          max-content-row="10"
+          class="cr-item"
+        >
+          <view slot="label" class="cr-item-label">{{ index+1 }}. {{ item.label }} </view>
+          <view slot="content" class="cr-item-content">
+            <view class="cric-btns" wx:if="{{ item.checked }}">
+              <t-button
+                class="cric-btns-left"
+                block
+                data-key="{{index}} fail"
+                theme="danger"
+                variant="{{item.checkResult === 'fail' ? '' : 'outline'}}"
+                bind:tap="handleCheckResult"
+                >否</t-button
+              >
+              <t-button
+                class="cric-btns-right"
+                block
+                data-key="{{index}} success"
+                theme="primary"
+                variant="{{item.checkResult === 'success' ? '' : 'outline'}}"
+                bind:tap="handleCheckResult"
+                >是</t-button
+              >
+            </view>
+            <view class="cric-bad" wx:if="{{item.checkResult === 'fail'}}">
+              <t-input
+                class="cric-bad-input"
+                value="{{item.checkExceptionReason}}"
+                placeholder="请输入异常理由"
+                borderless="{{true}}"
+                style="{{style}}"
+              />
+              <view class="cric-bad-title"> 现场照片 </view>
+              <view class="wrapper">
+                <t-upload
+                  class="cric-bad-upload"
+                  media-type="{{['image']}}"
+                  max="{{3}}"
+                  data-key="{{index}}"
+                  files="{{item.checkExceptionFileList}}"
+                  gridConfig="{{gridConfig}}"
+                  bind:success="handleSuccess"
+                  bind:remove="handleRemove"
+                  bind:click="handleClick"
+                >
+                </t-upload>
+              </view>
+            </view>
+          </view>
+        </t-checkbox>
+      </t-checkbox-group>
+    </view>
   </view>
 </view>
