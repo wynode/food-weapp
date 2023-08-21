@@ -1,0 +1,34 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="message-notify">
+    <view wx:for="{{messageList}}" wx:for-item="messageItem" wx:for-index="messageIndex" wx:key="title" class="mn-item">
+      <view class="mn-title"> {{ messageItem.title }}</view>
+      <view
+        wx:for="{{ messageItem.children }}"
+        wx:for-item="childrenItem"
+        wx:for-index="childrenIndex"
+        wx:key="title"
+        class="mn-children-item"
+      >
+        <view class="mnci-left {{ childrenItem.messageType }}">
+          <image src="{{ childrenItem.image }}"></image>
+        </view>
+        <view class="mnci-right">
+          <view class="mnci-top">
+            <view class="mnci-title">{{ childrenItem.title }}</view>
+            <view
+              wx:if="{{childrenItem.info.length > 34}}"
+              class="mnci-dwck"
+              data-key="{{messageIndex}} {{ childrenIndex }}"
+              bindtap="showHiddenChange"
+              >点我查看
+              <t-icon wx:if="{{ childrenItem.showHidden }}" class="mnci-icon" name="caret-up-small" size="34rpx" />
+              <t-icon wx:else class="mnci-icon" name="caret-down-small" size="34rpx" />
+            </view>
+          </view>
+          <view class="mnci-info {{ childrenItem.showHidden ? '' : 'mnci-info-hidden'}}">{{ childrenItem.info }}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

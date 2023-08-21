@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "记录报告",
+  "usingComponents": {
+    "background": "/components/background/index",
+    "t-progress": "tdesign-miniprogram/progress/progress",
+    "t-button": "tdesign-miniprogram/button/button"
+  }
+}

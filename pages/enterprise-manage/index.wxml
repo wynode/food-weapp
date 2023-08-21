@@ -1,0 +1,24 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="enterprise-manage">
+    <t-radio-group value="{{value}}" bind:change="onChange">
+      <view
+        wx:for="{{enterpriseList}}"
+        wx:for-item="item"
+        wx:key="index"
+        class="card {{value == index ? 'card--active' : ''}}"
+      >
+        <t-icon wx:if="{{value == index}}" name="check" t-class="card__icon" />
+        <t-radio value="{{index}}" icon="none" borderless>
+          <view slot="content" class="em-item">
+            <view class="em-item-left"> {{ item.name ? item.name[0] : '企'}} </view>
+            <view class="em-item-right">
+              <view class="em-item-name">{{ item.name }}</view>
+              <view class="em-item-address">{{ item.address }}</view>
+            </view>
+          </view>
+        </t-radio>
+      </view>
+    </t-radio-group>
+  </view>
+</view>

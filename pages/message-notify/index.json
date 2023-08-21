@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "消息通知",
+  "usingComponents": {
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "background": "/components/background/index",
+    "t-icon": "tdesign-miniprogram/icon/icon"
+  }
+}

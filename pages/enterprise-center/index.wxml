@@ -1,0 +1,61 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="enterprise-center">
+    <view class="ec-list">
+      <view class="ec-item">
+        <view class="ec-item-left ec-item-left1">
+          <image src="/assets/image/bggl.png"></image>
+        </view>
+        <view class="ec-item-right">
+          <view class="ec-item-title"> 报告管理 </view>
+          <view class="ec-item-info"> 134份 </view>
+        </view>
+      </view>
+      <view class="ec-item">
+        <view class="ec-item-left ec-item-left2">
+          <image src="/assets/image/pjzx.png"></image>
+        </view>
+        <view class="ec-item-right">
+          <view class="ec-item-title"> 票据中心 </view>
+          <view class="ec-item-info"> 12份 </view>
+        </view>
+      </view>
+      <view class="ec-item">
+        <view class="ec-item-left ec-item-left3">
+          <image src="/assets/image/rygl.png"></image>
+        </view>
+        <view class="ec-item-right">
+          <view class="ec-item-title"> 人员管理 </view>
+          <view class="ec-item-info"> 10人 </view>
+        </view>
+      </view>
+      <view class="ec-item">
+        <view class="ec-item-left ec-item-left4">
+          <image src="/assets/image/qygl.png"></image>
+        </view>
+        <view class="ec-item-right">
+          <view class="ec-item-title"> 企业管理 </view>
+          <view class="ec-item-info"> 1家 </view>
+        </view>
+      </view>
+      <view class="ec-item">
+        <view class="ec-item-left ec-item-left5">
+          <image src="/assets/image/qyxx.png"></image>
+        </view>
+        <view class="ec-item-right">
+          <view class="ec-item-title"> 企业信息 </view>
+          <view class="ec-item-info text-red"> 员工信息待补充 </view>
+        </view>
+      </view>
+      <view class="ec-item">
+        <view class="ec-item-left ec-item-left6">
+          <image src="/assets/image/xttz.png"></image>
+        </view>
+        <view class="ec-item-right">
+          <view class="ec-item-title"> 系统通知 </view>
+          <view class="ec-item-info text-red"> 25条未读 </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

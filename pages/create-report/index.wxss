@@ -1,0 +1,38 @@
+.create-report {
+  position: relative;
+  padding: 30rpx;
+}
+
+.cr-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cr-top-left {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #333333;
+  line-height: 45rpx;
+}
+
+.cr-top-left text {
+  color: #0B82FF;
+  margin-left: 6rpx;
+}
+
+.cr-top-right {
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #333333;
+  line-height: 45rpx;
+}
+
+.cr-top-right text {
+  color: #0B82FF;
+}
+
+.cr-progress {
+  margin-top: 20rpx;
+}

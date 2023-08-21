@@ -1,0 +1,16 @@
+{
+  "navigationBarTitleText": "提交新日报",
+  "usingComponents": {
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "background": "/components/background/index",
+    "my-upload": "/components/my-upload/index",
+    "t-progress": "tdesign-miniprogram/progress/progress",
+    "t-checkbox": "tdesign-miniprogram/checkbox/checkbox",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-picker": "tdesign-miniprogram/picker/picker",
+    "t-picker-item": "tdesign-miniprogram/picker-item/picker-item",
+    "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
+    "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-checkbox-group": "tdesign-miniprogram/checkbox-group/checkbox-group"
+  }
+}

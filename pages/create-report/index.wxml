@@ -1,0 +1,39 @@
+<view>
+  <background></background>
+  <view class="create-report">
+    <view class="cr-top">
+      <view class="cr-top-left">
+        必选项
+        <text>2</text>/15
+      </view>
+      <view class="cr-top-right">
+        <text>2023.2.12</text>
+        日报
+      </view>
+    </view>
+    <t-progress
+      class="cr-progress"
+      color="#0B82FF"
+      track-color="rgba(11,130,255,0.1)"
+      stroke-width="14"
+      theme="plump"
+      label=""
+      percentage="80"
+    />
+    <t-cell class="mb-16" title="带标题选择器" arrow hover note="{{cityText}}" bind:click="onTitlePicker" />
+
+    <t-picker
+      visible="{{cityVisible}}"
+      value="{{cityValue}}"
+      data-key="city"
+      title="{{cityTitle}}"
+      cancelBtn="取消"
+      confirmBtn="确认"
+      bindchange="onPickerChange"
+      bindpick="onColumnChange"
+      bindcancel="onPickerCancel"
+    >
+      <t-picker-item options="{{citys}}"></t-picker-item>
+    </t-picker>
+  </view>
+</view>

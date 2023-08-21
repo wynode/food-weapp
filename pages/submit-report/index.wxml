@@ -1,0 +1,55 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="submit-report">
+    <view class="sr-day">
+      <view class="sr-day-left">
+        <image src="/assets/image/message.png"></image>
+      </view>
+      <view class="sr-day-right">
+        <view class="srdr-top">
+          <view class="srdr-top-left"> 需提交日管控 </view>
+          <view class="srdr-top-right"> <text class="text-red">2</text>/4 </view>
+        </view>
+        <view class="srdr-bottom">
+          <view class="srdr-bottom-left"> 2023年7月11日 </view>
+          <view class="srdr-bottom-right"> 剩余25分钟 </view>
+        </view>
+      </view>
+    </view>
+    <view class="sr-day">
+      <view class="sr-day-left">
+        <image src="/assets/image/message.png"></image>
+      </view>
+      <view class="sr-day-right">
+        <view class="srdr-top">
+          <view class="srdr-top-left"> 需提交日管控 </view>
+          <view class="srdr-top-right"> <text class="text-red">2</text>/4 </view>
+        </view>
+        <view class="srdr-bottom">
+          <view class="srdr-bottom-left"> 2023年7月11日 </view>
+          <view class="srdr-bottom-right"> 剩余25分钟 </view>
+        </view>
+      </view>
+    </view>
+    <t-progress
+      class="sr-progress"
+      color="#0B82FF"
+      track-color="rgba(11,130,255,0.1)"
+      stroke-width="20"
+      theme="circle"
+      percentage="{{progress}}"
+    >
+      <view slot="label">
+        <view class="sr-progress-time">{{ currentTime }}</view>
+        <view class="sr-progress-countdown"
+          >剩余<text wx:if="{{remainingHours}}">{{ remainingHours }}小时</text>{{remainingMinutes}}分钟</view
+        >
+      </view>
+    </t-progress>
+    <view class="sr-tips"> 请尽快填写日报哦 </view>
+    <view class="sr-btns">
+      <t-button class="sr-btns-left" theme="primary" size="large">逐一检查</t-button>
+      <t-button class="sr-btns-right" theme="light" size="large">一键合格</t-button>
+    </view>
+  </view>
+</view>

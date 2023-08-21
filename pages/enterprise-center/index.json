@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "企业中心",
+  "usingComponents": {
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "background": "/components/background/index"
+  }
+}

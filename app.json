@@ -1,5 +1,10 @@
 {
   "pages": [
+    "pages/create-report/index",
+    "pages/submit-report/index",
+    "pages/message-notify/index",
+    "pages/enterprise-manage/index",
+    "pages/enterprise-center/index",
     "pages/log-list/index",
     "pages/bill-center/index",
     "pages/report-profile/index",

@@ -1,0 +1,101 @@
+.enterprise-manage {
+  position: relative;
+  padding: 30rpx;
+}
+
+.em-item {
+  display: flex;
+}
+
+.em-item-left {
+  width: 110rpx;
+  height: 110rpx;
+  background: #0B82FF;
+  border-radius: 8rpx;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 110rpx 110rpx;
+}
+
+.em-item-right {
+  margin-left: 20rpx;
+}
+
+.em-item-name {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #333333;
+  line-height: 32rpx;
+}
+
+.em-item-address {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 0.7);
+  line-height: 38rpx;
+}
+
+.card {
+  position: relative;
+  margin-bottom: 30rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 4rpx solid #fff;
+}
+
+.card--active {
+  border-color: #0B82FF;
+}
+
+.card--active::after {
+  content: '当前';
+  display: block;
+  position: absolute;
+  right: -2rpx;
+  top: 0;
+  background-color: #0B82FF;
+  font-size: 24rpx;
+  /* width: 0; */
+  color: #fff;
+  padding: 12rpx 20rpx;
+  border-radius: 10rpx;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  z-index: 1000;
+  /* border-bottom-color: transparent; */
+  /* border-right-color: transparent; */
+}
+
+.card__icon {
+  color: #fff;
+  position: absolute;
+  left: 1.5px;
+  top: 1.5px;
+  z-index: 1;
+}
+
+/* 横向布局 */
+.horizontal-box {
+  width: calc(100% - 64rpx);
+  display: flex;
+  align-items: center;
+  margin: 32rpx;
+}
+
+.horizontal-box .card {
+  flex: 1;
+  margin: 0;
+}
+
+.horizontal-box .card+.card {
+  margin-left: 24rpx;
+}

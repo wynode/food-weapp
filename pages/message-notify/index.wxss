@@ -1,0 +1,108 @@
+.message-notify {
+  position: relative;
+  padding: 30rpx;
+}
+
+.mn-item {
+  margin-bottom: 40rpx;
+}
+
+.mn-title {
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #333333;
+  line-height: 45rpx;
+}
+
+.mn-children-item {
+  background: #FFFFFF;
+  padding: 25rpx;
+  border-radius: 16rpx;
+  margin-top: 30rpx;
+  display: flex;
+}
+
+.mnci-left {
+  width: 110rpx;
+  height: 110rpx;
+  margin: 20rpx 0;
+  border-radius: 8rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: 110rpx 110rpx;
+}
+
+.scjgjtz {
+  background: #636EFF;
+}
+
+.xttz {
+  background: #0B82FF;
+}
+
+.rbtxtz {
+  background: #FC5B5B;
+}
+
+.ybsc {
+  background: #11C067;
+}
+
+.mnci-left image {
+  width: 70rpx;
+  height: 70rpx;
+}
+
+.mnci-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.mnci-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mnci-dwck {
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #0B82FF;
+  line-height: 37rpx;
+}
+
+.mnci-icon {}
+
+.mnci-title {
+  font-size: 34rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #333333;
+  line-height: 48rpx;
+}
+
+.mnci-info {
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 0.7);
+  line-height: 42rpx;
+  margin-top: 10rpx;
+}
+
+.mnci-info-hidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

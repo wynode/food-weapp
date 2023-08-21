@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "企业管理",
+  "usingComponents": {
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "background": "/components/background/index",
+    "t-radio": "tdesign-miniprogram/radio/radio",
+    "t-radio-group": "tdesign-miniprogram/radio-group/radio-group"
+  }
+}
