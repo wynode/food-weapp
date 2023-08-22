@@ -1,3 +1,8 @@
+import Toast from 'tdesign-miniprogram/toast';
+import {
+  formatTime
+} from '../../utils/util'
+
 Page({
   data: {
     style: 'border: 2rpx solid rgba(220,220,220,1);border-radius: 12rpx;',
@@ -10,6 +15,8 @@ Page({
       value: '（日周月）食品销售通用模板'
     }],
 
+    showAllQualified: false,
+    submitDisabled: true,
 
     fileList: [],
     gridConfig: {
@@ -19,36 +26,65 @@ Page({
     },
 
     checkList: [],
-
+    checkPercentage: 0,
+    currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
     checkListData: [{
         checked: false,
-        label: '大型企业应至少抽查22人从业人员是否掌握本单位食品安全知识是否掌握本单位。',
+        label: '大型企业应至少抽查2名从业人员是否掌握本单位食品安全知识。',
+        checkResult: '',
+        checkExceptionReason: '没有达标',
+        checkExceptionFileList: [],
+      },
+      {
+        checked: false,
+        label: '食品经营场所环境整洁卫生，食品（含食品添加剂、食用农产品，下同）是否有被污染的风险。',
+        checkResult: '',
+        checkExceptionReason: '没有达标',
+        checkExceptionFileList: [],
+      },
+      {
+        checked: false,
+        label: '接触直接入口或不需清洗即可加工的散装食品时，是否戴口罩、手套和帽子，头发不外露。',
+        checkResult: '',
+        checkExceptionReason: '没有达标',
+        checkExceptionFileList: [],
+      },
+      {
+        checked: false,
+        label: '贮存食品的库房、设备、容器、工具是否清洁、安全、无害，设备运转是否正常，温度是否度符合食品安全要求。',
         checkResult: '',
         checkExceptionReason: 'A设备运转呢不正常',
         checkExceptionFileList: [],
       },
       {
         checked: false,
-        label: '大型企业应至少抽查22人从业人员是否掌握本单位食品安全知识是否掌握本单位。',
+        label: '贮存食品的库房、设备、容器、工具是否清洁、安全、无害，设备运转是否正常，温度是否度符合食品安全要求。',
         checkResult: '',
         checkExceptionReason: 'A设备运转呢不正常',
         checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label: '大型企业应至少抽查22人从业人员是否掌握本单位食品安全知识是否掌握本单位。',
-        checkResult: '',
-        checkExceptionReason: 'A设备运转呢不正常',
-        checkExceptionFileList: [],
-      },
+      }
     ],
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
-
+    const {
+      allqualified = 0
+    } = options || {};
+    if (allqualified) {
+      const tempCheckListData = this.data.checkListData.map((item) => {
+        return {
+          ...item,
+          checked: true,
+          checkResult: 'success'
+        }
+      })
+      this.setData({
+        checkListData: tempCheckListData,
+        checkList: Array.from(Array(5).keys()),
+        showAllQualified: true,
+        submitDisabled: false,
+      });
+    }
   },
 
   templateTypePicker() {
@@ -57,6 +93,17 @@ Page({
       templateTypeVisible: true,
       templateTypeTitle: '选择模版'
     });
+  },
+
+  handleSubmit() {
+    Toast({
+      context: this,
+      selector: '#t-toast',
+      message: '提交成功',
+    });
+    wx.redirectTo({
+      url: '/pages/report-list/index',
+    })
   },
 
 
@@ -157,13 +204,19 @@ Page({
         }
       }
       return {
-        ...item
+        ...item,
+        checked: false,
+        checkResult: '',
+        checkExceptionFileList: [],
       }
     })
-
+    const checkPercentage = e.detail.value.length / this.data.checkListData.length * 100
+    const submitDisabled = e.detail.value.length >= 2 ? false : true
     this.setData({
       checkList: e.detail.value,
       checkListData: tempCheckListData,
+      checkPercentage,
+      submitDisabled,
     });
     console.log(e)
   },

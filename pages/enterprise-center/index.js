@@ -1,66 +1,78 @@
-// pages/enterprise-center/index.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    tabBarValue: 'enterprise-center',
+    list: [{
+        value: 'enterprise-center',
+        icon: 'city-10',
+        ariaLabel: '企业中心',
+        badgeProps: {
+          count: 25
+        },
+      },
+      {
+        value: 'submit-report',
+        icon: 'add-circle',
+        ariaLabel: '添加报告'
+      },
+      {
+        value: 'report-list',
+        icon: 'shop-5',
+        ariaLabel: '报告列表',
+      },
+    ],
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  goReportList() {
+    wx.navigateTo({
+      url: '/pages/daily-stats/index',
+    })
+  },
+  goBillCenter() {
+    wx.navigateTo({
+      url: '/pages/bill-center/index',
+    })
+  },
+  goStaffList() {
+    wx.navigateTo({
+      url: '/pages/staff-list/index',
+    })
+  },
+  goEnterpriseManage() {
+    wx.navigateTo({
+      url: '/pages/enterprise-manage/index',
+    })
+  },
+  goCreateShopProfile() {
+    wx.navigateTo({
+      url: '/pages/create-shop-profile/index',
+    })
+  },
+  goMessageNotify() {
+    wx.navigateTo({
+      url: '/pages/message-notify/index',
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
+  onTabBarChange(e) {
+    console.log(e)
+    const {
+      value
+    } = e.detail
+    // this.setData({
+    //   tabBarValue: value,
+    // });
+    if (value === 'submit-report') {
+      wx.navigateTo({
+        url: `/pages/${value}/index`,
+      });
+    } else {
+      wx.redirectTo({
+        url: `/pages/${value}/index`,
+      });
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
 })

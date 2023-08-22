@@ -37,8 +37,8 @@ Page({
   formSubmit() {
     const isLegal = true
     if (isLegal) {
-      wx.navigateTo({
-        url: '/pages/create/create-user/index',
+      wx.redirectTo({
+        url: '/pages/create-user/index',
       })
     } else {
       Toast({

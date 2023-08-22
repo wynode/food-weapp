@@ -1,0 +1,58 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="daily-stats">
+    <view class="ds-top">
+      <view class="ds-top-left">{{dateValue[1]}}月日报</view>
+      <view class="ds-top-right" bindtap="onSeasonPicker">
+        <view>其他月份</view>
+        <image class="ds-top-img" src="/assets/image/right_icon.png"></image>
+      </view>
+    </view>
+
+    <t-picker
+      visible="{{dateVisible}}"
+      value="{{dateValue}}"
+      data-key="date"
+      title="选择时间"
+      cancelBtn="取消"
+      confirmBtn="确认"
+      bindchange="onPickerChange"
+      bindpick="onColumnChange"
+      bindcancel="onPickerCancel"
+    >
+      <t-picker-item options="{{years}}"></t-picker-item>
+      <t-picker-item options="{{seasons}}"></t-picker-item>
+    </t-picker>
+
+    <view class="ds-stats">
+      <view class="ds-stats-btn">21天合格</view>
+      <view class="ds-stats-btn ds-btn-red">1天不合格</view>
+      <view class="ds-stats-btn ds-btn-red">14项不合格</view>
+    </view>
+
+    <view class="ds-list">
+      <view class="ds-item" wx:for="{{dsList}}" wx:key="index">
+        <view class="ds-item-top">
+          <view class="ds-item-top-left"> {{item.date}} </view>
+          <view class="ds-item-top-right"> {{item.unqualifiedTotal}}项不合格 </view>
+        </view>
+        <view class="ds-item-content" wx:for="{{item.unqualifiedList}}" wx:for-item="unItem" wx:key="{{unItem.label}}">
+          <view class="ds-item-label">{{unItem.label}}</view>
+          <view class="ds-item-reason">{{unItem.reason}}</view>
+          <view class="ds-item-photo">
+            <view class="ds-item-photo-title">现场照片</view>
+            <image
+              class="ds-item-photo-image"
+              wx:for="{{unItem.fileList}}"
+              wx:key="fileItem"
+              wx:for-item="fileItem"
+              src="{{fileItem}}"
+            ></image>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <t-toast id="t-toast" />
+</view>

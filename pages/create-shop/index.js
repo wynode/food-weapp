@@ -23,8 +23,8 @@ Page({
       tips
     } = this.onVerifyInputLegal();
     if (isLegal) {
-      wx.navigateTo({
-        url: '/pages/create/create-shop-profile/index',
+      wx.redirectTo({
+        url: '/pages/create-shop-profile/index',
       })
     } else {
       Toast({

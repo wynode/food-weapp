@@ -16,8 +16,8 @@ Page({
   },
 
   goNext(e) {
-    wx.navigateTo({
-      url: `/pages/create/create-shop/index`,
+    wx.redirectTo({
+      url: `/pages/create-shop/index`,
     });
   },
 });

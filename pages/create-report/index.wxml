@@ -4,10 +4,10 @@
     <view class="cr-top">
       <view class="cr-top-left">
         必选项
-        <text>2</text>/15
+        <text>2</text>/{{checkListData.length}}
       </view>
       <view class="cr-top-right">
-        <text>2023.2.12</text>
+        <text>{{ currentDay }}</text>
         日报
       </view>
     </view>
@@ -18,7 +18,7 @@
       stroke-width="14"
       theme="plump"
       label="{{false}}"
-      percentage="80"
+      percentage="{{checkPercentage}}"
     />
 
     <view class="cns-input" bind:tap="templateTypePicker">
@@ -106,5 +106,10 @@
         </t-checkbox>
       </t-checkbox-group>
     </view>
+
+    <t-button class="cr-submit-btn" size="large" disabled="{{submitDisabled}}" block bindtap="handleSubmit"
+      >{{ showAllQualified ? '全部合格' : '确定'}}</t-button
+    >
   </view>
+  <t-toast id="t-toast" />
 </view>

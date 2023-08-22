@@ -1,7 +1,7 @@
 export default [{
     icon: 'home',
     text: '首页',
-    url: 'pages/create/choice-shop-type/index',
+    url: 'pages/choice-shop-type/index',
   },
   {
     icon: 'sort',

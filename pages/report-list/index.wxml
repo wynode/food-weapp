@@ -14,12 +14,26 @@
     </view>
     <view class="rl-record">
       <view class="rlr-top">
-        <view class="rlr-top-left">本月记录</view>
-        <view class="rlr-top-right">
+        <view class="rlr-top-left">{{dateValue[1]}}月记录</view>
+        <view class="rlr-top-right" bindtap="onSeasonPicker">
           <view>其他月份</view>
           <image class="rlr-top-img" src="/assets/image/right_icon.png"></image>
         </view>
       </view>
+      <t-picker
+        visible="{{dateVisible}}"
+        value="{{dateValue}}"
+        data-key="date"
+        title="选择时间"
+        cancelBtn="取消"
+        confirmBtn="确认"
+        bindchange="onPickerChange"
+        bindpick="onColumnChange"
+        bindcancel="onPickerCancel"
+      >
+        <t-picker-item options="{{years}}"></t-picker-item>
+        <t-picker-item options="{{seasons}}"></t-picker-item>
+      </t-picker>
       <view class="rlr-content">
         <t-progress color="#0B82FF" stroke-width="20" theme="circle" percentage="30" />
         <view class="rlr-record">
@@ -41,7 +55,7 @@
     <view class="rl-report">
       <view class="rlr-top">
         <view class="rlr-top-left">全部报告（16）</view>
-        <view class="rlr-top-right">
+        <view class="rlr-top-right" bindtap="goLogList">
           <view>查看日志</view>
           <image class="rlr-top-img" src="/assets/image/right_icon.png"></image>
         </view>
@@ -126,12 +140,14 @@
   </view>
 </view>
 
-<t-tab-bar value="{{value}}" bindchange="onChange" theme="tag" split="{{false}}">
+<t-tab-bar value="{{tabBarValue}}" bindchange="onTabBarChange" theme="tag" split="{{false}}">
   <t-tab-bar-item
     wx:for="{{list}}"
     wx:key="index"
     value="{{item.value}}"
     icon="{{item.icon}}"
+    class="tab-bar-icon{{index}}"
     ariaLabel="{{item.ariaLabel}}"
+    badge-props="{{item.badgeProps}}"
   ></t-tab-bar-item>
 </t-tab-bar>

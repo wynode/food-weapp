@@ -2,7 +2,7 @@
   <background isHighlight="true"></background>
   <view class="enterprise-center">
     <view class="ec-list">
-      <view class="ec-item">
+      <view class="ec-item" bindtap="goReportList">
         <view class="ec-item-left ec-item-left1">
           <image src="/assets/image/bggl.png"></image>
         </view>
@@ -11,7 +11,7 @@
           <view class="ec-item-info"> 134份 </view>
         </view>
       </view>
-      <view class="ec-item">
+      <view class="ec-item" bindtap="goBillCenter">
         <view class="ec-item-left ec-item-left2">
           <image src="/assets/image/pjzx.png"></image>
         </view>
@@ -20,7 +20,7 @@
           <view class="ec-item-info"> 12份 </view>
         </view>
       </view>
-      <view class="ec-item">
+      <view class="ec-item" bindtap="goStaffList">
         <view class="ec-item-left ec-item-left3">
           <image src="/assets/image/rygl.png"></image>
         </view>
@@ -29,7 +29,7 @@
           <view class="ec-item-info"> 10人 </view>
         </view>
       </view>
-      <view class="ec-item">
+      <view class="ec-item" bindtap="goEnterpriseManage">
         <view class="ec-item-left ec-item-left4">
           <image src="/assets/image/qygl.png"></image>
         </view>
@@ -38,7 +38,7 @@
           <view class="ec-item-info"> 1家 </view>
         </view>
       </view>
-      <view class="ec-item">
+      <view class="ec-item" bindtap="goCreateShopProfile">
         <view class="ec-item-left ec-item-left5">
           <image src="/assets/image/qyxx.png"></image>
         </view>
@@ -47,7 +47,7 @@
           <view class="ec-item-info text-red"> 员工信息待补充 </view>
         </view>
       </view>
-      <view class="ec-item">
+      <view class="ec-item" bindtap="goMessageNotify">
         <view class="ec-item-left ec-item-left6">
           <image src="/assets/image/xttz.png"></image>
         </view>
@@ -59,3 +59,14 @@
     </view>
   </view>
 </view>
+<t-tab-bar value="{{tabBarValue}}" bindchange="onTabBarChange" theme="tag" split="{{false}}">
+  <t-tab-bar-item
+    wx:for="{{list}}"
+    wx:key="index"
+    class="tab-bar-icon{{index}}"
+    value="{{item.value}}"
+    icon="{{item.icon}}"
+    ariaLabel="{{item.ariaLabel}}"
+    badge-props="{{item.badgeProps}}"
+  ></t-tab-bar-item>
+</t-tab-bar>

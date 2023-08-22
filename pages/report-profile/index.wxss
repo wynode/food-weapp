@@ -92,6 +92,7 @@
 }
 
 .rpil-date {
+  min-width: 100rpx;
   font-size: 48rpx;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;

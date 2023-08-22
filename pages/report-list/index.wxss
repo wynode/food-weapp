@@ -200,3 +200,7 @@
   height: 30rpx;
   margin-bottom: 10rpx;
 }
+
+.t-tab-bar-item__icon {
+  color: #0B82FF;
+}

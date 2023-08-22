@@ -57,13 +57,13 @@
       "list": [
         {
           "name": "选择店铺类型",
-          "pathName": "pages/create/choice-shop-type",
+          "pathName": "pages/choice-shop-type",
           "query": "",
           "scene": null
         },
         {
           "name": "创建店铺",
-          "pathName": "pages/create/create-shop",
+          "pathName": "pages/create-shop",
           "query": "",
           "scene": null
         }

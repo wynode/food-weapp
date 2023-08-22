@@ -66,3 +66,21 @@
 .t-divider {
   margin: 0 !important;
 }
+
+.tab-bar-icon1 .t-icon {
+  font-size: 60rpx !important;
+  margin-top: -20rpx;
+}
+
+.t-tab-bar-item__icon {
+  color: #0B82FF;
+}
+
+.t-calendar__dates-item {
+  margin-top: 0 !important;
+  height: 88rpx !important;
+}
+
+/* .tab-bar-icon1 .t-tab-bar-item__icon {
+  height: 60rpx !important;
+} */

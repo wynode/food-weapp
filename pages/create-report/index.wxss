@@ -124,3 +124,8 @@
 /* .cric-btns .t-button::after {
   border: none;
 } */
+
+.cr-submit-btn {
+  margin-top: 40rpx;
+  margin-bottom: 60rpx;
+}

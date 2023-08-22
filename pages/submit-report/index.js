@@ -21,6 +21,18 @@ Page({
     })
   },
 
+  goCreateReport() {
+    wx.navigateTo({
+      url: `/pages/create-report/index`,
+    });
+  },
+
+  goCreateReportQualify() {
+    wx.navigateTo({
+      url: `/pages/create-report/index?allqualified=true`,
+    });
+  },
+
   onUnload() {
     clearInterval(this.data.intervalId)
   },

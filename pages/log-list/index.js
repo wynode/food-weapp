@@ -1,24 +1,25 @@
 // pages/report-profile/index.js
+import {
+  formatTime
+} from '../../utils/util'
 Page({
-
-
   data: {
     visible: true,
     calendarValue: new Date().getTime(),
     minDate: new Date(2023, 6, 12).getTime(),
     maxDate: new Date().getTime(),
     logList: [{
-        date: '7.11',
-        dateType: '上午',
+        date: formatTime(new Date(), 'M.DD'),
+        dateType: '下午',
         logType: 'day',
         logTypeCN: '提交日报',
-        submitTime: '09:00',
+        submitTime: '14:00',
         submitUser: '花花',
         submitStatus: '门店提交',
         address: '成都市金牛区驷马桥街道横田大厦'
       },
       {
-        date: '7.10',
+        date: formatTime(new Date(), 'M.DD'),
         dateType: '上午',
         logType: 'week',
         logTypeCN: '生成周报',
@@ -28,7 +29,7 @@ Page({
         address: '成都市金牛区驷马桥街道横田大厦'
       },
       {
-        date: '7.09',
+        date: formatTime(new Date(), 'M.DD'),
         dateType: '上午',
         logType: 'month',
         logTypeCN: '生成月报',
@@ -38,7 +39,7 @@ Page({
         address: '成都市金牛区驷马桥街道横田大厦'
       },
       {
-        date: '7.09',
+        date: formatTime(new Date(), 'M.DD'),
         dateType: '上午',
         title: 'XXXXXXXXX企业进货单',
         submitTime: '09:00',
@@ -57,7 +58,18 @@ Page({
     return 'item-right'
   },
 
-  handleSelect(value) {
-    console.log(value)
+  handleSelect(e) {
+    const {
+      value
+    } = e.detail
+    const tempLogList = this.data.logList.map((item) => {
+      return {
+        ...item,
+        date: formatTime(value, 'M.DD'),
+      }
+    })
+    this.setData({
+      logList: tempLogList
+    })
   }
 })

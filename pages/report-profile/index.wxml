@@ -4,13 +4,27 @@
     <view class="rp-record">
       <view class="rpr-top">
         <view class="rpr-top-left">本月日报</view>
-        <view class="rpr-top-right">
+        <view class="rpr-top-right" bindtap="onSeasonPicker">
           <view>其他月份</view>
           <image class="rpr-top-img" src="/assets/image/right_icon.png"></image>
         </view>
+        <t-picker
+          visible="{{dateVisible}}"
+          value="{{dateValue}}"
+          data-key="date"
+          title="选择时间"
+          cancelBtn="取消"
+          confirmBtn="确认"
+          bindchange="onPickerChange"
+          bindpick="onColumnChange"
+          bindcancel="onPickerCancel"
+        >
+          <t-picker-item options="{{years}}"></t-picker-item>
+          <t-picker-item options="{{seasons}}"></t-picker-item>
+        </t-picker>
       </view>
       <view class="rpr-content">
-        <t-progress color="#FF3E3E" stroke-width="20" theme="circle" percentage="76" />
+        <t-progress color="#FF3E3E" stroke-width="20" theme="circle" percentage="{{percentage}}" />
         <view class="rpr-record">
           <view class="rpr-record-item">
             <view>合格项</view>
@@ -28,7 +42,7 @@
       </view>
     </view>
     <view class="rp-list">
-      <view class="rp-item" wx:for="{{reportList}}" wx:key="index" wx:for-item="reportItem">
+      <view class="rp-item" wx:for="{{reportList}}" wx:key="index" wx:for-item="reportItem" bindtap="goDailyStats">
         <view class="rp-item-left">
           <view class="rpil-date">{{ reportItem.date }}</view>
           <view class="rpil-type">{{ reportItem.dateType }}</view>

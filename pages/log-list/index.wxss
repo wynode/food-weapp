@@ -8,11 +8,11 @@
 }
 
 .ll-calendar {
-  max-height: 520rpx;
+  max-height: 640rpx;
 }
 
 .ll-calendar .t-calendar {
-  max-height: 520rpx;
+  max-height: 640rpx;
   overflow: hidden;
 }
 
@@ -20,8 +20,12 @@
   display: none;
 }
 
+.ll-calendar .t-calendar__dates-item {
+  margin-top: 0;
+}
+
 .ll-calendar .t-calendar__months {
-  max-height: 420rpx;
+  max-height: 540rpx;
 }
 
 .ll-item {
@@ -44,6 +48,7 @@
 }
 
 .llil-date {
+  min-width: 100rpx;
   font-size: 48rpx;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;

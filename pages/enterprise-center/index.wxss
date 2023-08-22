@@ -1,6 +1,8 @@
 .enterprise-center {
   position: relative;
   padding: 30rpx;
+  height: calc(100vh - 200rpx);
+  overflow-y: auto;
 }
 
 .ec-list {}
@@ -9,7 +11,7 @@
   background: #FFFFFF;
   border-radius: 16rpx;
   display: flex;
-  padding: 45rpx 20rpx;
+  padding: 38rpx 20rpx;
   margin-bottom: 30rpx;
 }
 

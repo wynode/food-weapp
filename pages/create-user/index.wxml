@@ -66,7 +66,7 @@
       hover
     />
     <view class="cu-submit">
-      <t-button theme="primary" disabled="{{!submitActive}}" size="large" block bind:tap="formSubmit"
+      <t-button theme="primary" disabled="{{!submitActive}}" size="large" block bind:tap="goReportList"
         >立即创建</t-button
       >
     </view>

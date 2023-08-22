@@ -1,0 +1,117 @@
+.staff-list {
+  position: relative;
+  padding: 30rpx;
+}
+
+.btn-wrapper {
+  height: 100%;
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 120rpx;
+  height: 100%;
+  color: white;
+}
+
+.sl-aqy {
+  margin-bottom: 40rpx;
+}
+
+.delete-btn {
+  background-color: #FC5B5B;
+}
+
+.edit-btn {
+  background-color: #ed7b2f;
+}
+
+.favor-btn {
+  background-color: #0B82FF;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.padding-bottom {
+  padding-bottom: 8rpx;
+}
+
+.sl-item {
+  border-radius: 16rpx;
+  margin-top: 20rpx;
+  overflow: hidden;
+}
+
+.sl-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sl-title {
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #333333;
+  line-height: 45rpx;
+}
+
+.sl-btn {
+  padding: 0;
+  margin-top: 0;
+  height: 40rpx;
+  color: #0B82FF;
+}
+
+.sl-item-image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: #0B82FF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 38rpx;
+  font-weight: bold;
+  margin-right: 20rpx;
+}
+
+.sl-item-image1 {
+  background: #ed7b2f;
+}
+
+.sl-item-image2 {
+  background: #FC5B5B;
+}
+
+.sl-item-title {
+  font-size: 34rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #333333;
+  line-height: 48rpx;
+}
+
+.sl-item-desc {
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 0.7);
+  line-height: 42rpx;
+  margin-top: 10rpx;
+}
+
+.sl-item-note image {
+  width: 110rpx;
+  height: 110rpx;
+  margin-left: 14rpx;
+}
+
+.sl-tips {
+  text-align: center;
+  color: #999;
+}

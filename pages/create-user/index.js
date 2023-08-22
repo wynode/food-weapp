@@ -59,11 +59,11 @@ Page({
     console.log(e)
   },
 
-  formSubmit() {
+  goReportList() {
     const isLegal = true
     if (isLegal) {
-      wx.navigateTo({
-        url: '/pages/create/create-user/index',
+      wx.redirectTo({
+        url: '/pages/report-list/index',
       })
     } else {
       Toast({
