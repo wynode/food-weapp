@@ -53,6 +53,7 @@
 
 .cr-list .t-grid-item__content {
   border-radius: 8rpx;
+  background: transparent;
 }
 
 .cric-bad .cric-bad-input {
