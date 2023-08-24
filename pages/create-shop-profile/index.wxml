@@ -34,7 +34,7 @@
       </view>
     </view>
     <view class="cns-input">
-      <t-input value="{{ businessCode }}" placeholder="营业执照编码" />
+      <t-input value="{{ businessCode }}" bindblur="codeChange" placeholder="营业执照编码" />
     </view>
     <view class="cns-business">
       <view class="cns-upload-box">
@@ -54,11 +54,11 @@
     </view>
     <view class="cns-title">法人姓名</view>
     <view class="cns-input">
-      <t-input value="{{ personalName }}" placeholder="请填写法人姓名" />
+      <t-input value="{{ personalName }}" bindblur="nameChange" placeholder="请填写法人姓名" />
     </view>
     <view class="cns-title">法人联系电话</view>
     <view class="cns-input">
-      <t-input value="{{ personalPhone }}" placeholder="请填写法人联系电话" />
+      <t-input value="{{ personalPhone }}" bindblur="phoneChange" placeholder="请填写法人联系电话" />
     </view>
     <view>
       <view class="cns-title">报告模板</view>
@@ -86,7 +86,7 @@
     </view>
     <view class="cns-submit">
       <t-button theme="primary" disabled="{{!submitActive}}" size="large" block bind:tap="formSubmit"
-        >立即创建</t-button
+        >立即{{isEnter ? '修改' : '创建'}}</t-button
       >
     </view>
   </view>

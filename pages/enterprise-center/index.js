@@ -2,22 +2,21 @@ Page({
   data: {
     tabBarValue: 'enterprise-center',
     list: [{
+        value: 'report-list',
+        icon: 'shop-5',
+        ariaLabel: '工作台',
+      },
+      {
+        value: 'submit-report',
+        icon: 'add-circle',
+      },
+      {
         value: 'enterprise-center',
         icon: 'city-10',
         ariaLabel: '企业中心',
         badgeProps: {
           count: 25
         },
-      },
-      {
-        value: 'submit-report',
-        icon: 'add-circle',
-        ariaLabel: '添加报告'
-      },
-      {
-        value: 'report-list',
-        icon: 'shop-5',
-        ariaLabel: '报告列表',
       },
     ],
   },
@@ -48,7 +47,7 @@ Page({
   },
   goCreateShopProfile() {
     wx.navigateTo({
-      url: '/pages/create-shop-profile/index',
+      url: '/pages/create-shop-profile/index?isEnter=true',
     })
   },
   goMessageNotify() {

@@ -3,6 +3,10 @@ Component({
     uploadTitle: {
       type: String,
       value: '',
+    },
+    showLocalData: {
+      type: String,
+      value: '0',
     }
   },
   data: {
@@ -12,6 +16,14 @@ Component({
       column: 1,
       width: 300,
       height: 240,
+    }
+  },
+  ready() {
+    const value = wx.getStorageSync(this.data.uploadTitle)
+    if (value) {
+      this.setData({
+        fileList: value,
+      })
     }
   },
   methods: {
@@ -27,6 +39,7 @@ Component({
       this.setData({
         fileList: [...fileList, ...files], // 此时设置了 fileList 之后才会展示选择的图片
       });
+      wx.setStorageSync(this.data.uploadTitle, files)
 
       // 方法2：每次选择图片都上传，展示每次上传图片的进度
       // files.forEach(file => this.uploadFile(file))

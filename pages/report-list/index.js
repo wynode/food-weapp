@@ -2,6 +2,7 @@
 
 Page({
   data: {
+    shopName: '花花的小店',
     dateValue: [2023, '本'],
     years: [{
         label: '2023年',
@@ -51,6 +52,15 @@ Page({
     ],
     tabBarValue: 'report-list',
     list: [{
+        value: 'report-list',
+        icon: 'shop-5',
+        ariaLabel: '工作台',
+      },
+      {
+        value: 'submit-report',
+        icon: 'add-circle',
+      },
+      {
         value: 'enterprise-center',
         icon: 'city-10',
         ariaLabel: '企业中心',
@@ -58,20 +68,22 @@ Page({
           count: 25
         },
       },
-      {
-        value: 'submit-report',
-        icon: 'add-circle',
-        ariaLabel: '添加报告'
-      },
-      {
-        value: 'report-list',
-        icon: 'shop-5',
-        ariaLabel: '报告列表',
-      },
     ],
   },
 
-  onLoad() {},
+  onLoad() {
+    const value = wx.getStorageSync('user_data')
+    if (!value) {
+      wx.redirectTo({
+        url: `/pages/choice-shop-type/index`,
+      });
+    } else {
+      const shopData = wx.getStorageSync('shop_form')
+      this.setData({
+        shopName: shopData.shopName,
+      })
+    }
+  },
 
   onTabBarChange(e) {
     console.log(e)

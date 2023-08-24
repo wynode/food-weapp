@@ -4,7 +4,7 @@
     <view class="cr-top">
       <view class="cr-top-left">
         必选项
-        <text>2</text>/{{checkListData.length}}
+        <text>5</text>/{{checkListData.length}}
       </view>
       <view class="cr-top-right">
         <text>{{ currentDay }}</text>
@@ -13,7 +13,7 @@
     </view>
     <t-progress
       class="cr-progress"
-      color="#0B82FF"
+      color="{{computedColor}}"
       track-color="rgba(11,130,255,0.1)"
       stroke-width="14"
       theme="plump"

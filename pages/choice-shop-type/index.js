@@ -16,6 +16,7 @@ Page({
   },
 
   goNext(e) {
+    wx.setStorageSync('shop_type', this.data.shop_type)
     wx.redirectTo({
       url: `/pages/create-shop/index`,
     });

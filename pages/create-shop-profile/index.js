@@ -28,18 +28,69 @@ Page({
     submitActive: false,
     businessCode: '',
     personalPhone: '',
+    isEnter: false,
   },
 
-  onLoad() {
+  onLoad(options) {
+    const {
+      isEnter = false
+    } = options || {}
+    if (isEnter) {
+      wx.setNavigationBarTitle({
+        title: '企业信息',
+      })
+      const shopData = wx.getStorageSync('shop_data')
+      if (shopData) {
+        this.setData({
+          shopTypeText: shopData.shopTypeText,
+          shopTemplateText: shopData.shopTemplateText,
+          personalName: shopData.personalName,
+          businessCode: shopData.businessCode,
+          personalPhone: shopData.personalPhone,
+          isEnter: true,
+        })
+      }
+    }
+  },
 
+  nameChange(e) {
+    const {
+      value
+    } = e.detail
+    this.setData({
+      personalName: value
+    })
+  },
+  phoneChange(e) {
+    const {
+      value
+    } = e.detail
+    this.setData({
+      personalPhone: value
+    })
+  },
+  codeChange(e) {
+    const {
+      value
+    } = e.detail
+    this.setData({
+      businessCode: value
+    })
   },
 
   formSubmit() {
     const isLegal = true
     if (isLegal) {
-      wx.redirectTo({
-        url: '/pages/create-user/index',
-      })
+      wx.setStorageSync('shop_data', this.data)
+      if (this.data.isEnter) {
+        wx.redirectTo({
+          url: '/pages/enterprise-center/index',
+        })
+      } else {
+        wx.redirectTo({
+          url: '/pages/create-user/index',
+        })
+      }
     } else {
       Toast({
         context: this,

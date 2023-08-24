@@ -23,6 +23,7 @@ Page({
       tips
     } = this.onVerifyInputLegal();
     if (isLegal) {
+      wx.setStorageSync('shop_form', this.data.csForm)
       wx.redirectTo({
         url: '/pages/create-shop-profile/index',
       })

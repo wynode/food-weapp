@@ -62,6 +62,7 @@ Page({
   goReportList() {
     const isLegal = true
     if (isLegal) {
+      wx.setStorageSync('user_data', this.data)
       wx.redirectTo({
         url: '/pages/report-list/index',
       })

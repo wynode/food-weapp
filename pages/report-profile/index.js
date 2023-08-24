@@ -99,6 +99,9 @@ Page({
     } = options || {}
     let tempReportList = this.data.reportList
     if (reportType === 'week') {
+      wx.setNavigationBarTitle({
+        title: '周管控',
+      })
       tempReportList = tempReportList.slice(0, 3).map((item, index) => {
         return {
           ...item,
@@ -107,6 +110,9 @@ Page({
         }
       })
     } else if (reportType === 'month') {
+      wx.setNavigationBarTitle({
+        title: '月调度',
+      })
       tempReportList = tempReportList.slice(1, 2).map((item) => {
         return {
           ...item,

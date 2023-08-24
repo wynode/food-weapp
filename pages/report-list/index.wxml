@@ -6,7 +6,7 @@
         <view class="rl-top-logo">
           <image class="rl-top-icon" src="/assets/image/self_employed.png"></image>
         </view>
-        <view class="rl-top-title">早上好，花花的小店</view>
+        <view class="rl-top-title">早上好，{{shopName}}</view>
       </view>
       <view class="rl-top-right">
         <image class="rl-top-bell" src="/assets/image/bell.png"></image>
@@ -67,7 +67,7 @@
           </view>
           <view class="rlb-content">
             <view class="rlb-center">
-              <view class="rlb-center-title">全部日报</view>
+              <view class="rlb-center-title">日排查</view>
               <view class="rlb-center-bottom">
                 <view class="rlb-center-fit">合格<text>6</text></view>
                 <view class="rlb-center-unfit">不合格<text>17</text></view>
@@ -85,7 +85,7 @@
           </view>
           <view class="rlb-content">
             <view class="rlb-center">
-              <view class="rlb-center-title">全部周报</view>
+              <view class="rlb-center-title">周管控</view>
               <view class="rlb-center-bottom">
                 <view class="rlb-center-fit">合格<text>6</text></view>
                 <view class="rlb-center-unfit">不合格<text>17</text></view>
@@ -103,7 +103,7 @@
           </view>
           <view class="rlb-content">
             <view class="rlb-center">
-              <view class="rlb-center-title">全部月报</view>
+              <view class="rlb-center-title">月调度</view>
               <view class="rlb-center-bottom">
                 <view class="rlb-center-fit">合格<text>6</text></view>
                 <view class="rlb-center-unfit">不合格<text>17</text></view>
@@ -149,5 +149,7 @@
     class="tab-bar-icon{{index}}"
     ariaLabel="{{item.ariaLabel}}"
     badge-props="{{item.badgeProps}}"
-  ></t-tab-bar-item>
+  >
+    {{item.ariaLabel}}
+  </t-tab-bar-item>
 </t-tab-bar>

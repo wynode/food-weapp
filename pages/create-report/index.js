@@ -17,6 +17,7 @@ Page({
 
     showAllQualified: false,
     submitDisabled: true,
+    computedColor: '#FC5B5B',
 
     fileList: [],
     gridConfig: {
@@ -30,39 +31,81 @@ Page({
     currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
     checkListData: [{
         checked: false,
-        label: '大型企业应至少抽查2名从业人员是否掌握本单位食品安全知识。',
+        label: '听取周排查、日管控中发现问题汇报，研判是否存在有食品安全事故潜在风险。',
         checkResult: '',
-        checkExceptionReason: '没有达标',
+        checkExceptionReason: '应组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
         checkExceptionFileList: [],
       },
       {
         checked: false,
-        label: '食品经营场所环境整洁卫生，食品（含食品添加剂、食用农产品，下同）是否有被污染的风险。',
+        label: '研究周排查、日管控发现问题存在的原因，整改措施是否有效，提出完善制度措施建议。',
         checkResult: '',
-        checkExceptionReason: '没有达标',
+        checkExceptionReason: '应组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
         checkExceptionFileList: [],
       },
       {
         checked: false,
-        label: '接触直接入口或不需清洗即可加工的散装食品时，是否戴口罩、手套和帽子，头发不外露。',
+        label: '检查公司统一信用代码证、食品经营许可（备案）证明是否在有效期内，并依法公示。',
         checkResult: '',
-        checkExceptionReason: '没有达标',
+        checkExceptionReason: '应组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
         checkExceptionFileList: [],
       },
       {
         checked: false,
-        label: '贮存食品的库房、设备、容器、工具是否清洁、安全、无害，设备运转是否正常，温度是否度符合食品安全要求。',
+        label: '检查公司所有从事直接入口食品制售从业人员健康证是否在有效期内。',
         checkResult: '',
-        checkExceptionReason: 'A设备运转呢不正常',
+        checkExceptionReason: '应组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
         checkExceptionFileList: [],
       },
       {
         checked: false,
-        label: '贮存食品的库房、设备、容器、工具是否清洁、安全、无害，设备运转是否正常，温度是否度符合食品安全要求。',
+        label: '组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
         checkResult: '',
-        checkExceptionReason: 'A设备运转呢不正常',
+        checkExceptionReason: '应组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
         checkExceptionFileList: [],
-      }
+      },
+      {
+        checked: false,
+        label: '评估公司食品贮存场所、冷藏冷冻设施设备、销售场所是否满足食品安全要求。',
+        checkResult: '',
+        checkExceptionReason: '应组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
+        checkExceptionFileList: [],
+      },
+      {
+        checked: false,
+        label: '每周评价是否配备与冷藏冷冻食品品种、数量相适应的设施设备。',
+        checkResult: '',
+        checkExceptionReason: '应组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
+        checkExceptionFileList: [],
+      },
+      {
+        checked: false,
+        label: '查验公司供应商、贮存和运输服务提供者资质合格情况，评估其遵守食品安全有关规定情况，其产品、服务是否存在食品安全潜在风险。',
+        checkResult: '',
+        checkExceptionReason: '应组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
+        checkExceptionFileList: [],
+      },
+      {
+        checked: false,
+        label: '评估公司其他各项食品安全管理制度执行情况，是否存在潜在食品安全风险。',
+        checkResult: '',
+        checkExceptionReason: '应组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
+        checkExceptionFileList: [],
+      },
+      {
+        checked: false,
+        label: '委托生产者生产食品、食品添加剂的，对受托方遵守食品安全情况开展检查，评估其生产的产品是否存在安全风险。',
+        checkResult: '',
+        checkExceptionReason: '应组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
+        checkExceptionFileList: [],
+      },
+      {
+        checked: false,
+        label: '月调度后，认为存在发生事故潜在风险隐患的，应立即采取应急处置措施，依法及时向属地监管部门报告。',
+        checkResult: '',
+        checkExceptionReason: '应组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
+        checkExceptionFileList: [],
+      },
     ],
   },
 
@@ -211,12 +254,13 @@ Page({
       }
     })
     const checkPercentage = e.detail.value.length / this.data.checkListData.length * 100
-    const submitDisabled = e.detail.value.length >= 2 ? false : true
+    const submitDisabled = e.detail.value.length >= 5 ? false : true
     this.setData({
       checkList: e.detail.value,
       checkListData: tempCheckListData,
       checkPercentage,
       submitDisabled,
+      computedColor: submitDisabled ? '#FC5B5B' : '0B82FF',
     });
     console.log(e)
   },
