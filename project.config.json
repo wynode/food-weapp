@@ -48,7 +48,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.23.1",
-  "appid": "wxf94b62e41b4982cb",
+  "appid": "wx48a4230fe919bc57",
   "projectname": "tdesign-miniprogram-starter-retail",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
@@ -56,13 +56,13 @@
     "miniprogram": {
       "list": [
         {
-          "name": "选择店铺类型",
+          "name": "选择企业主体类型",
           "pathName": "pages/choice-shop-type",
           "query": "",
           "scene": null
         },
         {
-          "name": "创建店铺",
+          "name": "创建企业主体",
           "pathName": "pages/create-shop",
           "query": "",
           "scene": null

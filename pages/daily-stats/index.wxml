@@ -2,7 +2,7 @@
   <background isHighlight="true"></background>
   <view class="daily-stats">
     <view class="ds-top">
-      <view class="ds-top-left">{{dateValue[1]}}月日报</view>
+      <view class="ds-top-left">{{dateValue[1]}}月日管控</view>
       <view class="ds-top-right" bindtap="onSeasonPicker">
         <view>其他月份</view>
         <image class="ds-top-img" src="/assets/image/right_icon.png"></image>

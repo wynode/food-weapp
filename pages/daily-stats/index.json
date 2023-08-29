@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "日报统计",
+  "navigationBarTitleText": "日管控统计",
   "usingComponents": {
     "t-divider": "tdesign-miniprogram/divider/divider",
     "t-toast": "tdesign-miniprogram/toast/toast",

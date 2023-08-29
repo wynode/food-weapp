@@ -1,7 +1,7 @@
 <view>
   <background></background>
   <view class="create-user">
-    <view class="cu-top-title"> 请添加店铺新员工 </view>
+    <view class="cu-top-title"> 请添加企业主体新员工 </view>
     <view class="cu-top-title">需根据实际情况选择对应身份</view>
     <view class="cu-avatar-box">
       <view class="cu-avatar" bind:tap="handleEditAvatar">

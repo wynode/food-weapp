@@ -4,11 +4,11 @@
     <view class="cr-top">
       <view class="cr-top-left">
         必选项
-        <text>5</text>/{{checkListData.length}}
+        <text>{{checkList.length}}</text>/{{checkListData.length}}
       </view>
       <view class="cr-top-right">
         <text>{{ currentDay }}</text>
-        日报
+        日管控
       </view>
     </view>
     <t-progress
@@ -25,7 +25,7 @@
       <t-input
         suffixIcon="caret-down-small"
         value="{{ templateTypeText }}"
-        placeholder="请选择店铺类别"
+        placeholder="请选择企业主体类别"
         disabled
         bind:click="onTitlePicker"
       />
@@ -66,7 +66,7 @@
                 theme="danger"
                 variant="{{item.checkResult === 'fail' ? '' : 'outline'}}"
                 bind:tap="handleCheckResult"
-                >否</t-button
+                >不合格</t-button
               >
               <t-button
                 class="cric-btns-right"
@@ -75,16 +75,24 @@
                 theme="primary"
                 variant="{{item.checkResult === 'success' ? '' : 'outline'}}"
                 bind:tap="handleCheckResult"
-                >是</t-button
+                >合格</t-button
               >
             </view>
             <view class="cric-bad" wx:if="{{item.checkResult === 'fail'}}">
-              <t-input
-                class="cric-bad-input"
-                value="{{item.checkExceptionReason}}"
+              <!-- <t-input
+                
+                
                 placeholder="请输入异常理由"
                 borderless="{{true}}"
                 style="{{style}}"
+              /> -->
+              <t-textarea
+                t-class="external-class"
+                placeholder="请输入文字"
+                value="{{item.checkExceptionReason}}"
+                bordered
+                disableDefaultPadding="{{true}}"
+                indicator
               />
               <view class="cric-bad-title"> 现场照片 </view>
               <view class="wrapper">

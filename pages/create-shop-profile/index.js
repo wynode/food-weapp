@@ -7,8 +7,8 @@ Page({
     shopTypeTitle: '',
     shopTypeText: '',
     shopTypeList: [{
-      label: '食品餐饮',
-      value: '食品餐饮'
+      label: '餐饮服务',
+      value: '餐饮服务'
     }],
     shopTemplateValue: [],
     shopTemplateTitle: '',
@@ -132,7 +132,7 @@ Page({
     console.log(111)
     this.setData({
       shopTypeVisible: true,
-      shopTypeTitle: '选择店铺类别'
+      shopTypeTitle: '选择企业主体类别'
     });
   },
 

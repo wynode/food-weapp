@@ -4,7 +4,7 @@ Page({
     percentage: 76,
     reportList: [{
         date: '7.11',
-        dateType: '日报',
+        dateType: '日管控',
         total: 5,
         unqualifiedTotal: 0,
         submitTime: '09:00',
@@ -14,7 +14,7 @@ Page({
       },
       {
         date: '7.10',
-        dateType: '日报',
+        dateType: '日管控',
         total: 10,
         unqualifiedTotal: 3,
         submitTime: '09:00',
@@ -24,7 +24,7 @@ Page({
       },
       {
         date: '7.09',
-        dateType: '日报',
+        dateType: '日管控',
         total: 5,
         unqualifiedTotal: 0,
         submitTime: '09:00',
@@ -34,7 +34,7 @@ Page({
       },
       {
         date: '7.08',
-        dateType: '日报',
+        dateType: '日管控',
         total: 3,
         unqualifiedTotal: 2,
         submitTime: '09:00',
@@ -100,13 +100,13 @@ Page({
     let tempReportList = this.data.reportList
     if (reportType === 'week') {
       wx.setNavigationBarTitle({
-        title: '周管控',
+        title: '周排查',
       })
       tempReportList = tempReportList.slice(0, 3).map((item, index) => {
         return {
           ...item,
           date: `第${index + 1}周`,
-          dateType: '周报',
+          dateType: '周排查',
         }
       })
     } else if (reportType === 'month') {
@@ -117,7 +117,7 @@ Page({
         return {
           ...item,
           date: `${this.data.month}月`,
-          dateType: '月报',
+          dateType: '月调度',
         }
       })
     }

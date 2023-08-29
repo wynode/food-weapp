@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "创建店铺",
+  "navigationBarTitleText": "创建企业主体",
   "usingComponents": {
     "t-toast": "tdesign-miniprogram/toast/toast",
     "t-image": "/components/webp-image/index",

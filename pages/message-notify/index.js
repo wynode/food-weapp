@@ -25,8 +25,8 @@ Page({
       {
         title: '昨日',
         children: [{
-          title: '日报填写通知',
-          info: '距离您本周二日报填写时间仅剩余3个小时啦！！！',
+          title: '日管控填写通知',
+          info: '距离您本周二日管控填写时间仅剩余3个小时啦！！！',
           messageType: 'rbtxtz',
           image: '/assets/image/xttz.png'
         }]
@@ -34,13 +34,13 @@ Page({
       {
         title: '2023年07月30日',
         children: [{
-            title: '本月月报已生成',
-            info: '点击此处查看您本月日报',
+            title: '本月月调度已生成',
+            info: '点击此处查看您本月日管控',
             messageType: 'ybsc',
             image: '/assets/image/ybsc.png'
           }, {
-            title: '本月月报已生成',
-            info: '点击此处查看您本月日报',
+            title: '本月月调度已生成',
+            info: '点击此处查看您本月日管控',
             messageType: 'ybsc',
             image: '/assets/image/ybsc.png'
           },

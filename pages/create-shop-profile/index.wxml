@@ -2,12 +2,12 @@
   <background></background>
   <view class="create-new-shop">
     <view>
-      <view class="cns-title">店铺类别</view>
+      <view class="cns-title">企业主体类别</view>
       <view class="cns-input" bind:tap="shopTypePicker">
-        <t-input suffixIcon="caret-down-small" value="{{ shopTypeText }}" placeholder="请选择店铺类别" disabled />
+        <t-input suffixIcon="caret-down-small" value="{{ shopTypeText }}" placeholder="请选择企业主体类别" disabled />
       </view>
 
-      <!-- <t-cell title="店铺类别" arrow hover note="{{shopTypeText}}" bind:click="shopTypePicker" /> -->
+      <!-- <t-cell title="企业主体类别" arrow hover note="{{shopTypeText}}" bind:click="shopTypePicker" /> -->
 
       <t-picker
         visible="{{shopTypeVisible}}"
@@ -52,13 +52,13 @@
         <my-upload uploadTitle="上传月调度制度"> </my-upload>
       </view>
     </view>
-    <view class="cns-title">法人姓名</view>
+    <view class="cns-title">负责人姓名</view>
     <view class="cns-input">
-      <t-input value="{{ personalName }}" bindblur="nameChange" placeholder="请填写法人姓名" />
+      <t-input value="{{ personalName }}" bindblur="nameChange" placeholder="请填写负责人姓名" />
     </view>
-    <view class="cns-title">法人联系电话</view>
+    <view class="cns-title">负责人联系电话</view>
     <view class="cns-input">
-      <t-input value="{{ personalPhone }}" bindblur="phoneChange" placeholder="请填写法人联系电话" />
+      <t-input value="{{ personalPhone }}" bindblur="phoneChange" placeholder="请填写负责人联系电话" />
     </view>
     <view>
       <view class="cns-title">报告模板</view>

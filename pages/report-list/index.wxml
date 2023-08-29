@@ -38,15 +38,15 @@
         <t-progress color="#0B82FF" stroke-width="20" theme="circle" percentage="30" />
         <view class="rlr-record">
           <view class="rlr-record-item">
-            <view>本月日报</view>
+            <view>本月日管控</view>
             <view>7/30</view>
           </view>
           <view class="rlr-record-item">
-            <view>本月周报</view>
+            <view>本月周排查</view>
             <view>1/4</view>
           </view>
           <view class="rlr-record-item">
-            <view>本月月报</view>
+            <view>本月月调度</view>
             <view>0/1</view>
           </view>
         </view>
@@ -67,7 +67,7 @@
           </view>
           <view class="rlb-content">
             <view class="rlb-center">
-              <view class="rlb-center-title">日排查</view>
+              <view class="rlb-center-title">日管控</view>
               <view class="rlb-center-bottom">
                 <view class="rlb-center-fit">合格<text>6</text></view>
                 <view class="rlb-center-unfit">不合格<text>17</text></view>
@@ -85,7 +85,7 @@
           </view>
           <view class="rlb-content">
             <view class="rlb-center">
-              <view class="rlb-center-title">周管控</view>
+              <view class="rlb-center-title">周排查</view>
               <view class="rlb-center-bottom">
                 <view class="rlb-center-fit">合格<text>6</text></view>
                 <view class="rlb-center-unfit">不合格<text>17</text></view>

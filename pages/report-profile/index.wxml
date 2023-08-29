@@ -3,7 +3,7 @@
   <view class="report-profile">
     <view class="rp-record">
       <view class="rpr-top">
-        <view class="rpr-top-left">本月日报</view>
+        <view class="rpr-top-left">本月{{reportList[0].dateType}}</view>
         <view class="rpr-top-right" bindtap="onSeasonPicker">
           <view>其他月份</view>
           <image class="rpr-top-img" src="/assets/image/right_icon.png"></image>

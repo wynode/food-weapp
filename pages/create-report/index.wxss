@@ -56,10 +56,10 @@
   background: transparent;
 }
 
-.cric-bad .cric-bad-input {
+/* .cric-bad .cric-bad-input {
   height: 90rpx;
   box-sizing: border-box;
-}
+} */
 
 .cric-bad .cric-bad-title {
   font-size: 30rpx;

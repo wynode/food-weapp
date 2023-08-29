@@ -145,7 +145,7 @@ Page({
       message: '提交成功',
     });
     wx.redirectTo({
-      url: '/pages/report-list/index',
+      url: '/pages/report-profile/index',
     })
   },
 
@@ -254,7 +254,7 @@ Page({
       }
     })
     const checkPercentage = e.detail.value.length / this.data.checkListData.length * 100
-    const submitDisabled = e.detail.value.length >= 5 ? false : true
+    const submitDisabled = e.detail.value.length >= 11 ? false : true
     this.setData({
       checkList: e.detail.value,
       checkListData: tempCheckListData,
