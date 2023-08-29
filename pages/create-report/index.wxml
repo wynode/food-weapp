@@ -88,9 +88,10 @@
               /> -->
               <t-textarea
                 t-class="external-class"
-                placeholder="请输入文字"
+                placeholder="请输入不合格内容（非必填）"
                 value="{{item.checkExceptionReason}}"
                 bordered
+                autosize
                 disableDefaultPadding="{{true}}"
                 indicator
               />
