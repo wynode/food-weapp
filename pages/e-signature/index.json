@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "电子签名",
+  "usingComponents": {
+    "t-button": "tdesign-miniprogram/button/button",
+    "background": "/components/background/index",
+    "t-row": "tdesign-miniprogram/row/row",
+    "t-col": "tdesign-miniprogram/col/col",
+    "t-radio": "tdesign-miniprogram/radio/radio"
+  }
+}

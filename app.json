@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/e-signature/index",
     "pages/report-list/index",
     "pages/create-report/index",
     "pages/enterprise-center/index",
@@ -16,9 +17,7 @@
     "pages/create-shop-profile/index",
     "pages/create-shop/index"
   ],
-  "requiredPrivateInfos": [
-    "chooseAddress"
-  ],
+  "requiredPrivateInfos": ["chooseAddress"],
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {},
   "window": {

@@ -1,0 +1,141 @@
+/* 样例1 */
+.container1 {
+  text-align: center;
+  position: relative;
+}
+
+.sign-title {
+  color: #333;
+  font-size: 30rpx;
+  font-weight: bold;
+  padding-top: 140rpx;
+  padding-bottom: 100rpx;
+}
+
+.sign-result {
+  padding: 30rpx;
+  position: relative;
+}
+
+.container {
+  border: 1px solid #000;
+  border-bottom: none;
+  border-right: none;
+  font-size: 24rpx;
+  /* display: grid;
+  grid-template-columns: 2fr 12fr 2fr 8fr; */
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 2fr 12fr 4fr 6fr;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 2fr 12fr 4fr 6fr;
+  border-bottom: 1px solid #000;
+}
+
+.cell {
+  /* padding: 5px; */
+  border-right: 1px solid #000;
+  text-align: center;
+}
+
+.sign-commend .t-radio--block {
+  padding: 0rpx 20rpx;
+  background: transparent;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign-commend .t-radio__icon--left {
+  margin-right: 0rpx;
+  font-size: 34rpx;
+  width: 34rpx;
+  height: 34rpx;
+}
+
+/* .sign-commend .t-radio__icon-circle {
+  font-size: 32rpx;
+} */
+
+.sign-table {
+  font-size: 24rpx;
+}
+
+.sign-table .sign-tr {
+  display: flex;
+}
+
+.sign-table .sign-td {
+  border: 1px solid #333;
+}
+
+.sign-grid {
+  border: 1px solid #333;
+}
+
+.signature1 {
+  margin: 25px auto;
+}
+
+.actions1 {
+  margin-top: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 400rpx;
+}
+
+.actions1 button {
+  /* display: inline-block;
+  height: 30px;
+  line-height: 30px; */
+  height: 80rpx;
+  padding: 4rpx 40rpx;
+  /* margin-left: 100rpx; */
+}
+
+.submit-sign {
+  margin: 160rpx 40rpx;
+}
+
+/* 样例2（伪全屏） */
+.container2 {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.actions2Wrap {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions2 {
+  margin-right: 10px;
+  white-space: nowrap;
+  transform: rotate(90deg);
+}
+
+.actions2 button {
+  margin-left: 5px;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 5px;
+}
