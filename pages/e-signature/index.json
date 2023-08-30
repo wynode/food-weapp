@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "电子签名",
+  "navigationBarTitleText": "导出报告",
   "usingComponents": {
     "t-button": "tdesign-miniprogram/button/button",
     "background": "/components/background/index",

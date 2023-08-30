@@ -1,14 +1,14 @@
-<wxml-to-canvas class="widget"></wxml-to-canvas>
 <view>
+  <wxml-to-canvas class="widget" width="400" height="{{canvasHeight}}"></wxml-to-canvas>
   <view class="test"></view>
   <background isHighlight="true"></background>
   <view class="signResult">
     <view class="signTable">
       <view class="signTr signHeader">
-        <view class="signTd">序号</view>
-        <view class="signTd">每周风险防控清单</view>
-        <view class="signTd">评价</view>
-        <view class="signTd">处理措施</view>
+        <view class="signTh">序号</view>
+        <view class="signTh">每周风险防控清单</view>
+        <view class="signTh">评价</view>
+        <view class="signTh">处理措施</view>
       </view>
       <block wx:for="{{reportData}}" wx:key="index">
         <view class="signTr">
@@ -21,14 +21,15 @@
     </view>
 
     <view class="signBottom">
-      <view wx:if="signUrl" class="signSign">
+      <view wx:if="{{signUrl}}" class="signSign">
         <text>报告人：</text>
         <image src="{{signUrl}}"></image>
-        <t-button block bindtap="exportReport">导出报告</t-button>
       </view>
       <t-button wx:else type="primary" bindtap="handleFullScreen1">点击签名</t-button>
     </view>
   </view>
+
+  <view class="sign-export"> <t-button block bindtap="exportReport">导出报告</t-button></view>
 
   <!-- <view class="container1" wx:if="{{notShow}}">
     <view class="sign-title">请在以下区域书写您的签名</view>

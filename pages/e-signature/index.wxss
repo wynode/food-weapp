@@ -41,6 +41,7 @@
   padding: 15px;
   display: flex;
   justify-content: center;
+  background: #eee;
 }
 
 .hidden-sign {
@@ -88,6 +89,16 @@
   font-size: 22rpx;
 }
 
+.sign-export {
+  position: relative;
+  padding: 30rpx;
+  padding-bottom: 40px;
+}
+
+.sign-export button {
+  margin-bottom: 40rpx;
+}
+
 .signHeader {
   display: grid;
   grid-template-columns: 2fr 11fr 3fr 8fr;
@@ -102,6 +113,12 @@
 }
 
 .signTd {
+  padding: 4rpx;
+  border-right: 1px solid #000;
+  text-align: center;
+}
+
+.signTh {
   border-right: 1px solid #000;
   text-align: center;
 }
@@ -140,8 +157,7 @@
   margin-bottom: 60rpx;
 }
 
-/* .widget {
+.widget {
   position: absolute;
-  top: 1000px;
   left: 1000px;
-} */
+}
