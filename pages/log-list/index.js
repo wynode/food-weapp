@@ -1,14 +1,13 @@
 // pages/report-profile/index.js
-import {
-  formatTime
-} from '../../utils/util'
+import { formatTime } from '../../utils/util';
 Page({
   data: {
     visible: true,
     calendarValue: new Date().getTime(),
     minDate: new Date(2023, 6, 12).getTime(),
     maxDate: new Date().getTime(),
-    logList: [{
+    logList: [
+      {
         date: formatTime(new Date(), 'M.DD'),
         dateType: '下午',
         logType: 'day',
@@ -16,7 +15,7 @@ Page({
         submitTime: '14:00',
         submitUser: '花花',
         submitStatus: '门店提交',
-        address: '成都市金牛区驷马桥街道横田大厦'
+        address: '成都市金牛区驷马桥街道横田大厦',
       },
       {
         date: formatTime(new Date(), 'M.DD'),
@@ -26,7 +25,7 @@ Page({
         submitTime: '11:00',
         submitUser: '花花',
         submitStatus: '审批通过',
-        address: '成都市金牛区驷马桥街道横田大厦'
+        address: '成都市金牛区驷马桥街道横田大厦',
       },
       {
         date: formatTime(new Date(), 'M.DD'),
@@ -36,7 +35,7 @@ Page({
         submitTime: '09:00',
         submitUser: '花花',
         submitStatus: '审批通过',
-        address: '成都市金牛区驷马桥街道横田大厦'
+        address: '成都市金牛区驷马桥街道横田大厦',
       },
       {
         date: formatTime(new Date(), 'M.DD'),
@@ -46,30 +45,26 @@ Page({
         submitUser: '花花',
         logType: 'bill',
         logTypeCN: '审批未通过',
-        rejectReason: '这是一条理由'
+        rejectReason: '这是一条理由',
       },
-
-
-    ]
+    ],
   },
 
   getItemRightClass(value) {
-    console.log(value)
-    return 'item-right'
+    console.log(value);
+    return 'item-right';
   },
 
   handleSelect(e) {
-    const {
-      value
-    } = e.detail
+    const { value } = e.detail;
     const tempLogList = this.data.logList.map((item) => {
       return {
         ...item,
         date: formatTime(value, 'M.DD'),
-      }
-    })
+      };
+    });
     this.setData({
-      logList: tempLogList
-    })
-  }
-})
+      logList: tempLogList,
+    });
+  },
+});
