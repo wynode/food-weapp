@@ -1,7 +1,5 @@
 import Toast from 'tdesign-miniprogram/toast';
-import {
-  formatTime
-} from '../../utils/util'
+import { formatTime } from '../../utils/util';
 
 Page({
   data: {
@@ -10,10 +8,12 @@ Page({
     templateTypeValue: [],
     templateTypeTitle: '',
     templateTypeText: '（日周月）食品销售通用模板',
-    templateTypeList: [{
-      label: '（日周月）食品销售通用模板',
-      value: '（日周月）食品销售通用模板'
-    }],
+    templateTypeList: [
+      {
+        label: '（日周月）食品销售通用模板',
+        value: '（日周月）食品销售通用模板',
+      },
+    ],
 
     showAllQualified: false,
     submitDisabled: true,
@@ -29,7 +29,8 @@ Page({
     checkList: [],
     checkPercentage: 0,
     currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
-    checkListData: [{
+    checkListData: [
+      {
         checked: false,
         label: '听取周排查、日管控中发现问题汇报，研判是否存在有食品安全事故潜在风险。',
         checkResult: '',
@@ -59,7 +60,8 @@ Page({
       },
       {
         checked: false,
-        label: '组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
+        label:
+          '组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
         checkResult: '',
         checkExceptionReason: '',
         checkExceptionFileList: [],
@@ -80,7 +82,8 @@ Page({
       },
       {
         checked: false,
-        label: '查验公司供应商、贮存和运输服务提供者资质合格情况，评估其遵守食品安全有关规定情况，其产品、服务是否存在食品安全潜在风险。',
+        label:
+          '查验公司供应商、贮存和运输服务提供者资质合格情况，评估其遵守食品安全有关规定情况，其产品、服务是否存在食品安全潜在风险。',
         checkResult: '',
         checkExceptionReason: '',
         checkExceptionFileList: [],
@@ -110,20 +113,18 @@ Page({
   },
 
   onLoad(options) {
-    const {
-      allqualified = 0
-    } = options || {};
+    const { allqualified = 0 } = options || {};
     if (allqualified) {
       const tempCheckListData = this.data.checkListData.map((item) => {
         return {
           ...item,
           checked: true,
-          checkResult: 'success'
-        }
-      })
+          checkResult: 'success',
+        };
+      });
       this.setData({
         checkListData: tempCheckListData,
-        checkList: Array.from(Array(5).keys()),
+        checkList: Array.from(Array(11).keys()),
         showAllQualified: true,
         submitDisabled: false,
       });
@@ -131,37 +132,32 @@ Page({
   },
 
   templateTypePicker() {
-    console.log(111)
+    console.log(111);
     this.setData({
       templateTypeVisible: true,
-      templateTypeTitle: '选择模版'
+      templateTypeTitle: '选择模版',
     });
   },
 
   handleSubmit() {
-    wx.setStorageSync('report_data', this.data.checkListData)
+    wx.setStorageSync('report_data', this.data.checkListData);
     Toast({
       context: this,
       selector: '#t-toast',
       message: '提交成功',
     });
     wx.redirectTo({
-      url: '/pages/report-profile/index',
-    })
+      url: '/pages/e-signature/index',
+    });
   },
-
 
   onColumnChange(e) {
     console.log('picker pick:', e);
   },
 
   onPickerChange(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
-    const {
-      value
-    } = e.detail;
+    const { key } = e.currentTarget.dataset;
+    const { value } = e.detail;
 
     console.log('picker change:', e.detail);
     this.setData({
@@ -172,9 +168,7 @@ Page({
   },
 
   onPickerCancel(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
+    const { key } = e.currentTarget.dataset;
     console.log(e, '取消');
     console.log('picker1 cancel:');
     this.setData({
@@ -185,49 +179,40 @@ Page({
   onTitlePicker() {
     this.setData({
       cityVisible: true,
-      cityTitle: '选择城市'
+      cityTitle: '选择城市',
     });
   },
 
-
   handleSuccess(e) {
-    const {
-      files
-    } = e.detail;
-    const {
-      key = '0'
-    } = e.currentTarget.dataset
-    console.log(e)
+    const { files } = e.detail;
+    const { key = '0' } = e.currentTarget.dataset;
+    console.log(e);
     const tempCheckListData = this.data.checkListData.map((item, index) => {
       if (index === Number(key)) {
         return {
           ...item,
           checkExceptionFileList: files,
-        }
+        };
       }
       return {
-        ...item
-      }
-    })
+        ...item,
+      };
+    });
     this.setData({
       checkListData: tempCheckListData,
     });
   },
   handleRemove(e) {
-    const {
-      index: fileIndex
-    } = e.detail;
-    const {
-      key = '0'
-    } = e.currentTarget.dataset
+    const { index: fileIndex } = e.detail;
+    const { key = '0' } = e.currentTarget.dataset;
     const tempCheckListData = this.data.checkListData.map((item, index) => {
       if (index === Number(key)) {
         item.checkExceptionFileList.splice(fileIndex, 1);
       }
       return {
-        ...item
-      }
-    })
+        ...item,
+      };
+    });
     this.setData({
       checkListData: tempCheckListData,
     });
@@ -237,25 +222,23 @@ Page({
   },
 
   onCheckChange(e) {
-    const {
-      value
-    } = e.detail
+    const { value } = e.detail;
     const tempCheckListData = this.data.checkListData.map((item, index) => {
       if (value.includes(index)) {
         return {
           ...item,
           checked: true,
-        }
+        };
       }
       return {
         ...item,
         checked: false,
         checkResult: '',
         checkExceptionFileList: [],
-      }
-    })
-    const checkPercentage = e.detail.value.length / this.data.checkListData.length * 100
-    const submitDisabled = e.detail.value.length >= 11 ? false : true
+      };
+    });
+    const checkPercentage = (e.detail.value.length / this.data.checkListData.length) * 100;
+    const submitDisabled = !(e.detail.value.length >= 11);
     this.setData({
       checkList: e.detail.value,
       checkListData: tempCheckListData,
@@ -263,51 +246,44 @@ Page({
       submitDisabled,
       computedColor: submitDisabled ? '#FC5B5B' : '0B82FF',
     });
-    console.log(e)
+    console.log(e);
   },
 
   handleCheckResult(e) {
-    const {
-      key = '0 0'
-    } = e.currentTarget.dataset
+    const { key = '0 0' } = e.currentTarget.dataset;
     const tempCheckListData = this.data.checkListData.map((item, index) => {
       if (String(index) === key.split(' ')[0]) {
         return {
           ...item,
-          checkResult: key.split(' ')[1]
-        }
+          checkResult: key.split(' ')[1],
+        };
       }
       return {
-        ...item
-      }
-    })
+        ...item,
+      };
+    });
 
     this.setData({
       checkListData: tempCheckListData,
     });
-
   },
   handleReasonChange(e) {
-    const {
-      key = '0'
-    } = e.currentTarget.dataset
-    const {
-      value
-    } = e.detail
+    const { key = '0' } = e.currentTarget.dataset;
+    const { value } = e.detail;
     const tempCheckListData = this.data.checkListData.map((item, index) => {
       if (String(index) === String(key)) {
         return {
           ...item,
-          checkExceptionReason: value
-        }
+          checkExceptionReason: value,
+        };
       }
       return {
-        ...item
-      }
-    })
+        ...item,
+      };
+    });
 
     this.setData({
       checkListData: tempCheckListData,
     });
   },
-})
+});
