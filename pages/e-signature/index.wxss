@@ -2,83 +2,7 @@
 .container1 {
   text-align: center;
   position: relative;
-}
-
-.sign-title {
-  color: #333;
-  font-size: 30rpx;
-  font-weight: bold;
-  padding-top: 140rpx;
-  padding-bottom: 100rpx;
-}
-
-.sign-result {
-  padding: 30rpx;
-  position: relative;
-}
-
-.container {
-  border: 1px solid #000;
-  border-bottom: none;
-  border-right: none;
-  font-size: 24rpx;
-  /* display: grid;
-  grid-template-columns: 2fr 12fr 2fr 8fr; */
-}
-
-.header {
-  display: grid;
-  grid-template-columns: 2fr 12fr 4fr 6fr;
-  font-weight: bold;
-  border-bottom: 1px solid #000;
-}
-
-.row {
-  display: grid;
-  grid-template-columns: 2fr 12fr 4fr 6fr;
-  border-bottom: 1px solid #000;
-}
-
-.cell {
-  /* padding: 5px; */
-  border-right: 1px solid #000;
-  text-align: center;
-}
-
-.sign-commend .t-radio--block {
-  padding: 0rpx 20rpx;
-  background: transparent;
-  font-size: 24rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sign-commend .t-radio__icon--left {
-  margin-right: 0rpx;
-  font-size: 34rpx;
-  width: 34rpx;
-  height: 34rpx;
-}
-
-/* .sign-commend .t-radio__icon-circle {
-  font-size: 32rpx;
-} */
-
-.sign-table {
-  font-size: 24rpx;
-}
-
-.sign-table .sign-tr {
-  display: flex;
-}
-
-.sign-table .sign-td {
-  border: 1px solid #333;
-}
-
-.sign-grid {
-  border: 1px solid #333;
+  background: #fff;
 }
 
 .signature1 {
@@ -119,6 +43,10 @@
   justify-content: center;
 }
 
+.hidden-sign {
+  display: none;
+}
+
 .actions2Wrap {
   width: 50px;
   display: flex;
@@ -132,6 +60,14 @@
   transform: rotate(90deg);
 }
 
+.sign-title {
+  color: #333;
+  font-size: 30rpx;
+  font-weight: bold;
+  padding-top: 140rpx;
+  padding-bottom: 100rpx;
+}
+
 .actions2 button {
   margin-left: 5px;
   display: inline-block;
@@ -139,3 +75,73 @@
   line-height: 30px;
   padding: 0 5px;
 }
+
+.signResult {
+  padding: 30rpx;
+  position: relative;
+}
+
+.signTable {
+  border: 1px solid #000;
+  border-bottom: none;
+  border-right: none;
+  font-size: 22rpx;
+}
+
+.signHeader {
+  display: grid;
+  grid-template-columns: 2fr 11fr 3fr 8fr;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+}
+
+.signTr {
+  display: grid;
+  grid-template-columns: 2fr 11fr 3fr 8fr;
+  border-bottom: 1px solid #000;
+}
+
+.signTd {
+  border-right: 1px solid #000;
+  text-align: center;
+}
+
+.signCommend .t-radio--block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0rpx 10rpx;
+  font-size: 24rpx;
+}
+
+.signCommend .t-radio__icon--left {
+  width: 34rpx;
+  height: 34rpx;
+  margin: 0rpx;
+  font-size: 34rpx;
+}
+
+.signBottom {
+  text-align: right;
+  margin: 50rpx 20rpx;
+}
+
+.signBottom image {
+  width: 224rpx;
+  height: 120rpx;
+}
+
+.signTr .textLeft {
+  text-align: left;
+}
+
+.signBottom button {
+  margin-top: 100rpx;
+  margin-bottom: 60rpx;
+}
+
+/* .widget {
+  position: absolute;
+  top: 1000px;
+  left: 1000px;
+} */

@@ -80,8 +80,6 @@
             </view>
             <view class="cric-bad" wx:if="{{item.checkResult === 'fail'}}">
               <!-- <t-input
-                
-                
                 placeholder="请输入异常理由"
                 borderless="{{true}}"
                 style="{{style}}"
@@ -89,7 +87,9 @@
               <t-textarea
                 t-class="external-class"
                 placeholder="请输入不合格内容（非必填）"
+                data-key="{{index}}"
                 value="{{item.checkExceptionReason}}"
+                bind:change="handleReasonChange"
                 bordered
                 autosize
                 disableDefaultPadding="{{true}}"

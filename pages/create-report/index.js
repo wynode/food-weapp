@@ -139,6 +139,7 @@ Page({
   },
 
   handleSubmit() {
+    wx.setStorageSync('report_data', this.data.checkListData)
     Toast({
       context: this,
       selector: '#t-toast',
@@ -286,6 +287,27 @@ Page({
     });
 
   },
+  handleReasonChange(e) {
+    const {
+      key = '0'
+    } = e.currentTarget.dataset
+    const {
+      value
+    } = e.detail
+    const tempCheckListData = this.data.checkListData.map((item, index) => {
+      if (String(index) === String(key)) {
+        return {
+          ...item,
+          checkExceptionReason: value
+        }
+      }
+      return {
+        ...item
+      }
+    })
 
-
+    this.setData({
+      checkListData: tempCheckListData,
+    });
+  },
 })

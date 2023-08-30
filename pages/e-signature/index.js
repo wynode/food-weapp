@@ -2,29 +2,9 @@ import Signature from 'mini-smooth-signature';
 
 Page({
   data: {
-    testdata: [
-      {
-        checked: false,
-        label: '听取周排查、日管控中发现问题汇报，研判是否存在有食品安全事故潜在风险。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label: '研究周排查、日管控发现问题存在的原因，整改措施是否有效，提出完善制度措施建议。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label: '检查公司统一信用代码证、食品经营许可（备案）证明是否在有效期内，并依法公示。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-    ],
+    signUrl: '/assets/image/bell.png',
+    notShow: false,
+    reportData: [],
     fullScreen: false,
     width1: 320,
     height1: 240,
@@ -35,33 +15,46 @@ Page({
       color: '#333',
     },
   },
-  // onReady() {
-  //   try {
-  //     const {
-  //       windowWidth,
-  //       windowHeight,
-  //       pixelRatio
-  //     } = wx.getSystemInfoSync();
-  //     this.setData({
-  //       width1: windowWidth - 30,
-  //       height1: 240,
-  //       width2: windowWidth - 80,
-  //       height2: windowHeight - 50,
-  //       scale: Math.max(pixelRatio || 1, 2),
-  //     })
-  //   } catch (e) {}
-  //   if (this.data.fullScreen) {
-  //     this.initSignature2();
-  //   } else {
-  //     this.initSignature1();
-  //   }
-  // },
+  onReady() {
+    const reportData = wx.getStorageSync('report_data')
+    this.setData({
+      reportData,
+    })
+    try {
+      const {
+        windowWidth,
+        windowHeight,
+        pixelRatio
+      } = wx.getSystemInfoSync();
+      this.setData({
+        width1: windowWidth - 30,
+        height1: 240,
+        width2: windowWidth - 80,
+        height2: windowHeight - 50,
+        scale: Math.max(pixelRatio || 1, 2),
+      })
+    } catch (e) {}
+    // this.initSignature2();
+    // if (this.data.fullScreen) {
+    //   this.initSignature2();
+    // } else {
+    //   this.initSignature1();
+    // }
+  },
 
+  onLoad() {
+    this.widget = this.selectComponent('.widget')
+    console.log(this.widget)
+  },
   handleCheckboxChange(event) {
-    const { index } = event.currentTarget.dataset;
+    const {
+      index
+    } = event.currentTarget.dataset;
     const checked = event.detail.value;
 
-    const { data } = this.data;
+    const {
+      data
+    } = this.data;
     data[index].checked = checked;
 
     this.setData({
@@ -171,7 +164,7 @@ Page({
     this.setData({
       fullScreen: true,
     });
-    setTimeout(() => this.initSignature2(), 50);
+    // setTimeout(() => this.initSignature2(), 50);
   },
   handleClear1() {
     this.signature1.clear();
@@ -201,6 +194,88 @@ Page({
     });
   },
 
+  exportReport() {
+    const query = wx.createSelectorQuery();
+    const wxml = `
+    <view class="signResult">
+      <view class="signTable">
+        <view class="signTr signTrHeader">
+          <view class="text"><text class="text">序号</text></view>
+        </view>
+      </view>
+    </view>
+      `
+    let style = {
+      signTdC1: {
+        width: 60,
+        height: 60,
+      },
+      signTdC2: {
+        width: 174,
+      },
+      signTdC3: {
+        width: 48,
+      },
+      signTdC4: {
+        width: 128,
+      }
+    }
+    query.selectAll('.signTr').boundingClientRect((trArray) => {
+      trArray.forEach((item, index) => {
+        style[`signTdR${index+1}`] = {
+          height: item.height,
+        }
+      });
+      console.log(style, 1)
+    }).exec();
+    query.select('.signResult').boundingClientRect((res) => {
+      const elementWidth = res.width;
+      const elementHeight = res.height;
+      style = {
+        ...style,
+        signResult: {
+          width: elementWidth,
+          height: elementHeight,
+        },
+        signTable: {},
+        signTr: {
+          flexDirection: 'row'
+        },
+        text: {
+          width: 80,
+          height: 60,
+          textAlign: 'center',
+          verticalAlign: 'middle',
+        },
+      }
+      console.log(style, 2)
+      this.widget.renderToCanvas({
+        wxml,
+        style
+      })
+    }).exec();
+
+    // wx.showLoading({
+    //   title: '图片生成中'
+    // }).then(() => {
+    //   setTimeout(() => {
+    //     const p2 = this.widget.canvasToTempFilePath()
+    //     p2.then(res => {
+    //       wx.hideLoading();
+    //       wx.saveImageToPhotosAlbum({
+    //         filePath: res.tempFilePath,
+    //         success: (res) => {
+    //           console.log(res)
+    //         },
+    //         fail: (res) => {
+    //           console.log(res)
+    //         }
+    //       })
+    //     })
+    //   }, 1000)
+    // });
+  },
+
   /**
    * 样例2按钮事件
    */
@@ -227,12 +302,19 @@ Page({
       });
       return;
     }
+
     this.getRotateImage().then((url) => {
-      url &&
-        wx.previewImage({
-          current: 0,
-          urls: [url],
-        });
+      if (url) {
+        this.setData({
+          fullScreen: false,
+          signUrl: url
+        })
+      }
+      // url &&
+      //   wx.previewImage({
+      //     current: 0,
+      //     urls: [url],
+      //   });
     });
   },
 
@@ -241,8 +323,12 @@ Page({
     const dataURL = this.signature2.toDataURL();
     const url = await base64ToPath(dataURL);
     const ctx = wx.createCanvasContext('signature3');
-    const { width } = this.signature2;
-    const { height } = this.signature2;
+    const {
+      width
+    } = this.signature2;
+    const {
+      height
+    } = this.signature2;
     ctx.restore();
     ctx.save();
     ctx.translate(0, height);

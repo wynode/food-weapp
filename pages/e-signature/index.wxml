@@ -1,31 +1,36 @@
-<view class="index">
-  <!-- 样例1 -->
+<wxml-to-canvas class="widget"></wxml-to-canvas>
+<view>
+  <view class="test"></view>
   <background isHighlight="true"></background>
-  <view class="sign-result">
-    <view class="container">
-      <!-- 表头 -->
-      <view class="header">
-        <view class="cell">序号</view>
-        <view class="cell">每周风险防控清单</view>
-        <view class="cell">评价</view>
-        <view class="cell">处理措施</view>
+  <view class="signResult">
+    <view class="signTable">
+      <view class="signTr signHeader">
+        <view class="signTd">序号</view>
+        <view class="signTd">每周风险防控清单</view>
+        <view class="signTd">评价</view>
+        <view class="signTd">处理措施</view>
       </view>
-      <!-- 数据行 -->
-      <block wx:for="{{testdata}}" wx:key="index">
-        <view class="row">
-          <view class="cell">{{index}}</view>
-          <view class="cell">{{item.label}}</view>
-          <view class="cell sign-commend">
-            <t-radio value="radio2" label="是" />
-            <t-radio value="radio2" label="否" />
-          </view>
-          <view class="cell">{{item.checkExceptionReason}}</view>
+      <block wx:for="{{reportData}}" wx:key="index">
+        <view class="signTr">
+          <view class="signTd">{{index + 1}}</view>
+          <view class="signTd textLeft">{{item.label}}</view>
+          <view class="signTd signCommend"> {{ item.checkResult === 'success' ? '合格' : '不合格'}} </view>
+          <view class="signTd textLeft">{{item.checkExceptionReason}}</view>
         </view>
       </block>
     </view>
+
+    <view class="signBottom">
+      <view wx:if="signUrl" class="signSign">
+        <text>报告人：</text>
+        <image src="{{signUrl}}"></image>
+        <t-button block bindtap="exportReport">导出报告</t-button>
+      </view>
+      <t-button wx:else type="primary" bindtap="handleFullScreen1">点击签名</t-button>
+    </view>
   </view>
 
-  <view class="container1" wx:if="{{fullScreen}}">
+  <!-- <view class="container1" wx:if="{{notShow}}">
     <view class="sign-title">请在以下区域书写您的签名</view>
     <canvas
       type="2d"
@@ -41,26 +46,23 @@
     <view class="actions1">
       <t-button bindtap="handleClear1" size="large" variant="outline" theme="danger">清除</t-button>
       <t-button bindtap="handleUndo1" size="large" variant="outline">撤销</t-button>
-      <!-- <button bindtap="handlePreview1"> View PNG </button> -->
-      <!-- <button bindtap="handleClear1"> Clear </button>
-      <button bindtap="handleUndo1"> Undo </button>
-      <button bindtap="handlePreview1"> View PNG </button>
-      <button bindtap="handleColor1"> Change Color </button> -->
-      <!-- <button bindtap="handleFullScreen1"> Full Screen </button> -->
     </view>
     <view class="submit-sign">
       <t-button theme="primary" size="large" block bind:tap="handlePreview1">提交签名</t-button>
     </view>
-  </view>
+  </view> -->
   <!-- 样例2（伪全屏） -->
-  <view class="container2" wx:if="{{fullScreen}}">
+  <view class="container2 {{ fullScreen ? '' : 'hidden-sign' }}">
     <view class="actions2Wrap">
       <view class="actions2">
-        <button bindtap="handleClear2"> Clear </button>
-        <button bindtap="handleUndo2"> Undo </button>
-        <button bindtap="handlePreview2"> View PNG </button>
-        <button bindtap="handleColor2"> Change Color </button>
-        <button bindtap="handleFullScreen2"> Close Full Screen </button>
+        <t-button bindtap="handleClear2" size="large" variant="outline" theme="danger">清除</t-button>
+        <t-button bindtap="handleUndo2" size="large" variant="outline" style="margin: 0 50rpx">撤销</t-button>
+        <!-- <button bindtap="handleClear2"> Clear </button>
+        <button bindtap="handleUndo2"> Undo </button> -->
+        <t-button theme="primary" size="large" block bind:tap="handlePreview2">确认签名</t-button>
+        <!-- <button bindtap="handlePreview2"> View PNG </button> -->
+        <!-- <button bindtap="handleColor2"> Change Color </button> -->
+        <!-- <button bindtap="handleFullScreen2"> Close Full Screen </button> -->
       </view>
     </view>
     <canvas
