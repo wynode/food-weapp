@@ -3,6 +3,17 @@
   padding: 30rpx;
 }
 
+.cr-top-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 1000;
+  width: 100vw;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
 .cr-top {
   display: flex;
   justify-content: space-between;
@@ -35,6 +46,10 @@
 
 .cr-progress {
   margin-top: 20rpx;
+}
+
+.cr-list {
+  margin-bottom: 240rpx;
 }
 
 .cr-list .t-checkbox__border {
@@ -100,6 +115,10 @@
   line-height: 50rpx;
 }
 
+.cns-input {
+  margin-top: 120rpx;
+}
+
 .cns-input .t-input {
   background: #f2f4f7;
   border-radius: 8rpx;
@@ -127,6 +146,18 @@
 } */
 
 .cr-submit-btn {
-  margin-top: 40rpx;
-  margin-bottom: 60rpx;
+  /* margin-top: 40rpx; */
+  /* margin-bottom: 60rpx;
+  /* position: fixed;
+  top: 60rpx;
+  left: 0; */
+}
+
+.cns-bbtn {
+  position: fixed;
+  bottom: 20rpx;
+  width: 100vw;
+  padding: 30rpx;
+  box-sizing: border-box;
+  left: 0;
 }

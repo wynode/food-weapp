@@ -17,7 +17,7 @@ Page({
 
     showAllQualified: false,
     submitDisabled: true,
-    computedColor: '#FC5B5B',
+    computedColor: '#0B82FF',
 
     fileList: [],
     gridConfig: {
@@ -127,6 +127,8 @@ Page({
         checkList: Array.from(Array(11).keys()),
         showAllQualified: true,
         submitDisabled: false,
+        checkPercentage: 100,
+        computedColor: '',
       });
     }
   },
@@ -238,7 +240,7 @@ Page({
       };
     });
     const checkPercentage = (e.detail.value.length / this.data.checkListData.length) * 100;
-    const submitDisabled = !(e.detail.value.length >= 11);
+    const submitDisabled = !(e.detail.value.length >= 5);
     this.setData({
       checkList: e.detail.value,
       checkListData: tempCheckListData,

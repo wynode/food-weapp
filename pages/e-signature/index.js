@@ -1,4 +1,5 @@
 import Signature from 'mini-smooth-signature';
+import { formatTime } from '../../utils/util';
 
 Page({
   data: {
@@ -15,6 +16,7 @@ Page({
     border: {
       color: '#333',
     },
+    currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
   },
   onReady() {
     const reportData = wx.getStorageSync('report_data');
@@ -273,6 +275,9 @@ Page({
     const wxml = `
     <view class="signResult">
       <view class="signTable">
+        <view class="signTitle">
+          <text class="signTitle1">食品安全日检查记录</text>
+        </view>
         <view class="signTrb1"></view>
         <view class="signHeader">
           <view class="signTh1b"></view>
@@ -280,9 +285,9 @@ Page({
           <view class="signTh1b"></view>
           <view class="signTh2"><text class="signTh2">每周风险防控清单</text></view>
           <view class="signTh1b"></view>
-          <view class="signTh3"><text class="signTh3">评价</text></view>
+          <view class="signTh3"><text class="signTh3">检查结果</text></view>
           <view class="signTh1b"></view>
-          <view class="signTh4"><text class="signTh4">处理措施</text></view>
+          <view class="signTh4"><text class="signTh4">整改情况</text></view>
           <view class="signTh1b"></view>
         </view>
         <view class="signTrb1"></view>
@@ -310,8 +315,13 @@ Page({
           .join('')}
       </view>
       <view class="signBottom">
-        <text class="signText">报告人：</text>
-        <image class="signImage" src="${this.data.signUrl}"></image>
+        <view class="signLeft">
+          <text class="signDate">检查日期：${this.data.currentDay}</text>
+        </view>
+        <view class="signRight">
+          <text class="signText">报告人：</text>
+          <image class="signImage" src="${this.data.signUrl}"></image>
+        </view>
       </view>
     </view>
       `;
@@ -333,15 +343,44 @@ Page({
         backgroundColor: '#000',
       },
       signBottom: {
-        width: 320,
+        width: 340,
         height: 70,
-        margin: 50,
+        margin: 40,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      },
+      signTitle: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        margin: 10,
+        width: 380,
+        height: 24,
+      },
+      signTitle1: {
+        width: 146,
+        height: 24,
+        fontSize: 14,
+      },
+      signLeft: {
+        width: 132,
+        height: 24,
+      },
+      signDate: {
+        width: 132,
+        height: 24,
+        fontSize: 12,
+      },
+      signRight: {
+        width: 174,
+        height: 70,
+        fontSize: 12,
         flexDirection: 'row',
         justifyContent: 'flex-end',
       },
       signText: {
         width: 64,
         height: 28,
+        fontSize: 12,
       },
       signImage: {
         width: 124,
@@ -364,7 +403,7 @@ Page({
         padding: 2,
       },
       signTh3: {
-        width: 47.625,
+        width: 63.5,
         height: 22,
         fontSize: 12,
         textAlign: 'center',
@@ -372,7 +411,7 @@ Page({
         padding: 2,
       },
       signTh4: {
-        width: 127,
+        width: 111,
         height: 22,
         fontSize: 12,
         textAlign: 'center',
@@ -389,9 +428,11 @@ Page({
           ...style,
           signResult: {
             width: elementWidth,
-            height: elementHeight,
+            height: elementHeight + 40,
             backgroundColor: '#fff',
             padding: 8,
+            position: 'absolute',
+            top: 60,
           },
         };
       })

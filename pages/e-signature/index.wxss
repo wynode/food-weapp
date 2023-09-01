@@ -101,14 +101,14 @@
 
 .signHeader {
   display: grid;
-  grid-template-columns: 2fr 11fr 3fr 8fr;
+  grid-template-columns: 2fr 11fr 4fr 7fr;
   font-weight: bold;
   border-bottom: 1px solid #000;
 }
 
 .signTr {
   display: grid;
-  grid-template-columns: 2fr 11fr 3fr 8fr;
+  grid-template-columns: 2fr 11fr 4fr 7fr;
   border-bottom: 1px solid #000;
 }
 
@@ -116,6 +116,13 @@
   padding: 4rpx;
   border-right: 1px solid #000;
   text-align: center;
+}
+
+.signTitle {
+  text-align: center;
+  margin-bottom: 10rpx;
+  font-weight: bold;
+  font-size: 24rpx;
 }
 
 .signTh {
@@ -141,6 +148,10 @@
 .signBottom {
   text-align: right;
   margin: 50rpx 20rpx;
+  display: flex;
+  align-items: flex-end;
+  font-size: 24rpx;
+  justify-content: space-between;
 }
 
 .signBottom image {
@@ -154,7 +165,7 @@
 
 .signBottom button {
   margin-top: 100rpx;
-  margin-bottom: 60rpx;
+  /* margin-bottom: 60rpx; */
 }
 
 .widget {

@@ -3,12 +3,15 @@
   <view class="test"></view>
   <background isHighlight="true"></background>
   <view class="signResult">
+    <view class="signTitle">
+      <text>食品安全日检查记录</text>
+    </view>
     <view class="signTable">
       <view class="signTr signHeader">
         <view class="signTh">序号</view>
         <view class="signTh">每周风险防控清单</view>
-        <view class="signTh">评价</view>
-        <view class="signTh">处理措施</view>
+        <view class="signTh">检查结果</view>
+        <view class="signTh">整改情况</view>
       </view>
       <block wx:for="{{reportData}}" wx:key="index">
         <view class="signTr">
@@ -21,6 +24,7 @@
     </view>
 
     <view class="signBottom">
+      <view>检查日期：{{currentDay}}</view>
       <view wx:if="{{signUrl}}" class="signSign">
         <text>报告人：</text>
         <image src="{{signUrl}}"></image>

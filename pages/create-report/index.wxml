@@ -1,26 +1,27 @@
 <view>
   <background></background>
   <view class="create-report">
-    <view class="cr-top">
-      <view class="cr-top-left">
-        必选项
-        <text>{{checkList.length}}</text>/{{checkListData.length}}
+    <view class="cr-top-box">
+      <view class="cr-top">
+        <view class="cr-top-left">
+          必选项
+          <text>{{checkList.length}}</text>/5
+        </view>
+        <view class="cr-top-right">
+          <text>{{ currentDay }}</text>
+          日管控
+        </view>
       </view>
-      <view class="cr-top-right">
-        <text>{{ currentDay }}</text>
-        日管控
-      </view>
+      <t-progress
+        class="cr-progress"
+        color="{{computedColor}}"
+        track-color="rgba(11,130,255,0.1)"
+        stroke-width="14"
+        theme="plump"
+        label="{{false}}"
+        percentage="{{checkPercentage}}"
+      />
     </view>
-    <t-progress
-      class="cr-progress"
-      color="{{computedColor}}"
-      track-color="rgba(11,130,255,0.1)"
-      stroke-width="14"
-      theme="plump"
-      label="{{false}}"
-      percentage="{{checkPercentage}}"
-    />
-
     <view class="cns-input" bind:tap="templateTypePicker">
       <t-input
         suffixIcon="caret-down-small"
@@ -116,9 +117,11 @@
       </t-checkbox-group>
     </view>
 
-    <t-button class="cr-submit-btn" size="large" disabled="{{submitDisabled}}" block bindtap="handleSubmit"
-      >{{ showAllQualified ? '全部合格' : '确定'}}</t-button
-    >
+    <view class="cns-bbtn">
+      <t-button class="cr-submit-btn" size="large" disabled="{{submitDisabled}}" block bindtap="handleSubmit"
+        >{{ showAllQualified ? '全部合格' : '确定'}}</t-button
+      >
+    </view>
   </view>
   <t-toast id="t-toast" />
 </view>
