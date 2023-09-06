@@ -6,8 +6,18 @@
     <view class="cu-avatar-box">
       <view class="cu-avatar" bind:tap="handleEditAvatar">
         <image wx:if="{{fileList[0]}}" class="cu-avatar-img" src="{{fileList[0].url}}"> </image>
-        <image wx:if="{{!fileList[0]}}" class="cu-avatar-img" src="/assets/image/shop_user.png"> </image>
-        <view class="cu-avatar-edit"> <image class="cu-avatar-icon" src="/assets/image/avatar_edit.png"></image></view>
+        <image
+          wx:if="{{!fileList[0]}}"
+          class="cu-avatar-img"
+          src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop_user.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+        >
+        </image>
+        <view class="cu-avatar-edit">
+          <image
+            class="cu-avatar-icon"
+            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/avatar_edit.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+          ></image
+        ></view>
       </view>
       <t-upload
         id="avatar-upload"

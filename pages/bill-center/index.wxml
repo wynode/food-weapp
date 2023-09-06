@@ -6,7 +6,10 @@
         <view class="bcr-top-left">{{dateValue[1]}}月进货单</view>
         <view class="bcr-top-right" bindtap="onSeasonPicker">
           <view>其他月份</view>
-          <image class="bcr-top-img" src="/assets/image/right_icon.png"></image>
+          <image
+            class="bcr-top-img"
+            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+          ></image>
         </view>
       </view>
       <t-picker

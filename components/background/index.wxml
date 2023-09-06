@@ -1,4 +1,7 @@
 <view class="{{isHighlight ? 'main-highlight-background' : 'main-background' }}">
   <t-divider t-class="main-divider" />
-  <image class="main-background-image" src="/assets/image/background.png"></image>
+  <image
+    class="main-background-image"
+    src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/background.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+  ></image>
 </view>

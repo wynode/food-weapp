@@ -6,18 +6,19 @@ Page({
     userPositionValue: [],
     userPositionTitle: '',
     userPositionText: '',
-    userPositionList: [{
+    userPositionList: [
+      {
         label: '食品安全员  ',
-        value: '食品安全员'
+        value: '食品安全员',
       },
       {
         label: '食品安全总监',
-        value: '食品安全总监'
+        value: '食品安全总监',
       },
       {
         label: '负责人',
-        value: '负责人'
-      }
+        value: '负责人',
+      },
     ],
 
     gridConfig: {
@@ -31,41 +32,40 @@ Page({
     businessCode: '',
     personalPhone: '',
 
-
     value1: [0, 1],
     userRole: [],
   },
 
-  onLoad() {
-
-  },
+  onLoad() {},
 
   onChange1(e) {
     this.setData({
-      value1: e.detail.value
+      value1: e.detail.value,
     });
   },
 
   avatarUrl() {
-    return this.data.fileList[0] ? this.data.fileList[0].url : '/assets/image/shop_user.png'
+    return this.data.fileList[0]
+      ? this.data.fileList[0].url
+      : 'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop_user.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113';
   },
 
   handleEditAvatar() {
-    const uploadComponent = this.selectComponent('#avatar-upload')
-    uploadComponent.onAddTap()
+    const uploadComponent = this.selectComponent('#avatar-upload');
+    uploadComponent.onAddTap();
   },
 
   userRoleChange(e) {
-    console.log(e)
+    console.log(e);
   },
 
   goReportList() {
-    const isLegal = true
+    const isLegal = true;
     if (isLegal) {
-      wx.setStorageSync('user_data', this.data)
+      wx.setStorageSync('user_data', this.data);
       wx.redirectTo({
         url: '/pages/report-list/index',
-      })
+      });
     } else {
       Toast({
         context: this,
@@ -80,12 +80,8 @@ Page({
   },
 
   onPickerChange(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
-    const {
-      value
-    } = e.detail;
+    const { key } = e.currentTarget.dataset;
+    const { value } = e.detail;
 
     this.setData({
       [`${key}Visible`]: false,
@@ -95,35 +91,27 @@ Page({
   },
 
   onPickerCancel(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
+    const { key } = e.currentTarget.dataset;
     this.setData({
       [`${key}Visible`]: false,
     });
   },
 
-
   userPositionPicker() {
-    console.log(111)
+    console.log(111);
     this.setData({
       userPositionVisible: true,
-      userPositionTitle: '请选择员工身份'
+      userPositionTitle: '请选择员工身份',
     });
     this.setData({
       submitActive: true,
     });
   },
 
-
   handleAdd(e) {
-    const {
-      fileList
-    } = this.data;
-    const {
-      files
-    } = e.detail;
-    console.log(e.detail, 222)
+    const { fileList } = this.data;
+    const { files } = e.detail;
+    console.log(e.detail, 222);
 
     this.setData({
       fileList: [...fileList, ...files], // 此时设置了 fileList 之后才会展示选择的图片
@@ -131,17 +119,12 @@ Page({
   },
 
   handleRemove(e) {
-    const {
-      index
-    } = e.detail;
-    const {
-      fileList
-    } = this.data;
+    const { index } = e.detail;
+    const { fileList } = this.data;
 
     fileList.splice(index, 1);
     this.setData({
       fileList,
     });
   },
-
 });

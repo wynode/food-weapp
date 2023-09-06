@@ -3,6 +3,8 @@
   "usingComponents": {
     "background": "/components/background/index",
     "t-progress": "tdesign-miniprogram/progress/progress",
-    "t-button": "tdesign-miniprogram/button/button"
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-switch": "tdesign-miniprogram/switch/switch",
+    "t-cell": "tdesign-miniprogram/cell/cell"
   }
 }

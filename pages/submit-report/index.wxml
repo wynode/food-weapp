@@ -1,9 +1,14 @@
 <view>
   <background isHighlight="true"></background>
   <view class="submit-report">
+    <t-cell title="是否切换为餐饮" bordered="{{false}}" style="margin-bottom: 20rpx">
+      <t-switch value="{{switchValue}}" bindchange="handleSwitchChange" slot="note" />
+    </t-cell>
     <view class="sr-day">
       <view class="sr-day-left">
-        <image src="/assets/image/message.png"></image>
+        <image
+          src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/message.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+        ></image>
       </view>
       <view class="sr-day-right">
         <view class="srdr-top">
@@ -16,9 +21,11 @@
         </view>
       </view>
     </view>
-    <view class="sr-day">
+    <!-- <view class="sr-day">
       <view class="sr-day-left">
-        <image src="/assets/image/message.png"></image>
+        <image
+          src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/message.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+        ></image>
       </view>
       <view class="sr-day-right">
         <view class="srdr-top">
@@ -30,7 +37,7 @@
           <view class="srdr-bottom-right"> 剩余25分钟 </view>
         </view>
       </view>
-    </view>
+    </view> -->
     <t-progress
       class="sr-progress"
       color="#0B82FF"
@@ -50,6 +57,14 @@
     <view class="sr-btns">
       <t-button class="sr-btns-left" theme="primary" size="large" bindtap="goCreateReport">逐一检查</t-button>
       <t-button class="sr-btns-right" theme="light" size="large" bindtap="goCreateReportQualify">一键合格</t-button>
+    </view>
+    <view class="srb-btns" wx:if="{{switchValue}}">
+      <t-button class="srb-btns-left" theme="primary" variant="outline" size="large" bindtap="goCreateWeek"
+        >生成周报</t-button
+      >
+      <t-button class="srb-btns-right" theme="primary" variant="outline" size="large" bindtap="goCreateMonth"
+        >生成月报</t-button
+      >
     </view>
   </view>
 </view>

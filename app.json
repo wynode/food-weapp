@@ -1,21 +1,21 @@
 {
   "pages": [
+    "pages/report-list/index",
+    "pages/create-report/index",
+    "pages/submit-report/index",
+    "pages/create-shop-profile/index",
     "pages/create-shop/index",
     "pages/e-signature/index",
-    "pages/create-report/index",
-    "pages/report-list/index",
     "pages/enterprise-center/index",
     "pages/enterprise-manage/index",
     "pages/staff-list/index",
     "pages/daily-stats/index",
-    "pages/submit-report/index",
     "pages/message-notify/index",
     "pages/log-list/index",
     "pages/bill-center/index",
     "pages/report-profile/index",
     "pages/create-user/index",
-    "pages/choice-shop-type/index",
-    "pages/create-shop-profile/index"
+    "pages/choice-shop-type/index"
   ],
   "requiredPrivateInfos": ["chooseAddress"],
   "lazyCodeLoading": "requiredComponents",

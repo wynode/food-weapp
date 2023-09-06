@@ -8,7 +8,10 @@
   bind:remove="handleRemove"
 >
   <view slot="add-content" class="my-upload-box">
-    <image src="/assets/image/add_icon.png" class="my-upload-icon"></image>
+    <image
+      src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/add_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+      class="my-upload-icon"
+    ></image>
     <view class="my-upload-title">{{ uploadTitle }}</view>
   </view>
 </t-upload>

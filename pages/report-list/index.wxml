@@ -4,12 +4,18 @@
     <view class="rl-top">
       <view class="rl-top-left">
         <view class="rl-top-logo">
-          <image class="rl-top-icon" src="/assets/image/self_employed.png"></image>
+          <image
+            class="rl-top-icon"
+            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/self_employed.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+          ></image>
         </view>
         <view class="rl-top-title">早上好，{{shopName}}</view>
       </view>
       <view class="rl-top-right">
-        <image class="rl-top-bell" src="/assets/image/bell.png"></image>
+        <image
+          class="rl-top-bell"
+          src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bell.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+        ></image>
       </view>
     </view>
     <view class="rl-record">
@@ -17,7 +23,10 @@
         <view class="rlr-top-left">{{dateValue[1]}}月记录</view>
         <view class="rlr-top-right" bindtap="onSeasonPicker">
           <view>其他月份</view>
-          <image class="rlr-top-img" src="/assets/image/right_icon.png"></image>
+          <image
+            class="rlr-top-img"
+            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+          ></image>
         </view>
       </view>
       <t-picker
@@ -57,13 +66,18 @@
         <view class="rlr-top-left">全部报告（16）</view>
         <view class="rlr-top-right" bindtap="goLogList">
           <view>查看日志</view>
-          <image class="rlr-top-img" src="/assets/image/right_icon.png"></image>
+          <image
+            class="rlr-top-img"
+            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+          ></image>
         </view>
       </view>
       <view class="rlr-box">
         <view class="rlr-box-item" data-key="day" bindtap="goProfile">
           <view class="rlb-left">
-            <image src="/assets/image/all_day.png"></image>
+            <image
+              src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/all_day.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+            ></image>
           </view>
           <view class="rlb-content">
             <view class="rlb-center">
@@ -75,13 +89,18 @@
             </view>
             <view class="rlb-right">
               <view class="rlb-right-title"><text>7</text>份</view>
-              <image class="rlb-right-export" src="/assets/image/export.png"></image>
+              <image
+                class="rlb-right-export"
+                src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/export.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+              ></image>
             </view>
           </view>
         </view>
         <view class="rlr-box-item" data-key="week" bindtap="goProfile">
           <view class="rlb-left">
-            <image src="/assets/image/all_weak.png"></image>
+            <image
+              src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/all_weak.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+            ></image>
           </view>
           <view class="rlb-content">
             <view class="rlb-center">
@@ -93,13 +112,18 @@
             </view>
             <view class="rlb-right">
               <view class="rlb-right-title"><text>7</text>份</view>
-              <image class="rlb-right-export" src="/assets/image/export.png"></image>
+              <image
+                class="rlb-right-export"
+                src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/export.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+              ></image>
             </view>
           </view>
         </view>
         <view class="rlr-box-item" data-key="month" bindtap="goProfile">
           <view class="rlb-left">
-            <image src="/assets/image/all_month.png"></image>
+            <image
+              src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/all_month.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+            ></image>
           </view>
           <view class="rlb-content">
             <view class="rlb-center">
@@ -111,13 +135,18 @@
             </view>
             <view class="rlb-right">
               <view class="rlb-right-title"><text>7</text>份</view>
-              <image class="rlb-right-export" src="/assets/image/export.png"></image>
+              <image
+                class="rlb-right-export"
+                src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/export.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+              ></image>
             </view>
           </view>
         </view>
         <view class="rlr-box-item" data-key="bill" bindtap="goProfile">
           <view class="rlb-left">
-            <image src="/assets/image/bill_center.png"></image>
+            <image
+              src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bill_center.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+            ></image>
           </view>
           <view class="rlb-content">
             <view class="rlb-center">
@@ -129,7 +158,10 @@
             </view>
             <view class="rlb-right">
               <view class="rlb-right-title"><text>200</text>张</view>
-              <image class="rlb-right-export" src="/assets/image/export.png"></image>
+              <image
+                class="rlb-right-export"
+                src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/export.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+              ></image>
             </view>
           </view>
         </view>
