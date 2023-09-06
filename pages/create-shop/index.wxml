@@ -11,7 +11,11 @@
           value="{{csForm.shopName}}"
           bind:change="onInputValue"
         >
-          <image style="width: 39rpx; height: 36rpx" src="/assets/image/shop_name.png" slot="prefix-icon"></image>
+          <image
+            style="width: 39rpx; height: 36rpx"
+            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop_name.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+            slot="prefix-icon"
+          ></image>
         </t-input>
         <t-input
           placeholder="请输入企业主体地址"
@@ -19,7 +23,11 @@
           value="{{csForm.shopAddress}}"
           bind:change="onInputValue"
         >
-          <image style="width: 33rpx; height: 44rpx" src="/assets/image/shop_location.png" slot="prefix-icon"></image>
+          <image
+            style="width: 33rpx; height: 44rpx"
+            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop_location.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+            slot="prefix-icon"
+          ></image>
         </t-input>
         <t-input
           placeholder="请填写负责人名称"
@@ -27,7 +35,11 @@
           value="{{csForm.shopUser}}"
           bind:change="onInputValue"
         >
-          <image style="width: 36rpx; height: 36rpx" src="/assets/image/shop_user.png" slot="prefix-icon"></image>
+          <image
+            style="width: 36rpx; height: 36rpx"
+            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop_user.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+            slot="prefix-icon"
+          ></image>
         </t-input>
         <t-input
           placeholder="请填写负责人联系方式"
@@ -35,7 +47,11 @@
           value="{{csForm.shopPhone}}"
           bind:change="onInputValue"
         >
-          <image style="width: 32rpx; height: 50rpx" src="/assets/image/shop_phone.png" slot="prefix-icon"></image>
+          <image
+            style="width: 32rpx; height: 50rpx"
+            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop_phone.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+            slot="prefix-icon"
+          ></image>
         </t-input>
         <view class="cs-submit">
           <t-button theme="primary" disabled="{{!submitActive}}" size="large" block bind:tap="formSubmit"

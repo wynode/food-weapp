@@ -45,7 +45,100 @@
       <t-picker-item options="{{templateTypeList}}"></t-picker-item>
     </t-picker>
 
-    <view class="cr-list">
+    <view class="cr-list" wx:if="{{isRestaurant}}">
+      <t-checkbox-group value="{{checkList}}" bind:change="onCheckResChange">
+        <t-checkbox
+          wx:for="{{restaurantList}}"
+          wx:key="index"
+          value="{{index}}"
+          icon="rectangle"
+          content-disabled
+          max-label-row="10"
+          max-content-row="10"
+          class="cr-item"
+        >
+          <view slot="label" class="cr-item-label">{{ index+1 }}. {{ item.checkProject }} </view>
+          <view slot="content" class="cr-item-content">
+            <view class="cric-btns" wx:if="{{ item.checked }}">
+              <t-button
+                class="cric-btns-left"
+                block
+                data-key="{{index}} fail"
+                theme="danger"
+                variant="{{item.checkResult === 'fail' ? '' : 'outline'}}"
+                bind:tap="handleCheckResResult"
+                >不合格</t-button
+              >
+              <t-button
+                class="cric-btns-right"
+                block
+                data-key="{{index}} success"
+                theme="primary"
+                variant="{{item.checkResult === 'success' ? '' : 'outline'}}"
+                bind:tap="handleCheckResResult"
+                >合格</t-button
+              >
+            </view>
+            <view class="cric-bad" wx:if="{{item.checkResult === 'fail'}}">
+              <!-- <t-input
+                placeholder="请输入异常理由"
+                borderless="{{true}}"
+                style="{{style}}"
+              /> -->
+              <t-textarea
+                t-class="external-class"
+                placeholder="请输入可能存在的风险隐患（非必填）"
+                data-key="{{index}}"
+                value="{{item.maybeRisk}}"
+                bind:change="handleReasonChange"
+                bordered
+                autosize
+                disableDefaultPadding="{{true}}"
+                indicator
+              />
+              <t-textarea
+                t-class="external-class"
+                placeholder="请输入产生的原因分析（非必填）"
+                data-key="{{index}}"
+                value="{{item.reasonAnalysis}}"
+                bind:change="handleReasonChange"
+                bordered
+                autosize
+                disableDefaultPadding="{{true}}"
+                indicator
+              />
+              <t-textarea
+                t-class="external-class"
+                placeholder="请输入防范措施（非必填）"
+                data-key="{{index}}"
+                value="{{item.measures}}"
+                bind:change="handleReasonChange"
+                bordered
+                autosize
+                disableDefaultPadding="{{true}}"
+                indicator
+              />
+              <!-- <view class="cric-bad-title"> 现场照片 </view>
+              <view class="wrapper">
+                <t-upload
+                  class="cric-bad-upload"
+                  media-type="{{['image']}}"
+                  max="{{3}}"
+                  data-key="{{index}}"
+                  files="{{item.checkExceptionFileList}}"
+                  gridConfig="{{gridConfig}}"
+                  bind:success="handleSuccess"
+                  bind:remove="handleRemove"
+                  bind:click="handleClick"
+                >
+                </t-upload>
+              </view> -->
+            </view>
+          </view>
+        </t-checkbox>
+      </t-checkbox-group>
+    </view>
+    <view class="cr-list" wx:else>
       <t-checkbox-group value="{{checkList}}" bind:change="onCheckChange">
         <t-checkbox
           wx:for="{{checkListData}}"

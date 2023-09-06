@@ -2,7 +2,10 @@
   <background></background>
   <view class="choice-shop-type">
     <view class="cst-top">
-      <image class="cst-img" src="/assets/image/shop.png"></image>
+      <image
+        class="cst-img"
+        src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+      ></image>
       <view class="cst-title">请根据您的经营性质选择企业主体类型</view>
     </view>
     <view>
@@ -12,7 +15,10 @@
           <t-radio value="personal" icon="none" borderless>
             <view slot="content" class="cst-box">
               <view class="cst-type">
-                <image class="cst-type-img" src="/assets/image/self_employed.png"></image>
+                <image
+                  class="cst-type-img"
+                  src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/self_employed.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+                ></image>
               </view>
               <view class="cst-type-des">
                 <view class="cst-type-title">个体户 </view>
@@ -26,7 +32,10 @@
           <t-radio value="enterprise" icon="none" borderless>
             <view slot="content" class="cst-box">
               <view class="cst-type">
-                <image class="cst-type-img" src="/assets/image/enterprise.png"></image>
+                <image
+                  class="cst-type-img"
+                  src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/enterprise.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+                ></image>
               </view>
               <view class="cst-type-des">
                 <view class="cst-type-title">企业 </view>

@@ -153,3 +153,13 @@
   border-radius: 16rpx;
   margin-left: 30rpx;
 }
+.srb-btns {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40rpx;
+}
+
+.srb-btns button {
+  width: 310rpx;
+  height: 100rpx;
+}

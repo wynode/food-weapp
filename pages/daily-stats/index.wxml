@@ -2,10 +2,13 @@
   <background isHighlight="true"></background>
   <view class="daily-stats">
     <view class="ds-top">
-      <view class="ds-top-left">{{dateValue[1]}}月日管控</view>
+      <view class="ds-top-left">{{dateValue[1]}}月{{topTitle}}</view>
       <view class="ds-top-right" bindtap="onSeasonPicker">
         <view>其他月份</view>
-        <image class="ds-top-img" src="/assets/image/right_icon.png"></image>
+        <image
+          class="ds-top-img"
+          src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+        ></image>
       </view>
     </view>
 
@@ -25,7 +28,7 @@
     </t-picker>
 
     <view class="ds-stats">
-      <view class="ds-stats-btn">21天合格</view>
+      <view class="ds-stats-btn">{{qualifiedDay}}天合格</view>
       <view class="ds-stats-btn ds-btn-red">1天不合格</view>
       <view class="ds-stats-btn ds-btn-red">14项不合格</view>
     </view>

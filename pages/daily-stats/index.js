@@ -1,5 +1,7 @@
 Page({
   data: {
+    qualifiedDay: '21',
+    topTitle: '日管控',
     dsList: [
       {
         date: '8月21日',
@@ -8,7 +10,9 @@ Page({
           {
             label: '贮存食品的库房，设备，容器，工具是否清洁，安全，无害，设备是否正常运2转，温度是否符合食品安全标准',
             reason: 'A设备运转不正常',
-            fileList: ['/assets/image/shop.png'],
+            fileList: [
+              'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113',
+            ],
           },
         ],
       },
@@ -19,12 +23,17 @@ Page({
           {
             label: '食品经营场所环境整洁卫生，食品（含食品添加剂、食用农产品，下同）是否有被污染的风险。',
             reason: '不达标',
-            fileList: ['/assets/image/bell.png', '/assets/image/shop.png'],
+            fileList: [
+              'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bell.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113',
+              'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113',
+            ],
           },
           {
             label: '接触直接入口或不需清洗即可加工的散装食品时，是否戴口罩、手套和帽子，头发不外露。',
             reason: '不达标',
-            fileList: ['/assets/image/all_day.png'],
+            fileList: [
+              'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/all_day.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113',
+            ],
           },
         ],
       },
@@ -64,24 +73,43 @@ Page({
       },
       {
         label: '5月',
-        value: '5月',
+        value: '5',
       },
       {
         label: '6月',
-        value: '6月',
+        value: '6',
       },
       {
         label: '7月',
-        value: '7月',
+        value: '7',
       },
       {
         label: '8月',
-        value: '8月',
+        value: '8',
       },
     ],
   },
 
-  onLoad(options) {},
+  onLoad(options) {
+    const { pageType = 'day' } = options || {};
+    if (pageType === 'week') {
+      wx.setNavigationBarTitle({
+        title: '周报统计',
+      });
+      this.setData({
+        qualifiedDay: '3',
+        topTitle: '周报',
+      });
+    } else if (pageType === 'month') {
+      wx.setNavigationBarTitle({
+        title: '月报统计',
+      });
+      this.setData({
+        qualifiedDay: '21',
+        topTitle: '月报',
+      });
+    }
+  },
 
   onColumnChange(e) {
     console.log('picker pick:', e);

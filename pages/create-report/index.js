@@ -1,10 +1,12 @@
 import Toast from 'tdesign-miniprogram/toast';
 import { formatTime } from '../../utils/util';
+import { restaurantList } from './mock';
 
 Page({
   data: {
     style: 'border: 2rpx solid rgba(220,220,220,1);border-radius: 12rpx;',
-
+    restaurantList,
+    isRestaurant: false,
     templateTypeValue: [],
     templateTypeTitle: '',
     templateTypeText: '（日周月）食品销售通用模板',
@@ -113,6 +115,19 @@ Page({
   },
 
   onLoad(options) {
+    const shopData = wx.getStorageSync('shop_data');
+    if (shopData.shopTypeText === '餐饮服务') {
+      this.setData({
+        isRestaurant: true,
+        templateTypeText: '（日周月）餐饮服务通用模板',
+        templateTypeList: [
+          {
+            label: '（日周月）餐饮服务通用模板',
+            value: '（日周月）餐饮服务通用模板',
+          },
+        ],
+      });
+    }
     const { allqualified = 0 } = options || {};
     if (allqualified) {
       const tempCheckListData = this.data.checkListData.map((item) => {
@@ -249,6 +264,52 @@ Page({
       computedColor: submitDisabled ? '#FC5B5B' : '0B82FF',
     });
     console.log(e);
+  },
+
+  onCheckResChange(e) {
+    const { value } = e.detail;
+    const tempCheckListData = this.data.restaurantList.map((item, index) => {
+      if (value.includes(index)) {
+        return {
+          ...item,
+          checked: true,
+        };
+      }
+      return {
+        ...item,
+        checked: false,
+        checkResult: '',
+      };
+    });
+    const checkPercentage = (e.detail.value.length / this.data.restaurantList.length) * 100;
+    const submitDisabled = !(e.detail.value.length >= 5);
+    this.setData({
+      checkList: e.detail.value,
+      restaurantList: tempCheckListData,
+      checkPercentage,
+      submitDisabled,
+      computedColor: submitDisabled ? '#FC5B5B' : '0B82FF',
+    });
+    console.log(e);
+  },
+
+  handleCheckResResult(e) {
+    const { key = '0 0' } = e.currentTarget.dataset;
+    const tempCheckListData = this.data.restaurantList.map((item, index) => {
+      if (String(index) === key.split(' ')[0]) {
+        return {
+          ...item,
+          checkResult: key.split(' ')[1],
+        };
+      }
+      return {
+        ...item,
+      };
+    });
+
+    this.setData({
+      restaurantList: tempCheckListData,
+    });
   },
 
   handleCheckResult(e) {

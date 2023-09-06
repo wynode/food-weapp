@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/shop-list/index",
     "pages/create-shop/index",
     "pages/e-signature/index",
     "pages/create-report/index",
@@ -8,6 +7,7 @@
     "pages/enterprise-center/index",
     "pages/enterprise-manage/index",
     "pages/staff-list/index",
+    "pages/shop-list/index",
     "pages/daily-stats/index",
     "pages/submit-report/index",
     "pages/message-notify/index",

@@ -11,11 +11,19 @@ Page({
         label: '餐饮服务',
         value: '餐饮服务',
       },
+      {
+        label: '食品销售',
+        value: '食品销售',
+      },
     ],
     shopTemplateValue: [],
     shopTemplateTitle: '',
     shopTemplateText: '',
     shopTemplateList: [
+      {
+        label: '（日周月）餐饮服务通用模板',
+        value: '（日周月）餐饮服务通用模板',
+      },
       {
         label: '（日周月）食品销售通用模板',
         value: '（日周月）食品销售通用模板',
