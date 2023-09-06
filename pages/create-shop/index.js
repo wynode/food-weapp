@@ -13,20 +13,15 @@ Page({
     submitActive: false,
   },
 
-  onLoad() {
-
-  },
+  onLoad() {},
 
   formSubmit() {
-    const {
-      isLegal,
-      tips
-    } = this.onVerifyInputLegal();
+    const { isLegal, tips } = this.onVerifyInputLegal();
     if (isLegal) {
-      wx.setStorageSync('shop_form', this.data.csForm)
+      wx.setStorageSync('shop_form', this.data.csForm);
       wx.redirectTo({
         url: '/pages/create-shop-profile/index',
-      })
+      });
     } else {
       Toast({
         context: this,
@@ -37,28 +32,24 @@ Page({
   },
 
   onInputValue(e) {
-    const {
-      value = ''
-    } = e.detail;
-    const {
-      item
-    } = e.currentTarget.dataset;
-    this.setData({
-      [`csForm.${item}`]: value,
-    }, () => {
-      if (Object.keys(this.data.csForm).every((item) => this.data.csForm[item])) {
-        this.setData({
-          submitActive: true,
-        });
-      }
-    });
+    const { value = '' } = e.detail;
+    const { item } = e.currentTarget.dataset;
+    this.setData(
+      {
+        [`csForm.${item}`]: value,
+      },
+      () => {
+        if (Object.keys(this.data.csForm).every((item) => this.data.csForm[item])) {
+          this.setData({
+            submitActive: true,
+          });
+        }
+      },
+    );
   },
 
   onVerifyInputLegal() {
-    const {
-      shopUser,
-      shopPhone
-    } = this.data.csForm;
+    const { shopUser, shopPhone } = this.data.csForm;
     const prefixPhoneReg = String(this.properties.phoneReg || innerPhoneReg);
     const prefixNameReg = String(this.properties.nameReg || innerNameReg);
     const nameRegExp = new RegExp(prefixNameReg);
@@ -80,5 +71,4 @@ Page({
       tips: '添加成功',
     };
   },
-
 });

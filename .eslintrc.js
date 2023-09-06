@@ -29,10 +29,7 @@ module.exports = {
     'class-name-casing': 'off',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'no-debugger': 'error',
-    'no-unused-expressions': [
-      'error',
-      { allowShortCircuit: true, allowTernary: true },
-    ],
+    'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
     'no-empty-interface': 'off',
     'no-use-before-define': ['error', { functions: false }],
     'no-useless-constructor': 'error',
@@ -95,7 +92,7 @@ module.exports = {
     'one-var': ['warn', 'never'],
     'no-multi-assign': 'error',
     'no-unused-vars': [
-      'error',
+      'warn',
       {
         args: 'after-used',
         ignoreRestSiblings: true,

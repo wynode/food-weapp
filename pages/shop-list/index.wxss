@@ -1,6 +1,10 @@
-.staff-list {
+.shop-list {
   position: relative;
-  padding: 30rpx;
+}
+
+.example-search {
+  background-color: #fff;
+  padding: 16rpx 32rpx;
 }
 
 .btn-wrapper {
@@ -40,10 +44,17 @@
   padding-bottom: 8rpx;
 }
 
+.sl-items {
+  margin: 10px;
+}
+
 .sl-item {
   border-radius: 16rpx;
   margin-top: 20rpx;
   overflow: hidden;
+  display: flex;
+  background-color: #fff;
+  height: 180rpx;
 }
 
 .sl-top {
@@ -51,13 +62,43 @@
   justify-content: space-between;
 }
 
-.sl-title {
+.sl-image-box {
+  width: 200rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sl-item-info {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.sl-name {
   font-size: 32rpx;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;
   color: #333333;
   line-height: 45rpx;
 }
+
+.sl-title {
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgb(27, 96, 200);
+  line-height: 45rpx;
+}
+
+.sl-address {
+  font-size: 24rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(60, 58, 58, 0.46);
+  line-height: 45rpx;
+}
+
 
 .sl-btn {
   padding: 0;
@@ -67,9 +108,9 @@
 }
 
 .sl-item-image {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 14px;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 30rpx;
   background: #0B82FF;
   display: flex;
   justify-content: center;
@@ -77,41 +118,5 @@
   color: #fff;
   font-size: 38rpx;
   font-weight: bold;
-  margin-right: 20rpx;
-}
 
-.sl-item-image1 {
-  background: #ed7b2f;
-}
-
-.sl-item-image2 {
-  background: #FC5B5B;
-}
-
-.sl-item-title {
-  font-size: 34rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: #333333;
-  line-height: 48rpx;
-}
-
-.sl-item-desc {
-  font-size: 30rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: rgba(51, 51, 51, 0.7);
-  line-height: 42rpx;
-  margin-top: 10rpx;
-}
-
-.sl-item-note image {
-  width: 110rpx;
-  height: 110rpx;
-  margin-left: 14rpx;
-}
-
-.sl-tips {
-  text-align: center;
-  color: #999;
 }
