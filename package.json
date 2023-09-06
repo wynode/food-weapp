@@ -13,9 +13,6 @@
   "author": "",
   "license": "ISC",
   "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   },
   "lint-staged": {
     "*.{js, ts}": "eslint --cache --fix",
