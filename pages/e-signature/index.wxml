@@ -2,7 +2,41 @@
   <wxml-to-canvas class="widget" width="400" height="{{canvasHeight}}"></wxml-to-canvas>
   <view class="test"></view>
   <background isHighlight="true"></background>
-  <view class="signResult">
+  <view class="signResult" wx:if="isRestaurant">
+    <view class="ssignTitle">
+      <text>餐饮服务日检查记录</text>
+    </view>
+    <view class="ssignTable">
+      <view class="ssignTr ssignHeader">
+        <view class="ssignTh">序号</view>
+        <view class="ssignTh">检查项目</view>
+        <view class="ssignTh">检查结果</view>
+        <view class="ssignTh">可能存在的风险隐患</view>
+        <view class="ssignTh">产生的原因分析</view>
+        <view class="ssignTh">防范措施</view>
+      </view>
+      <block wx:for="{{reportData}}" wx:key="index">
+        <view class="ssignTr">
+          <view class="ssignTd">{{index + 1}}</view>
+          <view class="ssignTd">{{item.checkProject}}</view>
+          <view class="ssignTd"> {{ item.checkResult === 'success' ? '合格' : '不合格'}} </view>
+          <view class="ssignTd">{{item.maybeRisk}}</view>
+          <view class="ssignTd">{{item.reasonAnalysis}}</view>
+          <view class="ssignTd">{{item.measures}}</view>
+        </view>
+      </block>
+    </view>
+
+    <view class="signBottom">
+      <view>检查日期：{{currentDay}}</view>
+      <view wx:if="{{signUrl}}" class="signSign">
+        <text>报告人：</text>
+        <image src="{{signUrl}}"></image>
+      </view>
+      <t-button wx:else type="primary" bindtap="handleFullScreen1">点击签名</t-button>
+    </view>
+  </view>
+  <view class="signResult" wx:else>
     <view class="signTitle">
       <text>食品安全日检查记录</text>
     </view>

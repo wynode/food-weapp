@@ -157,7 +157,13 @@ Page({
   },
 
   handleSubmit() {
-    wx.setStorageSync('report_data', this.data.checkListData);
+    let reportData = []
+    if (this.data.isRestaurant) {
+      reportData = this.data.restaurantList
+    } else {
+      reportData = this.data.checkListData
+    }
+    wx.setStorageSync('report_data', reportData);
     Toast({
       context: this,
       selector: '#t-toast',

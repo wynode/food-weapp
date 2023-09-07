@@ -23,6 +23,7 @@ Page({
     this.setData({
       reportData,
     });
+    console.log(reportData)
     try {
       const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
       this.setData({
