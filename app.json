@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/create-shop/index",
     "pages/report-list/index",
     "pages/e-signature/index",
     "pages/e-signature2/index",
-    "pages/create-shop/index",
     "pages/enterprise-profile/index",
     "pages/choice-shop-type/index",
     "pages/enterprise-info/index",
