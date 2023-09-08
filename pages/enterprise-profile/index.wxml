@@ -1,0 +1,133 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="shop-list">
+    <view class="sl-items">
+      <view class="sl-item" wx:for="{{shopList1}}" wx:key="index">
+        <view class="sl-image-box">
+          <view slot="image" class="sl-item-image sl-item-image{{index}}">{{item.name ? item.name[0] : '佚'}}</view>
+        </view>
+        <view class="sl-item-info">
+          <view class="sl-name">{{item.name}}</view>
+          <view class="sl-address">{{item.address}}</view>
+          <view class="sl-location"
+            ><t-icon style="color: #666" name="location" size="40rpx" data-name="location" bind:click="onIconTap" />
+            到这去 48km
+          </view>
+        </view>
+      </view>
+    </view>
+    <view>
+      <t-button
+        theme="primary"
+        icon="system-messages"
+        variant="outline"
+        content="发送整改通知"
+        size="small"
+        style="margin-left: 20rpx"
+      ></t-button>
+      <t-button
+        theme="primary"
+        icon="city-10"
+        variant="outline"
+        content="企业信息"
+        size="small"
+        style="margin-left: 20rpx"
+      ></t-button>
+      <t-button
+        theme="primary"
+        icon="call-forwarded"
+        variant="outline"
+        content="联系负责人"
+        size="small"
+        style="margin-left: 20rpx"
+      ></t-button>
+    </view>
+    <view class="ei-center">
+      <view class="rl-record">
+        <view class="rlr-top">
+          <view class="rlr-top-left">本月记录</view>
+          <view class="rlr-top-right" bindtap="onSeasonPicker">
+            <view>其他月份</view>
+            <image
+              class="rlr-top-img"
+              src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+            ></image>
+          </view>
+        </view>
+        <t-picker
+          visible="{{dateVisible}}"
+          value="{{dateValue}}"
+          data-key="date"
+          title="选择时间"
+          cancelBtn="取消"
+          confirmBtn="确认"
+          bindchange="onPickerChange"
+          bindpick="onColumnChange"
+          bindcancel="onPickerCancel"
+        >
+          <t-picker-item options="{{years}}"></t-picker-item>
+          <t-picker-item options="{{seasons}}"></t-picker-item>
+        </t-picker>
+        <view class="rlr-content">
+          <t-progress color="#0B82FF" stroke-width="20" theme="circle" percentage="30" />
+          <view class="rlr-record">
+            <view class="rlr-record-item">
+              <view>本月日管控</view>
+              <view>7/30</view>
+            </view>
+            <view class="rlr-record-item">
+              <view>本月周排查</view>
+              <view>1/4</view>
+            </view>
+            <view class="rlr-record-item">
+              <view>本月月调度</view>
+              <view>0/1</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view style="padding: 20rpx">
+      <view style="margin-top: 2rpx; margin-bottom: 10rpx; font-size: 32rpx; font-weight: bold">企业信息</view>
+      <t-row gutter="16">
+        <t-col span="8" bind:tap="goEnterprise">
+          <image src="/assets/image/qyxx.png" style="background: #b483ff" mode="" />
+          <view class="col-title">企业信息</view>
+        </t-col>
+        <t-col span="8" bind:tap="goCertInfo">
+          <image src="/assets/image/bggl.png" mode="" style="background: #0b82ff" />
+          <view class="col-title">证件信息</view></t-col
+        >
+        <t-col span="8" bind:tap="goBao">
+          <image src="/assets/image/qygl.png" mode="" style="background: #00bacc" />
+          <view class="col-title">包保信息</view></t-col
+        >
+      </t-row>
+      <t-row gutter="16">
+        <t-col span="8" data-key="day" bindtap="goProfile">
+          <image src="/assets/image/all_day.png" mode="" /> <view class="col-title">日管控记录</view></t-col
+        >
+        <t-col span="8" data-key="week" bindtap="goProfile">
+          <image src="/assets/image/all_weak.png" mode="" /> <view class="col-title">周排查记录</view></t-col
+        >
+        <t-col span="8" data-key="month" bindtap="goProfile">
+          <image src="/assets/image/all_month.png" mode="" /> <view class="col-title">月调度记录</view></t-col
+        >
+      </t-row>
+    </view>
+  </view>
+
+  <t-tab-bar value="{{tabBarValue}}" bindchange="onTabBarChange" theme="tag" split="{{false}}">
+    <t-tab-bar-item
+      wx:for="{{list}}"
+      wx:key="index"
+      value="{{item.value}}"
+      icon="{{item.icon}}"
+      class="tab-bar-ico{{index}}"
+      ariaLabel="{{item.ariaLabel}}"
+      badge-props="{{item.badgeProps}}"
+    >
+      {{item.ariaLabel}}
+    </t-tab-bar-item>
+  </t-tab-bar>
+</view>

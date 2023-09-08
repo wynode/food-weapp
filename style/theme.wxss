@@ -47,8 +47,9 @@
   --td-button-danger-text-color: #fff;
 }
 
-.t-textarea {
+.cr-list .t-textarea {
   --td-textarea-placeholder-color: #bbb;
+  --td-font-size-m: 28rpx;
 }
 
 .t-checkbox {

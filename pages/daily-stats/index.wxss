@@ -110,6 +110,15 @@
   line-height: 42rpx;
 }
 
+.ds-item-label2 {
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 0.8);
+  line-height: 42rpx;
+  margin-bottom: 20rpx;
+}
+
 .ds-item-reason {
   font-size: 32rpx;
   font-family: PingFangSC-Regular, PingFang SC;
@@ -120,6 +129,18 @@
   border-bottom: 2rpx dashed #DAE2E9;
   padding: 20rpx 0;
   margin: 20rpx 0;
+}
+
+.ds-item-reason2 {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FC5B5B;
+  line-height: 45rpx;
+  border-bottom: 2rpx dashed #DAE2E9;
+  margin-bottom: 40rpx;
+  padding-bottom: 10rpx;
+  padding-top: 10rpx;
 }
 
 .ds-item-photo {}

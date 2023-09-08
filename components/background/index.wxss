@@ -11,6 +11,13 @@
   height: 100vh;
 }
 
+.go-monitor {
+  position: absolute;
+  top: 10rpx;
+  left: 10rpx;
+  z-index: 100000;
+}
+
 .main-background-image {
   position: absolute;
   width: 100vw;

@@ -33,7 +33,7 @@ Page({
     personalPhone: '',
 
     value1: [0, 1],
-    userRole: [],
+    userRole: ['day', 'week', 'month'],
   },
 
   onLoad() {},

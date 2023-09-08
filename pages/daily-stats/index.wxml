@@ -39,18 +39,41 @@
           <view class="ds-item-top-left"> {{item.date}} </view>
           <view class="ds-item-top-right"> {{item.unqualifiedTotal}}项不合格 </view>
         </view>
-        <view class="ds-item-content" wx:for="{{item.unqualifiedList}}" wx:for-item="unItem" wx:key="{{unItem.label}}">
-          <view class="ds-item-label">{{unItem.label}}</view>
-          <view class="ds-item-reason">{{unItem.reason}}</view>
-          <view class="ds-item-photo">
-            <view class="ds-item-photo-title">现场照片</view>
-            <image
-              class="ds-item-photo-image"
-              wx:for="{{unItem.fileList}}"
-              wx:key="fileItem"
-              wx:for-item="fileItem"
-              src="{{fileItem}}"
-            ></image>
+        <view wx:if="{{isRes}}">
+          <view
+            class="ds-item-content"
+            wx:for="{{item.unqualifiedList}}"
+            wx:for-item="unItem"
+            wx:key="{{unItem.label}}"
+          >
+            <view class="ds-item-label2">{{unItem.checkProject}}</view>
+            <view>可能存在的风险隐患：</view>
+            <view class="ds-item-reason2">{{unItem.maybeRisk}}</view>
+            <view>产生的原因分析：</view>
+            <view class="ds-item-reason2">{{unItem.reasonAnalysis}}</view>
+            <view>防范措施：</view>
+            <view class="ds-item-reason2">{{unItem.measures}}</view>
+          </view>
+        </view>
+        <view wx:else>
+          <view
+            class="ds-item-content"
+            wx:for="{{item.unqualifiedList}}"
+            wx:for-item="unItem"
+            wx:key="{{unItem.label}}"
+          >
+            <view class="ds-item-label">{{unItem.label}}</view>
+            <view class="ds-item-reason">{{unItem.reason}}</view>
+            <view class="ds-item-photo">
+              <view class="ds-item-photo-title">现场照片</view>
+              <image
+                class="ds-item-photo-image"
+                wx:for="{{unItem.fileList}}"
+                wx:key="fileItem"
+                wx:for-item="fileItem"
+                src="{{fileItem}}"
+              ></image>
+            </view>
           </view>
         </view>
       </view>

@@ -1,0 +1,57 @@
+.data-show {
+  position: relative;
+}
+
+.ds-picker {
+}
+
+.ds-list {
+  position: relative;
+  margin-bottom: 40rpx;
+}
+
+.ds-content {
+  padding: 20rpx;
+}
+
+.ds-list-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.ds-ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20rpx;
+}
+
+.ds-item-progress {
+  width: 178rpx;
+}
+
+.t-progress__canvas--circle {
+  width: 178rpx !important;
+  height: 178rpx !important;
+}
+
+.t-progress__canvas--inner {
+  width: 150rpx !important;
+  height: 150rpx !important;
+}
+
+.ds-item-title {
+  margin-bottom: 16rpx;
+  font-size: 26rpx;
+}
+
+.ds-item {
+  background-color: #fff;
+  border-radius: 14rpx;
+  padding: 20rpx;
+}
+
+.t-progress__canvas--inner {
+  display: flex !important;
+  flex-direction: column !important;
+}

@@ -1,0 +1,40 @@
+<view>
+  <background></background>
+  <view class="create-new-shop">
+    <view class="cns-title">企业信息</view>
+    <view class="cns-input">
+      <t-input value="花花的咖啡馆" bindblur="nameChange" placeholder="请填写负责人姓名" />
+    </view>
+    <view class="cns-input">
+      <t-input value="四川省成都市金牛区马鞍东路14号附6" bindblur="nameChange" placeholder="请填写负责人姓名" />
+    </view>
+    <view class="cns-title">店铺类别</view>
+    <view class="cns-input">
+      <t-input value="餐饮" bindblur="phoneChange" placeholder="请填写负责人联系电话" />
+    </view>
+    <view class="cns-title">法人信息</view>
+    <view class="cns-input">
+      <t-input value="花花   18776756534" bindblur="phoneChange" placeholder="请填写负责人联系电话" />
+    </view>
+    <view class="cns-title">包保信息</view>
+    <view class="cns-input">
+      <t-textarea
+        value="周文 职务：社区书记 包保等级：D 15565345432"
+        bindblur="phoneChange"
+        placeholder="请填写负责人联系电话"
+      />
+    </view>
+    <view class="cns-title">企业员工</view>
+    <view class="cns-input">
+      <t-input value="食品安全员  周文   15565345432" bindblur="phoneChange" placeholder="请填写负责人联系电话" />
+    </view>
+    <view class="cns-input">
+      <t-input value="食品总监      周一文   15565345432" bindblur="phoneChange" placeholder="请填写负责人联系电话" />
+    </view>
+    <view class="cns-input">
+      <t-input value="企业负责人      周二文   15565345432" bindblur="phoneChange" placeholder="请填写负责人联系电话" />
+    </view>
+  </view>
+</view>
+
+<t-toast id="t-toast"></t-toast>

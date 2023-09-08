@@ -1,0 +1,42 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="data-show">
+    <view class="ds-picker">
+      <t-cell class="mb-16" title="选择区域" arrow hover note="{{cityText}}" bind:click="onCityPicker" />
+      <t-picker
+        visible="{{cityVisible}}"
+        value="{{cityValue}}"
+        data-key="date"
+        title="选择时间"
+        cancelBtn="取消"
+        confirmBtn="确认"
+        bindchange="onPickerChange"
+        bindcancel="onPickerCancel"
+      >
+        <t-picker-item options="{{citys}}" />
+      </t-picker>
+    </view>
+    <view class="ds-content">
+      <view class="ds-list" wx:for="{{dataList}}">
+        <view class="ds-list-title"> {{item.title}} </view>
+        <view class="ds-ul">
+          <view class="ds-item" wx:for="{{item.childrenList}}" wx:for-item="cItem">
+            <view class="ds-item-title">{{cItem.title}}</view>
+            <view class="ds-item-progress">
+              <t-progress
+                class="ds-item-progress"
+                color="{{cItem.status === 'success' ? '#2BA471' : cItem.status === 'warning' ? '#D54941' : '#0B82FF'}}"
+                track-color="rgba(11,130,255,0.1)"
+                stroke-width="10"
+                theme="circle"
+                percentage="{{cItem.progress}}"
+              >
+                <view slot="label"> {{cItem.total}} </view>
+              </t-progress>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

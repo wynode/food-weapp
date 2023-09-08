@@ -5,7 +5,7 @@
       <view class="cr-top">
         <view class="cr-top-left">
           必选项
-          <text>{{checkList.length}}</text>/5
+          <text>{{checkList.length}}</text>/{{isRestaurant ? '15' : '5'}}
         </view>
         <view class="cr-top-right">
           <text>{{ currentDay }}</text>
@@ -85,6 +85,7 @@
                 borderless="{{true}}"
                 style="{{style}}"
               /> -->
+              <view>可能存在的风险隐患</view>
               <t-textarea
                 t-class="external-class"
                 placeholder="请输入可能存在的风险隐患（非必填）"
@@ -96,6 +97,7 @@
                 disableDefaultPadding="{{true}}"
                 indicator
               />
+              <view style="margin-top: 10rpx">产生的原因分析</view>
               <t-textarea
                 t-class="external-class"
                 placeholder="请输入产生的原因分析（非必填）"
@@ -107,6 +109,7 @@
                 disableDefaultPadding="{{true}}"
                 indicator
               />
+              <view style="margin-top: 10rpx">防范措施</view>
               <t-textarea
                 t-class="external-class"
                 placeholder="请输入防范措施（非必填）"

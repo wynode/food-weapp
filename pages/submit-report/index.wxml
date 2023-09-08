@@ -60,10 +60,10 @@
     </view>
     <view class="srb-btns" wx:if="{{switchValue}}">
       <t-button class="srb-btns-left" theme="primary" variant="outline" size="large" bindtap="goCreateWeek"
-        >生成周报</t-button
+        >生成周排查</t-button
       >
       <t-button class="srb-btns-right" theme="primary" variant="outline" size="large" bindtap="goCreateMonth"
-        >生成月报</t-button
+        >生成月调度</t-button
       >
     </view>
   </view>

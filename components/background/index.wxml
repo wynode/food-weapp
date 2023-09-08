@@ -4,4 +4,5 @@
     class="main-background-image"
     src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/background.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
   ></image>
+  <!-- <t-button class="go-monitor" theme="primary" size="large">监管版</t-button> -->
 </view>

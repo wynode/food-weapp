@@ -1,0 +1,47 @@
+<view>
+  <background></background>
+  <view class="create-new-shop">
+    <view class="cns-business">
+      <view class="cns-upload-box">
+        <view class="cns-title">营业执照</view>
+        <image src="{{yyzz}}" class="bb-image" />
+      </view>
+      <view class="cns-upload-box" style="margin-left: 50rpx">
+        <view class="cns-title">食品安全许可证</view>
+        <image src="{{spaq}}" class="bb-image" />
+      </view>
+    </view>
+    <view class="cns-input">
+      <t-input value="{{ businessCode }}" bindblur="codeChange" placeholder="营业执照编码" />
+    </view>
+    <view class="cns-business">
+      <view class="cns-upload-box">
+        <view class="cns-title">日管控制度</view>
+        <image src="{{rgk}}" class="bb-image" />
+      </view>
+      <view class="cns-upload-box" style="margin-left: 50rpx">
+        <view class="cns-title">周排查制度</view>
+        <image src="{{zpc}}" class="bb-image" />
+      </view>
+    </view>
+    <view class="cns-business">
+      <view class="cns-upload-box">
+        <view class="cns-title">月调度制度</view>
+        <image src="{{ydd}}" class="bb-image" />
+      </view>
+    </view>
+    <view class="cns-jkz">
+      <view class="cns-title">健康证</view>
+      <view class="cns-upload-box">
+        <image src="{{jkz}}" style="margin-right: 40rpx" class="bb-image" />
+        <image src="{{jkz}}" class="bb-image" />
+      </view>
+      <view style="margin-top: 40rpx">
+        <image src="{{jkz}}" style="margin-right: 40rpx" class="bb-image" />
+        <image src="{{jkz}}" class="bb-image" />
+      </view>
+    </view>
+  </view>
+</view>
+
+<t-toast id="t-toast"></t-toast>

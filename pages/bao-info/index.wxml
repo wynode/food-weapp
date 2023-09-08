@@ -1,0 +1,15 @@
+<view>
+  <background></background>
+  <view class="create-new-shop">
+    <view class="cns-title">包保信息</view>
+    <view class="cns-input">
+      <t-textarea
+        value="周文 职务：社区书记 包保等级：D 15565345432"
+        bindblur="phoneChange"
+        placeholder="请填写负责人联系电话"
+      />
+    </view>
+  </view>
+</view>
+
+<t-toast id="t-toast"></t-toast>

@@ -157,11 +157,11 @@ Page({
   },
 
   handleSubmit() {
-    let reportData = []
+    let reportData = [];
     if (this.data.isRestaurant) {
-      reportData = this.data.restaurantList
+      reportData = this.data.restaurantList;
     } else {
-      reportData = this.data.checkListData
+      reportData = this.data.checkListData;
     }
     wx.setStorageSync('report_data', reportData);
     Toast({
@@ -288,7 +288,7 @@ Page({
       };
     });
     const checkPercentage = (e.detail.value.length / this.data.restaurantList.length) * 100;
-    const submitDisabled = !(e.detail.value.length >= 5);
+    const submitDisabled = !(e.detail.value.length >= 15);
     this.setData({
       checkList: e.detail.value,
       restaurantList: tempCheckListData,

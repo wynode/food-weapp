@@ -1,0 +1,19 @@
+{
+  "navigationBarTitleText": "数据展示",
+  "usingComponents": {
+    "t-divider": "tdesign-miniprogram/divider/divider",
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "t-image": "/components/webp-image/index",
+    "t-button": "tdesign-miniprogram/button/button",
+    "background": "/components/background/index",
+    "t-swipe-cell": "tdesign-miniprogram/swipe-cell/swipe-cell",
+    "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-picker": "tdesign-miniprogram/picker/picker",
+    "t-picker-item": "tdesign-miniprogram/picker-item/picker-item",
+    "t-progress": "tdesign-miniprogram/progress/progress",
+    "t-search": "tdesign-miniprogram/search/search",
+    "t-grid": "tdesign-miniprogram/grid/grid",
+    "t-grid-item": "tdesign-miniprogram/grid-item/grid-item"
+  }
+}
