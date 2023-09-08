@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/report-list/index",
     "pages/create-shop/index",
     "pages/enterprise-profile/index",
-    "pages/report-list/index",
     "pages/choice-shop-type/index",
     "pages/enterprise-info/index",
     "pages/cert-info/index",
