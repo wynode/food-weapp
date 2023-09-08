@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/report-list/index",
+    "pages/e-signature/index",
+    "pages/e-signature2/index",
     "pages/create-shop/index",
     "pages/enterprise-profile/index",
     "pages/choice-shop-type/index",
@@ -9,7 +11,6 @@
     "pages/data-show/index",
     "pages/shop-list/index",
     "pages/submit-report/index",
-    "pages/e-signature/index",
     "pages/create-report/index",
     "pages/enterprise-center/index",
     "pages/enterprise-manage/index",

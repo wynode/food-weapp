@@ -130,21 +130,39 @@ Page({
     }
     const { allqualified = 0 } = options || {};
     if (allqualified) {
-      const tempCheckListData = this.data.checkListData.map((item) => {
-        return {
-          ...item,
-          checked: true,
-          checkResult: 'success',
-        };
-      });
-      this.setData({
-        checkListData: tempCheckListData,
-        checkList: Array.from(Array(11).keys()),
-        showAllQualified: true,
-        submitDisabled: false,
-        checkPercentage: 100,
-        computedColor: '',
-      });
+      if (shopData.shopTypeText === '餐饮服务') {
+        const tempCheckListData = this.data.restaurantList.map((item) => {
+          return {
+            ...item,
+            checked: true,
+            checkResult: 'success',
+          };
+        });
+        this.setData({
+          restaurantList: tempCheckListData,
+          checkList: Array.from(Array(49).keys()),
+          showAllQualified: true,
+          submitDisabled: false,
+          checkPercentage: 100,
+          computedColor: '',
+        });
+      } else {
+        const tempCheckListData = this.data.checkListData.map((item) => {
+          return {
+            ...item,
+            checked: true,
+            checkResult: 'success',
+          };
+        });
+        this.setData({
+          checkListData: tempCheckListData,
+          checkList: Array.from(Array(11).keys()),
+          showAllQualified: true,
+          submitDisabled: false,
+          checkPercentage: 100,
+          computedColor: '',
+        });
+      }
     }
   },
 
@@ -169,9 +187,15 @@ Page({
       selector: '#t-toast',
       message: '提交成功',
     });
-    wx.redirectTo({
-      url: '/pages/e-signature/index',
-    });
+    if (this.data.isRestaurant) {
+      wx.redirectTo({
+        url: '/pages/e-signature2/index',
+      });
+    } else {
+      wx.redirectTo({
+        url: '/pages/e-signature/index',
+      });
+    }
   },
 
   onColumnChange(e) {

@@ -2,7 +2,7 @@
   <wxml-to-canvas class="widget" width="{{canvasWidth}}" height="{{canvasHeight}}"></wxml-to-canvas>
   <view class="test"></view>
   <background isHighlight="true"></background>
-  <view class="ssignResult" wx:if="{{isRestaurant}}">
+  <view class="ssignResult">
     <view class="ssignTitle">
       <text>餐饮服务日检查记录</text>
     </view>
@@ -36,38 +36,8 @@
       <t-button wx:else type="primary" bindtap="handleFullScreen1">点击签名</t-button>
     </view>
   </view>
-  <view class="signResult" wx:else>
-    <view class="signTitle">
-      <text>食品安全日检查记录</text>
-    </view>
-    <view class="signTable">
-      <view class="signTr signHeader">
-        <view class="signTh">序号</view>
-        <view class="signTh">每周风险防控清单</view>
-        <view class="signTh">检查结果</view>
-        <view class="signTh">整改情况</view>
-      </view>
-      <block wx:for="{{reportData}}" wx:key="index">
-        <view class="signTr">
-          <view class="signTd">{{index + 1}}</view>
-          <view class="signTd textLeft">{{item.label}}</view>
-          <view class="signTd signCommend"> {{ item.checkResult === 'success' ? '合格' : '不合格'}} </view>
-          <view class="signTd textLeft">{{item.checkExceptionReason}}</view>
-        </view>
-      </block>
-    </view>
 
-    <view class="signBottom">
-      <view>检查日期：{{currentDay}}</view>
-      <view wx:if="{{signUrl}}" class="signSign">
-        <text>报告人：</text>
-        <image src="{{signUrl}}"></image>
-      </view>
-      <t-button wx:else type="primary" bindtap="handleFullScreen1">点击签名</t-button>
-    </view>
-  </view>
-
-  <view class="sign-export"> <t-button block bindtap="exportFn">导出报告</t-button></view>
+  <view class="sign-export"> <t-button block bindtap="exportReport2">导出报告</t-button></view>
 
   <!-- <view class="container1" wx:if="{{notShow}}">
     <view class="sign-title">请在以下区域书写您的签名</view>

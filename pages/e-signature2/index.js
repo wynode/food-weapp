@@ -11,29 +11,19 @@ Page({
     height1: 240,
     width2: 320,
     height2: 600,
-    canvasWidth: 400,
-    canvasHeight: 1100,
+    canvasWidth: 800,
+    canvasHeight: 4660,
     scale: 2,
     border: {
       color: '#333',
     },
     currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
-    isRestaurant: false,
   },
   onReady() {
-    const shopData = wx.getStorageSync('shop_data');
-    if (shopData.shopTypeText === '餐饮服务') {
-      this.setData({
-        isRestaurant: true,
-        canvasWidth: 800,
-        canvasHeight: 4660,
-      });
-    }
     const reportData = wx.getStorageSync('report_data');
     this.setData({
       reportData,
     });
-    console.log(reportData);
     try {
       const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
       this.setData({
@@ -292,237 +282,6 @@ Page({
           fail: reject,
         });
       }, 50);
-    });
-  },
-
-  exportFn() {
-    if (this.data.isRestaurant) {
-      this.exportReport2();
-    } else {
-      this.exportReport();
-    }
-  },
-
-  exportReport() {
-    const query = wx.createSelectorQuery();
-    const wxml = `
-    <view class="signResult">
-      <view class="signTable">
-        <view class="signTitle">
-          <text class="signTitle1">食品安全日检查记录</text>
-        </view>
-        <view class="signTrb1"></view>
-        <view class="signHeader">
-          <view class="signTh1b"></view>
-          <view class="signTh1"><text class="signTh1">序号</text></view>
-          <view class="signTh1b"></view>
-          <view class="signTh2"><text class="signTh2">每周风险防控清单</text></view>
-          <view class="signTh1b"></view>
-          <view class="signTh3"><text class="signTh3">检查结果</text></view>
-          <view class="signTh1b"></view>
-          <view class="signTh4"><text class="signTh4">整改情况</text></view>
-          <view class="signTh1b"></view>
-        </view>
-        <view class="signTrb1"></view>
-        ${this.data.reportData
-          .map((item, index) => {
-            return `
-        <view class="signTr">
-          <view class="signTr${index * 4 + 1}b"></view>
-          <view class="signTd${index * 4 + 1}"><text class="signTd${index * 4 + 1}">${index + 1}</text></view>
-          <view class="signTr${index * 4 + 1}b"></view>
-          <view class="signTd${index * 4 + 2}"><text class="signTd${index * 4 + 2}">${item.label}</text></view>
-          <view class="signTr${index * 4 + 2}b"></view>
-          <view class="signTd${index * 4 + 3}"><text class="signTd${index * 4 + 3}">${
-              item.checkResult === 'success' ? '合格' : '不合格'
-            }</text></view>
-          <view class="signTr${index * 4 + 3}b"></view>
-          <view class="signTd${index * 4 + 4}"><text class="signTd${index * 4 + 4}">${
-              item.checkExceptionReason
-            }</text></view>
-          <view class="signTr${index * 4 + 4}b"></view>
-        </view>
-        <view class="signTrb1"></view>
-          `;
-          })
-          .join('')}
-      </view>
-      <view class="signBottom">
-        <view class="signLeft">
-          <text class="signDate">检查日期：${this.data.currentDay}</text>
-        </view>
-        <view class="signRight">
-          <text class="signText">报告人：</text>
-          <image class="signImage" src="${this.data.signUrl}"></image>
-        </view>
-      </view>
-    </view>
-      `;
-    let style = {
-      signTr: {
-        flexDirection: 'row',
-      },
-      signHeader: {
-        flexDirection: 'row',
-      },
-      signTh1b: {
-        width: 1,
-        height: 22,
-        backgroundColor: '#000',
-      },
-      signTrb1: {
-        width: 386,
-        height: 1,
-        backgroundColor: '#000',
-      },
-      signBottom: {
-        width: 340,
-        height: 70,
-        margin: 40,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-      },
-      signTitle: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        margin: 10,
-        width: 380,
-        height: 24,
-      },
-      signTitle1: {
-        width: 146,
-        height: 24,
-        fontSize: 14,
-      },
-      signLeft: {
-        width: 132,
-        height: 24,
-      },
-      signDate: {
-        width: 132,
-        height: 24,
-        fontSize: 12,
-      },
-      signRight: {
-        width: 174,
-        height: 70,
-        fontSize: 12,
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-      },
-      signText: {
-        width: 64,
-        height: 28,
-        fontSize: 12,
-      },
-      signImage: {
-        width: 124,
-        height: 66,
-      },
-      signTh1: {
-        width: 31.75,
-        height: 22,
-        fontSize: 12,
-        textAlign: 'center',
-        verticalAlign: 'middle',
-        padding: 2,
-      },
-      signTh2: {
-        width: 174.625,
-        height: 22,
-        fontSize: 12,
-        textAlign: 'center',
-        verticalAlign: 'middle',
-        padding: 2,
-      },
-      signTh3: {
-        width: 63.5,
-        height: 22,
-        fontSize: 12,
-        textAlign: 'center',
-        verticalAlign: 'middle',
-        padding: 2,
-      },
-      signTh4: {
-        width: 111,
-        height: 22,
-        fontSize: 12,
-        textAlign: 'center',
-        verticalAlign: 'middle',
-        padding: 2,
-      },
-    };
-    query
-      .select('.signResult')
-      .boundingClientRect((res) => {
-        const elementWidth = res.width;
-        const elementHeight = res.height;
-        style = {
-          ...style,
-          signResult: {
-            width: elementWidth,
-            height: elementHeight + 40,
-            backgroundColor: '#fff',
-            padding: 8,
-            position: 'absolute',
-            top: 60,
-          },
-        };
-      })
-      .exec();
-    query
-      .selectAll('.signTd')
-      .boundingClientRect((tdArray) => {
-        tdArray.forEach((item, index) => {
-          style[`signTd${index + 1}`] = {
-            width: item.width,
-            height: item.height < 22 ? 22 : item.height,
-            fontSize: 12,
-            textAlign: item.width > 100 ? 'left' : 'center',
-            verticalAlign: 'middle',
-            padding: 2,
-          };
-          style[`signTr${index + 1}b`] = {
-            width: 1,
-            height: item.height < 22 ? 22 : item.height,
-            backgroundColor: '#000',
-          };
-        });
-        console.log(style);
-        this.widget.renderToCanvas({
-          wxml,
-          style,
-        });
-      })
-      .exec();
-
-    wx.showLoading({
-      title: '图片生成中',
-    }).then(() => {
-      setTimeout(() => {
-        const p2 = this.widget.canvasToTempFilePath();
-        p2.then((res) => {
-          wx.hideLoading();
-          wx.saveImageToPhotosAlbum({
-            filePath: res.tempFilePath,
-            success: (res) => {
-              console.log(res);
-              wx.showToast({
-                title: '报告已经成功导出到手机相册！',
-                icon: 'none',
-              });
-              setTimeout(() => {
-                wx.redirectTo({
-                  url: '/pages/report-list/index',
-                });
-              }, 3000);
-            },
-            fail: (res) => {
-              console.log(res);
-            },
-          });
-        });
-      }, 1000);
     });
   },
 
