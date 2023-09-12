@@ -19,7 +19,8 @@ Page({
 
     showAllQualified: false,
     submitDisabled: true,
-    computedColor: '#0B82FF',
+    computedColor: '#FC5B5B',
+    computedColor1: 'color: #FC5B5B',
 
     fileList: [],
     gridConfig: {
@@ -188,9 +189,15 @@ Page({
       message: '提交成功',
     });
     if (this.data.isRestaurant) {
-      wx.redirectTo({
-        url: '/pages/e-signature2/index',
-      });
+      if (this.data.showAllQualified) {
+        wx.redirectTo({
+          url: '/pages/e-signature3/index',
+        });
+      } else {
+        wx.redirectTo({
+          url: '/pages/e-signature2/index',
+        });
+      }
     } else {
       wx.redirectTo({
         url: '/pages/e-signature/index',
@@ -292,6 +299,7 @@ Page({
       checkPercentage,
       submitDisabled,
       computedColor: submitDisabled ? '#FC5B5B' : '0B82FF',
+      computedColor1: submitDisabled ? 'color: #FC5B5B' : 'color: 0B82FF',
     });
     console.log(e);
   },
@@ -312,13 +320,14 @@ Page({
       };
     });
     const checkPercentage = (e.detail.value.length / this.data.restaurantList.length) * 100;
-    const submitDisabled = !(e.detail.value.length >= 15);
+    const submitDisabled = !(e.detail.value.length >= 10);
     this.setData({
       checkList: e.detail.value,
       restaurantList: tempCheckListData,
       checkPercentage,
       submitDisabled,
       computedColor: submitDisabled ? '#FC5B5B' : '0B82FF',
+      computedColor1: submitDisabled ? 'color: #FC5B5B' : 'color: 0B82FF',
     });
     console.log(e);
   },

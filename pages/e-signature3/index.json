@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "导出报告",
+  "usingComponents": {
+    "t-button": "tdesign-miniprogram/button/button",
+    "background": "/components/background/index",
+    "t-row": "tdesign-miniprogram/row/row",
+    "t-col": "tdesign-miniprogram/col/col",
+    "t-radio": "tdesign-miniprogram/radio/radio",
+    "wxml-to-canvas": "wxml-to-canvas"
+  }
+}

@@ -5,7 +5,7 @@
       <view class="cr-top">
         <view class="cr-top-left">
           必选项
-          <text>{{checkList.length}}</text>/{{isRestaurant ? '15' : '5'}}
+          <text style="{{computedColor1}}">{{checkList.length}}</text>/{{isRestaurant ? '49' : '11'}}
         </view>
         <view class="cr-top-right">
           <text>{{ currentDay }}</text>

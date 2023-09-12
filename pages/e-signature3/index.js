@@ -12,7 +12,7 @@ Page({
     width2: 320,
     height2: 600,
     canvasWidth: 800,
-    canvasHeight: 820,
+    canvasHeight: 4660,
     scale: 2,
     border: {
       color: '#333',
@@ -22,7 +22,7 @@ Page({
   onReady() {
     const reportData = wx.getStorageSync('report_data');
     this.setData({
-      reportData: reportData.slice(0, 10),
+      reportData,
     });
     try {
       const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
@@ -276,7 +276,7 @@ Page({
     const wxml = `
         <view class="signResult">
           <view class="signTop">
-            <image class="signTopImage" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/foo_check.png?sign=70da0bc75c78c14701ae4357d1159b61&t=1694535029"></image>
+            <image class="signTopImage" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/food_all_check.png?sign=78c2a2ad5b0d704af94a4cc3245371d9&t=1694533482"></image>
           </view>
           <view class="signBottom">
             <view class="signLeft">
@@ -338,11 +338,11 @@ Page({
       },
       signTop: {
         width: 800,
-        height: 712,
+        height: 4504,
       },
       signTopImage: {
         width: 800,
-        height: 712,
+        height: 4504,
       },
       signText: {
         width: 64,

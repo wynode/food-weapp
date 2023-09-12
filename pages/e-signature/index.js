@@ -12,7 +12,7 @@ Page({
     width2: 320,
     height2: 600,
     canvasWidth: 400,
-    canvasHeight: 1100,
+    canvasHeight: 1200,
     scale: 2,
     border: {
       color: '#333',
@@ -385,9 +385,9 @@ Page({
       signTitle: {
         flexDirection: 'row',
         justifyContent: 'center',
-        margin: 10,
+        margin: 14,
         width: 380,
-        height: 24,
+        height: 44,
       },
       signTitle1: {
         width: 146,
