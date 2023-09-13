@@ -1,9 +1,14 @@
 {
   "pages": [
-    "pages/report-list/index",
     "pages/create-shop/index",
-    "pages/e-signature/index",
+    "pages/report-list/index",
     "pages/e-signature2/index",
+    "pages/week-check1/index",
+    "pages/week-check2/index",
+    "pages/week-check3/index",
+    "pages/week-check4/index",
+    "pages/week-check5/index",
+    "pages/e-signature/index",
     "pages/e-signature3/index",
     "pages/enterprise-profile/index",
     "pages/choice-shop-type/index",
@@ -25,7 +30,9 @@
     "pages/bao-info/index",
     "pages/create-shop-profile/index"
   ],
-  "requiredPrivateInfos": ["chooseAddress"],
+  "requiredPrivateInfos": [
+    "chooseAddress"
+  ],
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {},
   "window": {

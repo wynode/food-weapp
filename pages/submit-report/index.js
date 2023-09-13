@@ -44,13 +44,13 @@ Page({
 
   goCreateWeek() {
     wx.navigateTo({
-      url: `/pages/daily-stats/index?pageType=week`,
+      url: `/pages/week-check1/index?pageType=week`,
     });
   },
 
   goCreateMonth() {
     wx.navigateTo({
-      url: `/pages/daily-stats/index?pageType=month`,
+      url: `/pages/week-check1/index?pageType=month`,
     });
   },
 

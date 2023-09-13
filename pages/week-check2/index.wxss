@@ -1,0 +1,17 @@
+.week-check1 {
+  width: 100%;
+}
+
+.week-check1-image {
+  width: 100%;
+  height: 1600rpx;
+  margin-top: -140rpx;
+}
+
+.week-check-go {
+  position: fixed;
+  width: 100%;
+  height: 200rpx;
+  bottom: 0;
+  left: 0;
+}

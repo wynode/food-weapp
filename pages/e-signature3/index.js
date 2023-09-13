@@ -42,22 +42,22 @@ Page({
     // }
   },
 
-  onLoad() {
-    this.widget = this.selectComponent('.widget');
-    setTimeout(() => {
-      const query = wx.createSelectorQuery();
-      query
-        .select('.ssignResult')
-        .boundingClientRect((res) => {
-          console.log(res, 111);
-          this.setData({
-            canvasWidth: res.width,
-            canvasHeight: res.height,
-          });
-        })
-        .exec();
-    }, 5000);
-  },
+  // onLoad() {
+  //   this.widget = this.selectComponent('.widget');
+  //   setTimeout(() => {
+  //     const query = wx.createSelectorQuery();
+  //     query
+  //       .select('.ssignResult')
+  //       .boundingClientRect((res) => {
+  //         console.log(res, 111);
+  //         this.setData({
+  //           canvasWidth: res.width,
+  //           canvasHeight: res.height,
+  //         });
+  //       })
+  //       .exec();
+  //   }, 5000);
+  // },
   handleCheckboxChange(event) {
     const { index } = event.currentTarget.dataset;
     const checked = event.detail.value;
@@ -271,123 +271,165 @@ Page({
       }, 50);
     });
   },
-
   exportReport2() {
-    const wxml = `
-        <view class="signResult">
-          <view class="signTop">
-            <image class="signTopImage" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/food_all_check.png?sign=78c2a2ad5b0d704af94a4cc3245371d9&t=1694533482"></image>
-          </view>
-          <view class="signBottom">
-            <view class="signLeft">
-              <text class="signDate">检查日期：${this.data.currentDay}</text>
-            </view>
-            <view class="signRight">
-              <text class="signText">报告人：</text>
-              <image class="signImage" src="${this.data.signUrl}"></image>
-            </view>
-          </view>
-        </view>
-          `;
-    const style = {
-      signTr: {
-        flexDirection: 'row',
-      },
-      signHeader: {
-        flexDirection: 'row',
-      },
-      signResult: {
-        backgroundColor: '#fff',
-      },
-
-      signBottom: {
-        backgroundColor: '#fff',
-        width: 340,
-        height: 70,
-        margin: 40,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-      },
-      signTitle: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        margin: 10,
-        width: 780,
-        height: 24,
-      },
-      signTitle1: {
-        width: 146,
-        height: 24,
-        fontSize: 14,
-      },
-      signLeft: {
-        width: 132,
-        height: 24,
-      },
-      signDate: {
-        width: 132,
-        height: 24,
-        fontSize: 12,
-      },
-      signRight: {
-        width: 474,
-        height: 70,
-        fontSize: 12,
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-      },
-      signTop: {
-        width: 800,
-        height: 4504,
-      },
-      signTopImage: {
-        width: 800,
-        height: 4504,
-      },
-      signText: {
-        width: 64,
-        height: 28,
-        fontSize: 12,
-      },
-      signImage: {
-        width: 124,
-        height: 66,
-      },
-    };
-
-    this.widget.renderToCanvas({
-      wxml,
-      style,
-    });
     wx.showLoading({
       title: '图片生成中',
     }).then(() => {
-      setTimeout(() => {
-        const p2 = this.widget.canvasToTempFilePath();
-        p2.then((res) => {
-          wx.hideLoading();
-          wx.saveImageToPhotosAlbum({
-            filePath: res.tempFilePath,
-            success: (res) => {
-              console.log(res);
-              wx.showToast({
-                title: '报告已经成功导出到手机相册！',
-                icon: 'none',
-              });
-              // setTimeout(() => {
-              //   wx.redirectTo({
-              //     url: '/pages/report-list/index',
-              //   });
-              // }, 3000);
-            },
-            fail: (res) => {
-              console.log(res);
-            },
-          });
-        });
-      }, 1000);
+      var remoteImageUrl =
+        'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/food_all_check.png?sign=78c2a2ad5b0d704af94a4cc3245371d9&t=1694533482';
+      // 下载远程图片
+      wx.downloadFile({
+        url: remoteImageUrl,
+        success: function (res) {
+          if (res.statusCode === 200) {
+            // 下载成功后，获取临时文件路径
+            wx.hideLoading();
+            console.log(res);
+            wx.saveImageToPhotosAlbum({
+              filePath: res.tempFilePath,
+              success: (res) => {
+                console.log(1234);
+                wx.showToast({
+                  title: '报告已经成功导出到手机相册！',
+                  icon: 'none',
+                });
+                setTimeout(() => {
+                  wx.redirectTo({
+                    url: '/pages/report-list/index',
+                  });
+                }, 3000);
+              },
+              fail: (res) => {
+                console.log(res);
+              },
+            });
+          } else {
+            console.error('下载文件失败，状态码：', res.statusCode);
+          }
+        },
+        fail: function (error) {
+          console.error('下载文件失败', error);
+        },
+      });
     });
   },
+
+  // exportReport2() {
+  //   const wxml = `
+  //       <view class="signResult">
+  //         <view class="signTop">
+  //           <image class="signTopImage" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/food_all_check.png?sign=78c2a2ad5b0d704af94a4cc3245371d9&t=1694533482"></image>
+  //         </view>
+  //         <view class="signBottom">
+  //           <view class="signLeft">
+  //             <text class="signDate">检查日期：${this.data.currentDay}</text>
+  //           </view>
+  //           <view class="signRight">
+  //             <text class="signText">报告人：</text>
+  //             <image class="signImage" src="${this.data.signUrl}"></image>
+  //           </view>
+  //         </view>
+  //       </view>
+  //         `;
+  //   const style = {
+  //     signTr: {
+  //       flexDirection: 'row',
+  //     },
+  //     signHeader: {
+  //       flexDirection: 'row',
+  //     },
+  //     signResult: {
+  //       backgroundColor: '#fff',
+  //     },
+
+  //     signBottom: {
+  //       backgroundColor: '#fff',
+  //       width: 340,
+  //       height: 70,
+  //       margin: 40,
+  //       flexDirection: 'row',
+  //       justifyContent: 'space-between',
+  //     },
+  //     signTitle: {
+  //       flexDirection: 'row',
+  //       justifyContent: 'center',
+  //       margin: 10,
+  //       width: 780,
+  //       height: 24,
+  //     },
+  //     signTitle1: {
+  //       width: 146,
+  //       height: 24,
+  //       fontSize: 14,
+  //     },
+  //     signLeft: {
+  //       width: 132,
+  //       height: 24,
+  //     },
+  //     signDate: {
+  //       width: 132,
+  //       height: 24,
+  //       fontSize: 12,
+  //     },
+  //     signRight: {
+  //       width: 474,
+  //       height: 70,
+  //       fontSize: 12,
+  //       flexDirection: 'row',
+  //       justifyContent: 'flex-end',
+  //     },
+  //     signTop: {
+  //       width: 800,
+  //       height: 4504,
+  //     },
+  //     signTopImage: {
+  //       width: 800,
+  //       height: 4504,
+  //     },
+  //     signText: {
+  //       width: 64,
+  //       height: 28,
+  //       fontSize: 12,
+  //     },
+  //     signImage: {
+  //       width: 124,
+  //       height: 66,
+  //     },
+  //   };
+
+  //   this.widget.renderToCanvas({
+  //     wxml,
+  //     style,
+  //   });
+  //   wx.showLoading({
+  //     title: '图片生成中',
+  //   }).then(() => {
+  //     setTimeout(() => {
+  //       const p2 = this.widget.canvasToTempFilePath();
+  //       p2.then((res) => {
+  //         wx.hideLoading();
+  //         wx.saveImageToPhotosAlbum({
+  //           filePath: res.tempFilePath,
+  //           success: (res) => {
+  //             console.log(res);
+  //             wx.showToast({
+  //               title: '报告已经成功导出到手机相册！',
+  //               icon: 'none',
+  //             });
+  //             // setTimeout(() => {
+  //             //   wx.redirectTo({
+  //             //     url: '/pages/report-list/index',
+  //             //   });
+  //             // }, 3000);
+  //           },
+  //           fail: (res) => {
+  //             console.log(res);
+  //           },
+  //         });
+  //       });
+  //     }, 1000);
+  //   });
+  // },
 
   // exportReport2() {
   //   console.log(111);
