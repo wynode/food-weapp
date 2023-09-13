@@ -1,5 +1,5 @@
 {
-  "component": true,
+  "navigationBarTitleText": "食品安全周排查记录报告",
   "usingComponents": {
     "t-image": "tdesign-miniprogram/image/image"
   }

@@ -2,7 +2,7 @@
   <view class="week-check1">
     <t-image
       class="week-check1-image"
-      src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/week_check5.png?sign=94f0f900cad1a58a19dc87e0eac12eb8&t=1694571168"
+      src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/week_check4.png?sign=94f0f900cad1a58a19dc87e0eac12eb8&t=1694571168"
     ></t-image>
   </view>
   <view class="week-check-go" bind:tap="goNext">

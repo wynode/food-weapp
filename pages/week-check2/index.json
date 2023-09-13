@@ -1,5 +1,5 @@
 {
-  "component": true,
+  "navigationBarTitleText": "餐饮服务企业食品安全周排查清单",
   "usingComponents": {
     "t-image": "tdesign-miniprogram/image/image"
   }

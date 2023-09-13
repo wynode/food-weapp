@@ -1,5 +1,5 @@
 {
-  "component": true,
+  "navigationBarTitleText": "本周排查发现问题",
   "usingComponents": {
     "t-image": "tdesign-miniprogram/image/image"
   }

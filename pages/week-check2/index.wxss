@@ -4,8 +4,8 @@
 
 .week-check1-image {
   width: 100%;
-  height: 1600rpx;
-  margin-top: -140rpx;
+  height: 1846rpx;
+  margin-top: -180rpx;
 }
 
 .week-check-go {

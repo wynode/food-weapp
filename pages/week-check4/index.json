@@ -1,5 +1,5 @@
 {
-  "component": true,
+  "navigationBarTitleText": "情况评级及下周排查重点",
   "usingComponents": {
     "t-image": "tdesign-miniprogram/image/image"
   }

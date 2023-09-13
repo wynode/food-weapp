@@ -7,7 +7,7 @@ Page({
       title: '图片生成中',
     }).then(() => {
       wx.downloadFile({
-        url: 'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/week_check5.png?sign=57a4dd68ada5572fbd6f66d3e054602b&t=1694573468',
+        url: 'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/7181694595633_.pic_hd.jpg?sign=da0369976dd2f21ebb6be8fb69375ca3&t=1694596023',
         success: (res) => {
           wx.hideLoading();
           wx.saveImageToPhotosAlbum({
