@@ -12,7 +12,7 @@ Page({
     width2: 320,
     height2: 600,
     canvasWidth: 800,
-    canvasHeight: 820,
+    canvasHeight: 1100,
     scale: 2,
     border: {
       color: '#333',
@@ -20,9 +20,10 @@ Page({
     currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
   },
   onReady() {
-    const reportData = wx.getStorageSync('report_data');
+    const reportDataTemp = wx.getStorageSync('report_data');
+    const reportData = reportDataTemp.filter((item) => item.checked);
     this.setData({
-      reportData: reportData.slice(0, 10),
+      reportData,
     });
     try {
       const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
@@ -44,19 +45,19 @@ Page({
 
   onLoad() {
     this.widget = this.selectComponent('.widget');
-    setTimeout(() => {
-      const query = wx.createSelectorQuery();
-      query
-        .select('.ssignResult')
-        .boundingClientRect((res) => {
-          console.log(res, 111);
-          this.setData({
-            canvasWidth: res.width,
-            canvasHeight: res.height,
-          });
-        })
-        .exec();
-    }, 5000);
+    // setTimeout(() => {
+    //   const query = wx.createSelectorQuery();
+    //   query
+    //     .select('.ssignResult')
+    //     .boundingClientRect((res) => {
+    //       console.log(res, 111);
+    //       this.setData({
+    //         canvasWidth: res.width,
+    //         canvasHeight: res.height,
+    //       });
+    //     })
+    //     .exec();
+    // }, 5000);
   },
   handleCheckboxChange(event) {
     const { index } = event.currentTarget.dataset;

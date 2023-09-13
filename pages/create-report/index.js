@@ -191,7 +191,7 @@ Page({
     if (this.data.isRestaurant) {
       if (this.data.showAllQualified) {
         wx.redirectTo({
-          url: '/pages/e-signature3/index',
+          url: '/pages/e-signature2/index',
         });
       } else {
         wx.redirectTo({

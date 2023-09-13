@@ -12,7 +12,7 @@ Page({
     width2: 320,
     height2: 600,
     canvasWidth: 400,
-    canvasHeight: 1200,
+    canvasHeight: 1600,
     scale: 2,
     border: {
       color: '#333',
@@ -21,15 +21,8 @@ Page({
     isRestaurant: false,
   },
   onReady() {
-    const shopData = wx.getStorageSync('shop_data');
-    if (shopData.shopTypeText === '餐饮服务') {
-      this.setData({
-        isRestaurant: true,
-        canvasWidth: 800,
-        canvasHeight: 4660,
-      });
-    }
-    const reportData = wx.getStorageSync('report_data');
+    const reportDataTemp = wx.getStorageSync('report_data');
+    const reportData = reportDataTemp.filter((item) => item.checked);
     this.setData({
       reportData,
     });
@@ -54,32 +47,32 @@ Page({
 
   onLoad() {
     this.widget = this.selectComponent('.widget');
-    setTimeout(() => {
-      if (this.data.isRestaurant) {
-        const query = wx.createSelectorQuery();
-        query
-          .select('.ssignResult')
-          .boundingClientRect((res) => {
-            console.log(res, 111);
-            this.setData({
-              canvasWidth: res.width,
-              canvasHeight: res.height,
-            });
-          })
-          .exec();
-      } else {
-        const query = wx.createSelectorQuery();
-        query
-          .select('.signResult')
-          .boundingClientRect((res) => {
-            console.log(res);
-            this.setData({
-              canvasHeight: res.height,
-            });
-          })
-          .exec();
-      }
-    }, 5000);
+    // setTimeout(() => {
+    //   if (this.data.isRestaurant) {
+    //     const query = wx.createSelectorQuery();
+    //     query
+    //       .select('.ssignResult')
+    //       .boundingClientRect((res) => {
+    //         console.log(res, 111);
+    //         this.setData({
+    //           canvasWidth: res.width,
+    //           canvasHeight: res.height,
+    //         });
+    //       })
+    //       .exec();
+    //   } else {
+    //     const query = wx.createSelectorQuery();
+    //     query
+    //       .select('.signResult')
+    //       .boundingClientRect((res) => {
+    //         console.log(res);
+    //         this.setData({
+    //           canvasHeight: res.height,
+    //         });
+    //       })
+    //       .exec();
+    //   }
+    // }, 5000);
   },
   handleCheckboxChange(event) {
     const { index } = event.currentTarget.dataset;
@@ -461,7 +454,7 @@ Page({
           ...style,
           signResult: {
             width: elementWidth,
-            height: elementHeight + 40,
+            height: elementHeight + 140,
             backgroundColor: '#fff',
             padding: 8,
             position: 'absolute',

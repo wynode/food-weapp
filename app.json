@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/report-list/index",
     "pages/create-shop/index",
+    "pages/report-list/index",
     "pages/e-signature2/index",
     "pages/week-check1/index",
     "pages/week-check2/index",
@@ -30,9 +30,7 @@
     "pages/bao-info/index",
     "pages/create-shop-profile/index"
   ],
-  "requiredPrivateInfos": [
-    "chooseAddress"
-  ],
+  "requiredPrivateInfos": ["chooseAddress"],
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {},
   "window": {

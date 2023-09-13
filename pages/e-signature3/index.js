@@ -12,7 +12,7 @@ Page({
     width2: 320,
     height2: 600,
     canvasWidth: 800,
-    canvasHeight: 4660,
+    canvasHeight: 2300,
     scale: 2,
     border: {
       color: '#333',
@@ -44,19 +44,19 @@ Page({
 
   onLoad() {
     this.widget = this.selectComponent('.widget');
-    setTimeout(() => {
-      const query = wx.createSelectorQuery();
-      query
-        .select('.ssignResult')
-        .boundingClientRect((res) => {
-          console.log(res, 111);
-          this.setData({
-            canvasWidth: res.width,
-            canvasHeight: res.height,
-          });
-        })
-        .exec();
-    }, 5000);
+    // setTimeout(() => {
+    //   const query = wx.createSelectorQuery();
+    //   query
+    //     .select('.ssignResult')
+    //     .boundingClientRect((res) => {
+    //       console.log(res, 111);
+    //       this.setData({
+    //         canvasWidth: res.width,
+    //         canvasHeight: res.height,
+    //       });
+    //     })
+    //     .exec();
+    // }, 5000);
   },
   handleCheckboxChange(event) {
     const { index } = event.currentTarget.dataset;
@@ -318,7 +318,7 @@ Page({
     const wxml = `
         <view class="signResult">
           <view class="signTop">
-            <image class="signTopImage" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/food_all_check.png?sign=78c2a2ad5b0d704af94a4cc3245371d9&t=1694533482"></image>
+            <image class="signTopImage" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/food_all_check5.png?sign=6fa7cc98690969f64ed3656c49a88881&t=1694621157"></image>
           </view>
           <view class="signBottom">
             <view class="signLeft">
@@ -380,11 +380,11 @@ Page({
       },
       signTop: {
         width: 800,
-        height: 4504,
+        height: 2000,
       },
       signTopImage: {
         width: 800,
-        height: 4504,
+        height: 2000,
       },
       signText: {
         width: 64,
