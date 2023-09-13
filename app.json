@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/create-shop/index",
     "pages/report-list/index",
+    "pages/create-shop/index",
     "pages/e-signature2/index",
     "pages/week-check1/index",
     "pages/week-check2/index",
