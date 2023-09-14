@@ -11,8 +11,8 @@ Page({
     height1: 240,
     width2: 320,
     height2: 600,
-    canvasWidth: 800,
-    canvasHeight: 2300,
+    canvasWidth: 400,
+    canvasHeight: 1300,
     scale: 2,
     border: {
       color: '#333',
@@ -318,7 +318,7 @@ Page({
     const wxml = `
         <view class="signResult">
           <view class="signTop">
-            <image class="signTopImage" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/food_all_check5.png?sign=6fa7cc98690969f64ed3656c49a88881&t=1694621157"></image>
+            <image class="signTopImage" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/3101694679380_.pic.jpg?sign=a63bad960aec3ad939c026a5defee587&t=1694679473"></image>
           </view>
           <view class="signBottom">
             <view class="signLeft">
@@ -379,12 +379,33 @@ Page({
         justifyContent: 'flex-end',
       },
       signTop: {
-        width: 800,
-        height: 2000,
+        width: 400,
+        height: 1000,
       },
       signTopImage: {
-        width: 800,
-        height: 2000,
+        width: 400,
+        height: 1000,
+      },
+      signTitle1: {
+        width: 146,
+        height: 24,
+        fontSize: 14,
+      },
+      signLeft: {
+        width: 132,
+        height: 24,
+      },
+      signDate: {
+        width: 132,
+        height: 24,
+        fontSize: 12,
+      },
+      signRight: {
+        width: 174,
+        height: 70,
+        fontSize: 12,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
       },
       signText: {
         width: 64,

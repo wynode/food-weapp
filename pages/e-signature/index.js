@@ -1,6 +1,37 @@
 import Signature from 'mini-smooth-signature';
 import { formatTime } from '../../utils/util';
-
+// signTh1: {
+//   width: 31.75,
+//   height: 22,
+//   fontSize: 12,
+//   textAlign: 'center',
+//   verticalAlign: 'middle',
+//   padding: 2,
+// },
+// signTh2: {
+//   width: 174.625,
+//   height: 22,
+//   fontSize: 12,
+//   textAlign: 'center',
+//   verticalAlign: 'middle',
+//   padding: 2,
+// },
+// signTh3: {
+//   width: 63.5,
+//   height: 22,
+//   fontSize: 12,
+//   textAlign: 'center',
+//   verticalAlign: 'middle',
+//   padding: 2,
+// },
+// signTh4: {
+//   width: 111,
+//   height: 22,
+//   fontSize: 12,
+//   textAlign: 'center',
+//   verticalAlign: 'middle',
+//   padding: 2,
+// },
 Page({
   data: {
     signUrl: '',
@@ -12,7 +43,7 @@ Page({
     width2: 320,
     height2: 600,
     canvasWidth: 400,
-    canvasHeight: 1600,
+    canvasHeight: 1200,
     scale: 2,
     border: {
       color: '#333',
@@ -292,8 +323,145 @@ Page({
     if (this.data.isRestaurant) {
       this.exportReport2();
     } else {
-      this.exportReport();
+      this.exportReport3();
     }
+  },
+  exportReport3() {
+    const wxml = `
+        <view class="signResult">
+          <view class="signTop">
+            <image class="signTopImage" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/3101694679380_.pic.jpg?sign=a63bad960aec3ad939c026a5defee587&t=1694679473"></image>
+          </view>
+          <view class="signBottom">
+            <view class="signLeft">
+              <text class="signDate">检查日期：${this.data.currentDay}</text>
+            </view>
+            <view class="signRight">
+              <text class="signText">报告人：</text>
+              <image class="signImage" src="${this.data.signUrl}"></image>
+            </view>
+          </view>
+        </view>
+          `;
+    const style = {
+      signTr: {
+        flexDirection: 'row',
+      },
+      signHeader: {
+        flexDirection: 'row',
+      },
+      signResult: {
+        backgroundColor: '#fff',
+      },
+
+      signBottom: {
+        backgroundColor: '#fff',
+        width: 340,
+        height: 70,
+        margin: 40,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      },
+      signTitle: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        margin: 10,
+        width: 780,
+        height: 24,
+      },
+      signTitle1: {
+        width: 146,
+        height: 24,
+        fontSize: 14,
+      },
+      signLeft: {
+        width: 132,
+        height: 24,
+      },
+      signDate: {
+        width: 132,
+        height: 24,
+        fontSize: 12,
+      },
+      signRight: {
+        width: 474,
+        height: 70,
+        fontSize: 12,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+      },
+      signTop: {
+        width: 400,
+        height: 840,
+      },
+      signTopImage: {
+        width: 400,
+        height: 840,
+      },
+      signTitle1: {
+        width: 146,
+        height: 24,
+        fontSize: 14,
+      },
+      signLeft: {
+        width: 132,
+        height: 24,
+      },
+      signDate: {
+        width: 132,
+        height: 24,
+        fontSize: 12,
+      },
+      signRight: {
+        width: 174,
+        height: 70,
+        fontSize: 12,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+      },
+      signText: {
+        width: 64,
+        height: 28,
+        fontSize: 12,
+      },
+      signImage: {
+        width: 124,
+        height: 66,
+      },
+    };
+
+    this.widget.renderToCanvas({
+      wxml,
+      style,
+    });
+    wx.showLoading({
+      title: '图片生成中',
+    }).then(() => {
+      setTimeout(() => {
+        const p2 = this.widget.canvasToTempFilePath();
+        p2.then((res) => {
+          wx.hideLoading();
+          wx.saveImageToPhotosAlbum({
+            filePath: res.tempFilePath,
+            success: (res) => {
+              console.log(res);
+              wx.showToast({
+                title: '报告已经成功导出到手机相册！',
+                icon: 'none',
+              });
+              setTimeout(() => {
+                wx.redirectTo({
+                  url: '/pages/report-list/index',
+                });
+              }, 3000);
+            },
+            fail: (res) => {
+              console.log(res);
+            },
+          });
+        });
+      }, 1000);
+    });
   },
 
   exportReport() {
@@ -412,38 +580,6 @@ Page({
         width: 124,
         height: 66,
       },
-      signTh1: {
-        width: 31.75,
-        height: 22,
-        fontSize: 12,
-        textAlign: 'center',
-        verticalAlign: 'middle',
-        padding: 2,
-      },
-      signTh2: {
-        width: 174.625,
-        height: 22,
-        fontSize: 12,
-        textAlign: 'center',
-        verticalAlign: 'middle',
-        padding: 2,
-      },
-      signTh3: {
-        width: 63.5,
-        height: 22,
-        fontSize: 12,
-        textAlign: 'center',
-        verticalAlign: 'middle',
-        padding: 2,
-      },
-      signTh4: {
-        width: 111,
-        height: 22,
-        fontSize: 12,
-        textAlign: 'center',
-        verticalAlign: 'middle',
-        padding: 2,
-      },
     };
     query
       .select('.signResult')
@@ -480,6 +616,14 @@ Page({
             height: item.height < 22 ? 22 : item.height,
             backgroundColor: '#000',
           };
+          style[`signTh${index + 1}`] = {
+            width: item.width,
+            height: 22,
+            fontSize: 12,
+            textAlign: 'center',
+            verticalAlign: 'middle',
+            padding: 2,
+          }
         });
         console.log(style);
         this.widget.renderToCanvas({
