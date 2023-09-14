@@ -31,7 +31,7 @@
   padding: 20rpx 30rpx;
   margin-top: 20rpx;
   margin-bottom: 30rpx;
-  height: 140rpx;
+  height: 240rpx;
 }
 
 .cns-input .t-input::after {

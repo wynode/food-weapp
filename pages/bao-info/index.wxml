@@ -4,7 +4,7 @@
     <view class="cns-title">包保信息</view>
     <view class="cns-input">
       <t-textarea
-        value="周文 职务：社区书记 包保等级：D 15565345432"
+        value="姓名：周文 \n职务：社区书记 \n包保等级：D \n电话：15565345432"
         bindblur="phoneChange"
         placeholder="请填写负责人联系电话"
       />

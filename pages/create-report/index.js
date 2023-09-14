@@ -320,7 +320,7 @@ Page({
       };
     });
     const checkPercentage = (e.detail.value.length / this.data.restaurantList.length) * 100;
-    const submitDisabled = !(e.detail.value.length >= 10);
+    const submitDisabled = !(e.detail.value.length >= 15);
     this.setData({
       checkList: e.detail.value,
       restaurantList: tempCheckListData,

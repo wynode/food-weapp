@@ -20,7 +20,7 @@
         </view>
         <view class="sl-item-info">
           <view class="sl-name">{{item.name}}</view>
-          <view class="sl-title">本月合格率{{item.standard}}，本月进度{{item.progress}}</view>
+          <view class="sl-title">本月合格率{{item.standard}}%，本月进度{{item.progress}}%</view>
           <view class="sl-address">{{item.address}}</view>
         </view>
       </view>
