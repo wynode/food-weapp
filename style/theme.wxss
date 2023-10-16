@@ -82,6 +82,22 @@
   height: 88rpx !important;
 }
 
+.t-input__icon--prefix {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40rpx;
+}
+
+.t-upload__progress-mask {
+  padding: 0;
+  justify-content: center;
+}
+
+.t-upload__wrapper {
+  width: 100% !important;
+}
+
 /* .tab-bar-icon1 .t-tab-bar-item__icon {
   height: 60rpx !important;
 } */

@@ -1154,3 +1154,9 @@ h6 {
   top: 20rpx;
   left: 10rpx;
 }
+
+.t-input__icon--prefix {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

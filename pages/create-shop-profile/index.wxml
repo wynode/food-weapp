@@ -7,8 +7,6 @@
         <t-input suffixIcon="caret-down-small" value="{{ shopTypeText }}" placeholder="请选择企业主体类别" disabled />
       </view>
 
-      <!-- <t-cell title="企业主体类别" arrow hover note="{{shopTypeText}}" bind:click="shopTypePicker" /> -->
-
       <t-picker
         visible="{{shopTypeVisible}}"
         value="{{shopTypeValue}}"

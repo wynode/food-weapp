@@ -1,4 +1,8 @@
 /* components/uploadImg/uploadImg.wxss */
+.my-upload .t-upload__wrapper {
+  width: 100%;
+}
+
 .my-upload-box {
   background: #F2F4F7;
   width: 300rpx;
