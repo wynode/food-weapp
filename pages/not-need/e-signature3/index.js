@@ -11,8 +11,8 @@ Page({
     height1: 240,
     width2: 320,
     height2: 600,
-    canvasWidth: 800,
-    canvasHeight: 1100,
+    canvasWidth: 400,
+    canvasHeight: 1300,
     scale: 2,
     border: {
       color: '#333',
@@ -20,8 +20,7 @@ Page({
     currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
   },
   onReady() {
-    const reportDataTemp = wx.getStorageSync('report_data');
-    const reportData = reportDataTemp.filter((item) => item.checked);
+    const reportData = wx.getStorageSync('report_data');
     this.setData({
       reportData,
     });
@@ -272,13 +271,12 @@ Page({
       }, 50);
     });
   },
-
   // exportReport2() {
   //   wx.showLoading({
   //     title: '图片生成中',
   //   }).then(() => {
   //     var remoteImageUrl =
-  //       'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/foo_check.png?sign=70da0bc75c78c14701ae4357d1159b61&t=1694535029';
+  //       'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/food_all_check.png?sign=78c2a2ad5b0d704af94a4cc3245371d9&t=1694533482';
   //     // 下载远程图片
   //     wx.downloadFile({
   //       url: remoteImageUrl,
@@ -286,18 +284,18 @@ Page({
   //         if (res.statusCode === 200) {
   //           // 下载成功后，获取临时文件路径
   //           wx.hideLoading();
-  //           console.log(res)
+  //           console.log(res);
   //           wx.saveImageToPhotosAlbum({
   //             filePath: res.tempFilePath,
   //             success: (res) => {
-  //               console.log(1234)
+  //               console.log(1234);
   //               wx.showToast({
   //                 title: '报告已经成功导出到手机相册！',
   //                 icon: 'none',
   //               });
   //               setTimeout(() => {
   //                 wx.redirectTo({
-  //                   url: '/pages/report-list/index',
+  //                   url: '/pages/all-center/index',
   //                 });
   //               }, 3000);
   //             },
@@ -320,7 +318,7 @@ Page({
     const wxml = `
         <view class="signResult">
           <view class="signTop">
-            <image class="signTopImage" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/foo_check.png?sign=70da0bc75c78c14701ae4357d1159b61&t=1694535029"></image>
+            <image class="signTopImage" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/3101694679380_.pic.jpg?sign=a63bad960aec3ad939c026a5defee587&t=1694679473"></image>
           </view>
           <view class="signBottom">
             <view class="signLeft">
@@ -381,12 +379,33 @@ Page({
         justifyContent: 'flex-end',
       },
       signTop: {
-        width: 800,
-        height: 712,
+        width: 400,
+        height: 1000,
       },
       signTopImage: {
-        width: 800,
-        height: 712,
+        width: 400,
+        height: 1000,
+      },
+      signTitle1: {
+        width: 146,
+        height: 24,
+        fontSize: 14,
+      },
+      signLeft: {
+        width: 132,
+        height: 24,
+      },
+      signDate: {
+        width: 132,
+        height: 24,
+        fontSize: 12,
+      },
+      signRight: {
+        width: 174,
+        height: 70,
+        fontSize: 12,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
       },
       signText: {
         width: 64,
@@ -420,7 +439,7 @@ Page({
               });
               setTimeout(() => {
                 wx.redirectTo({
-                  url: '/pages/report-list/index',
+                  url: '/pages/all-center/index',
                 });
               }, 3000);
             },
@@ -658,7 +677,7 @@ Page({
   //             });
   //             // setTimeout(() => {
   //             //   wx.redirectTo({
-  //             //     url: '/pages/report-list/index',
+  //             //     url: '/pages/all-center/index',
   //             //   });
   //             // }, 3000);
   //           },

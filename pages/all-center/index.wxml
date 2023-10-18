@@ -1,6 +1,6 @@
 <view>
   <background isHighlight="true"></background>
-  <view class="report-list">
+  <view class="all-center">
     <view class="rl-top">
       <view class="rl-top-left">
         <view class="rl-top-logo">
@@ -143,7 +143,7 @@
             </view>
           </view>
         </view>
-        <view class="rlr-box-item" data-key="bill" bindtap="goProfile">
+        <!-- <view class="rlr-box-item" data-key="bill" bindtap="goProfile">
           <view class="rlb-left">
             <image
               src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bill_center.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
@@ -165,7 +165,7 @@
               ></image>
             </view>
           </view>
-        </view>
+        </view> -->
       </view>
     </view>
 

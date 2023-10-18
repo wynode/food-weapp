@@ -1,4 +1,4 @@
-.create-shop {
+.create-enterprise {
   padding: 40rpx;
   position: relative;
 }

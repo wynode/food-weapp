@@ -1,4 +1,5 @@
-// import Toast from 'tdesign-miniprogram/toast/index';
+import Toast from 'tdesign-miniprogram/toast/index';
+const app = getApp();
 
 Page({
   data: {
@@ -52,10 +53,10 @@ Page({
         value: '8',
       },
     ],
-    tabBarValue: 'report-list',
+    tabBarValue: 'all-center',
     list: [
       {
-        value: 'report-list',
+        value: 'all-center',
         icon: 'shop-5',
         ariaLabel: '工作台',
       },
@@ -74,16 +75,25 @@ Page({
     ],
   },
 
-  onLoad() {
-    const value = wx.getStorageSync('user_data');
-    if (!value) {
+  async onLoad() {
+    const res = await app.call({
+      path: '/api/v1/program/enterprise/relationship',
+    });
+    // const { is_bind, enterprise_id, enterprise_name } = res.data || {};
+    const { is_bind = true, enterprise_id = 1, enterprise_name = 'wynode' } = res.data || {};
+    if (!is_bind) {
+      Toast({
+        context: this,
+        selector: '#t-toast',
+        message: '您还未绑定企业，请先绑定',
+      });
       wx.redirectTo({
-        url: `/pages/choice-shop-type/index`,
+        url: `/pages/create-enterprise/index`,
       });
     } else {
-      const shopData = wx.getStorageSync('shop_form');
       this.setData({
-        enterprise_name: shopData.enterprise_name,
+        enterprise_id,
+        enterprise_name,
       });
     }
   },

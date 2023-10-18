@@ -451,7 +451,7 @@ Page({
               });
               setTimeout(() => {
                 wx.redirectTo({
-                  url: '/pages/report-list/index',
+                  url: '/pages/all-center/index',
                 });
               }, 3000);
             },
@@ -650,7 +650,7 @@ Page({
               });
               setTimeout(() => {
                 wx.redirectTo({
-                  url: '/pages/report-list/index',
+                  url: '/pages/all-center/index',
                 });
               }, 3000);
             },
@@ -888,7 +888,7 @@ Page({
               });
               // setTimeout(() => {
               //   wx.redirectTo({
-              //     url: '/pages/report-list/index',
+              //     url: '/pages/all-center/index',
               //   });
               // }, 3000);
             },

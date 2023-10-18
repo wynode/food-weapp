@@ -1,4 +1,4 @@
-.report-list {
+.all-center {
   padding: 30rpx;
   position: relative;
   height: calc(100vh - 200rpx);

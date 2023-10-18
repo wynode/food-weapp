@@ -1,18 +1,15 @@
 {
   "pages": [
-    "pages/create-shop/index",
-    "pages/report-list/index",
-    "pages/e-signature2/index",
+    "pages/all-center/index",
+    "pages/create-enterprise/index",
+    "pages/enterprise-profile/index",
+    "pages/enterprise-info/index",
+    "pages/e-signature/index",
     "pages/week-check1/index",
     "pages/week-check2/index",
     "pages/week-check3/index",
     "pages/week-check4/index",
     "pages/week-check5/index",
-    "pages/e-signature/index",
-    "pages/e-signature3/index",
-    "pages/enterprise-profile/index",
-    "pages/choice-shop-type/index",
-    "pages/enterprise-info/index",
     "pages/cert-info/index",
     "pages/data-show/index",
     "pages/shop-list/index",
@@ -27,8 +24,7 @@
     "pages/bill-center/index",
     "pages/report-profile/index",
     "pages/create-user/index",
-    "pages/bao-info/index",
-    "pages/create-shop-profile/index"
+    "pages/bao-info/index"
   ],
   "requiredPrivateInfos": ["chooseAddress"],
   "lazyCodeLoading": "requiredComponents",

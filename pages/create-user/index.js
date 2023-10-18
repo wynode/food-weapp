@@ -64,7 +64,7 @@ Page({
     if (isLegal) {
       wx.setStorageSync('user_data', this.data);
       wx.redirectTo({
-        url: '/pages/report-list/index',
+        url: '/pages/all-center/index',
       });
     } else {
       Toast({

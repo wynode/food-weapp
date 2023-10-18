@@ -3,7 +3,7 @@ Page({
     tabBarValue: 'enterprise-center',
     list: [
       {
-        value: 'report-list',
+        value: 'all-center',
         icon: 'shop-5',
         ariaLabel: '工作台',
       },
