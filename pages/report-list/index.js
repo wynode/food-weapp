@@ -2,7 +2,7 @@
 
 Page({
   data: {
-    shopName: '花花的小店',
+    enterprise_name: '花花的小店',
     dateValue: [2023, '本'],
     years: [
       {
@@ -83,7 +83,7 @@ Page({
     } else {
       const shopData = wx.getStorageSync('shop_form');
       this.setData({
-        shopName: shopData.shopName,
+        enterprise_name: shopData.enterprise_name,
       });
     }
   },

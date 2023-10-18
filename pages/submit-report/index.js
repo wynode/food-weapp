@@ -19,7 +19,7 @@ Page({
       intervalId,
     });
     const shopData = wx.getStorageSync('shop_data');
-    if (shopData.shopTypeText === '餐饮服务') {
+    if (shopData.businessTypeText === '餐饮服务') {
       this.setData({
         switchValue: true,
       });
@@ -62,14 +62,14 @@ Page({
       const shopData = wx.getStorageSync('shop_data');
       wx.setStorageSync('shop_data', {
         ...shopData,
-        shopTypeText: '餐饮服务',
+        businessTypeText: '餐饮服务',
         shopTemplateText: '（日周月）餐饮服务通用模板',
       });
     } else {
       const shopData = wx.getStorageSync('shop_data');
       wx.setStorageSync('shop_data', {
         ...shopData,
-        shopTypeText: '食品销售',
+        businessTypeText: '食品销售',
         shopTemplateText: '（日周月）食品销售通用模板',
       });
     }

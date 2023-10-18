@@ -117,7 +117,7 @@ Page({
 
   onLoad(options) {
     const shopData = wx.getStorageSync('shop_data');
-    if (shopData.shopTypeText === '餐饮服务') {
+    if (shopData.businessTypeText === '餐饮服务') {
       this.setData({
         isRestaurant: true,
         templateTypeText: '（日周月）餐饮服务通用模板',
@@ -131,7 +131,7 @@ Page({
     }
     const { allqualified = 0 } = options || {};
     if (allqualified) {
-      if (shopData.shopTypeText === '餐饮服务') {
+      if (shopData.businessTypeText === '餐饮服务') {
         const tempCheckListData = this.data.restaurantList.map((item) => {
           return {
             ...item,

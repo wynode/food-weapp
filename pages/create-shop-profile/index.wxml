@@ -3,22 +3,22 @@
   <view class="create-new-shop">
     <view>
       <view class="cns-title">企业主体类别</view>
-      <view class="cns-input" bind:tap="shopTypePicker">
-        <t-input suffixIcon="caret-down-small" value="{{ shopTypeText }}" placeholder="请选择企业主体类别" disabled />
+      <view class="cns-input" bind:tap="businessTypePicker">
+        <t-input suffixIcon="caret-down-small" value="{{ businessTypeText }}" placeholder="请选择企业主体类别" disabled />
       </view>
 
       <t-picker
-        visible="{{shopTypeVisible}}"
-        value="{{shopTypeValue}}"
-        data-key="shopType"
-        title="{{shopTypeTitle}}"
+        visible="{{businessTypeVisible}}"
+        value="{{businessTypeValue}}"
+        data-key="businessType"
+        title="{{businessTypeTitle}}"
         cancelBtn="取消"
         confirmBtn="确认"
         bindchange="onPickerChange"
         bindpick="onColumnChange"
         bindcancel="onPickerCancel"
       >
-        <t-picker-item options="{{shopTypeList}}"></t-picker-item>
+        <t-picker-item options="{{businessTypeList}}"></t-picker-item>
       </t-picker>
     </view>
     <view class="cns-business">

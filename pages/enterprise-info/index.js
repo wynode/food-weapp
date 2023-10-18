@@ -3,10 +3,10 @@ import Toast from 'tdesign-miniprogram/toast';
 Page({
   data: {
     fileList: [],
-    shopTypeValue: [],
-    shopTypeTitle: '',
-    shopTypeText: '',
-    shopTypeList: [
+    businessTypeValue: [],
+    businessTypeTitle: '',
+    businessTypeText: '',
+    businessTypeList: [
       {
         label: '餐饮服务',
         value: '餐饮服务',
@@ -52,7 +52,7 @@ Page({
       const shopData = wx.getStorageSync('shop_data');
       if (shopData) {
         this.setData({
-          shopTypeText: shopData.shopTypeText,
+          businessTypeText: shopData.businessTypeText,
           shopTemplateText: shopData.shopTemplateText,
           personalName: shopData.personalName,
           businessCode: shopData.businessCode,
@@ -126,11 +126,11 @@ Page({
     });
   },
 
-  shopTypePicker() {
+  businessTypePicker() {
     console.log(111);
     this.setData({
-      shopTypeVisible: true,
-      shopTypeTitle: '选择企业主体类别',
+      businessTypeVisible: true,
+      businessTypeTitle: '选择企业主体类别',
     });
   },
 

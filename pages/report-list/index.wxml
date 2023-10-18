@@ -9,7 +9,7 @@
             src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/self_employed.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
           ></image>
         </view>
-        <view class="rl-top-title">早上好，{{shopName}}</view>
+        <view class="rl-top-title">早上好，{{enterprise_name}}</view>
       </view>
       <view class="rl-top-right">
         <t-button style="margin-right: 20rpx" bind:tap="goMonitor" theme="primary" size="small">监管版</t-button>
