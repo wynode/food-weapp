@@ -181,7 +181,6 @@
     icon="{{item.icon}}"
     class="tab-bar-icon{{index}}"
     ariaLabel="{{item.ariaLabel}}"
-    badge-props="{{item.badgeProps}}"
   >
     {{item.ariaLabel}}
   </t-tab-bar-item>

@@ -1,6 +1,4 @@
 Page({
-
-
   data: {
     value: 0,
     enterpriseList: [{
@@ -21,6 +19,14 @@ Page({
     this.setData({
       value: e.detail.value
     });
+    wx.navigateTo({
+      url: `/pages/enterprise-center/index?id=${this.data.value}`,
+    })
   },
 
+  newEnterprise() {
+    wx.redirectTo({
+      url: '/pages/create-enterprise/index',
+    })
+  }
 })

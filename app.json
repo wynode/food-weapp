@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/all-center/index",
     "pages/create-enterprise/index",
+    "pages/all-center/index",
     "pages/enterprise-profile/index",
     "pages/enterprise-info/index",
     "pages/e-signature/index",

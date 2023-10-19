@@ -5,8 +5,7 @@ Page({
   data: {
     enterprise_name: '花花的小店',
     dateValue: [2023, '本'],
-    years: [
-      {
+    years: [{
         label: '2023年',
         value: '2023',
       },
@@ -19,8 +18,7 @@ Page({
         value: '2021',
       },
     ],
-    seasons: [
-      {
+    seasons: [{
         label: '1月',
         value: '1',
       },
@@ -54,8 +52,7 @@ Page({
       },
     ],
     tabBarValue: 'all-center',
-    list: [
-      {
+    list: [{
         value: 'all-center',
         icon: 'shop-5',
         ariaLabel: '工作台',
@@ -65,12 +62,9 @@ Page({
         icon: 'add-circle',
       },
       {
-        value: 'enterprise-center',
+        value: 'enterprise-manage',
         icon: 'city-10',
         ariaLabel: '企业中心',
-        badgeProps: {
-          count: 25,
-        },
       },
     ],
   },
@@ -79,8 +73,11 @@ Page({
     const res = await app.call({
       path: '/api/v1/program/enterprise/relationship',
     });
+    console.log(res)
     // const { is_bind, enterprise_id, enterprise_name } = res.data || {};
-    const { is_bind = true, enterprise_id = 1, enterprise_name = 'wynode' } = res.data || {};
+    const {
+      is_bind = true, enterprise_id = 1, enterprise_name = 'wynode'
+    } = res.data || {};
     if (!is_bind) {
       Toast({
         context: this,
@@ -99,24 +96,18 @@ Page({
   },
 
   onTabBarChange(e) {
-    console.log(e);
-    const { value } = e.detail;
-    // this.setData({
-    //   tabBarValue: value,
-    // });
-    if (value === 'submit-report') {
-      wx.navigateTo({
-        url: `/pages/${value}/index`,
-      });
-    } else {
-      wx.redirectTo({
-        url: `/pages/${value}/index`,
-      });
-    }
+    const {
+      value
+    } = e.detail;
+    wx.navigateTo({
+      url: `/pages/${value}/index`,
+    });
   },
 
   goProfile(e) {
-    const { key = 'day' } = e.currentTarget.dataset || {};
+    const {
+      key = 'day'
+    } = e.currentTarget.dataset || {};
     if (key === 'bill') {
       wx.navigateTo({
         url: `/pages/bill-center/index`,
@@ -141,8 +132,12 @@ Page({
   },
 
   onPickerChange(e) {
-    const { key } = e.currentTarget.dataset;
-    const { value } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
+    const {
+      value
+    } = e.detail;
     let tempReportList = this.data.reportList;
     let percentage = 76;
     if (this.data.reportType === 'day') {
@@ -172,7 +167,9 @@ Page({
   },
 
   onPickerCancel(e) {
-    const { key } = e.currentTarget.dataset;
+    const {
+      key
+    } = e.currentTarget.dataset;
     console.log(e, '取消');
     console.log('picker1 cancel:');
     this.setData({

@@ -14,8 +14,7 @@ Component({
   data: {
     fileList: [],
     gridConfig: {
-      column: 2,
-      width: 300,
+      column: 1,
       height: 240,
     },
   },

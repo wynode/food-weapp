@@ -2,76 +2,167 @@
   <background isHighlight="true"></background>
   <view class="enterprise-center">
     <view class="ec-list">
-      <view class="ec-item" bindtap="goReportList">
-        <view class="ec-item-left ec-item-left1">
-          <image
-            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bggl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-          ></image>
-        </view>
-        <view class="ec-item-right">
-          <view class="ec-item-title"> 报告管理 </view>
-          <view class="ec-item-info"> 134份 </view>
-        </view>
+      <view class="ec-title">
+        报告管理
       </view>
-      <view class="ec-item" bindtap="goBillCenter">
+      <t-row gutter="16">
+        <t-col span="12">
+          <view class="ec-item" bindtap="goReportList">
+            <view class="ec-item-left ec-item-left1">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bggl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 日报管理 </view>
+              <view class="ec-item-info"> 134份 </view>
+            </view>
+          </view>
+        </t-col>
+        <t-col span="12">
+          <view class="ec-item" bindtap="goReportList">
+            <view class="ec-item-left ec-item-left1">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bggl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 周报管理 </view>
+              <view class="ec-item-info"> 134份 </view>
+            </view>
+          </view>
+        </t-col>
+      </t-row>
+      <t-row gutter="16">
+        <t-col span="12">
+          <view class="ec-item" bindtap="goReportList">
+            <view class="ec-item-left ec-item-left1">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bggl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 月报管理 </view>
+              <view class="ec-item-info"> 134份 </view>
+            </view>
+          </view>
+        </t-col>
+      </t-row>
+
+
+      <view class="ec-title">
+        企业信息管理
+      </view>
+      <t-row gutter="16">
+        <t-col span="12">
+          <view class="ec-item" bindtap="goCreateShopProfile">
+            <view class="ec-item-left ec-item-left5">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/qyxx.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 企业信息 </view>
+              <view class="ec-item-info"> 1家 </view>
+            </view>
+          </view>
+        </t-col>
+        <t-col span="12">
+          <view class="ec-item" bindtap="goStaffList">
+            <view class="ec-item-left ec-item-left3">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/rygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 人员管理 </view>
+              <view class="ec-item-info"> 10人 </view>
+            </view>
+          </view>
+        </t-col>
+      </t-row>
+      <t-row gutter="16">
+        <t-col span="12">
+          <view class="ec-item" bindtap="goStaffList">
+            <view class="ec-item-left ec-item-left3">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/rygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 证件管理 </view>
+              <view class="ec-text-red"> 员工信息待补充 </view>
+            </view>
+          </view>
+        </t-col>
+        <t-col span="12">
+          <view class="ec-item" bindtap="goStaffList">
+            <view class="ec-item-left ec-item-left3">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/rygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 任命书管理 </view>
+              <view class="ec-text-red"> 任命书待上传 </view>
+            </view>
+          </view>
+        </t-col>
+      </t-row>
+      <view class="ec-title">
+        制度管理
+      </view>
+      <t-row gutter="16">
+        <t-col span="12">
+          <view class="ec-item" bindtap="goEnterpriseManage">
+            <view class="ec-item-left ec-item-left4">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/qygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 管控制度 </view>
+              <view class="ec-item-info"> 3份 </view>
+            </view>
+          </view>
+        </t-col>
+        <t-col span="12">
+          <view class="ec-item" bindtap="goEnterpriseManage">
+            <view class="ec-item-left ec-item-left4">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/qygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 管理职责 </view>
+              <view class="ec-item-info"> 3份 </view>
+            </view>
+          </view>
+        </t-col>
+      </t-row>
+      <t-row gutter="16">
+        <t-col span="12">
+          <view class="ec-item" bindtap="goEnterpriseManage">
+            <view class="ec-item-left ec-item-left4">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/qygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 管理制度汇编 </view>
+              <view class="ec-item-info"> 18份（餐饮） </view>
+            </view>
+          </view>
+        </t-col>
+        <t-col span="12">
+          <view class="ec-item" bindtap="goMessageNotify">
+            <view class="ec-item-left ec-item-left6">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/xttz.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 系统通知 </view>
+              <view class="ec-item-info text-red"> 25条未读 </view>
+            </view>
+          </view>
+        </t-col>
+      </t-row>
+      <!-- <view class="ec-item" bindtap="goBillCenter">
         <view class="ec-item-left ec-item-left2">
-          <image
-            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/pjzx.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-          ></image>
+          <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/pjzx.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
         </view>
         <view class="ec-item-right">
           <view class="ec-item-title"> 票据中心 </view>
           <view class="ec-item-info"> 12份 </view>
         </view>
-      </view>
-      <view class="ec-item" bindtap="goStaffList">
-        <view class="ec-item-left ec-item-left3">
-          <image
-            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/rygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-          ></image>
-        </view>
-        <view class="ec-item-right">
-          <view class="ec-item-title"> 人员管理 </view>
-          <view class="ec-item-info"> 10人 </view>
-        </view>
-      </view>
-      <view class="ec-item" bindtap="goEnterpriseManage">
-        <view class="ec-item-left ec-item-left4">
-          <image
-            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/qygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-          ></image>
-        </view>
-        <view class="ec-item-right">
-          <view class="ec-item-title"> 企业管理 </view>
-          <view class="ec-item-info"> 1家 </view>
-        </view>
-      </view>
-      <view class="ec-item" bindtap="goCreateShopProfile">
-        <view class="ec-item-left ec-item-left5">
-          <image
-            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/qyxx.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-          ></image>
-        </view>
-        <view class="ec-item-right">
-          <view class="ec-item-title"> 企业信息 </view>
-          <view class="ec-item-info text-red"> 员工信息待补充 </view>
-        </view>
-      </view>
-      <view class="ec-item" bindtap="goMessageNotify">
-        <view class="ec-item-left ec-item-left6">
-          <image
-            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/xttz.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-          ></image>
-        </view>
-        <view class="ec-item-right">
-          <view class="ec-item-title"> 系统通知 </view>
-          <view class="ec-item-info text-red"> 25条未读 </view>
-        </view>
-      </view>
+      </view> -->
+
+
+
+
     </view>
   </view>
 </view>
-<t-tab-bar value="{{tabBarValue}}" bindchange="onTabBarChange" theme="tag" split="{{false}}">
+<!-- <t-tab-bar value="{{tabBarValue}}" bindchange="onTabBarChange" theme="tag" split="{{false}}">
   <t-tab-bar-item
     wx:for="{{list}}"
     wx:key="index"
@@ -81,4 +172,4 @@
     ariaLabel="{{item.ariaLabel}}"
     badge-props="{{item.badgeProps}}"
   ></t-tab-bar-item>
-</t-tab-bar>
+</t-tab-bar> -->

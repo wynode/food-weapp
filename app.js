@@ -40,8 +40,8 @@ App({
         header: {
           ...obj.header,
           'X-WX-SERVICE': 'koa-nu2x', // xxx中填入服务名称（微信云托管 - 服务管理 - 服务列表 - 服务名称）
-          'X-WX-APPID': 'wx48a4230fe919bc57',
-          'X-WX-UNIONID': '1',
+          // 'x-wx-openid': 'wx48a4230fe919bc57',
+          // 'x-wx-unionid': '1',
           // 其他header参数
         },
         // 其余参数同 wx.request

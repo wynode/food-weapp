@@ -99,3 +99,15 @@
 .horizontal-box .card+.card {
   margin-left: 24rpx;
 }
+
+.new-enterprise-btn {
+  width: 680rpx;
+  position: fixed;
+  bottom: 60rpx;
+}
+
+.em-tips {
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
+}

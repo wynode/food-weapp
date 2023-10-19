@@ -2,12 +2,7 @@
   <background isHighlight="true"></background>
   <view class="enterprise-manage">
     <t-radio-group value="{{value}}" bind:change="onChange">
-      <view
-        wx:for="{{enterpriseList}}"
-        wx:for-item="item"
-        wx:key="index"
-        class="card {{value == index ? 'card--active' : ''}}"
-      >
+      <view wx:for="{{enterpriseList}}" wx:for-item="item" wx:key="index" class="card {{value == index ? 'card--active' : ''}}">
         <t-icon wx:if="{{value == index}}" name="check" t-class="card__icon" />
         <t-radio value="{{index}}" icon="none" borderless>
           <view slot="content" class="em-item">
@@ -20,5 +15,9 @@
         </t-radio>
       </view>
     </t-radio-group>
+    <view class="em-tips">选择进入企业详情～</view>
+    <view class="new-enterprise-btn">
+      <t-button block size="large" bind:tap="newEnterprise">新增企业</t-button>
+    </view>
   </view>
 </view>

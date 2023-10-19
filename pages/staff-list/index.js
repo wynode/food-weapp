@@ -1,3 +1,5 @@
+const app = getApp()
+
 Page({
   data: {
     staffList1: [
@@ -23,7 +25,17 @@ Page({
       },
     ],
   },
-  onLoad(options) {},
+  async onLoad(options) {
+    const res = await app.call({
+      path: '/api/v1/program/enterprise/employees',
+      method: 'GET',
+    });
+    if (res.list) {
+      res.list.forEach((item) => {
+
+      })
+    }
+  },
   onDelete() {
     wx.showToast({
       title: '你点击了删除',
@@ -39,7 +51,7 @@ Page({
 
   goCreateUser() {
     wx.redirectTo({
-      url: `/pages/create-user/index`,
+      url: `/pages/create-user/index?`,
     });
   },
 });
