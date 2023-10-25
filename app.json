@@ -1,10 +1,10 @@
 {
   "pages": [
+    "pages/e-signature/index",
     "pages/create-enterprise/index",
     "pages/all-center/index",
     "pages/enterprise-profile/index",
     "pages/enterprise-info/index",
-    "pages/e-signature/index",
     "pages/week-check1/index",
     "pages/week-check2/index",
     "pages/week-check3/index",

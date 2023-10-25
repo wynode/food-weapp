@@ -1,5 +1,7 @@
 import Signature from 'mini-smooth-signature';
-import { formatTime } from '../../utils/util';
+import {
+  formatTime
+} from '../../utils/util';
 // signTh1: {
 //   width: 31.75,
 //   height: 22,
@@ -59,7 +61,11 @@ Page({
     });
     console.log(reportData);
     try {
-      const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
+      const {
+        windowWidth,
+        windowHeight,
+        pixelRatio
+      } = wx.getSystemInfoSync();
       this.setData({
         width1: windowWidth - 30,
         height1: 240,
@@ -106,10 +112,14 @@ Page({
     // }, 5000);
   },
   handleCheckboxChange(event) {
-    const { index } = event.currentTarget.dataset;
+    const {
+      index
+    } = event.currentTarget.dataset;
     const checked = event.detail.value;
 
-    const { data } = this.data;
+    const {
+      data
+    } = this.data;
     data[index].checked = checked;
 
     this.setData({
@@ -294,10 +304,17 @@ Page({
   // 样例2伪全屏输出旋转图片
   async getRotateImage() {
     const dataURL = this.signature2.toDataURL();
+
     const url = await base64ToPath(dataURL);
     const ctx = wx.createCanvasContext('signature3');
-    const { width } = this.signature2;
-    const { height } = this.signature2;
+    const {
+      width
+    } = this.signature2;
+    const {
+      height
+    } = this.signature2;
+    // const width = 138;
+    // const height = 584;
     ctx.restore();
     ctx.save();
     ctx.translate(0, height);
@@ -312,7 +329,16 @@ Page({
           y: height - width,
           width: height,
           height: width,
-          success: (res) => resolve(res.tempFilePath),
+          success: async (res) => {
+            // const uploadResult = await getApp().cloud.uploadFile({
+            //   cloudPath: `business_license_image/sign_test.png`,
+            //   filePath: res.tempFilePath,
+            // });
+
+            const arrayBuffer = new Uint8Array(res.tempFilePath); //将本地图片路径转换成array类型 
+            const base64Img = wx.arrayBufferToBase64(arrayBuffer); //再转换成base64类型
+            console.log(base64Img) //成品就在这里了
+          },
           fail: reject,
         });
       }, 50);
