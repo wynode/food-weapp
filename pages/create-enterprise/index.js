@@ -109,31 +109,39 @@ Page({
   },
 
   async formSubmit() {
-    wx.redirectTo({
-      url: '/pages/all-center/index',
-    });
     const { isLegal, tips } = this.onVerifyInputLegal();
     if (isLegal) {
       const payload = {
         ...this.data.enterpriseForm,
-        province: this.data.areaValue[0],
-        city: this.data.areaValue[1],
-        district: this.data.areaValue[2],
-        business_type: this.data.businessTypeValue[0],
+        province: Number(this.data.areaValue[0]),
+        city: Number(this.data.areaValue[1]),
+        district: Number(this.data.areaValue[2]),
+        business_type: Number(this.data.businessTypeValue[0]),
+        legal_name: this.data.enterpriseForm.employee_name,
       };
       const upload = this.selectComponent('#upload');
       const fileID = upload.data.fileList[0].fileID;
       payload.business_license_image = fileID;
-      const res = await app.call({
-        path: '/api/v1/program/enterprise',
-        method: 'PUT',
-        data: payload,
-      });
-
-      if (res) {
-        // wx.redirectTo({
-        //   url: '/pages/create-enterprise-profile/index',
-        // });
+      try {
+        const res = await app.call({
+          path: '/api/v1/program/enterprise',
+          method: 'PUT',
+          data: payload,
+        });
+        console.log(res);
+        if (res.statusCode === 200) {
+          wx.redirectTo({
+            url: '/pages/all-center/index',
+          });
+        } else {
+          Toast({
+            context: this,
+            selector: '#t-toast',
+            message: '创建出错，请检查填写是否正确',
+          });
+        }
+      } catch (error) {
+        console.log(error);
       }
     } else {
       Toast({
@@ -210,16 +218,19 @@ Page({
   },
 
   async scanAddIn() {
-    const res = await app.call({
-      path: '/api/v1/program/enterprise',
+    wx.redirectTo({
+      url: '/pages/all-center/index',
     });
-    console.log(res);
-    console.log(this.selectComponent('#upload'));
+    // const res = await app.call({
+    //   path: '/api/v1/program/enterprise',
+    // });
+    // console.log(res);
+    // console.log(this.selectComponent('#upload'));
   },
 
   handleOCRResult(e) {
     if (e.detail) {
-      const { company_address, company_name, legal_person, license_no } = e.detail;
+      const { company_address, company_name, legal_person, license_no } = e.detail.data;
       this.setData({
         'enterpriseForm.enterprise_name': company_name,
         'enterpriseForm.address': company_address,

@@ -1,58 +1,81 @@
 import Toast from 'tdesign-miniprogram/toast/index';
 const app = getApp();
-
 Page({
   data: {
+    enterprise_id: '',
     enterprise_name: '花花的小店',
-    dateValue: [2023, '本'],
-    years: [{
+    dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1)],
+    years: [
+      {
+        label: '2026年',
+        value: '2026',
+      },
+      {
+        label: '2025年',
+        value: '2025',
+      },
+      {
+        label: '2024年',
+        value: '2024',
+      },
+      {
         label: '2023年',
         value: '2023',
       },
-      {
-        label: '2022年',
-        value: '2022',
-      },
-      {
-        label: '2021年',
-        value: '2021',
-      },
     ],
-    seasons: [{
+    seasons: [
+      {
         label: '1月',
-        value: '1',
+        value: '01',
       },
       {
         label: '2月',
-        value: '2',
+        value: '02',
       },
       {
         label: '3月',
-        value: '3',
+        value: '03',
       },
       {
         label: '4月',
-        value: '4',
+        value: '04',
       },
       {
         label: '5月',
-        value: '5',
+        value: '05',
       },
       {
         label: '6月',
-        value: '6',
+        value: '06',
       },
       {
         label: '7月',
-        value: '7',
+        value: '07',
       },
       {
         label: '8月',
-        value: '8',
+        value: '08',
+      },
+      {
+        label: '9月',
+        value: '09',
+      },
+      {
+        label: '10月',
+        value: '10',
+      },
+      {
+        label: '11月',
+        value: '11',
+      },
+      {
+        label: '12月',
+        value: '12',
       },
     ],
     tabBarValue: 'all-center',
-    list: [{
+    list: [
+      {
         value: 'all-center',
         icon: 'shop-5',
         ariaLabel: '工作台',
@@ -67,18 +90,47 @@ Page({
         ariaLabel: '企业中心',
       },
     ],
+    reportStats: {
+      daily: {},
+      weekly: {},
+      monthly: {},
+    },
   },
 
   async onLoad() {
-    const res = await app.call({
-      path: '/api/v1/program/enterprise/relationship',
-    });
-    console.log(res)
-    // const { is_bind, enterprise_id, enterprise_name } = res.data || {};
-    const {
-      is_bind = true, enterprise_id = 1, enterprise_name = 'wynode'
-    } = res.data || {};
-    if (!is_bind) {
+    this.handelInit();
+  },
+
+  async handelInit() {
+    try {
+      console.log(111);
+      const res = await app.call({
+        path: '/api/v1/program/enterprise/relationship',
+      });
+      if (res.statusCode !== 200) {
+        throw error;
+      }
+      const { is_bind, enterprise_id, enterprise_name } = res.data.data || {};
+      if (!is_bind) {
+        throw error;
+      }
+      const enterpriseRes = await app.call({
+        path: '/api/v1/program/enterprise',
+        header: {
+          'x-enterprise-id': enterprise_id,
+        },
+      });
+      if (enterpriseRes.statusCode !== 200) {
+        throw error;
+      }
+      wx.setStorageSync('enterpriseData', enterpriseRes.data.data);
+      this.setData({
+        enterprise_id,
+        enterprise_name,
+      });
+      this.getReportStats(this.data.dateValue[1], enterprise_id);
+    } catch (error) {
+      console.dir(error);
       Toast({
         context: this,
         selector: '#t-toast',
@@ -87,93 +139,70 @@ Page({
       wx.redirectTo({
         url: `/pages/create-enterprise/index`,
       });
-    } else {
-      this.setData({
-        enterprise_id,
-        enterprise_name,
-      });
     }
   },
 
+  async getReportStats(month, enterprise_id) {
+    const reportRes = await app.call({
+      path: `/api/v1/program/enterprise/report/stats/${month}`,
+      header: {
+        'x-enterprise-id': enterprise_id,
+      },
+    });
+    const reportStats = reportRes.data.data;
+    reportStats.percentage = parseInt((reportStats.daily.submit_count / reportStats.daily.total_count) * 100);
+    reportStats.total =
+      reportStats.daily.submit_count + reportStats.monthly.submit_count + reportStats.weekly.submit_count;
+    this.setData({
+      reportStats,
+    });
+  },
+
   onTabBarChange(e) {
-    const {
-      value
-    } = e.detail;
-    wx.navigateTo({
+    const { value } = e.detail;
+    wx.redirectTo({
       url: `/pages/${value}/index`,
     });
   },
 
   goProfile(e) {
-    const {
-      key = 'day'
-    } = e.currentTarget.dataset || {};
+    const { key = '1' } = e.currentTarget.dataset || {};
     if (key === 'bill') {
-      wx.navigateTo({
+      wx.redirectTo({
         url: `/pages/bill-center/index`,
       });
     } else {
-      wx.navigateTo({
-        url: `/pages/report-profile/index?reportType=${key}`,
+      wx.redirectTo({
+        url: `/pages/report-profile/index?reportType=${key}&month=${this.data.dateValue.join('')}`,
       });
     }
   },
 
   goLogList() {
-    wx.navigateTo({
-      url: `/pages/log-list/index`,
+    wx.redirectTo({
+      url: `/pages/create-report2/index`,
     });
   },
 
   goMonitor() {
-    wx.navigateTo({
+    wx.redirectTo({
       url: `/pages/enterprise-profile/index`,
     });
   },
 
   onPickerChange(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
-    const {
-      value
-    } = e.detail;
-    let tempReportList = this.data.reportList;
-    let percentage = 76;
-    if (this.data.reportType === 'day') {
-      tempReportList = this.data.reportList.map((item, index) => {
-        return {
-          ...item,
-          date: `${value[1]}.${item.date.split('.')[1]}`,
-        };
-      });
-      percentage = 90;
-    } else if (this.data.reportType === 'month') {
-      tempReportList = this.data.reportList.map((item, index) => {
-        return {
-          ...item,
-          date: `${value[1]}月`,
-        };
-      });
-      percentage = 88;
-    }
+    const { value } = e.detail;
+    console.log(value);
+    this.getReportStats(value.join(''), this.data.enterprise_id);
     this.setData({
-      [`${key}Visible`]: false,
-      [`${key}Value`]: value,
-      [`${key}Text`]: value.join(' '),
-      reportList: tempReportList,
-      percentage: percentage,
+      dateVisible: false,
+      dateValue: value,
     });
   },
 
-  onPickerCancel(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
-    console.log(e, '取消');
-    console.log('picker1 cancel:');
+  onPickerCancel() {
     this.setData({
-      [`${key}Visible`]: false,
+      dateVisible: false,
     });
   },
 

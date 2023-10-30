@@ -36,6 +36,13 @@
   font-weight: 400;
   color: #333333;
   line-height: 45rpx;
+  white-space: nowrap;
+  /* 让文本不换行 */
+  overflow: hidden;
+  /* 隐藏溢出的文本 */
+  text-overflow: ellipsis;
+  max-width: 500rpx;
+  /* 使用省略号来表示文本的溢出部分 */
 }
 
 .rl-top-right {}

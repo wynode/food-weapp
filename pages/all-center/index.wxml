@@ -12,7 +12,7 @@
         <view class="rl-top-title">早上好，{{enterprise_name}}</view>
       </view>
       <view class="rl-top-right">
-        <t-button style="margin-right: 20rpx" bind:tap="goMonitor" theme="primary" size="small">监管版</t-button>
+        <!-- <t-button style="margin-right: 20rpx" bind:tap="goMonitor" theme="primary" size="small">监管版</t-button> -->
         <image
           class="rl-top-bell"
           src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bell.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
@@ -45,26 +45,31 @@
         <t-picker-item options="{{seasons}}"></t-picker-item>
       </t-picker>
       <view class="rlr-content">
-        <t-progress color="#0B82FF" stroke-width="20" theme="circle" percentage="30" />
+        <t-progress
+          color="#0B82FF"
+          stroke-width="20"
+          theme="circle"
+          percentage="{{ reportStats.percentage }}"
+        />
         <view class="rlr-record">
           <view class="rlr-record-item">
             <view>本月日管控</view>
-            <view>7/30</view>
+            <view>{{ reportStats.daily.submit_count }}/{{ reportStats.daily.total_count }}</view>
           </view>
           <view class="rlr-record-item">
             <view>本月周排查</view>
-            <view>1/4</view>
+            <view>{{ reportStats.weekly.submit_count }}/{{ reportStats.weekly.total_count }}</view>
           </view>
           <view class="rlr-record-item">
             <view>本月月调度</view>
-            <view>0/1</view>
+            <view>{{ reportStats.monthly.submit_count }}/{{ reportStats.monthly.total_count }}</view>
           </view>
         </view>
       </view>
     </view>
     <view class="rl-report">
       <view class="rlr-top">
-        <view class="rlr-top-left">全部报告（16）</view>
+        <view class="rlr-top-left">全部报告（{{reportStats.total}}）</view>
         <view class="rlr-top-right" bindtap="goLogList">
           <view>查看日志</view>
           <image
@@ -74,7 +79,7 @@
         </view>
       </view>
       <view class="rlr-box">
-        <view class="rlr-box-item" data-key="day" bindtap="goProfile">
+        <view class="rlr-box-item" data-key="1" bindtap="goProfile">
           <view class="rlb-left">
             <image
               src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/all_day.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
@@ -84,8 +89,8 @@
             <view class="rlb-center">
               <view class="rlb-center-title">日管控</view>
               <view class="rlb-center-bottom">
-                <view class="rlb-center-fit">合格<text>6</text></view>
-                <view class="rlb-center-unfit">不合格<text>17</text></view>
+                <view class="rlb-center-fit">合格<text>{{ reportStats.daily.passed_count }}</text></view>
+                <view class="rlb-center-unfit">不合格<text>{{ reportStats.daily.unpassed_count }}</text></view>
               </view>
             </view>
             <view class="rlb-right">
@@ -97,7 +102,7 @@
             </view>
           </view>
         </view>
-        <view class="rlr-box-item" data-key="week" bindtap="goProfile">
+        <view class="rlr-box-item" data-key="2" bindtap="goProfile">
           <view class="rlb-left">
             <image
               src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/all_weak.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
@@ -107,8 +112,8 @@
             <view class="rlb-center">
               <view class="rlb-center-title">周排查</view>
               <view class="rlb-center-bottom">
-                <view class="rlb-center-fit">合格<text>6</text></view>
-                <view class="rlb-center-unfit">不合格<text>17</text></view>
+                <view class="rlb-center-fit">合格<text>{{ reportStats.weekly.unpassed_count }}</text></view>
+                <view class="rlb-center-unfit">不合格<text>{{ reportStats.weekly.unpassed_count }}</text></view>
               </view>
             </view>
             <view class="rlb-right">
@@ -120,7 +125,7 @@
             </view>
           </view>
         </view>
-        <view class="rlr-box-item" data-key="month" bindtap="goProfile">
+        <view class="rlr-box-item" data-key="3" bindtap="goProfile">
           <view class="rlb-left">
             <image
               src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/all_month.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
@@ -130,8 +135,8 @@
             <view class="rlb-center">
               <view class="rlb-center-title">月调度</view>
               <view class="rlb-center-bottom">
-                <view class="rlb-center-fit">合格<text>6</text></view>
-                <view class="rlb-center-unfit">不合格<text>17</text></view>
+                <view class="rlb-center-fit">合格<text>{{ reportStats.monthly.unpassed_count }}</text></view>
+                <view class="rlb-center-unfit">不合格<text>{{ reportStats.monthly.unpassed_count }}</text></view>
               </view>
             </view>
             <view class="rlb-right">

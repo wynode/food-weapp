@@ -1,8 +1,9 @@
 {
   "pages": [
-    "pages/e-signature/index",
-    "pages/create-enterprise/index",
     "pages/all-center/index",
+    "pages/create-report2/index",
+    "pages/create-enterprise/index",
+    "pages/e-signature/index",
     "pages/enterprise-profile/index",
     "pages/enterprise-info/index",
     "pages/week-check1/index",
@@ -26,7 +27,9 @@
     "pages/create-user/index",
     "pages/bao-info/index"
   ],
-  "requiredPrivateInfos": ["chooseAddress"],
+  "requiredPrivateInfos": [
+    "chooseAddress"
+  ],
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {},
   "window": {

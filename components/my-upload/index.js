@@ -22,6 +22,7 @@ Component({
   methods: {
     handleAdd(e) {
       const { files } = e.detail;
+      console.log(123123123)
       files.forEach((file) => this.onUpload(file));
     },
 
@@ -38,7 +39,7 @@ Component({
       try {
         compressResult = await wx.compressImage({
           src: file.url, // 图片路径
-          quality: 70, // 压缩质量
+          quality: 60, // 压缩质量
         });
       } catch {
         Toast({

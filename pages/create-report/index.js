@@ -1,23 +1,23 @@
 import Toast from 'tdesign-miniprogram/toast';
+import Signature from 'mini-smooth-signature';
 import { formatTime } from '../../utils/util';
-import { restaurantList } from './mock';
-
+const app = getApp();
 Page({
   data: {
+    fullScreen: false,
+    width2: 320,
+    height2: 600,
+    scale: 2,
+
     style: 'border: 2rpx solid rgba(220,220,220,1);border-radius: 12rpx;',
-    restaurantList,
+    restaurantList: [],
     isRestaurant: false,
     templateTypeValue: [],
     templateTypeTitle: '',
-    templateTypeText: '（日周月）食品销售通用模板',
-    templateTypeList: [
-      {
-        label: '（日周月）食品销售通用模板',
-        value: '（日周月）食品销售通用模板',
-      },
-    ],
+    templateTypeText: '',
+    templateTypeList: [],
+    reportType: '',
 
-    showAllQualified: false,
     submitDisabled: true,
     computedColor: '#FC5B5B',
     computedColor1: 'color: #FC5B5B',
@@ -32,143 +32,405 @@ Page({
     checkList: [],
     checkPercentage: 0,
     currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
-    checkListData: [
-      {
-        checked: false,
-        label: '听取周排查、日管控中发现问题汇报，研判是否存在有食品安全事故潜在风险。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label: '研究周排查、日管控发现问题存在的原因，整改措施是否有效，提出完善制度措施建议。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label: '检查公司统一信用代码证、食品经营许可（备案）证明是否在有效期内，并依法公示。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label: '检查公司所有从事直接入口食品制售从业人员健康证是否在有效期内。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label:
-          '组织开展公司食品安全管理人员、从业人员开展食品安全培训考核，评估公司各岗位人员食品安全知识是否胜任岗位要求。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label: '评估公司食品贮存场所、冷藏冷冻设施设备、销售场所是否满足食品安全要求。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label: '每周评价是否配备与冷藏冷冻食品品种、数量相适应的设施设备。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label:
-          '查验公司供应商、贮存和运输服务提供者资质合格情况，评估其遵守食品安全有关规定情况，其产品、服务是否存在食品安全潜在风险。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label: '评估公司其他各项食品安全管理制度执行情况，是否存在潜在食品安全风险。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label: '委托生产者生产食品、食品添加剂的，对受托方遵守食品安全情况开展检查，评估其生产的产品是否存在安全风险。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-      {
-        checked: false,
-        label: '月调度后，认为存在发生事故潜在风险隐患的，应立即采取应急处置措施，依法及时向属地监管部门报告。',
-        checkResult: '',
-        checkExceptionReason: '',
-        checkExceptionFileList: [],
-      },
-    ],
+    checkListData: [],
+    min_item_nums: 3,
   },
 
-  onLoad(options) {
-    const shopData = wx.getStorageSync('shop_data');
-    if (shopData.businessTypeText === '餐饮服务') {
-      this.setData({
-        isRestaurant: true,
-        templateTypeText: '（日周月）餐饮服务通用模板',
-        templateTypeList: [
-          {
-            label: '（日周月）餐饮服务通用模板',
-            value: '（日周月）餐饮服务通用模板',
-          },
-        ],
+  async onLoad(options) {
+    try {
+      const reportData = wx.getStorageSync('reportData');
+      const reportTypeOptions = {
+        1: '日管控',
+        2: '周排查',
+        3: '月调度',
+      };
+      const reportType = reportTypeOptions[reportData.report_type];
+      const enterpriseData = wx.getStorageSync('enterpriseData');
+      const { business_type, enterprise_id } = enterpriseData;
+      const res = await app.call({
+        path: `/api/v1/program/enterprise/report/template?report_type=${reportData.report_type}`,
+        method: 'GET',
+        header: {
+          'x-enterprise-id': enterprise_id,
+        },
       });
-    }
-    const { allqualified = 0 } = options || {};
-    if (allqualified) {
-      if (shopData.businessTypeText === '餐饮服务') {
-        const tempCheckListData = this.data.restaurantList.map((item) => {
+      if (res.statusCode !== 200) {
+        throw error;
+      }
+      const { has_template } = res.data.data;
+      let allCheck = [];
+      if (!has_template) {
+        const templateRes = await app.call({
+          path: `/api/v1/program/report/templates?report_type=${reportData.report_type}&business_type=${business_type}`,
+          method: 'GET',
+          header: {
+            'x-enterprise-id': enterprise_id,
+          },
+        });
+        if (templateRes.statusCode !== 200) {
+          throw error;
+        }
+        const { list } = templateRes.data.data;
+        const filterList = list.map((item) => {
           return {
-            ...item,
-            checked: true,
-            checkResult: 'success',
+            label: item.template_name,
+            value: item.template_id,
           };
         });
+        const profileRes = await app.call({
+          path: `/api/v1/program/report/template/${list[0].template_id}`,
+          method: 'GET',
+          header: {
+            'x-enterprise-id': enterprise_id,
+          },
+        });
+        if (profileRes.statusCode !== 200) {
+          throw error;
+        }
+        const { items, min_item_nums } = profileRes.data.data;
+        wx.setStorageSync('templateData', profileRes.data.data);
+        allCheck = items;
         this.setData({
-          restaurantList: tempCheckListData,
-          checkList: Array.from(Array(49).keys()),
-          showAllQualified: true,
-          submitDisabled: false,
-          checkPercentage: 100,
-          computedColor: '',
+          templateTypeList: filterList,
+          templateTypeValue: [list[0].template_id],
+          templateTypeText: list[0].template_name,
+          min_item_nums,
         });
       } else {
-        const tempCheckListData = this.data.checkListData.map((item) => {
+        const { all_items, template } = res.data.data;
+        const { items } = template;
+        allCheck = items.concat(all_items);
+      }
+      console.log(allCheck);
+      const { allqualified = 0 } = options || {};
+      if (allqualified) {
+        const tempCheckListData = allCheck.map((item) => {
           return {
             ...item,
             checked: true,
             checkResult: 'success',
+            checkFileList: [],
+            remark: '',
           };
         });
         this.setData({
+          isRestaurant: business_type === 2,
           checkListData: tempCheckListData,
-          checkList: Array.from(Array(11).keys()),
-          showAllQualified: true,
+          checkList: Array.from(Array(tempCheckListData.length).keys()),
           submitDisabled: false,
           checkPercentage: 100,
           computedColor: '',
+          reportType,
         });
+        console.log(tempCheckListData);
+      } else {
+        const tempCheckListData = allCheck.map((item) => {
+          return {
+            ...item,
+            checked: false,
+            checkResult: '',
+            remark: '',
+            checkFileList: [],
+          };
+        });
+        this.setData({
+          isRestaurant: business_type === 2,
+          checkListData: tempCheckListData,
+          reportType,
+        });
+        console.log(tempCheckListData);
       }
+    } catch (error) {
+      console.log(error);
+      Toast({
+        context: this,
+        selector: '#t-toast',
+        message: '获取详情出错，请联系管理员',
+      });
+      setTimeout(() => {
+        wx.redirectTo({
+          url: '/pages/all-center/index',
+        });
+      });
     }
+  },
+
+  onReady() {
+    try {
+      const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
+      this.setData({
+        width1: windowWidth - 30,
+        height1: 200,
+        width2: windowWidth - 80,
+        height2: windowHeight - 50,
+        scale: Math.max(pixelRatio || 1, 2),
+      });
+    } catch (e) {}
+
+    setTimeout(() => {
+      this.initSignature2();
+    }, 2000);
+  },
+
+  handleBack() {
+    this.setData({
+      fullScreen: false,
+    });
+  },
+
+  // 样例2初始化（伪全屏）
+  initSignature2() {
+    wx.createSelectorQuery()
+      .select('#signature2')
+      .fields({ node: true, size: true })
+      .exec((res) => {
+        console.log(res);
+        const canvas = res[0].node;
+        this.canvas2 = canvas;
+        canvas.width = this.data.width2 * this.data.scale;
+        canvas.height = this.data.height2 * this.data.scale;
+        const ctx = canvas.getContext('2d');
+        this.signature2 = new Signature(ctx, {
+          width: this.data.width2,
+          height: this.data.height2,
+          scale: this.data.scale,
+          minWidth: 4,
+          maxWidth: 10,
+          bgColor: '#ffffff',
+          toDataURL: (type, quality) => canvas.toDataURL(type, quality),
+          requestAnimationFrame: (fn) => canvas.requestAnimationFrame(fn),
+          getImagePath: () =>
+            new Promise((resolve, reject) => {
+              const img = canvas.createImage();
+              img.onerror = reject;
+              img.onload = () => resolve(img);
+              img.src = canvas.toDataURL();
+            }),
+        });
+      });
+  },
+
+  /**
+   * 样例2事件绑定
+   */
+  handleTouchStart2(e) {
+    const pos = e.touches[0];
+    this.signature2.onDrawStart(pos.x, pos.y);
+  },
+  handleTouchMove2(e) {
+    const pos = e.touches[0];
+    this.signature2.onDrawMove(pos.x, pos.y);
+  },
+  handleTouchEnd2() {
+    this.signature2.onDrawEnd();
+  },
+
+  /**
+   * 样例2按钮事件
+   */
+  handleFullScreen2() {
+    this.setData({ fullScreen: false });
+    setTimeout(() => this.initSignature1(), 50);
+  },
+  handleClear2() {
+    this.signature2.clear();
+  },
+  handleUndo2() {
+    this.signature2.undo();
+  },
+  handleColor2() {
+    this.signature2.color = '#' + Math.random().toString(16).slice(-6);
+  },
+  async handlePreview2() {
+    if (this.signature2.isEmpty()) {
+      wx.showToast({ icon: 'none', title: '未签名' });
+      return;
+    }
+    try {
+      const getImgUrlRes = await this.getRotateImage();
+      wx.showLoading({
+        title: '正在生成报告中，请耐心等待',
+      });
+      const uploadResult = await getApp().cloud.uploadFile({
+        cloudPath: `sign_image/${getImgUrlRes.slice(-10)}`,
+        filePath: getImgUrlRes,
+      });
+      console.log(uploadResult);
+      const signer = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${uploadResult.fileID
+        .split('/')
+        .slice(-2)
+        .join('/')}`;
+      const reportData = wx.getStorageSync('reportData');
+      const templateData = wx.getStorageSync('templateData');
+      const payload = {
+        report_type: reportData.report_type,
+        date: reportData.date,
+        params: {
+          signer,
+          template_id: templateData.template_id,
+        },
+      };
+      let passed_items = [];
+      let unpassed_items = [];
+      this.data.checkListData.forEach((curr) => {
+        if (curr.checked && curr.checkResult === 'success') {
+          passed_items.push({
+            item_id: curr.item_id,
+            remark: curr.remark,
+            spot_images: curr.checkFileList.map((item) => item.fileID),
+            rectification_images: [],
+          });
+        }
+        if (curr.checked && curr.checkResult === 'fail') {
+          unpassed_items.push({
+            item_id: curr.item_id,
+            remark: curr.remark,
+            spot_images: curr.checkFileList.map((item) => item.fileID),
+            rectification_images: [],
+          });
+        }
+      });
+      payload.params.passed_items = passed_items;
+      payload.params.unpassed_items = unpassed_items;
+      payload.params.item_count = passed_items.length + unpassed_items.length;
+      payload.params.content = {};
+      console.log(payload);
+      const enterpriseData = wx.getStorageSync('enterpriseData');
+      const reportRes = await app.call({
+        path: `/api/v1/program/enterprise/report`,
+        method: 'PUT',
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
+        data: payload,
+      });
+      if (reportRes.statusCode !== 200) {
+        throw error;
+      }
+      wx.hideLoading();
+      wx.showToast({
+        title: '生成报告成功',
+        icon: 'success',
+        duration: 2000,
+      });
+      wx.redirectTo({
+        url: '/pages/all-center/index',
+      });
+    } catch (error) {
+      console.log(error);
+      wx.showToast({
+        title: '生成报告失败',
+        icon: 'error',
+        duration: 2000,
+      });
+    }
+    // Toast({
+    //   context: this,
+    //   selector: '#t-toast',
+    //   message: '提交成功',
+    // });
+    // const report_type = wx.getStorageSync('report_type');
+    // wx.setStorageSync('reportData', this.data.checkListData);
+    // if ((this.isRestaurant && report_type === 2) || report_type === 3) {
+    //   wx.navigateTo({
+    //     url: 'pages/e-signature/index',
+    //   });
+    // } else {
+    // }
+  },
+
+  handleAdd(e) {
+    const { files } = e.detail;
+    const { key } = e.currentTarget.dataset;
+    files.forEach((file) => this.onUpload(file, key));
+  },
+  async onUpload(file, key) {
+    const itemIndex = Number(key) - 1;
+    console.log(this.data);
+    const fileList = this.data.checkListData[itemIndex].checkFileList;
+    const length = fileList.length;
+
+    this.setData({
+      [`checkListData[${itemIndex}].checkFileList`]: [...fileList, { ...file, status: 'loading' }],
+    });
+    let compressResult = {};
+    try {
+      compressResult = await wx.compressImage({
+        src: file.url, // 图片路径
+        quality: 60, // 压缩质量
+      });
+    } catch {
+      Toast({
+        context: this,
+        selector: '#t-toast',
+        message: '压缩图片失败，请使用jpg格式图片',
+      });
+    }
+    let uploadResult = {};
+    try {
+      uploadResult = await getApp().cloud.uploadFile({
+        cloudPath: `report_image/${file.name}`,
+        filePath: compressResult.tempFilePath,
+      });
+      this.setData({
+        [`checkListData[${itemIndex}].checkFileList[${length}].status`]: 'done',
+        [`checkListData[${itemIndex}].checkFileList[${length}].fileID`]: `/${uploadResult.fileID
+          .split('/')
+          .slice(-2)
+          .join('/')}`,
+      });
+      setTimeout(() => {
+        console.log(this.data.checkListData);
+      }, 2000);
+    } catch {
+      Toast({
+        context: this,
+        selector: '#t-toast',
+        message: '上传图片出错，请联系管理员',
+      });
+    }
+  },
+  handleRemove(e) {
+    const { index } = e.detail;
+    const { key } = e.currentTarget.dataset;
+    const fileIndex = Number(key) - 1;
+    const { checkFileList } = this.data.checkListData[fileIndex];
+
+    checkFileList.splice(index, 1);
+    this.setData({
+      [`checkListData[${index}].checkFileList`]: checkFileList,
+    });
+  },
+
+  // 样例2伪全屏输出旋转图片
+  async getRotateImage() {
+    const dataURL = this.signature2.toDataURL();
+    const url = await base64ToPath(dataURL);
+    const ctx = wx.createCanvasContext('signature3');
+    const width = this.signature2.width;
+    const height = this.signature2.height;
+    ctx.restore();
+    ctx.save();
+    ctx.translate(0, height);
+    ctx.rotate((270 * Math.PI) / 180);
+    ctx.drawImage(url, 0, 0, width, height);
+    ctx.draw();
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        wx.canvasToTempFilePath({
+          canvasId: 'signature3',
+          x: 0,
+          y: height - width,
+          width: height,
+          height: width,
+          success: (res) => resolve(res.tempFilePath),
+          fail: reject,
+        });
+      }, 50);
+    });
   },
 
   templateTypePicker() {
-    console.log(111);
     this.setData({
       templateTypeVisible: true,
       templateTypeTitle: '选择模版',
@@ -176,48 +438,50 @@ Page({
   },
 
   handleSubmit() {
-    let reportData = [];
-    if (this.data.isRestaurant) {
-      reportData = this.data.restaurantList;
-    } else {
-      reportData = this.data.checkListData;
-    }
-    wx.setStorageSync('report_data', reportData);
-    Toast({
-      context: this,
-      selector: '#t-toast',
-      message: '提交成功',
-    });
-    if (this.data.isRestaurant) {
-      if (this.data.showAllQualified) {
-        wx.redirectTo({
-          url: '/pages/e-signature2/index',
-        });
-      } else {
-        wx.redirectTo({
-          url: '/pages/e-signature2/index',
-        });
-      }
-    } else {
-      wx.redirectTo({
-        url: '/pages/e-signature/index',
+    const reportData = wx.getStorageSync('reportData');
+    if ((this.isRestaurant && reportData.report_type === 2) || reportData.report_type === 3) {
+      let payload = {};
+      let passed_items = [];
+      let unpassed_items = [];
+      this.data.checkListData.forEach((curr) => {
+        if (curr.checked && curr.checkResult === 'success') {
+          passed_items.push({
+            item_id: curr.item_id,
+            remark: '',
+            spot_images: curr.checkFileList.map((item) => item.fileID),
+            rectification_images: [],
+          });
+        }
+        if (curr.checked && curr.checkResult === 'fail') {
+          unpassed_items.push({
+            item_id: curr.item_id,
+            remark: '',
+            spot_images: curr.checkFileList.map((item) => item.fileID),
+            rectification_images: [],
+          });
+        }
       });
+      payload.passed_items = passed_items;
+      payload.unpassed_items = unpassed_items;
+      payload.item_count = passed_items.length + unpassed_items.length;
+      wx.setStorageSync('reportProfileList', payload);
+      wx.navigateTo({
+        url: '/pages/creat-report2/index',
+      });
+    } else {
+      this.setData({ fullScreen: true });
     }
-  },
-
-  onColumnChange(e) {
-    console.log('picker pick:', e);
   },
 
   onPickerChange(e) {
     const { key } = e.currentTarget.dataset;
-    const { value } = e.detail;
+    const { value, label } = e.detail;
 
     console.log('picker change:', e.detail);
     this.setData({
       [`${key}Visible`]: false,
       [`${key}Value`]: value,
-      [`${key}Text`]: value.join(' '),
+      [`${key}Text`]: label.join(' '),
     });
   },
 
@@ -235,44 +499,6 @@ Page({
       cityVisible: true,
       cityTitle: '选择城市',
     });
-  },
-
-  handleSuccess(e) {
-    const { files } = e.detail;
-    const { key = '0' } = e.currentTarget.dataset;
-    console.log(e);
-    const tempCheckListData = this.data.checkListData.map((item, index) => {
-      if (index === Number(key)) {
-        return {
-          ...item,
-          checkExceptionFileList: files,
-        };
-      }
-      return {
-        ...item,
-      };
-    });
-    this.setData({
-      checkListData: tempCheckListData,
-    });
-  },
-  handleRemove(e) {
-    const { index: fileIndex } = e.detail;
-    const { key = '0' } = e.currentTarget.dataset;
-    const tempCheckListData = this.data.checkListData.map((item, index) => {
-      if (index === Number(key)) {
-        item.checkExceptionFileList.splice(fileIndex, 1);
-      }
-      return {
-        ...item,
-      };
-    });
-    this.setData({
-      checkListData: tempCheckListData,
-    });
-  },
-  handleClick(e) {
-    console.log(e.detail.file);
   },
 
   onCheckChange(e) {
@@ -306,8 +532,8 @@ Page({
 
   onCheckResChange(e) {
     const { value } = e.detail;
-    const tempCheckListData = this.data.restaurantList.map((item, index) => {
-      if (value.includes(index)) {
+    const tempCheckListData = this.data.checkListData.map((item) => {
+      if (value.includes(item.item_seq)) {
         return {
           ...item,
           checked: true,
@@ -319,11 +545,11 @@ Page({
         checkResult: '',
       };
     });
-    const checkPercentage = (e.detail.value.length / this.data.restaurantList.length) * 100;
-    const submitDisabled = !(e.detail.value.length >= 15);
+    const checkPercentage = (value.length / this.data.checkListData.length) * 100;
+    const submitDisabled = !(value.length >= this.data.min_item_nums);
     this.setData({
-      checkList: e.detail.value,
-      restaurantList: tempCheckListData,
+      checkList: value,
+      checkListData: tempCheckListData,
       checkPercentage,
       submitDisabled,
       computedColor: submitDisabled ? '#FC5B5B' : '0B82FF',
@@ -334,20 +560,21 @@ Page({
 
   handleCheckResResult(e) {
     const { key = '0 0' } = e.currentTarget.dataset;
-    const tempCheckListData = this.data.restaurantList.map((item, index) => {
-      if (String(index) === key.split(' ')[0]) {
+    const checkIndex = key.split(' ')[0];
+    const checkResult = key.split(' ')[1];
+    const tempCheckListData = this.data.checkListData.map((item) => {
+      if (String(item.item_seq) === checkIndex) {
         return {
           ...item,
-          checkResult: key.split(' ')[1],
+          checkResult: checkResult,
         };
       }
       return {
         ...item,
       };
     });
-
     this.setData({
-      restaurantList: tempCheckListData,
+      checkListData: tempCheckListData,
     });
   },
 
@@ -372,11 +599,11 @@ Page({
   handleReasonChange(e) {
     const { key = '0' } = e.currentTarget.dataset;
     const { value } = e.detail;
-    const tempCheckListData = this.data.checkListData.map((item, index) => {
-      if (String(index) === String(key)) {
+    const tempCheckListData = this.data.checkListData.map((item) => {
+      if (String(item.item_seq) === String(key)) {
         return {
           ...item,
-          checkExceptionReason: value,
+          remark: value,
         };
       }
       return {
@@ -389,3 +616,19 @@ Page({
     });
   },
 });
+
+// base64转本地
+function base64ToPath(dataURL) {
+  return new Promise((resolve, reject) => {
+    // const data = wx.base64ToArrayBuffer(dataURL.replace(/^data:image\/\w+;base64,/, ""));
+    const data = dataURL.replace(/^data:image\/\w+;base64,/, '');
+    const filePath = `${wx.env.USER_DATA_PATH}/${Math.random().toString(32).slice(2)}.png`;
+    wx.getFileSystemManager().writeFile({
+      filePath,
+      data,
+      encoding: 'base64',
+      success: () => resolve(filePath),
+      fail: reject,
+    });
+  });
+}

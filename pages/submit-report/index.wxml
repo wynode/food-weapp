@@ -1,10 +1,10 @@
 <view>
   <background isHighlight="true"></background>
   <view class="submit-report">
-    <t-cell title="是否切换为餐饮" bordered="{{false}}" style="margin-bottom: 20rpx">
+    <!-- <t-cell title="是否切换为餐饮" bordered="{{false}}" style="margin-bottom: 20rpx">
       <t-switch value="{{switchValue}}" bindchange="handleSwitchChange" slot="note" />
-    </t-cell>
-    <view class="sr-day">
+    </t-cell> -->
+    <view class="sr-day" wx:for="{{waitlist}}" wx:key="index" wx:for-item="item">
       <view class="sr-day-left">
         <image
           src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/message.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
@@ -12,45 +12,41 @@
       </view>
       <view class="sr-day-right">
         <view class="srdr-top">
-          <view class="srdr-top-left"> 需提交日管控 </view>
-          <view class="srdr-top-right"> <text class="text-red">2</text>/4 </view>
+          <view class="srdr-top-left"> 需提交{{ reportTypeMap[item.report_type] }} </view>
+          <!-- <view class="srdr-top-right"> <text class="text-red">2</text>/4 </view> -->
         </view>
         <view class="srdr-bottom">
-          <view class="srdr-bottom-left"> 2023年7月11日 </view>
-          <view class="srdr-bottom-right"> 剩余25分钟 </view>
+          <view class="srdr-bottom-left"> {{ item.showDate }} </view>
+          <view class="srdr-bottom-right"> {{ item.remain }} </view>
         </view>
       </view>
     </view>
-    <!-- <view class="sr-day">
-      <view class="sr-day-left">
-        <image
-          src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/message.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-        ></image>
+    <t-progress
+      class="sr-progress"
+      color="#FC5B5B"
+      track-color="rgba(252,91,91,0.1)"
+      stroke-width="20"
+      theme="circle"
+      percentage="100"
+      wx:if="{{isOvertime}}"
+    >
+      <view slot="label">
+        <view class="sr-progress-time">{{ currentTime }}</view>
+        <view class="sr-progress-countdown">{{ waitlist[0].remain }}</view>
       </view>
-      <view class="sr-day-right">
-        <view class="srdr-top">
-          <view class="srdr-top-left"> 需提交周排查 </view>
-          <view class="srdr-top-right"> <text class="text-red">2</text>/4 </view>
-        </view>
-        <view class="srdr-bottom">
-          <view class="srdr-bottom-left"> 2023年7月11日 </view>
-          <view class="srdr-bottom-right"> 剩余25分钟 </view>
-        </view>
-      </view>
-    </view> -->
+    </t-progress>
     <t-progress
       class="sr-progress"
       color="#0B82FF"
       track-color="rgba(11,130,255,0.1)"
       stroke-width="20"
       theme="circle"
-      percentage="{{progress}}"
+      percentage="40"
+      wx:else
     >
       <view slot="label">
         <view class="sr-progress-time">{{ currentTime }}</view>
-        <view class="sr-progress-countdown"
-          >剩余<text wx:if="{{remainingHours}}">{{ remainingHours }}小时</text>{{remainingMinutes}}分钟</view
-        >
+        <view class="sr-progress-countdown">{{ waitlist[0].remain }}</view>
       </view>
     </t-progress>
     <view class="sr-tips"> 请尽快填写日管控哦 </view>
@@ -58,6 +54,7 @@
       <t-button class="sr-btns-left" theme="primary" size="large" bindtap="goCreateReport">逐一检查</t-button>
       <t-button class="sr-btns-right" theme="light" size="large" bindtap="goCreateReportQualify">一键合格</t-button>
     </view>
+
     <view class="srb-btns" wx:if="{{switchValue}}">
       <t-button class="srb-btns-left" theme="primary" variant="outline" size="large" bindtap="goCreateWeek"
         >生成周排查</t-button
@@ -68,3 +65,5 @@
     </view>
   </view>
 </view>
+
+<t-toast id="t-toast"></t-toast>

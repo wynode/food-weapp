@@ -9,7 +9,7 @@
 import updateManager from './common/updateManager';
 
 App({
-  onLaunch: function () {},
+  // onLaunch: function () {},
   onShow: function () {
     updateManager();
   },
@@ -19,9 +19,16 @@ App({
       resourceEnv: 'prod-2gdukdnr11f1f68a', // 微信云托管的环境ID
     });
     await c1.init();
-    this.cloud = c1; // 在页面js中，可以使用getApp().cloud
+    this.cloud = c1;
+  // 在页面js中，可以使用getApp().cloud
   },
   async call(obj, number = 0) {
+    const c1 = new wx.cloud.Cloud({
+      resourceAppid: 'wx48a4230fe919bc57', // 环境所属的账号appid
+      resourceEnv: 'prod-2gdukdnr11f1f68a', // 微信云托管的环境ID
+    });
+    await c1.init();
+    this.cloud = c1;
     const that = this;
     if (that.cloud === null) {
       that.cloud = new wx.cloud.Cloud({
@@ -47,7 +54,7 @@ App({
         // 其余参数同 wx.request
       });
       console.log(`微信云托管调用结果${result.errMsg} | callid:${result.callID}`);
-      return result.data; // 业务数据在data中
+      return result; // 业务数据在data中
     } catch (e) {
       const error = e.toString();
       // 如果错误信息为未初始化，则等待300ms再次尝试，因为init过程是异步的

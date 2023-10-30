@@ -39,39 +39,12 @@
 
   <view class="sign-export"> <t-button block bindtap="exportReport2">导出报告</t-button></view>
 
-  <!-- <view class="container1" wx:if="{{notShow}}">
-    <view class="sign-title">请在以下区域书写您的签名</view>
-    <canvas
-      type="2d"
-      id="signature1"
-      class="signature1"
-      style="width:{{width1}}px;height:{{height1}}px;"
-      disable-scroll="{{true}}"
-      bindtouchstart="handleTouchStart1"
-      bindtouchmove="handleTouchMove1"
-      bindtouchcancel="handleTouchEnd1"
-      bindtouchend="handleTouchEnd1"
-    ></canvas>
-    <view class="actions1">
-      <t-button bindtap="handleClear1" size="large" variant="outline" theme="danger">清除</t-button>
-      <t-button bindtap="handleUndo1" size="large" variant="outline">撤销</t-button>
-    </view>
-    <view class="submit-sign">
-      <t-button theme="primary" size="large" block bind:tap="handlePreview1">提交签名</t-button>
-    </view>
-  </view> -->
-  <!-- 样例2（伪全屏） -->
   <view class="container2 {{ fullScreen ? '' : 'hidden-sign' }}">
     <view class="actions2Wrap">
       <view class="actions2">
         <t-button bindtap="handleClear2" size="large" variant="outline" theme="danger">清除</t-button>
         <t-button bindtap="handleUndo2" size="large" variant="outline" style="margin: 0 50rpx">撤销</t-button>
-        <!-- <button bindtap="handleClear2"> Clear </button>
-        <button bindtap="handleUndo2"> Undo </button> -->
         <t-button theme="primary" size="large" block bind:tap="handlePreview2">确认签名</t-button>
-        <!-- <button bindtap="handlePreview2"> View PNG </button> -->
-        <!-- <button bindtap="handleColor2"> Change Color </button> -->
-        <!-- <button bindtap="handleFullScreen2"> Close Full Screen </button> -->
       </view>
     </view>
     <canvas
@@ -85,8 +58,6 @@
       bindtouchcancel="handleTouchEnd2"
       bindtouchend="handleTouchEnd2"
     ></canvas>
-    <!-- 伪全屏生成旋转图片canvas容器，不在页面上展示 -->
-    <!-- style="position: fixed; left: -2000px; width: 0; height: 0; overflow: hidden" -->
     <view style="position: fixed; left: -2000px; width: 0; height: 0; overflow: hidden">
       <canvas canvas-id="signature3" style="width:{{height2}}px;height:{{height2}}px;" />
     </view>

@@ -1,0 +1,14 @@
+{
+  "navigationBarTitleText": "情况评级及下周排查重点",
+  "usingComponents": {
+    "background": "/components/background/index",
+    "t-progress": "tdesign-miniprogram/progress/progress",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-switch": "tdesign-miniprogram/switch/switch",
+    "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "t-radio": "tdesign-miniprogram/radio/radio",
+    "t-textarea": "tdesign-miniprogram/textarea/textarea",
+    "t-radio-group": "tdesign-miniprogram/radio-group/radio-group"
+  }
+}

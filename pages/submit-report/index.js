@@ -1,32 +1,84 @@
 import { formatTime } from '../../utils/util';
-
+import Toast from 'tdesign-miniprogram/toast/index';
+const app = getApp();
 Page({
   data: {
+    isOvertime: true,
     currentTime: '',
     intervalId: '',
     remainingHours: '',
     remainingMinutes: '',
     progress: 0,
     switchValue: false,
+    waitlist: [{}],
+    reportTypeMap: {
+      1: '日报',
+      2: '周报',
+      3: '月报',
+    },
   },
 
-  onLoad() {
-    this.updateTime();
-    const intervalId = setInterval(() => {
-      this.updateTime();
-    }, 20000);
-    this.setData({
-      intervalId,
-    });
-    const shopData = wx.getStorageSync('shop_data');
-    if (shopData.businessTypeText === '餐饮服务') {
-      this.setData({
-        switchValue: true,
+  async onLoad() {
+    try {
+      const enterpriseData = wx.getStorageSync('enterpriseData')
+      const res = await app.call({
+        path: '/api/v1/program/enterprise/report/waitlist',
+        method: 'GET',
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
       });
+      if (res.statusCode !== 200) {
+        throw error;
+      }
+      const { waitlist } = res.data.data;
+      if (waitlist.length === 0) {
+        throw error;
+      }
+      const filterwait = waitlist.map((item) => {
+        const now = new Date();
+        const targetTime = new Date(formatTime(item.deadline, 'YYYY/MM/DD HH:mm:ss'));
+        const diff = targetTime.getTime() - now.getTime();
+        const remainingHours = parseInt(diff / (1000 * 60 * 60));
+        const remainingMinutes = parseInt((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const date = String(item.date);
+        return {
+          ...item,
+          showDate: date.slice(0, 4) + '年' + date.slice(4, 6) + '月' + date.slice(6, 8) + '日',
+          remain: `${remainingHours > 0 ? '剩余' : '已超时'}${Math.abs(remainingHours)}小时${Math.abs(
+            remainingMinutes,
+          )}分钟`,
+        };
+      });
+      if (filterwait[0].remain.includes('已超时')) {
+        this.setData({
+          isOvertime: true,
+        });
+      }
+      this.updateTime(filterwait[0].deadline);
+      const intervalId = setInterval(() => {
+        this.updateTime(filterwait[0].deadline);
+      }, 1000);
+      wx.setStorageSync('reportData', filterwait[0])
+      this.setData({
+        intervalId,
+        waitlist: filterwait,
+      });
+    } catch {
+      Toast({
+        context: this,
+        selector: '#t-toast',
+        message: '暂无需要提交的报告',
+      });
+      setTimeout(() => {
+        wx.redirectTo({
+          url: `/pages/all-center/index`,
+        });
+      }, 1000);
     }
   },
 
-  goCreateReport() {
+  async goCreateReport() {
     wx.navigateTo({
       url: `/pages/create-report/index`,
     });
@@ -38,7 +90,7 @@ Page({
     });
   },
 
-  onUnload() {
+  async onUnload() {
     clearInterval(this.data.intervalId);
   },
 
@@ -75,10 +127,10 @@ Page({
     }
   },
 
-  updateTime() {
+  updateTime(deadline) {
     const now = new Date();
     const currentTime = formatTime(now, 'HH:mm');
-    const targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+    const targetTime = new Date(formatTime(deadline, 'YYYY/MM/DD HH:mm:ss'));
     const diff = targetTime.getTime() - now.getTime();
     const remainingHours = Math.floor(diff / (1000 * 60 * 60));
     const remainingMinutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));

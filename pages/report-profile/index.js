@@ -1,8 +1,11 @@
+const app = getApp();
 Page({
   data: {
-    month: '8',
     percentage: 76,
-    reportList: [{
+    dateType: '日管控',
+    reportType: '1',
+    reportProfileList: [
+      {
         date: '7.11',
         dateType: '日管控',
         total: 5,
@@ -10,7 +13,7 @@ Page({
         submitTime: '09:00',
         submitUser: '花花',
         submitType: '门店提交',
-        address: '成都市金牛区驷马桥街道横田大厦'
+        address: '成都市金牛区驷马桥街道横田大厦',
       },
       {
         date: '7.10',
@@ -20,7 +23,7 @@ Page({
         submitTime: '09:00',
         submitUser: '花花',
         submitType: '门店提交',
-        address: '成都市金牛区驷马桥街道横田大厦'
+        address: '成都市金牛区驷马桥街道横田大厦',
       },
       {
         date: '7.09',
@@ -30,7 +33,7 @@ Page({
         submitTime: '09:00',
         submitUser: '花花',
         submitType: '门店提交',
-        address: '成都市金牛区驷马桥街道横田大厦'
+        address: '成都市金牛区驷马桥街道横田大厦',
       },
       {
         date: '7.08',
@@ -40,149 +43,217 @@ Page({
         submitTime: '09:00',
         submitUser: '花花',
         submitType: '门店提交',
-        address: '成都市金牛区驷马桥街道横田大厦'
+        address: '成都市金牛区驷马桥街道横田大厦',
       },
-
     ],
-    dateValue: [2023, 8],
-    years: [{
+    reportProfileDetail: {},
+    reportList: [],
+    dateVisible: false,
+    dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1)],
+    years: [
+      {
+        label: '2026年',
+        value: '2026',
+      },
+      {
+        label: '2025年',
+        value: '2025',
+      },
+      {
+        label: '2024年',
+        value: '2024',
+      },
+      {
         label: '2023年',
-        value: '2023'
-      },
-      {
-        label: '2022年',
-        value: '2022'
-      },
-      {
-        label: '2021年',
-        value: '2021'
+        value: '2023',
       },
     ],
-    seasons: [{
+    seasons: [
+      {
         label: '1月',
-        value: '1'
+        value: '01',
       },
       {
         label: '2月',
-        value: '2'
+        value: '02',
       },
       {
         label: '3月',
-        value: '3'
+        value: '03',
       },
       {
         label: '4月',
-        value: '4'
+        value: '04',
       },
       {
         label: '5月',
-        value: '5'
+        value: '05',
       },
       {
         label: '6月',
-        value: '6'
+        value: '06',
       },
       {
         label: '7月',
-        value: '7'
+        value: '07',
       },
       {
         label: '8月',
-        value: '8'
+        value: '08',
+      },
+      {
+        label: '9月',
+        value: '09',
+      },
+      {
+        label: '10月',
+        value: '10',
+      },
+      {
+        label: '11月',
+        value: '11',
+      },
+      {
+        label: '12月',
+        value: '12',
       },
     ],
   },
 
   onLoad(options) {
-    const {
-      reportType = 'day'
-    } = options || {}
-    let tempReportList = this.data.reportList
-    if (reportType === 'week') {
-      wx.setNavigationBarTitle({
-        title: '周排查',
-      })
-      tempReportList = tempReportList.slice(0, 3).map((item, index) => {
-        return {
-          ...item,
-          date: `第${index + 1}周`,
-          dateType: '周排查',
-        }
-      })
-    } else if (reportType === 'month') {
-      wx.setNavigationBarTitle({
-        title: '月调度',
-      })
-      tempReportList = tempReportList.slice(1, 2).map((item) => {
-        return {
-          ...item,
-          date: `${this.data.month}月`,
-          dateType: '月调度',
-        }
-      })
-    }
+    const { reportType = '1', month = '' } = options || {};
+    this.getReportProfileList(reportType, month);
+    this.getReportList(reportType, month);
     this.setData({
       reportType,
-      reportList: tempReportList,
-    })
+      dateValue: [month.slice(0, 4), month.slice(-2)],
+    });
+  },
+
+  async getReportProfileList(reportType, month) {
+    try {
+      const enterpriseData = wx.getStorageSync('enterpriseData');
+      const reportProfileRes = await app.call({
+        path: `/api/v1/program/enterprise/report/stats/${month}/list?report_type=${reportType}`,
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
+      });
+      const { detail, list } = reportProfileRes.data.data;
+      const percentage = parseInt((detail.unpassed_count / (detail.unpassed_count + detail.passed_count || 1)) * 100);
+      this.setData({
+        reportProfileList: list,
+        reportProfileDetail: detail,
+        percentage,
+      });
+    } catch {
+      wx.showToast({
+        title: '获取详情失败，请联系管理员',
+      });
+      wx.redirectTo({
+        url: '/pages/all-center/index',
+      });
+    }
+  },
+
+  async getReportList(reportType, month) {
+    try {
+      const enterpriseData = wx.getStorageSync('enterpriseData');
+      const reportProfileRes = await app.call({
+        path: `/api/v1/program/enterprise/report/${month}/${reportType}`,
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
+      });
+      const reportList = reportProfileRes.data;
+      console.log(reportList);
+      // this.setData({
+      //   reportList,
+      // });
+    } catch {
+      wx.showToast({
+        title: '获取详情失败，请联系管理员',
+      });
+      wx.redirectTo({
+        url: '/pages/all-center/index',
+      });
+    }
   },
 
   goDailyStats() {
     wx.redirectTo({
       url: '/pages/daily-stats/index',
-    })
-  },
-
-
-  onPickerChange(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
-    const {
-      value
-    } = e.detail;
-    let tempReportList = this.data.reportList
-    let percentage = 76
-    if (this.data.reportType === 'day') {
-      tempReportList = this.data.reportList.map((item, index) => {
-        return {
-          ...item,
-          date: `${value[1]}.${item.date.split('.')[1]}`
-        }
-      })
-      percentage = 90
-    } else if (this.data.reportType === 'month') {
-      tempReportList = this.data.reportList.map((item, index) => {
-        return {
-          ...item,
-          date: `${value[1]}月`
-        }
-      })
-      percentage = 88
-    }
-    this.setData({
-      [`${key}Visible`]: false,
-      [`${key}Value`]: value,
-      [`${key}Text`]: value.join(' '),
-      reportList: tempReportList,
-      percentage: percentage,
     });
   },
 
-  onPickerCancel(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
-    console.log(e, '取消');
-    console.log('picker1 cancel:');
+  onPickerChange(e) {
+    const { value } = e.detail;
+    this.getReportProfileList(this.data.reportType, value.join(''));
     this.setData({
-      [`${key}Visible`]: false,
+      dateVisible: false,
+      dateValue: value,
+    });
+  },
+
+  onPickerCancel() {
+    this.setData({
+      dateVisible: false,
     });
   },
 
   onSeasonPicker() {
     this.setData({
-      dateVisible: true
+      dateVisible: true,
     });
   },
-})
+
+  onTabsChange() {
+    this.getReportProfileList(this.data.reportType, this.data.dateValue.join(''));
+    this.getReportList(this.data.reportType, this.data.dateValue.join(''));
+  },
+
+  onOneTabsChange(event) {
+    this.setData({
+      reportType: event.detail.value,
+    });
+    const dateOptions = {
+      1: '日管控',
+      2: '周排查',
+      3: '月调度',
+    };
+    this.setData({
+      dateType: dateOptions[event.detail.value],
+    });
+    this.getReportProfileList(event.detail.value, this.data.dateValue.join(''));
+  },
+
+  onSecondTabsChange(event) {
+    this.setData({
+      reportType: event.detail.value,
+    });
+    const dateOptions = {
+      1: '日管控',
+      2: '周排查',
+      3: '月调度',
+    };
+    this.setData({
+      dateType: dateOptions[event.detail.value],
+    });
+    this.getReportList(event.detail.value, this.data.dateValue.join(''));
+  },
+
+  handlePreview(url) {
+    wx.downloadFile({
+      url,
+      success: function (res) {
+        const filePath = res.tempFilePath;
+        wx.openDocument({
+          filePath: filePath,
+          success: function (res) {
+            console.log('打开文档成功');
+          },
+        });
+      },
+    });
+  },
+});

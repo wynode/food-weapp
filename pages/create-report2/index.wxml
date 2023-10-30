@@ -1,0 +1,73 @@
+<view>
+  <background></background>
+  <view class="final-profile">
+    <view class="final-weekly" wx:if="isWeekly">
+      <view class="final-date"> 报告日期：{{ currentDay }}</view>
+      <view style="margin-bottom: 20rpx">本周食品安全管理情况评价（请根据实际情况选择）</view>
+      <t-radio-group t-class="radio-class" bind:change="onRadioChange" value="{{current}}" options="{{options}}" />
+      <view class="textarea-example">
+        <text class="textarea-example__label">下周食品安全排查重点</text>
+        <t-textarea
+          t-class="external-class"
+          placeholder="请输入下周食品安全排查重点"
+          bordered
+          disableDefaultPadding="{{true}}"
+          indicator
+          value="{{important}}"
+        />
+      </view>
+    </view>
+
+    <view class="final-month" wx:else>
+      <view class="final-food-month" wx:if="isRes">
+        <view>会议日期：2023年9月12日</view>
+
+        <view>会议名称：xxx公司x年x月食品安全调度会议</view>
+      </view>
+      <view class="final-res-month" wx:else>
+        <view>会议日期：2023年9月12日</view>
+
+        <view>会议名称：xxx公司x年x月食品安全调度会议</view>
+      </view>
+    </view>
+    <view class="signBottom">
+      <view wx:if="{{signUrl}}" class="signSign" style="position: relative">
+        <!-- <text>报告人：</text> -->
+        <image src="{{signUrl}}"></image>
+      </view>
+      <t-button wx:else type="primary" bindtap="handleFullScreen1">点击签名</t-button>
+    </view>
+    <t-button theme="primary" size="large" block style="margin-top: 50rpx" bind:tap="handleFinal"
+      >确认无误，生成报告</t-button
+    >
+  </view>
+</view>
+
+<t-toast id="t-toast"></t-toast>
+
+<view class="container2 {{ fullScreen ? '' : 'hidden-sign' }}" style="z-index: 10000">
+  <view class="actions2Wrap" style="z-index: 10000">
+    <view class="actions2">
+      <!-- <t-button bindtap="handleBack" size="large" variant="outline" theme="light" style="margin:0 30rpx">返回</t-button> -->
+      <t-button bindtap="handleBack" size="large" variant="outline">返回</t-button>
+      <t-button bindtap="handleClear2" size="large" variant="outline" style="margin: 0 50rpx" theme="danger"
+        >清除</t-button
+      >
+      <t-button theme="primary" size="large" block bind:tap="handlePreview2">确认签名</t-button>
+    </view>
+  </view>
+  <canvas
+    type="2d"
+    id="signature2"
+    class="signature2"
+    style="width:{{width2}}px;height:{{height2}}px;"
+    disable-scroll="{{true}}"
+    bindtouchstart="handleTouchStart2"
+    bindtouchmove="handleTouchMove2"
+    bindtouchcancel="handleTouchEnd2"
+    bindtouchend="handleTouchEnd2"
+  ></canvas>
+  <view style="position: fixed; left: -2000px; width: 0; height: 0; overflow: hidden">
+    <canvas canvas-id="signature3" style="width:{{height2}}px;height:{{height2}}px;" />
+  </view>
+</view>

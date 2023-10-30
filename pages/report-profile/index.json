@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "日管控",
+  "navigationBarTitleText": "报告列表",
   "usingComponents": {
     "t-divider": "tdesign-miniprogram/divider/divider",
     "t-toast": "tdesign-miniprogram/toast/toast",
@@ -13,6 +13,8 @@
     "t-tab-bar": "tdesign-miniprogram/tab-bar/tab-bar",
     "t-tab-bar-item": "tdesign-miniprogram/tab-bar-item/tab-bar-item",
     "t-picker": "tdesign-miniprogram/picker/picker",
-    "t-picker-item": "tdesign-miniprogram/picker-item/picker-item"
+    "t-picker-item": "tdesign-miniprogram/picker-item/picker-item",
+    "t-tabs": "tdesign-miniprogram/tabs/tabs",
+    "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel"
   }
 }
