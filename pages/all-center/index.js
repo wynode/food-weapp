@@ -5,8 +5,7 @@ Page({
     enterprise_id: '',
     enterprise_name: '花花的小店',
     dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1)],
-    years: [
-      {
+    years: [{
         label: '2026年',
         value: '2026',
       },
@@ -23,8 +22,7 @@ Page({
         value: '2023',
       },
     ],
-    seasons: [
-      {
+    seasons: [{
         label: '1月',
         value: '01',
       },
@@ -74,8 +72,7 @@ Page({
       },
     ],
     tabBarValue: 'all-center',
-    list: [
-      {
+    list: [{
         value: 'all-center',
         icon: 'shop-5',
         ariaLabel: '工作台',
@@ -85,7 +82,7 @@ Page({
         icon: 'add-circle',
       },
       {
-        value: 'enterprise-manage',
+        value: 'enterprise-center',
         icon: 'city-10',
         ariaLabel: '企业中心',
       },
@@ -110,7 +107,11 @@ Page({
       if (res.statusCode !== 200) {
         throw error;
       }
-      const { is_bind, enterprise_id, enterprise_name } = res.data.data || {};
+      const {
+        is_bind,
+        enterprise_id,
+        enterprise_name
+      } = res.data.data || {};
       if (!is_bind) {
         throw error;
       }
@@ -128,7 +129,7 @@ Page({
         enterprise_id,
         enterprise_name,
       });
-      this.getReportStats(this.data.dateValue[1], enterprise_id);
+      this.getReportStats(this.data.dateValue.join(''), enterprise_id);
     } catch (error) {
       console.dir(error);
       Toast({
@@ -150,29 +151,39 @@ Page({
       },
     });
     const reportStats = reportRes.data.data;
-    reportStats.percentage = parseInt((reportStats.daily.submit_count / reportStats.daily.total_count) * 100);
+    reportStats.percentage = parseInt((reportStats.daily.submit_report_count / reportStats.daily.total_report_count) * 100);
     reportStats.total =
-      reportStats.daily.submit_count + reportStats.monthly.submit_count + reportStats.weekly.submit_count;
+      reportStats.daily.submit_report_count + reportStats.monthly.submit_report_count + reportStats.weekly.submit_report_count;
+
     this.setData({
       reportStats,
     });
   },
 
   onTabBarChange(e) {
-    const { value } = e.detail;
-    wx.redirectTo({
+    const {
+      value
+    } = e.detail;
+    if (value === 'submit-report') {
+      wx.redirectTo({
+        url: `/pages/${value}/index`,
+      });
+    }
+    wx.navigateTo({
       url: `/pages/${value}/index`,
     });
   },
 
   goProfile(e) {
-    const { key = '1' } = e.currentTarget.dataset || {};
+    const {
+      key = '1'
+    } = e.currentTarget.dataset || {};
     if (key === 'bill') {
       wx.redirectTo({
         url: `/pages/bill-center/index`,
       });
     } else {
-      wx.redirectTo({
+      wx.navigateTo({
         url: `/pages/report-profile/index?reportType=${key}&month=${this.data.dateValue.join('')}`,
       });
     }
@@ -180,7 +191,7 @@ Page({
 
   goLogList() {
     wx.redirectTo({
-      url: `/pages/create-report2/index`,
+      url: `/pages/log-list/index`,
     });
   },
 
@@ -191,7 +202,9 @@ Page({
   },
 
   onPickerChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     console.log(value);
     this.getReportStats(value.join(''), this.data.enterprise_id);
     this.setData({

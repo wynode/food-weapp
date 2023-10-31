@@ -1,57 +1,16 @@
+import { formatTime } from '../../utils/util';
 const app = getApp();
 Page({
   data: {
-    percentage: 76,
+    percentage: 0,
     dateType: '日管控',
     reportType: '1',
-    reportProfileList: [
-      {
-        date: '7.11',
-        dateType: '日管控',
-        total: 5,
-        unqualifiedTotal: 0,
-        submitTime: '09:00',
-        submitUser: '花花',
-        submitType: '门店提交',
-        address: '成都市金牛区驷马桥街道横田大厦',
-      },
-      {
-        date: '7.10',
-        dateType: '日管控',
-        total: 10,
-        unqualifiedTotal: 3,
-        submitTime: '09:00',
-        submitUser: '花花',
-        submitType: '门店提交',
-        address: '成都市金牛区驷马桥街道横田大厦',
-      },
-      {
-        date: '7.09',
-        dateType: '日管控',
-        total: 5,
-        unqualifiedTotal: 0,
-        submitTime: '09:00',
-        submitUser: '花花',
-        submitType: '门店提交',
-        address: '成都市金牛区驷马桥街道横田大厦',
-      },
-      {
-        date: '7.08',
-        dateType: '日管控',
-        total: 3,
-        unqualifiedTotal: 2,
-        submitTime: '09:00',
-        submitUser: '花花',
-        submitType: '门店提交',
-        address: '成都市金牛区驷马桥街道横田大厦',
-      },
-    ],
+    reportProfileList: [],
     reportProfileDetail: {},
     reportList: [],
     dateVisible: false,
     dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1)],
-    years: [
-      {
+    years: [{
         label: '2026年',
         value: '2026',
       },
@@ -68,8 +27,7 @@ Page({
         value: '2023',
       },
     ],
-    seasons: [
-      {
+    seasons: [{
         label: '1月',
         value: '01',
       },
@@ -121,7 +79,9 @@ Page({
   },
 
   onLoad(options) {
-    const { reportType = '1', month = '' } = options || {};
+    const {
+      reportType = '1', month = ''
+    } = options || {};
     this.getReportProfileList(reportType, month);
     this.getReportList(reportType, month);
     this.setData({
@@ -139,10 +99,24 @@ Page({
           'x-enterprise-id': enterpriseData.enterprise_id,
         },
       });
-      const { detail, list } = reportProfileRes.data.data;
+      const {
+        detail,
+        list
+      } = reportProfileRes.data.data;
+      const reportProfileList = list.map((item) => {
+        return {
+          ...item,
+          dateCn: `${String(item.date).slice(-4,-2)}/${String(item.date).slice(-2)}`,
+          submitTime: formatTime(item.created_at, 'HH:mm'),
+          total: item.passed_count + item.unpassed_count,
+          unqualifiedTotal: item.unpassed_count,
+          submitUser: item.employee.name,
+        }
+      })
+
       const percentage = parseInt((detail.unpassed_count / (detail.unpassed_count + detail.passed_count || 1)) * 100);
       this.setData({
-        reportProfileList: list,
+        reportProfileList: reportProfileList,
         reportProfileDetail: detail,
         percentage,
       });
@@ -187,7 +161,9 @@ Page({
   },
 
   onPickerChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     this.getReportProfileList(this.data.reportType, value.join(''));
     this.setData({
       dateVisible: false,

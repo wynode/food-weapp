@@ -36,15 +36,15 @@
               <view class="rpr-record">
                 <view class="rpr-record-item">
                   <view>合格项</view>
-                  <view class="text-blue">14</view>
+                  <view class="text-blue">{{reportProfileDetail.passed_count}}</view>
                 </view>
                 <view class="rpr-record-item">
                   <view>不合格项</view>
-                  <view class="text-red">5</view>
+                  <view class="text-red">{{reportProfileDetail.unpassed_count}}</view>
                 </view>
                 <view class="rpr-record-item">
                   <view>不合格天数</view>
-                  <view class="text-red">2</view>
+                  <view class="text-red">{{reportProfileDetail.unpassed_days}}</view>
                 </view>
               </view>
             </view>
@@ -52,8 +52,8 @@
           <view class="rp-list">
             <view class="rp-item" wx:for="{{reportProfileList}}" wx:key="index" wx:for-item="reportItem">
               <view class="rp-item-left">
-                <view class="rpil-date">{{ reportItem.date }}</view>
-                <view class="rpil-type">{{ reportItem.dateType }}</view>
+                <view class="rpil-date">{{ reportItem.dateCn }}</view>
+                <!-- <view class="rpil-type">{{ reportItem.dateType }}</view> -->
               </view>
               <view class="{{ reportItem.unqualifiedTotal ? 'rp-item-right-red' : 'rp-item-right'}}">
                 <view class="rpir-top">
@@ -62,7 +62,7 @@
                   <view wx:else>全部合格</view>
                 </view>
                 <view class="rpir-center">
-                  {{ reportItem.submitTime }} | {{ reportItem.submitUser }} | {{ reportItem.submitType }}</view
+                  {{ reportItem.submitTime }} | {{ reportItem.submitUser }}</view
                 >
                 <view class="rpir-bottom"> {{ reportItem.address }}</view>
               </view>
@@ -97,7 +97,9 @@
     "legal_name": "string",
     "business_type": 0 -->
               <view class="ri-item">
-                <view></view>
+                <view>
+                  
+                </view>
               </view>
             </view>
           </view>
