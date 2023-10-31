@@ -54,7 +54,7 @@ Page({
         enterprise_id
       } = enterpriseData;
       const res = await app.call({
-        path: `/api/v1/program/enterprise/report/template?report_type=${reportData.report_type}`,
+        path: `/api/v1/program/enterprise/report/template?report_type=${reportData.report_type}&business_type=${business_type}`,
         method: 'GET',
         header: {
           'x-enterprise-id': enterprise_id,

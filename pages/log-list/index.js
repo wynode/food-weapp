@@ -40,7 +40,7 @@ Page({
   async getReportLogList() {
     try {
       const enterpriseData = wx.getStorageSync('enterpriseData');
-      const month = formatTime(new Date().getTime(), 'MM.DD')
+      const month = formatTime(new Date().getTime(), 'YYYYMM')
       const reportLogListRes = await app.call({
         path: `/api/v1/program/enterprise/report/stats/${month}/logs`,
         header: {
