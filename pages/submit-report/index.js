@@ -12,15 +12,15 @@ Page({
     switchValue: false,
     waitlist: [{}],
     reportTypeMap: {
-      1: '日报',
-      2: '周报',
-      3: '月报',
+      1: '日管控',
+      2: '周排查',
+      3: '月调度',
     },
   },
 
   async onLoad() {
     try {
-      const enterpriseData = wx.getStorageSync('enterpriseData')
+      const enterpriseData = wx.getStorageSync('enterpriseData');
       const res = await app.call({
         path: '/api/v1/program/enterprise/report/waitlist',
         method: 'GET',
@@ -39,15 +39,22 @@ Page({
         const now = new Date();
         const targetTime = new Date(formatTime(item.deadline, 'YYYY/MM/DD HH:mm:ss'));
         const diff = targetTime.getTime() - now.getTime();
-        const remainingHours = parseInt(diff / (1000 * 60 * 60));
+        const remainingDays = parseInt(diff / (1000 * 60 * 60 * 24));
+        let remainingHours = '';
+        if (remainingDays) {
+          remainingHours = parseInt((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        } else {
+          remainingHours = parseInt(diff / (1000 * 60 * 60));
+        }
         const remainingMinutes = parseInt((diff % (1000 * 60 * 60)) / (1000 * 60));
         const date = String(item.date);
+        const text = remainingDays
+          ? `${Math.abs(remainingDays)}天${Math.abs(remainingHours)}小时`
+          : `${Math.abs(remainingHours)}小时${Math.abs(remainingMinutes)}分钟`;
         return {
           ...item,
           showDate: date.slice(0, 4) + '年' + date.slice(4, 6) + '月' + date.slice(6, 8) + '日',
-          remain: `${remainingHours > 0 ? '剩余' : '已超时'}${Math.abs(remainingHours)}小时${Math.abs(
-            remainingMinutes,
-          )}分钟`,
+          remain: `${remainingHours > 0 ? '剩余' : '已超时'}${text}`,
         };
       });
       if (filterwait[0].remain.includes('已超时')) {
@@ -59,7 +66,7 @@ Page({
       const intervalId = setInterval(() => {
         this.updateTime(filterwait[0].deadline);
       }, 1000);
-      wx.setStorageSync('reportData', filterwait[0])
+      wx.setStorageSync('reportData', filterwait[0]);
       this.setData({
         intervalId,
         waitlist: filterwait,

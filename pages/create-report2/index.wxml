@@ -4,7 +4,7 @@
     <view class="final-weekly" wx:if="isWeekly">
       <view class="final-date"> 报告日期：{{ currentDay }}</view>
       <view style="margin-bottom: 20rpx">本周食品安全管理情况评价（请根据实际情况选择）</view>
-      <t-radio-group t-class="radio-class" bind:change="onRadioChange" value="{{current}}" options="{{options}}" />
+      <t-radio-group t-class="radio-class" bind:change="onRadioChange" value="{{judgement}}" options="{{options}}" />
       <view class="textarea-example">
         <text class="textarea-example__label">下周食品安全排查重点</text>
         <t-textarea
@@ -13,7 +13,8 @@
           bordered
           disableDefaultPadding="{{true}}"
           indicator
-          value="{{important}}"
+          value="{{next_week_point}}"
+          bindchange="handleTextAreaChange"
         />
       </view>
     </view>

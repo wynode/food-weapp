@@ -484,7 +484,7 @@ Page({
 
   handleSubmit() {
     const reportData = wx.getStorageSync('reportData');
-    if ((this.isRestaurant && reportData.report_type === 2) || reportData.report_type === 3) {
+    if ((this.data.isRestaurant && reportData.report_type === 2) || reportData.report_type === 3) {
       let payload = {};
       let passed_items = [];
       let unpassed_items = [];
@@ -509,9 +509,9 @@ Page({
       payload.passed_items = passed_items;
       payload.unpassed_items = unpassed_items;
       payload.item_count = passed_items.length + unpassed_items.length;
-      wx.setStorageSync('reportProfileList', payload);
+      wx.setStorageSync('reportProfileData', payload);
       wx.navigateTo({
-        url: '/pages/creat-report2/index',
+        url: `/pages/create-report2/index?isRes=${this.data.isRestaurant}&isWeekly=${reportData.report_type === 2}`,
       });
     } else {
       this.setData({

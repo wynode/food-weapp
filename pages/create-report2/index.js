@@ -1,14 +1,14 @@
 // pages/create-report2.js
 import { formatTime } from '../../utils/util';
 import Signature from 'mini-smooth-signature';
-const app = getApp()
+const app = getApp();
 Page({
   data: {
     isWeekly: true,
     isRes: false,
     currentDay: formatTime(new Date(), 'YYYY年MM月DD日'),
-    current: 1,
-    important: '',
+    judgement: 1,
+    next_week_point: '',
     options: [
       { value: 1, label: 'a.食品安全风险可控，无较大食品安全隐患。' },
       { value: 2, label: 'b.存在食品安全风险，需尽快采取措施防范' },
@@ -22,12 +22,24 @@ Page({
     signUrl: '',
   },
 
-  onLoad(options) {},
+  onLoad(options) {
+    const { isWeekly, isRes } = options;
+    this.setData({
+      isWeekly,
+      isRes,
+    });
+  },
 
   onRadioChange(event) {
     const { value } = event.detail;
 
-    this.setData({ current: value });
+    this.setData({ judgement: value });
+  },
+
+  handleTextAreaChange(event) {
+    const { value } = event.detail;
+
+    this.setData({ next_week_point: value });
   },
 
   onReady() {
@@ -160,21 +172,27 @@ Page({
         filePath: this.data.signUrl,
       });
       console.log(uploadResult);
-      const signer = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${uploadResult.fileID.split('/').slice(-2).join('/')}`;
+      const signer = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${uploadResult.fileID
+        .split('/')
+        .slice(-2)
+        .join('/')}`;
       const reportData = wx.getStorageSync('reportData');
       const templateData = wx.getStorageSync('templateData');
-      const reportProfileData = wx.getStorageSync('reportProfileData')
+      const reportProfileData = wx.getStorageSync('reportProfileData');
       const payload = {
         report_type: reportData.report_type,
-        date: reportData.date, 
+        date: reportData.date,
         params: {
           signer,
           template_id: templateData.template_id,
           ...reportProfileData,
         },
       };
- 
-      payload.params.content = {};
+
+      payload.params.content = {
+        judgement: this.data.judgement,
+        next_week_point: this.data.next_week_point,
+      };
       console.log(payload);
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const reportRes = await app.call({
