@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/all-center/index",
+    "pages/word-list/index",
     "pages/log-list/index",
     "pages/create-report2/index",
     "pages/create-enterprise/index",

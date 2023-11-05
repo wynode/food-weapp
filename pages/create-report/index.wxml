@@ -172,7 +172,7 @@
             <view class="cric-bad" wx:if="{{item.checkResult === 'fail'}}">
               <t-textarea
                 t-class="external-class"
-                placeholder="请输入不合格内容（非必填）"
+                placeholder="请输入处理措施（非必填）"
                 data-key="{{index}}"
                 value="{{item.remark}}"
                 bind:change="handleReasonChange"

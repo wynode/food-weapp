@@ -190,8 +190,8 @@ Page({
       };
 
       payload.params.content = {
-        judgement: this.data.judgement,
-        next_week_point: this.data.next_week_point,
+        judgement: String(this.data.judgement),
+        next_week_point: String(this.data.next_week_point),
       };
       console.log(payload);
       const enterpriseData = wx.getStorageSync('enterpriseData');

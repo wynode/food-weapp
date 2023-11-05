@@ -41,7 +41,7 @@ Page({
   },
   goEnterpriseManage() {
     wx.navigateTo({
-      url: '/pages/enterprise-manage/index',
+      url: '/pages/word-list/index',
     });
   },
   goCreateShopProfile() {
