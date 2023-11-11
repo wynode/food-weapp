@@ -1,49 +1,80 @@
 const app = getApp();
 Page({
   data: {
-    fileTypeOptions: {
-      11: '食品安全管理制度',
-      12: '餐饮具清洗消毒保洁管理制度',
-      21: '食品安全风险日管控管理制度',
-      22: '食品安全风险周管控管理制度',
-      23: '食品安全风险月管控管理制度',
-      31: '负责人食品安全职责',
-      32: '安全总监职责',
-      33: '安全员守则',
+    levelOptions: {
+      11: '企业负责人',
+      12: '食品总监职责',
+      13: '食品安全员',
+      14: '企业员工',
     },
-    day: {
-      url: '/report_doc/%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3%E5%93%88.docx?sign=1a9cf9d60bdddf23987fb937bc982af5&t=1699187366',
+    typeOptions: {
+      1: '健康证',
+      2: '任命书',
     },
-    week: {
-      document_id: 1,
-      url: '/report_doc/%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3%E5%93%88.docx?sign=1a9cf9d60bdddf23987fb937bc982af5&t=1699187366',
+    Principal: [],
+    Director: [],
+    SafetyOfficer: [
+    {
+      "license_id": "string",
+      "enterprise_id": "string",
+      "url": "https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/report_image/gq2fwd965a.jpg",
+      "type": 1,
+      "file_type": 11,
+      "template_url": "string",
+      "employee_id": "string",
+      "employee_name": "测绘"
     },
-    mouth: {},
+    {
+      "license_id": "string",
+      "enterprise_id": "string",
+      "url": "https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/report_image/gq2fwd965a.jpg",
+      "type": 1,
+      "file_type": 11,
+      "template_url": "string",
+      "employee_id": "string",
+      "employee_name": "员工名字"
+    },
+    {
+      "license_id": "string",
+      "enterprise_id": "string",
+      "url": "https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/report_image/gq2fwd965a.jpg",
+      "type": 1,
+      "file_type": 11,
+      "template_url": "string",
+      "employee_id": "string",
+      "employee_name": "老板名字"
+    },
+  
+  ],
+    Staff: [],
   },
 
   onLoad() {
-    this.fetchInstitutionList();
+    this.fetchCertList();
   },
 
-  async fetchInstitutionList() {
+  async fetchCertList() {
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const res = await app.call({
-      path: `/api/v1/program/enterprise/management_collection`,
+      path: `/api/v1/program/enterprise/employees`,
       method: 'GET',
       header: {
         'x-enterprise-id': enterpriseData.enterprise_id,
       },
     });
     console.log(res)
-    this.data.day = res.data.data.filter((item) => {
-      item.file_type === '21'
-    })[0] || {}
-    this.data.week = res.data.data.filter((item) => {
-      item.file_type === '22'
-    })[0] || {}
-    this.data.month = res.data.data.filter((item) => {
-      item.file_type === '23'
-    })[0] || {}
+    this.data.Principal = res.data.data.filter((item) => {
+      item.file_type === '11'
+    })
+    this.data.Director = res.data.data.filter((item) => {
+      item.file_type === '12'
+    })
+    this.data.SafetyOfficer = res.data.data.filter((item) => {
+      item.file_type === '13'
+    })
+    this.data.Staff = res.data.data.filter((item) => {
+      item.file_type === '14'
+    })
   },
 
   async uploadFn(id, tempFile, document_id) {
@@ -83,7 +114,7 @@ Page({
         });
       }
       wx.hideLoading();
-      this.fetchInstitutionList();
+      this.fetchCertList();
       wx.showToast({
         title: '上传成功',
         icon: 'success',

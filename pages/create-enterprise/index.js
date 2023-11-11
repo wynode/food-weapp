@@ -16,13 +16,12 @@ Page({
     businessTypeVisible: '',
     businessTypeValue: [],
     businessTypeText: '',
-    businessTypeList: [
-      {
-        label: '餐饮服务',
+    businessTypeList: [{
+        label: '食品销售',
         value: '1',
       },
       {
-        label: '食品销售',
+        label: '餐饮服务',
         value: '2',
       },
     ],
@@ -58,7 +57,10 @@ Page({
 
   onAreaColumnChange(e) {
     console.log('pick:', e.detail);
-    const { column, index } = e.detail;
+    const {
+      column,
+      index
+    } = e.detail;
 
     if (column === 0) {
       this.setCitiesFromProvinceIndex(index);
@@ -85,7 +87,10 @@ Page({
   },
 
   onAreaPickerChange(e) {
-    const { value, label } = e.detail;
+    const {
+      value,
+      label
+    } = e.detail;
 
     console.log('picker confirm:', e.detail);
     this.setData({
@@ -109,7 +114,10 @@ Page({
   },
 
   async formSubmit() {
-    const { isLegal, tips } = this.onVerifyInputLegal();
+    const {
+      isLegal,
+      tips
+    } = this.onVerifyInputLegal();
     if (isLegal) {
       const payload = {
         ...this.data.enterpriseForm,
@@ -153,10 +161,13 @@ Page({
   },
 
   onInputValue(e) {
-    const { value = '' } = e.detail;
-    const { item } = e.currentTarget.dataset;
-    this.setData(
-      {
+    const {
+      value = ''
+    } = e.detail;
+    const {
+      item
+    } = e.currentTarget.dataset;
+    this.setData({
         [`enterpriseForm.${item}`]: value,
       },
       () => {
@@ -170,7 +181,10 @@ Page({
   },
 
   onVerifyInputLegal() {
-    const { legal_name, employee_mobile } = this.data.enterpriseForm;
+    const {
+      legal_name,
+      employee_mobile
+    } = this.data.enterpriseForm;
     const prefixPhoneReg = String(this.properties.phoneReg || innerPhoneReg);
     const prefixNameReg = String(this.properties.nameReg || innerNameReg);
     const nameRegExp = new RegExp(prefixNameReg);
@@ -194,8 +208,13 @@ Page({
   },
 
   onPickerChange(e) {
-    const { key } = e.currentTarget.dataset;
-    const { label, value } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
+    const {
+      label,
+      value
+    } = e.detail;
 
     this.setData({
       businessTypeVisible: false,
@@ -205,7 +224,9 @@ Page({
   },
 
   onPickerCancel(e) {
-    const { key } = e.currentTarget.dataset;
+    const {
+      key
+    } = e.currentTarget.dataset;
     this.setData({
       [`${key}Visible`]: false,
     });
@@ -230,7 +251,12 @@ Page({
 
   handleOCRResult(e) {
     if (e.detail) {
-      const { company_address, company_name, legal_person, license_no } = e.detail.data;
+      const {
+        company_address,
+        company_name,
+        legal_person,
+        license_no
+      } = e.detail.data;
       this.setData({
         'enterpriseForm.enterprise_name': company_name,
         'enterpriseForm.address': company_address,

@@ -1,4 +1,6 @@
-import { formatTime } from '../../utils/util';
+import {
+  formatTime
+} from '../../utils/util';
 const app = getApp();
 Page({
   data: {
@@ -134,7 +136,7 @@ Page({
     try {
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const reportProfileRes = await app.call({
-        path: `/api/v1/program/enterprise/report/${month}/${reportType}`,
+        path: `/api/v1/program/enterprise/report/${month}/${reportType}/attachments`,
         header: {
           'x-enterprise-id': enterpriseData.enterprise_id,
         },
@@ -154,7 +156,8 @@ Page({
     }
   },
 
-  goDailyStats() {
+  goDailyStats(e) {
+    console.log(e)
     wx.redirectTo({
       url: '/pages/daily-stats/index',
     });

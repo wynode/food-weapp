@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/all-center/index",
+    "pages/create-user/index",
+    "pages/appointment-list/index",
     "pages/word-list/index",
     "pages/log-list/index",
     "pages/create-report2/index",
@@ -25,7 +27,6 @@
     "pages/message-notify/index",
     "pages/bill-center/index",
     "pages/report-profile/index",
-    "pages/create-user/index",
     "pages/bao-info/index"
   ],
   "requiredPrivateInfos": [

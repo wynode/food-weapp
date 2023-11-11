@@ -34,15 +34,16 @@ Page({
   },
 
   onLoad() {
-    this.getReportLogList();
+    this.getReportLogList(new Date().getTime());
   },
 
-  async getReportLogList() {
+  async getReportLogList(dateTime) {
     try {
       const enterpriseData = wx.getStorageSync('enterpriseData');
-      const month = formatTime(new Date().getTime(), 'YYYYMM')
+      const month = formatTime(dateTime, 'YYYYMM')
+      const date = formatTime(dateTime, 'DD')
       const reportLogListRes = await app.call({
-        path: `/api/v1/program/enterprise/report/stats/${month}/logs`,
+        path: `/api/v1/program/enterprise/report/stats/${month}/logs?date=${date}`,
         header: {
           'x-enterprise-id': enterpriseData.enterprise_id,
         },
@@ -85,14 +86,15 @@ Page({
     const {
       value
     } = e.detail;
-    const tempLogList = this.data.logList.map((item) => {
-      return {
-        ...item,
-        date: formatTime(value, 'MM.DD'),
-      };
-    });
-    this.setData({
-      logList: tempLogList,
-    });
+    // const tempLogList = this.data.logList.map((item) => {
+    //   return {
+    //     ...item,
+    //     date: formatTime(value, 'MM.DD'),
+    //   };
+    // });
+    // this.setData({
+    //   logList: tempLogList,
+    // });
+    this.getReportLogList(value)
   },
 });

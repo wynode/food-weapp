@@ -1,0 +1,75 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="cert">
+    <view class="cert-item">
+      <view class="cert-title">
+        <view>企业负责人</view>
+        <t-button class="cert-btn" theme="primary" size="small">新增</t-button>
+      </view>
+      <view class="cert-list">
+        <t-row gutter="15">
+          <t-col span="8" wx:for="{{SafetyOfficer}}" wx:key="index">
+            <t-image class="cert-img" src="{{item.url}}" mode="aspectFill" aria-label="任命书" />
+            <view class="cert-info">
+              <view class="cert-name">{{ item.employee_name }}</view>
+              <t-button class="cert-btn" theme="danger" size="small" icon="delete" shape="square" aria-label="删除"></t-button>
+            </view>
+          </t-col>
+        </t-row>
+      </view>
+    </view>
+    <view class="cert-item">
+      <view class="cert-title">
+        <view>食品总监职责</view>
+        <t-button class="cert-btn" theme="primary" size="small">新增</t-button>
+      </view>
+      <view class="cert-list">
+        <t-row gutter="15">
+          <t-col span="8" wx:for="{{SafetyOfficer}}" wx:key="index">
+            <t-image class="cert-img" src="{{item.url}}" mode="aspectFill" aria-label="任命书" />
+            <view class="cert-info">
+              <view class="cert-name">{{ item.employee_name }}</view>
+              <t-button class="cert-btn" theme="danger" size="small" icon="delete" shape="square" aria-label="删除"></t-button>
+            </view>
+          </t-col>
+        </t-row>
+      </view>
+    </view>
+    <view class="cert-item">
+      <view class="cert-title">
+        <view>食品安全员</view>
+        <t-button class="cert-btn" theme="primary" size="small">新增</t-button>
+      </view>
+      <view class="cert-list">
+        <t-row gutter="15">
+          <t-col span="8" wx:for="{{SafetyOfficer}}" wx:key="index">
+            <t-image class="cert-img" src="{{item.url}}" mode="aspectFill" aria-label="任命书" />
+            <view class="cert-info">
+              <view class="cert-name">{{ item.employee_name }}</view>
+              <t-button class="cert-btn" theme="danger" size="small" icon="delete" shape="square" aria-label="删除"></t-button>
+            </view>
+          </t-col>
+        </t-row>
+      </view>
+    </view>
+    <view class="cert-item">
+      <view class="cert-title">
+        <view>企业员工</view>
+        <t-button class="cert-btn" theme="primary" size="small">新增</t-button>
+      </view>
+      <view class="cert-list">
+        <t-row gutter="15">
+          <t-col span="8" wx:for="{{SafetyOfficer}}" wx:key="index">
+            <t-image class="cert-img" src="{{item.url}}" mode="aspectFill" aria-label="任命书" />
+            <view class="cert-info">
+              <view class="cert-name">{{ item.employee_name }}</view>
+              <t-button class="cert-btn" theme="danger" size="small" icon="delete" shape="square" aria-label="删除"></t-button>
+            </view>
+          </t-col>
+        </t-row>
+      </view>
+    </view>
+
+  </view>
+  <view class="week-check-go" bind:tap="goNext"> </view>
+</view>

@@ -96,7 +96,7 @@
               </view>
             </view>
             <view class="rlb-right">
-              <view class="rlb-right-title"><text>{{ reportStats.daily.total_report_count || 0 }}</text>份</view>
+              <view class="rlb-right-title"><text>{{ reportStats.daily.submit_report_count || 0 }}</text>份</view>
               <image
                 class="rlb-right-export"
                 src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/export.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
@@ -114,12 +114,12 @@
             <view class="rlb-center">
               <view class="rlb-center-title">周排查</view>
               <view class="rlb-center-bottom">
-                <view class="rlb-center-fit">合格<text>{{ reportStats.weekly.unpassed_count || 0 }}</text></view>
+                <view class="rlb-center-fit">合格<text>{{ reportStats.weekly.passed_count || 0 }}</text></view>
                 <view class="rlb-center-unfit">不合格<text>{{ reportStats.weekly.unpassed_count || 0 }}</text></view>
               </view>
             </view>
             <view class="rlb-right">
-              <view class="rlb-right-title"><text>{{ reportStats.weekly.total_report_count || 0 }}</text>份</view>
+              <view class="rlb-right-title"><text>{{ reportStats.weekly.submit_report_count || 0 }}</text>份</view>
               <image
                 class="rlb-right-export"
                 src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/export.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
@@ -142,7 +142,7 @@
               </view>
             </view>
             <view class="rlb-right">
-              <view class="rlb-right-title"><text>{{ reportStats.monthly.total_report_count || 0 }}</text>份</view>
+              <view class="rlb-right-title"><text>{{ reportStats.monthly.submit_report_count || 0 }}</text>份</view>
               <image
                 class="rlb-right-export"
                 src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/export.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"

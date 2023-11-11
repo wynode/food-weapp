@@ -1,18 +1,31 @@
 // pages/create-report2.js
-import { formatTime } from '../../utils/util';
+import {
+  formatTime
+} from '../../utils/util';
 import Signature from 'mini-smooth-signature';
 const app = getApp();
 Page({
   data: {
-    isWeekly: true,
-    isRes: false,
+    report_type: '',
+    business_type: '',
     currentDay: formatTime(new Date(), 'YYYY年MM月DD日'),
     judgement: 1,
     next_week_point: '',
-    options: [
-      { value: 1, label: 'a.食品安全风险可控，无较大食品安全隐患。' },
-      { value: 2, label: 'b.存在食品安全风险，需尽快采取措施防范' },
-      { value: 3, label: 'c.存在严重食品安全风险隐患，需尽快采取防范措施，请单位负责人重视。' },
+    address: '',
+    content: '',
+    decision: '',
+    options: [{
+        value: 1,
+        label: '1.食品安全风险可控，无较大食品安全隐患'
+      },
+      {
+        value: 2,
+        label: '2.存在食品安全风险，需尽快采取措施防范'
+      },
+      {
+        value: 3,
+        label: '3.存在严重食品安全风险隐患，需尽快采取防范措施，请单位负责人重视。'
+      },
     ],
 
     fullScreen: false,
@@ -22,29 +35,70 @@ Page({
     signUrl: '',
   },
 
-  onLoad(options) {
-    const { isWeekly, isRes } = options;
+  onLoad() {
+    const reportData = wx.getStorageSync('reportData');
+    const enterpriseData = wx.getStorageSync('enterpriseData');
+    const {
+      business_type
+    } = enterpriseData;
+    const {
+      report_type
+    } = reportData
+
     this.setData({
-      isWeekly,
-      isRes,
+      business_type,
+      report_type,
     });
   },
 
   onRadioChange(event) {
-    const { value } = event.detail;
-
-    this.setData({ judgement: value });
+    const {
+      value
+    } = event.detail;
+    this.setData({
+      judgement: value
+    });
   },
-
   handleTextAreaChange(event) {
-    const { value } = event.detail;
-
-    this.setData({ next_week_point: value });
+    const {
+      value
+    } = event.detail;
+    this.setData({
+      next_week_point: value
+    });
+  },
+  handleAddressChange(event) {
+    const {
+      value
+    } = event.detail;
+    this.setData({
+      address: value
+    });
+  },
+  handleContentChange(event) {
+    const {
+      value
+    } = event.detail;
+    this.setData({
+      content: value
+    });
+  },
+  handleDecisionChange(event) {
+    const {
+      value
+    } = event.detail;
+    this.setData({
+      decision: value
+    });
   },
 
   onReady() {
     try {
-      const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
+      const {
+        windowWidth,
+        windowHeight,
+        pixelRatio
+      } = wx.getSystemInfoSync();
       this.setData({
         width1: windowWidth - 30,
         height1: 200,
@@ -63,7 +117,10 @@ Page({
   initSignature2() {
     wx.createSelectorQuery()
       .select('#signature2')
-      .fields({ node: true, size: true })
+      .fields({
+        node: true,
+        size: true
+      })
       .exec((res) => {
         const canvas = res[0].node;
         this.canvas2 = canvas;
@@ -150,7 +207,9 @@ Page({
    * 样例2按钮事件
    */
   handleFullScreen2() {
-    this.setData({ fullScreen: false });
+    this.setData({
+      fullScreen: false
+    });
     setTimeout(() => this.initSignature1(), 50);
   },
   handleClear2() {
@@ -189,10 +248,21 @@ Page({
         },
       };
 
-      payload.params.content = {
-        judgement: String(this.data.judgement),
-        next_week_point: String(this.data.next_week_point),
-      };
+      if (this.data.business_type === 1) {
+        payload.params.content = {
+          decision: this.data.decision
+        };
+      } else if (this.data.business_type === 2 && this.data.report_type === 2) {
+        payload.params.content = {
+          judgement: String(this.data.judgement),
+          next_week_point: String(this.data.next_week_point),
+        };
+      } else if (this.data.business_type === 2 && this.data.report_type === 3) {
+        payload.params.content = {
+          content: String(this.data.content),
+          address: String(this.data.address),
+        };
+      }
       console.log(payload);
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const reportRes = await app.call({

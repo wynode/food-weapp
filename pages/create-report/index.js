@@ -511,7 +511,7 @@ Page({
       payload.item_count = passed_items.length + unpassed_items.length;
       wx.setStorageSync('reportProfileData', payload);
       wx.navigateTo({
-        url: `/pages/create-report2/index?isRes=${this.data.isRestaurant}&isWeekly=${reportData.report_type === 2}`,
+        url: `/pages/create-report2/index`,
       });
     } else {
       this.setData({

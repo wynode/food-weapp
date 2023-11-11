@@ -31,7 +31,7 @@
     </view>
 
     <view class="cu-input">
-      <t-input value="{{ userName }}" placeholder="请输入员工姓名" />
+      <t-input value="{{ userName }}" bindchange="onNameInput" placeholder="请输入员工姓名" />
     </view>
     <view>
       <view class="cu-input" bind:tap="userPositionPicker">
@@ -51,32 +51,32 @@
         <t-picker-item options="{{userPositionList}}"></t-picker-item>
       </t-picker>
     </view>
-    <t-checkbox-group class="cu-checkbox" borderless bind:change="userRoleChange" defaultValue="{{userRole}}">
+    <!-- <t-checkbox-group class="cu-checkbox" borderless bind:change="userRoleChange" defaultValue="{{userRole}}">
       <t-checkbox class="cu-checkbox-item" icon="rectangle" block="{{false}}" value="day" label="日管控" />
       <t-checkbox class="cu-checkbox-item" icon="rectangle" block="{{false}}" value="week" label="周排查" />
       <t-checkbox class="cu-checkbox-item" icon="rectangle" block="{{false}}" value="month" label="月调度" />
-    </t-checkbox-group>
+    </t-checkbox-group> -->
     <view class="cu-input">
-      <t-input value="{{ userPhone }}" placeholder="请输入员工联系方式" />
+      <t-input value="{{ userPhone }}" bindchange="onPhoneInput" placeholder="请输入员工联系方式" />
     </view>
-    <view class="cu-business">
+    <!-- <view class="cu-business">
       <view class="cu-upload-box">
         <my-upload uploadTitle="点击上传任命书"> </my-upload>
       </view>
       <view class="cu-upload-box" style="margin-left: 50rpx">
         <my-upload uploadTitle="点击上传健康证"> </my-upload>
       </view>
-    </view>
-    <t-link
+    </view> -->
+    <!-- <t-link
       style="margin-bottom: 40rpx"
       size="small"
       theme="primary"
       content="任命书模版点击此处下载"
       prefixIcon="link"
       hover
-    />
+    /> -->
     <view class="cu-submit">
-      <t-button theme="primary" disabled="{{!submitActive}}" size="large" block bind:tap="goReportList"
+      <t-button theme="primary" disabled="{{!submitActive}}" size="large" block bind:tap="handleGG"
         >立即创建</t-button
       >
     </view>

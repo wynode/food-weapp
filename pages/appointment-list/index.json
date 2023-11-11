@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "管控制度",
+  "usingComponents": {
+    "background": "/components/background/index",
+    "t-image": "tdesign-miniprogram/image/image",
+    "t-row": "tdesign-miniprogram/row/row",
+    "t-col": "tdesign-miniprogram/col/col",
+    "t-image-viewer": "tdesign-miniprogram/image-viewer/image-viewer",
+    "t-button": "tdesign-miniprogram/button/button"
+  }
+}
