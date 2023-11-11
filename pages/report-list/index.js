@@ -1,6 +1,4 @@
-import {
-  formatTime
-} from '../../utils/util';
+import { formatTime } from '../../utils/util';
 const app = getApp();
 Page({
   data: {
@@ -12,7 +10,8 @@ Page({
     reportList: [],
     dateVisible: false,
     dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1)],
-    years: [{
+    years: [
+      {
         label: '2026年',
         value: '2026',
       },
@@ -29,7 +28,8 @@ Page({
         value: '2023',
       },
     ],
-    seasons: [{
+    seasons: [
+      {
         label: '1月',
         value: '01',
       },
@@ -81,9 +81,7 @@ Page({
   },
 
   onLoad(options) {
-    const {
-      reportType = '1', month = ''
-    } = options || {};
+    const { reportType = '1', month = '' } = options || {};
     this.getReportProfileList(reportType, month);
     this.getReportList(reportType, month);
     this.setData({
@@ -94,6 +92,7 @@ Page({
 
   async getReportProfileList(reportType, month) {
     try {
+      this.setData({ reportProfileList: [] });
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const reportProfileRes = await app.call({
         path: `/api/v1/program/enterprise/report/stats/${month}/list?report_type=${reportType}`,
@@ -101,20 +100,17 @@ Page({
           'x-enterprise-id': enterpriseData.enterprise_id,
         },
       });
-      const {
-        detail,
-        list
-      } = reportProfileRes.data.data;
+      const { detail, list } = reportProfileRes.data.data;
       const reportProfileList = list.map((item) => {
         return {
           ...item,
-          dateCn: `${String(item.date).slice(-4,-2)}/${String(item.date).slice(-2)}`,
+          dateCn: `${String(item.date).slice(-4, -2)}/${String(item.date).slice(-2)}`,
           submitTime: formatTime(item.created_at, 'HH:mm'),
           total: item.passed_count + item.unpassed_count,
           unqualifiedTotal: item.unpassed_count,
           submitUser: item.employee.name,
-        }
-      })
+        };
+      });
 
       const percentage = parseInt((detail.unpassed_count / (detail.unpassed_count + detail.passed_count || 1)) * 100);
       this.setData({
@@ -124,16 +120,15 @@ Page({
       });
     } catch {
       wx.showToast({
+        icon: 'error',
         title: '获取详情失败，请联系管理员',
-      });
-      wx.redirectTo({
-        url: '/pages/all-center/index',
       });
     }
   },
 
   async getReportList(reportType, month) {
     try {
+      this.setData({ reportList: [] });
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const reportProfileRes = await app.call({
         path: `/api/v1/program/enterprise/report/${month}/${reportType}/attachments`,
@@ -141,32 +136,40 @@ Page({
           'x-enterprise-id': enterpriseData.enterprise_id,
         },
       });
-      const reportList = reportProfileRes.data;
-      console.log(reportList);
-      // this.setData({
-      //   reportList,
-      // });
+      const { list } = reportProfileRes.data.data;
+      const dateOptions = {
+        1: '日',
+        2: '周',
+        3: '月',
+      };
+      const reportList = list.map((item) => {
+        return {
+          ...item,
+          dateCn: `${String(item.date).slice(-4, -2)}/${String(item.date).slice(-2)}`,
+          submitTime: formatTime(item.created_at, 'HH:mm'),
+          showText: dateOptions[item.report_type],
+        };
+      });
+      this.setData({
+        reportList,
+      });
     } catch {
       wx.showToast({
+        icon: 'error',
         title: '获取详情失败，请联系管理员',
-      });
-      wx.redirectTo({
-        url: '/pages/all-center/index',
       });
     }
   },
 
   goDailyStats(e) {
-    console.log(e)
-    wx.redirectTo({
-      url: '/pages/daily-stats/index',
+    const { item } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `/pages/daily-stats/index?date=${item.date}&report_type=${item.report_type}`,
     });
   },
 
   onPickerChange(e) {
-    const {
-      value
-    } = e.detail;
+    const { value } = e.detail;
     this.getReportProfileList(this.data.reportType, value.join(''));
     this.setData({
       dateVisible: false,
@@ -186,9 +189,14 @@ Page({
     });
   },
 
-  onTabsChange() {
-    this.getReportProfileList(this.data.reportType, this.data.dateValue.join(''));
-    this.getReportList(this.data.reportType, this.data.dateValue.join(''));
+  onTabsChange(e) {
+    const { value } = e.detail;
+    if (value === '1') {
+      this.getReportProfileList(this.data.reportType, this.data.dateValue.join(''));
+    } else if (value === '2') {
+      this.getReportList(this.data.reportType, this.data.dateValue.join(''));
+    }
+    console.log(this.data.reportType, this.data.dateValue);
   },
 
   onOneTabsChange(event) {
@@ -203,6 +211,7 @@ Page({
     this.setData({
       dateType: dateOptions[event.detail.value],
     });
+    console.log(event);
     this.getReportProfileList(event.detail.value, this.data.dateValue.join(''));
   },
 
@@ -218,19 +227,32 @@ Page({
     this.setData({
       dateType: dateOptions[event.detail.value],
     });
+    console.log(event);
     this.getReportList(event.detail.value, this.data.dateValue.join(''));
   },
 
-  handlePreview(url) {
+  handlePreview(e) {
+    wx.showLoading({
+      title: '下载文档中',
+    });
+    const { item } = e.currentTarget.dataset;
     wx.downloadFile({
-      url,
+      url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${item.document_path}`,
       success: function (res) {
         const filePath = res.tempFilePath;
+        wx.hideLoading();
         wx.openDocument({
           filePath: filePath,
           success: function (res) {
             console.log('打开文档成功');
           },
+        });
+      },
+      fail: function () {
+        wx.hideLoading();
+        wx.showToast({
+          icon: 'error',
+          title: '打开文档失败',
         });
       },
     });

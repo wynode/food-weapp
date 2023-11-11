@@ -1,4 +1,3 @@
-// pages/report-profile/index.js
 import {
   formatTime
 } from '../../utils/util';
@@ -43,7 +42,7 @@ Page({
       const month = formatTime(dateTime, 'YYYYMM')
       const date = formatTime(dateTime, 'DD')
       const reportLogListRes = await app.call({
-        path: `/api/v1/program/enterprise/report/stats/${month}/logs?date=${date}`,
+        path: `/api/v1/program/enterprise/report/stats/${month}/logs`,
         header: {
           'x-enterprise-id': enterpriseData.enterprise_id,
         },

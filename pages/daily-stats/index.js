@@ -1,55 +1,8 @@
+const app = getApp();
 Page({
   data: {
     qualifiedDay: '21',
-    topTitle: '日管控',
-    dsList: [
-      {
-        date: '8月21日',
-        unqualifiedTotal: '1',
-        unqualifiedList: [
-          {
-            label: '贮存食品的库房，设备，容器，工具是否清洁，安全，无害，设备是否正常运2转，温度是否符合食品安全标准',
-            checkProject: '食品经营许可证合法有效、与经营场所（实体门店）地址一致。',
-            reason: 'A设备运转不正常',
-            maybeRisk: '无证违法经营。',
-            reasonAnalysis: '对食品安全法及相关规定不熟悉，经营上会有风险。',
-            measures: '增强法律意识，依法经营。',
-            fileList: [
-              'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113',
-            ],
-          },
-        ],
-      },
-      {
-        date: '8月16日',
-        unqualifiedTotal: '2',
-        unqualifiedList: [
-          {
-            checkProject: '未超出许可经营项目开展餐饮服务活动。',
-            label: '食品经营场所环境整洁卫生，食品（含食品添加剂、食用农产品，下同）是否有被污染的风险。',
-            reason: '不达标',
-            maybeRisk: '超出许可范围经营。',
-            reasonAnalysis: '对食品安全法及相关规定不熟悉，经营上会有风险。',
-            measures: '增强法律意识，依法经营。',
-            fileList: [
-              'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bell.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113',
-              'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113',
-            ],
-          },
-          {
-            checkProject: '在经营场所的显著位置悬挂或者摆放食品经营许可证正本，或以电子形式公示。',
-            label: '接触直接入口或不需清洗即可加工的散装食品时，是否戴口罩、手套和帽子，头发不外露。',
-            reason: '不达标',
-            maybeRisk: '降低消费者对门店认可对，不利于监管部门检查，容易引起投诉。',
-            reasonAnalysis: '对相关法律法规掌握不熟。',
-            measures: '按要求悬挂或摆放。',
-            fileList: [
-              'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/all_day.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113',
-            ],
-          },
-        ],
-      },
-    ],
+    topTitle: '日报',
     dateText: '',
     dateValue: [2023, 8],
     years: [
@@ -101,25 +54,72 @@ Page({
       },
     ],
     isRes: true,
+    date: '',
+    report_type: '',
+    profile: {},
+    unPassList: [],
   },
 
   onLoad(options) {
-    const { pageType = 'day' } = options || {};
-    if (pageType === 'week') {
+    const { date, report_type = 'day' } = options || {};
+    if (report_type === '2') {
       wx.setNavigationBarTitle({
         title: '周排查统计',
       });
       this.setData({
         qualifiedDay: '3',
-        topTitle: '周排查',
+        topTitle: '周报',
       });
-    } else if (pageType === 'month') {
+    } else if (report_type === '3') {
       wx.setNavigationBarTitle({
         title: '月调度统计',
       });
       this.setData({
         qualifiedDay: '21',
-        topTitle: '月调度',
+        topTitle: '月报',
+      });
+    }
+    this.setData({
+      date,
+      report_type,
+    });
+    this.getProfileList(date, report_type);
+  },
+
+  async getProfileList(date, report_type) {
+    try {
+      const enterpriseData = wx.getStorageSync('enterpriseData');
+      const reportProfileRes = await app.call({
+        path: `/api/v1/program/enterprise/report/${date}/${report_type}`,
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
+      });
+      const profile = reportProfileRes.data.data;
+      const list = profile.unpassed_items;
+      const unPassList = list.map((item) => {
+        const items = profile.items.filter((item2) => item2.item_id === item.item_id)[0];
+        return {
+          ...item,
+          ...items,
+          spot_images: item.spot_images.map(
+            (url) => `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${url}`,
+          ),
+        };
+      });
+      profile.month = String(profile.date).slice(4, 6);
+      profile.day = String(profile.date).slice(6, 8);
+      profile.title = this.data.topTitle;
+
+      this.setData({
+        profile,
+        unPassList,
+      });
+    } catch (error) {
+      console.log(error);
+      wx.showToast({
+        icon: 'error',
+        title: '获取详情失败，请联系管理员',
       });
     }
   },

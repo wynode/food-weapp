@@ -1,17 +1,18 @@
 import Toast from 'tdesign-miniprogram/toast';
-const app = getApp()
+const app = getApp();
 Page({
   data: {
     fileList: [],
     userPositionValue: [],
     userPositionTitle: '',
     userPositionText: '',
-    userPositionList: [{
+    userPositionList: [
+      {
         label: '企业负责人',
         value: '11',
       },
       {
-        label: '食品总监职责  ',
+        label: '食品总监职责',
         value: '12',
       },
       {
@@ -30,17 +31,38 @@ Page({
       height: 280,
     },
 
-    personalName: '',
+    userName: '',
     submitActive: false,
     businessCode: '',
-    personalPhone: '',
+    userPhone: '',
     fileID: '',
+    position: '',
+    title: '',
+    edit: {},
 
     value1: [0, 1],
     userRole: ['day', 'week', 'month'],
   },
 
-  onLoad() {},
+  onLoad(options) {
+    let { position, edit } = options || {};
+
+    if (edit) {
+      const editObj = JSON.parse(edit);
+      position = String(editObj.position);
+      console.log(position, editObj);
+      this.setData({
+        userName: editObj.name,
+        userPhone: editObj.mobile,
+        fileList: [{ url: editObj.avatar }],
+        position: String(editObj.position),
+        editObj,
+      });
+    }
+    const pos = this.data.userPositionList.filter((item1) => item1.value === position)[0] || {};
+    const title = pos.label || '';
+    this.setData({ position, title, userPositionText: title, userPositionValue: [position] });
+  },
 
   onChange1(e) {
     this.setData({
@@ -49,9 +71,9 @@ Page({
   },
 
   avatarUrl() {
-    return this.data.fileList[0] ?
-      this.data.fileList[0].url :
-      'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop_user.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113';
+    return this.data.fileList[0]
+      ? this.data.fileList[0].url
+      : 'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop_user.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113';
   },
 
   handleEditAvatar() {
@@ -65,70 +87,106 @@ Page({
 
   onNameInput(e) {
     this.setData({
-      personalName: e.detail.value
-    })
+      userName: e.detail.value,
+    });
   },
 
   onPhoneInput(e) {
     this.setData({
-      personalPhone: e.detail.value
-    })
+      userPhone: e.detail.value,
+    });
   },
 
   async goReportList() {
-    const isLegal = true;
-    if (isLegal) {
-      // wx.setStorageSync('user_data', this.data);
-      try {
-        const enterpriseData = wx.getStorageSync('enterpriseData');
-        await app.call({
+    // const isLegal = true;
+    // if (isLegal) {
+    // wx.setStorageSync('user_data', this.data);
+    try {
+      const enterpriseData = wx.getStorageSync('enterpriseData');
+      if (this.data.editObj) {
+        const res = await app.call({
+          path: `/api/v1/program/enterprise/employee`,
+          method: 'POST',
+          header: {
+            'x-enterprise-id': enterpriseData.enterprise_id,
+          },
+          data: {
+            employee_id: this.data.editObj.employee_id,
+            name: this.data.userName,
+            mobile: this.data.userPhone,
+            enterprise_id: enterpriseData.enterprise_id,
+            avatar:
+              this.data.fileID ||
+              this.data.editObj.avatar.replace('https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la', ''),
+            position: Number(this.data.position),
+            permission: 7,
+          },
+        });
+        if (res.data.code === 400) {
+          throw '请求参数错误';
+        }
+        wx.showToast({
+          title: '修改成功',
+        });
+      } else {
+        const res = await app.call({
           path: `/api/v1/program/enterprise/employee`,
           method: 'PUT',
           header: {
             'x-enterprise-id': enterpriseData.enterprise_id,
           },
           data: {
-            "name": this.data.personalName,
-            "mobile": this.data.personalPhone,
-            "enterprise_id": enterpriseData.enterprise_id,
-            "avatar": this.data.fileID,
-            position: Number(this.data.userPositionValue[0]),
+            name: this.data.userName,
+            mobile: this.data.userPhone,
+            enterprise_id: enterpriseData.enterprise_id,
+            avatar: this.data.fileID,
+            position: Number(this.data.position),
             permission: 7,
-          }
+          },
         });
-      } catch (error) {
-        console.log(error)
+        if (res.data.code === 400) {
+          throw '请求参数错误';
+        }
         wx.showToast({
-          title: '添加员工失败，请联系管理员',
-        })
+          title: '添加成功',
+        });
       }
-      // wx.redirectTo({
-      //   url: '/pages/all-center/index',
-      // });
-    } else {
-      Toast({
-        context: this,
-        selector: '#t-toast',
-        message: '请填写完整',
+      wx.redirectTo({
+        url: '/pages/staff-list/index',
+      });
+    } catch (error) {
+      console.log(error);
+      wx.showToast({
+        icon: 'error',
+        title: '添加员工失败，请联系管理员',
       });
     }
+    // wx.redirectTo({
+    //   url: '/pages/all-center/index',
+    // });
+    // } else {
+    //   Toast({
+    //     context: this,
+    //     selector: '#t-toast',
+    //     message: '请填写完整',
+    //   });
+    // }
   },
 
   async handleGG() {
-    const enterpriseData = wx.getStorageSync('enterpriseData')
+    const enterpriseData = wx.getStorageSync('enterpriseData');
     await app.call({
       path: `/api/v1/program/enterprise/health_certificate`,
       method: 'PUT',
       header: {
         'x-enterprise-id': enterpriseData.enterprise_id,
-
       },
       data: {
-        "url": "/user_image/gqeognb3o4.png",
-        "type": 1,
-        "file_type": 11,
-        "employee_name": "测试"
-      }
+        url: '/user_image/gqeognb3o4.png',
+        type: 1,
+        file_type: 11,
+        employee_name: '测试',
+      },
     });
   },
 
@@ -137,26 +195,20 @@ Page({
   },
 
   onPickerChange(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
+    const { key } = e.currentTarget.dataset;
 
-    const {
-      value,
-      label,
-    } = e.detail;
+    const { value, label } = e.detail;
 
     this.setData({
       [`${key}Visible`]: false,
       [`${key}Value`]: value,
       [`${key}Text`]: label[0],
+      position: value[0],
     });
   },
 
   onPickerCancel(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
+    const { key } = e.currentTarget.dataset;
     this.setData({
       [`${key}Visible`]: false,
     });
@@ -174,21 +226,16 @@ Page({
   },
 
   handleAdd(e) {
-    const {
-      fileList
-    } = this.data;
-    const {
-      files
-    } = e.detail;
+    const { fileList } = this.data;
+    const { files } = e.detail;
     console.log(e.detail, 222);
 
     this.setData({
-      fileList: [...files, ...fileList, ], // 此时设置了 fileList 之后才会展示选择的图片
+      fileList: [...files, ...fileList], // 此时设置了 fileList 之后才会展示选择的图片
     });
 
-    this.onUpload(files[0])
+    this.onUpload(files[0]);
   },
-
 
   async onUpload(file) {
     let compressResult = {};
@@ -212,8 +259,8 @@ Page({
       });
 
       this.setData({
-        fileID: `/${uploadResult.fileID.split('/').slice(-2).join('/')}`
-      })
+        fileID: `/${uploadResult.fileID.split('/').slice(-2).join('/')}`,
+      });
     } catch {
       Toast({
         context: this,
@@ -224,12 +271,8 @@ Page({
   },
 
   handleRemove(e) {
-    const {
-      index
-    } = e.detail;
-    const {
-      fileList
-    } = this.data;
+    const { index } = e.detail;
+    const { fileList } = this.data;
 
     fileList.splice(index, 1);
     this.setData({

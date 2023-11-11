@@ -106,7 +106,7 @@ Page({
       });
     } else {
       wx.navigateTo({
-        url: `/pages/report-profile/index?reportType=${key}`,
+        url: `/pages/report-list/index?reportType=${key}`,
       });
     }
   },

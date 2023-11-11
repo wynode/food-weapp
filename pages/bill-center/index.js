@@ -1,4 +1,3 @@
-// pages/report-profile/index.js
 Page({
   data: {
     dateValue: [2023, '本'],

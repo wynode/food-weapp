@@ -1,8 +1,8 @@
 <view>
   <background></background>
   <view class="create-user">
-    <view class="cu-top-title"> 请添加企业主体新员工 </view>
-    <view class="cu-top-title">需根据实际情况选择对应身份</view>
+    <view class="cu-top-title"> 请添加{{title}}新员工 </view>
+    <!-- <view class="cu-top-title">需根据实际情况选择对应身份</view> -->
     <view class="cu-avatar-box">
       <view class="cu-avatar" bind:tap="handleEditAvatar">
         <image wx:if="{{fileList[0]}}" class="cu-avatar-img" src="{{fileList[0].url}}"> </image>
@@ -34,7 +34,7 @@
       <t-input value="{{ userName }}" bindchange="onNameInput" placeholder="请输入员工姓名" />
     </view>
     <view>
-      <view class="cu-input" bind:tap="userPositionPicker">
+      <view class="cu-input" bind:tap="userPositionPicker" wx:if="{{editObj.position}}">
         <t-input suffixIcon="caret-down-small" value="{{ userPositionText }}" placeholder="请选择员工身份" disabled />
       </view>
       <t-picker
@@ -76,8 +76,8 @@
       hover
     /> -->
     <view class="cu-submit">
-      <t-button theme="primary" disabled="{{!submitActive}}" size="large" block bind:tap="handleGG"
-        >立即创建</t-button
+      <t-button theme="primary" size="large" block bind:tap="goReportList"
+        >立即{{editObj.position ? '修改' : '创建'}}</t-button
       >
     </view>
   </view>

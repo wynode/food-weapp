@@ -12,11 +12,20 @@
         <view class="rl-top-title">早上好，{{enterprise_name}}</view>
       </view>
       <view class="rl-top-right">
+        <t-picker
+          visible="{{clientVisible}}"
+          value="{{clientValue}}"
+          data-key="client"
+          title="切换客户端"
+          cancelBtn="取消"
+          confirmBtn="确认"
+          bindchange="onClientPickerChange"
+          bindcancel="onClientPickerCancel"
+        >
+          <t-picker-item options="{{clientOptions}}"></t-picker-item>
+        </t-picker>
         <!-- <t-button style="margin-right: 20rpx" bind:tap="goMonitor" theme="primary" size="small">监管版</t-button> -->
-        <image
-          class="rl-top-bell"
-          src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bell.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-        ></image>
+        <image class="rl-top-bell" src="/assets/image/menu1.png" bind:tap="handleClientPickerShow"></image>
       </view>
     </view>
     <view class="rl-record">

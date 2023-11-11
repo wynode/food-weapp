@@ -80,6 +80,13 @@
   margin-right: 20rpx;
 }
 
+.sl-item-avatar image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 14px;
+  margin-right: 20rpx;
+}
+
 .sl-item-image1 {
   background: #ed7b2f;
 }
@@ -112,6 +119,7 @@
 }
 
 .sl-tips {
+  margin-top: 200rpx;
   text-align: center;
   color: #999;
 }

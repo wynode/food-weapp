@@ -1,94 +1,47 @@
 <view>
   <background isHighlight="true"></background>
   <view class="staff-list">
-    <view class="sl-aqy">
+    <view class="sl-aqy" wx:for="{{dataList}}" wx:key="index" wx:for-item="pos">
       <view class="sl-top">
-        <view class="sl-title"> 食品安全员 </view>
-        <view class="sl-btn" bindtap="goCreateUser">新增</view>
+        <view class="sl-title"> {{ pos.label }} </view>
+        <view class="sl-btn" data-item="{{pos}}" bindtap="goCreateUser">新增</view>
       </view>
-      <view class="sl-item" wx:for="{{staffList1}}" wx:key="index">
-        <t-swipe-cell>
-          <t-cell bordered="{{false}}">
-            <view slot="image" class="sl-item-image sl-item-image{{index}}">{{item.name ? item.name[0] : '佚'}}</view>
-            <view slot="title" class="sl-itme-title"> {{item.name}}</view>
-            <view slot="description" class="sl-item-desc"> {{item.phone}}</view>
-            <view slot="note" class="sl-item-note">
-              <image src="https://tdesign.gtimg.com/miniprogram/images/default.svg"></image>
-            </view>
-          </t-cell>
+      <view wx:if="{{pos.list.length}}">
+        <view class="sl-item" wx:for="{{pos.list}}" wx:for-item="item" wx:key="mobile">
+          <t-swipe-cell>
+            <t-cell bordered="{{false}}">
+              <view slot="image">
+                <view class="sl-item-avatar" wx:if="{{item.avatar}}">
+                  <t-image mode="aspectFill" width="72" height="72" src="{{item.avatar}}"></t-image>
+                </view>
 
-          <view slot="right" class="btn-wrapper">
-            <view class="btn edit-btn column" bind:tap="onEdit">
-              <t-icon class="padding-bottom" name="edit" size="32rpx"></t-icon>
-              编辑
+                <view wx:else class="sl-item-image sl-item-image{{index}}">{{item.name ? item.name[0] : '佚'}}</view>
+              </view>
+              <view slot="title" class="sl-itme-title"> {{item.name}}</view>
+              <view slot="description" class="sl-item-desc"> {{item.mobile}}</view>
+              <!-- <view slot="note" class="sl-item-note">
+              <image src="https://tdesign.gtimg.com/miniprogram/images/default.svg"></image>
+            </view> -->
+            </t-cell>
+
+            <view slot="right" class="btn-wrapper">
+              <view class="btn edit-btn column" data-item="{{item}}" bind:tap="onEdit">
+                <t-icon class="padding-bottom" name="edit" size="32rpx"></t-icon>
+                编辑
+              </view>
+              <view class="btn delete-btn column" data-item="{{item}}" bind:tap="onDelete">
+                <t-icon class="padding-bottom" name="delete" size="32rpx"></t-icon>
+                删除
+              </view>
             </view>
-            <view class="btn delete-btn column" bind:tap="onDelete">
-              <t-icon class="padding-bottom" name="delete" size="32rpx"></t-icon>
-              删除
-            </view>
-          </view>
-        </t-swipe-cell>
+          </t-swipe-cell>
+        </view>
+      </view>
+      <view wx:else style="height: 160rpx; display: flex; align-items: center; justify-content: center; color: #666">
+        暂无相关人员~ 请添加
       </view>
     </view>
-    <view class="sl-aqy">
-      <view class="sl-top">
-        <view class="sl-title"> 食品安全总监 </view>
-        <view class="sl-btn" bindtap="goCreateUser">新增</view>
-      </view>
-      <view class="sl-item" wx:for="{{staffList2}}" wx:key="index">
-        <t-swipe-cell>
-          <t-cell bordered="{{false}}">
-            <view slot="image" class="sl-item-image sl-item-image{{index}}">{{item.name ? item.name[0] : '佚'}}</view>
-            <view slot="title" class="sl-itme-title"> {{item.name}}</view>
-            <view slot="description" class="sl-item-desc"> {{item.phone}}</view>
-            <view slot="note" class="sl-item-note">
-              <image src="https://tdesign.gtimg.com/miniprogram/images/default.svg"></image>
-              <image src="https://tdesign.gtimg.com/miniprogram/images/default.svg"></image>
-            </view>
-          </t-cell>
 
-          <view slot="right" class="btn-wrapper">
-            <view class="btn edit-btn column" bind:tap="onEdit">
-              <t-icon class="padding-bottom" name="edit" size="32rpx"></t-icon>
-              编辑
-            </view>
-            <view class="btn delete-btn column" bind:tap="onDelete">
-              <t-icon class="padding-bottom" name="delete" size="32rpx"></t-icon>
-              删除
-            </view>
-          </view>
-        </t-swipe-cell>
-      </view>
-    </view>
-    <view class="sl-aqy">
-      <view class="sl-top">
-        <view class="sl-title"> 负责人 </view>
-        <view class="sl-btn" bindtap="goCreateUser">新增</view>
-      </view>
-      <view class="sl-item" wx:for="{{staffList3}}" wx:key="index">
-        <t-swipe-cell>
-          <t-cell bordered="{{false}}">
-            <view slot="image" class="sl-item-image sl-item-image{{index}}">{{item.name ? item.name[0] : '佚'}}</view>
-            <view slot="title" class="sl-itme-title"> {{item.name}}</view>
-            <view slot="description" class="sl-item-desc"> {{item.phone}}</view>
-            <view slot="note" class="sl-item-note">
-              <image src="https://tdesign.gtimg.com/miniprogram/images/default.svg"></image>
-            </view>
-          </t-cell>
-
-          <view slot="right" class="btn-wrapper">
-            <view class="btn edit-btn column" bind:tap="onEdit">
-              <t-icon class="padding-bottom" name="edit" size="32rpx"></t-icon>
-              编辑
-            </view>
-            <view class="btn delete-btn column" bind:tap="onDelete">
-              <t-icon class="padding-bottom" name="delete" size="32rpx"></t-icon>
-              删除
-            </view>
-          </view>
-        </t-swipe-cell>
-      </view>
-    </view>
     <view class="sl-tips">左滑卡片进行编辑～</view>
   </view>
 </view>

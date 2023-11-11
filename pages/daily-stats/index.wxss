@@ -84,6 +84,12 @@
   font-weight: 500;
   color: #FFFFFF;
   line-height: 48rpx;
+  display: flex;
+  align-items: center;
+}
+
+.ds-item-top-left .t-icon {
+  margin-right: 10rpx;
 }
 
 .ds-item-top-right {

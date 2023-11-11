@@ -2,14 +2,14 @@
   <background isHighlight="true"></background>
   <view class="daily-stats">
     <view class="ds-top">
-      <view class="ds-top-left">{{dateValue[1]}}月{{topTitle}}</view>
-      <view class="ds-top-right" bindtap="onSeasonPicker">
+      <view class="ds-top-left">{{profile.month}}月{{profile.day}}日 {{profile.title}}</view>
+      <!-- <view class="ds-top-right" bindtap="onSeasonPicker">
         <view>其他月份</view>
         <image
           class="ds-top-img"
           src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
         ></image>
-      </view>
+      </view> -->
     </view>
 
     <t-picker
@@ -28,47 +28,49 @@
     </t-picker>
 
     <view class="ds-stats">
-      <view class="ds-stats-btn">{{qualifiedDay}}天合格</view>
-      <view class="ds-stats-btn ds-btn-red">1天不合格</view>
-      <view class="ds-stats-btn ds-btn-red">14项不合格</view>
+      <view class="ds-stats-btn">{{profile.passed_items.length}}项合格</view>
+      <view class="ds-stats-btn ds-btn-red">{{profile.unpassed_items.length}}项不合格</view>
     </view>
 
     <view class="ds-list">
-      <view class="ds-item" wx:for="{{dsList}}" wx:key="index">
+      <view class="ds-item" wx:for="{{unPassList}}" wx:key="index">
         <view class="ds-item-top">
-          <view class="ds-item-top-left"> {{item.date}} </view>
-          <view class="ds-item-top-right"> {{item.unqualifiedTotal}}项不合格 </view>
-        </view>
-        <view wx:if="{{isRes}}">
-          <view
-            class="ds-item-content"
-            wx:for="{{item.unqualifiedList}}"
-            wx:for-item="unItem"
-            wx:key="{{unItem.label}}"
-          >
-            <view class="ds-item-label2">{{unItem.checkProject}}</view>
-            <view>可能存在的风险隐患：</view>
-            <view class="ds-item-reason2">{{unItem.maybeRisk}}</view>
-            <view>产生的原因分析：</view>
-            <view class="ds-item-reason2">{{unItem.reasonAnalysis}}</view>
-            <view>防范措施：</view>
-            <view class="ds-item-reason2">{{unItem.measures}}</view>
+          <view class="ds-item-top-left">
+            <t-icon name="error-circle"></t-icon>
+            第{{item.item_seq}}项不合格
           </view>
+          <!-- <view class="ds-item-top-right"> {{item.unqualifiedTotal}}项不合格 </view> -->
         </view>
-        <view wx:else>
-          <view
-            class="ds-item-content"
-            wx:for="{{item.unqualifiedList}}"
-            wx:for-item="unItem"
-            wx:key="{{unItem.label}}"
-          >
-            <view class="ds-item-label">{{unItem.label}}</view>
-            <view class="ds-item-reason">{{unItem.reason}}</view>
+        <view wx:if="{{item.hidden_danger}}">
+          <view class="ds-item-content">
+            <view class="ds-item-label2">{{item.title}}</view>
+            <view>可能存在的风险隐患：</view>
+            <view class="ds-item-reason2">{{item.hidden_danger || '无'}}</view>
+            <view>产生的原因分析：</view>
+            <view class="ds-item-reason2">{{item.anaylise || '无'}}</view>
+            <view>防范措施：</view>
+            <view class="ds-item-reason2">{{item.solution || '无'}}</view>
             <view class="ds-item-photo">
               <view class="ds-item-photo-title">现场照片</view>
               <image
                 class="ds-item-photo-image"
-                wx:for="{{unItem.fileList}}"
+                wx:for="{{item.spot_images}}"
+                wx:key="fileItem"
+                wx:for-item="fileItem"
+                src="{{fileItem}}"
+              ></image>
+            </view>
+          </view>
+        </view>
+        <view wx:else>
+          <view class="ds-item-content">
+            <view class="ds-item-label">{{item.title}}</view>
+            <view class="ds-item-reason">{{item.remark || '无'}}</view>
+            <view class="ds-item-photo">
+              <view class="ds-item-photo-title">现场照片</view>
+              <image
+                class="ds-item-photo-image"
+                wx:for="{{item.spot_images}}"
                 wx:key="fileItem"
                 wx:for-item="fileItem"
                 src="{{fileItem}}"

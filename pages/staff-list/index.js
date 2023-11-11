@@ -1,57 +1,105 @@
-const app = getApp()
+const app = getApp();
 
 Page({
   data: {
-    staffList1: [
+    userPositionList: [
       {
-        name: '张晓',
-        phone: '18176672873',
+        label: '企业负责人',
+        value: '11',
       },
       {
-        name: '李不管',
-        phone: '13345343425',
+        label: '食品总监职责  ',
+        value: '12',
       },
-    ],
-    staffList2: [
       {
-        name: '王梅',
-        phone: '15565654545',
+        label: '食品安全员',
+        value: '13',
       },
-    ],
-    staffList3: [
       {
-        name: '花花',
-        phone: '18117814545',
+        label: '企业员工',
+        value: '14',
       },
     ],
+    dataList: [],
   },
-  async onLoad(options) {
-    const res = await app.call({
-      path: '/api/v1/program/enterprise/employees',
-      method: 'GET',
-    });
-    if (res.list) {
-      res.list.forEach((item) => {
+  onLoad() {
+    this.getList();
+  },
 
-      })
+  async getList() {
+    try {
+      const res = await app.call({
+        path: '/api/v1/program/enterprise/employees',
+        method: 'GET',
+      });
+      const { list } = res.data.data;
+      // let userPositionList = this.data.userPositionList;
+      const userPositionList = this.data.userPositionList.map((posItem) => {
+        let result = { ...posItem, list: [] };
+        list.forEach((item) => {
+          if (posItem.value === String(item.position)) {
+            result.list.push({
+              ...item,
+              avatar: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${item.avatar}`,
+            });
+          }
+          // userPositionList = userPositionList.map((posi) => {
+          //   if (posi.value === String(item.position)) {
+          //     return {
+          //       ...posi,
+          //       list: posi.list.concat([item]).map((item2) => {
+          //         return {
+          //           ...item2,
+          //           avatar: item2.avatar.includes('http')
+          //             ? item2.avatar
+          //             : `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${item2.avatar}`,
+          //         };
+          //       }),
+          //     };
+          //   }
+          //   return {
+          //     ...posi,
+          //   };
+          // });
+        });
+        console.log(result);
+        return result;
+      });
+
+      console.log(userPositionList);
+      this.setData({
+        dataList: userPositionList,
+      });
+    } catch (error) {
+      console.log(error);
+      wx.showToast({
+        title: '获取员工列表出错',
+        icon: 'error',
+      });
     }
   },
-  onDelete() {
-    wx.showToast({
-      title: '你点击了删除',
-      icon: 'none',
+  async onDelete(e) {
+    const { item } = e.currentTarget.dataset;
+    await app.call({
+      path: `/api/v1/program/enterprise/employee?employee_id=${item.employee_id}`,
+      method: 'DELETE',
     });
-  },
-  onEdit() {
     wx.showToast({
-      title: '你点击了编辑',
-      icon: 'none',
+      title: '删除成功',
+    });
+    this.getList();
+  },
+  onEdit(e) {
+    const { item } = e.currentTarget.dataset;
+    wx.redirectTo({
+      url: `/pages/create-user/index?edit=${JSON.stringify(item)}`,
     });
   },
 
-  goCreateUser() {
+  goCreateUser(e) {
+    const { item } = e.currentTarget.dataset;
     wx.redirectTo({
-      url: `/pages/create-user/index?`,
+      url: `/pages/create-user/index?position=${item.value}`,
     });
   },
 });
