@@ -39,9 +39,29 @@ Page({
       url: '/pages/staff-list/index',
     });
   },
-  goEnterpriseManage() {
+  goHealth() {
+    wx.navigateTo({
+      url: '/pages/health-list/index',
+    });
+  },
+  goAppointment() {
+    wx.navigateTo({
+      url: '/pages/appointment-list/index',
+    });
+  },
+  goWord() {
     wx.navigateTo({
       url: '/pages/word-list/index',
+    });
+  },
+  goDuty() {
+    wx.navigateTo({
+      url: '/pages/word-list-duty/index',
+    });
+  },
+  goRegime() {
+    wx.navigateTo({
+      url: '/pages/word-list-regime/index',
     });
   },
   goCreateShopProfile() {

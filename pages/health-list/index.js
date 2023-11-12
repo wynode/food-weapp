@@ -40,7 +40,7 @@ Page({
   async getList() {
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const res = await app.call({
-      path: `/api/v1/program/enterprise/enterprise_appointments`,
+      path: `/api/v1/program/enterprise/health_certificates`,
       method: 'GET',
       header: {
         'x-enterprise-id': enterpriseData.enterprise_id,
@@ -70,14 +70,14 @@ Page({
   handleGoCreate(e) {
     const { item } = e.currentTarget.dataset;
     wx.redirectTo({
-      url: `/pages/create-appointment/index?type=1&file_type=${item.value}`,
+      url: `/pages/create-appointment/index?type=2&file_type=${item.value}`,
     });
   },
 
   async handleDelete(e) {
     const { item } = e.currentTarget.dataset;
     await app.call({
-      path: `/api/v1/program/enterprise/enterprise_appointment?license_id=${item.license_id}`,
+      path: `/api/v1/program/enterprise/health_certificate?license_id=${item.license_id}`,
       method: 'DELETE',
       data: {
         license_id: item.license_id,

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "任命书管理",
+  "navigationBarTitleText": "健康证管理",
   "usingComponents": {
     "background": "/components/background/index",
     "t-image": "tdesign-miniprogram/image/image",

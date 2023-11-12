@@ -1,13 +1,17 @@
 {
   "pages": [
     "pages/all-center/index",
+    "pages/create-enterprise/index",
     "pages/report-list/index",
     "pages/create-user/index",
+    "pages/create-appointment/index",
     "pages/appointment-list/index",
+    "pages/health-list/index",
     "pages/word-list/index",
+    "pages/word-list-duty/index",
+    "pages/word-list-regime/index",
     "pages/log-list/index",
     "pages/create-report2/index",
-    "pages/create-enterprise/index",
     "pages/e-signature/index",
     "pages/enterprise-profile/index",
     "pages/enterprise-info/index",
@@ -29,9 +33,7 @@
     "pages/bill-center/index",
     "pages/bao-info/index"
   ],
-  "requiredPrivateInfos": [
-    "chooseAddress"
-  ],
+  "requiredPrivateInfos": ["chooseAddress"],
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {},
   "window": {

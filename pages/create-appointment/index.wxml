@@ -1,0 +1,42 @@
+<view>
+  <background></background>
+  <view class="create-user">
+    <view class="cu-top-title"> {{titleCn}} </view>
+    <view class="cu-avatar-box">
+      <t-upload
+        class="image-upload"
+        files="{{fileList}}"
+        mediaType="{{['image']}}"
+        max="{{1}}"
+        gridConfig="{{gridConfig}}"
+        bind:add="handleAdd"
+        bind:remove="handleRemove"
+      >
+      </t-upload>
+    </view>
+
+    <view class="cu-input">
+      <t-input value="{{ employee_name }}" bindchange="onNameInput" placeholder="{{typeCn}}" />
+    </view>
+
+    <!-- <view class="cu-business">
+      <view class="cu-upload-box">
+        <my-upload uploadTitle="点击上传任命书"> </my-upload>
+      </view>
+      <view class="cu-upload-box" style="margin-left: 50rpx">
+        <my-upload uploadTitle="点击上传健康证"> </my-upload>
+      </view>
+    </view> -->
+    <t-link
+      style="margin-bottom: 40rpx"
+      size="small"
+      theme="primary"
+      content="{{modelCn}}模版点击此处下载"
+      prefixIcon="link"
+      hover
+    />
+    <view class="cu-submit">
+      <t-button theme="primary" size="large" block bind:tap="goCreate">立即创建</t-button>
+    </view>
+  </view>
+</view>

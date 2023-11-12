@@ -33,7 +33,6 @@ Page({
         method: 'GET',
       });
       const { list } = res.data.data;
-      // let userPositionList = this.data.userPositionList;
       const userPositionList = this.data.userPositionList.map((posItem) => {
         let result = { ...posItem, list: [] };
         list.forEach((item) => {
@@ -43,24 +42,6 @@ Page({
               avatar: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${item.avatar}`,
             });
           }
-          // userPositionList = userPositionList.map((posi) => {
-          //   if (posi.value === String(item.position)) {
-          //     return {
-          //       ...posi,
-          //       list: posi.list.concat([item]).map((item2) => {
-          //         return {
-          //           ...item2,
-          //           avatar: item2.avatar.includes('http')
-          //             ? item2.avatar
-          //             : `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${item2.avatar}`,
-          //         };
-          //       }),
-          //     };
-          //   }
-          //   return {
-          //     ...posi,
-          //   };
-          // });
         });
         console.log(result);
         return result;

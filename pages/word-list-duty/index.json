@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "管控制度汇编",
+  "navigationBarTitleText": "管控职责",
   "usingComponents": {
     "background": "/components/background/index",
     "t-image": "tdesign-miniprogram/image/image",

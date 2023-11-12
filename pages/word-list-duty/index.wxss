@@ -1,0 +1,30 @@
+.manager {
+  position: relative;
+  padding: 30rpx;
+}
+
+.manager .manager-title:first-child {
+  margin-top: 10rpx;
+}
+
+.manager-title {
+  font-size: 38rpx;
+  font-weight: bold;
+  margin-top: 100rpx;
+}
+
+.manager-content {
+  margin-top: 40rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.manager-content .t-button {
+  margin: 44rpx 20rpx;
+}
+
+.manager-img {
+  width: 160rpx;
+  height: 160rpx;
+  margin-right: 60rpx;
+}

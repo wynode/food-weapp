@@ -1,0 +1,38 @@
+.create-enterprise {
+  padding: 40rpx;
+  position: relative;
+}
+
+.cs-title {
+  text-align: center;
+  font-size: 42rpx;
+  font-weight: bold;
+  color: #333333;
+  font-family: SimSong-Bold, SimSong;
+  line-height: 74rpx;
+}
+
+.cs-form {
+  margin-top: 30rpx;
+}
+
+.cs-form-content .t-input {
+  background: #f2f4f7;
+  border-radius: 8rpx;
+  padding: 20rpx 30rpx;
+  margin-top: 30rpx;
+}
+
+.cs-form-content .t-input::after {
+  height: 0;
+}
+
+.cs-submit {
+  margin-top: 40rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cs-form .t-input__control--disabled {
+  color: rgba(0, 0, 0, 0.9);
+}
