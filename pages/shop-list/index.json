@@ -10,6 +10,8 @@
     "t-cell": "tdesign-miniprogram/cell/cell",
     "t-icon": "tdesign-miniprogram/icon/icon",
     "t-picker": "tdesign-miniprogram/picker/picker",
+    "t-tab-bar": "tdesign-miniprogram/tab-bar/tab-bar",
+    "t-tab-bar-item": "tdesign-miniprogram/tab-bar-item/tab-bar-item",
     "t-picker-item": "tdesign-miniprogram/picker-item/picker-item",
     "t-search": "tdesign-miniprogram/search/search"
   }

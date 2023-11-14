@@ -20,7 +20,7 @@ App({
     });
     await c1.init();
     this.cloud = c1;
-  // 在页面js中，可以使用getApp().cloud
+    // 在页面js中，可以使用getApp().cloud
   },
   async call(obj, number = 0) {
     const c1 = new wx.cloud.Cloud({
@@ -54,6 +54,13 @@ App({
         // 其余参数同 wx.request
       });
       console.log(`微信云托管调用结果${result.errMsg} | callid:${result.callID}`);
+      console.log(result)
+      if (result.data.code && result.data.code !== 0) {
+        wx.showToast({
+          icon: 'none',
+          title: result.data.message,
+        })
+      }
       return result; // 业务数据在data中
     } catch (e) {
       const error = e.toString();

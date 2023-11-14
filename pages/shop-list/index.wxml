@@ -5,16 +5,10 @@
       <t-cell class="mb-16" title="选择区域" arrow hover note="{{cityText}}" bind:click="onCityPicker" />
     </view>
     <view class="example-search">
-      <t-search
-        model:value="{{value}}"
-        placeholder="请输入商家名称"
-        shape="round"
-        bind:clear="onChange"
-        bind:change="onChange"
-      />
+      <t-search model:value="{{value}}" placeholder="请输入商家名称" shape="round" bind:clear="onChange" bind:change="onChange" />
     </view>
     <view class="sl-items">
-      <view class="sl-item" wx:for="{{shopList1}}" wx:key="index">
+      <view class="sl-item" wx:for="{{shopList1}}" wx:key="index" bind:tap="handleGo">
         <view class="sl-image-box">
           <view slot="image" class="sl-item-image sl-item-image{{index}}">{{item.name ? item.name[0] : '佚'}}</view>
         </view>
@@ -25,17 +19,13 @@
         </view>
       </view>
     </view>
-    <t-picker
-      visible="{{cityVisible}}"
-      value="{{cityValue}}"
-      data-key="date"
-      title="选择时间"
-      cancelBtn="取消"
-      confirmBtn="确认"
-      bindchange="onPickerChange"
-      bindcancel="onPickerCancel"
-    >
+    <t-picker visible="{{cityVisible}}" value="{{cityValue}}" data-key="date" title="选择时间" cancelBtn="取消" confirmBtn="确认" bindchange="onPickerChange" bindcancel="onPickerCancel">
       <t-picker-item options="{{citys}}" />
     </t-picker>
   </view>
+  <t-tab-bar value="{{tabBarValue}}" bindchange="onTabBarChange" theme="tag" split="{{false}}">
+    <t-tab-bar-item wx:for="{{list}}" wx:key="index" value="{{item.value}}" icon="{{item.icon}}" class="tab-bar-ico{{index}}" ariaLabel="{{item.ariaLabel}}" badge-props="{{item.badgeProps}}">
+      {{item.ariaLabel}}
+    </t-tab-bar-item>
+  </t-tab-bar>
 </view>

@@ -70,7 +70,7 @@ Page({
   handleGoCreate(e) {
     const { item } = e.currentTarget.dataset;
     wx.redirectTo({
-      url: `/pages/create-appointment/index?type=2&file_type=${item.value}`,
+      url: `/pages/create-appointment/index?type=1&file_type=${item.value}`,
     });
   },
 

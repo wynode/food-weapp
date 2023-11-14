@@ -243,6 +243,7 @@ Page({
         wx.hideLoading();
         wx.openDocument({
           filePath: filePath,
+          showMenu: true,
           success: function (res) {
             console.log('打开文档成功');
           },

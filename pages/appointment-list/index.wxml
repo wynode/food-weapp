@@ -19,7 +19,7 @@
               data-item="{{item}}"
               bind:tap="handlePreview"
             />
-            <view class="cert-info">
+            <view class="cert-info" style="margin-bottom: 24rpx">
               <view class="cert-name">{{ item.employee_name }}</view>
               <t-button
                 class="cert-btn"

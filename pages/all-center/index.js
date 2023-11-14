@@ -2,11 +2,11 @@ import Toast from 'tdesign-miniprogram/toast/index';
 const app = getApp();
 Page({
   data: {
+    status: '1',
     enterprise_id: '',
-    enterprise_name: '花花的小店',
+    enterprise_name: '',
     dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1)],
-    years: [
-      {
+    years: [{
         label: '2026年',
         value: '2026',
       },
@@ -23,8 +23,7 @@ Page({
         value: '2023',
       },
     ],
-    seasons: [
-      {
+    seasons: [{
         label: '1月',
         value: '01',
       },
@@ -74,8 +73,7 @@ Page({
       },
     ],
     tabBarValue: 'all-center',
-    list: [
-      {
+    list: [{
         value: 'all-center',
         icon: 'shop-5',
         ariaLabel: '工作台',
@@ -98,19 +96,60 @@ Page({
 
     clientVisible: false,
     clientValue: '1',
-    clientOptions: [
-      { label: '商户端', value: '1' },
-      { label: '监管端', value: '2' },
-      { label: '包保端', value: '3' },
+    clientOptions: [{
+        label: '商户端',
+        value: '1'
+      },
+      {
+        label: '监管端',
+        value: '2'
+      },
+      {
+        label: '包保端',
+        value: '3'
+      },
     ],
   },
 
   handleClientPickerShow() {
-    this.setData({ clientVisible: true });
+    this.setData({
+      clientVisible: true
+    });
+  },
+
+  async toggleStatus() {
+    const enterpriseData = wx.getStorageSync('enterpriseData')
+    if (this.data.status === '1') {
+      await app.call({
+        path: '/api/v1/program/enterprise/relationship',
+        data: {
+          status: '0'
+        },
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
+      });
+
+    } else {
+      await app.call({
+        path: '/api/v1/program/enterprise/relationship',
+        data: {
+          status: '1'
+        },
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
+      });
+    }
+    this.setData({
+      status: this.data.status === '1' ? '0' : '1'
+    })
   },
 
   onClientPickerChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     this.setData({
       clientVisible: false,
       clientValue: value,
@@ -121,7 +160,7 @@ Page({
       });
     } else if (value[0] === '2') {
       wx.redirectTo({
-        url: '/pages/enterprise-profile/index',
+        url: '/pages/shop-list/index',
       });
     } else if (value[0] === '3') {
       wx.redirectTo({
@@ -149,7 +188,11 @@ Page({
       if (res.statusCode !== 200) {
         throw error;
       }
-      const { is_bind, enterprise_id, enterprise_name } = res.data.data || {};
+      const {
+        is_bind,
+        enterprise_id,
+        enterprise_name
+      } = res.data.data || {};
       if (!is_bind) {
         throw error;
       }
@@ -203,7 +246,9 @@ Page({
   },
 
   onTabBarChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     if (value === 'submit-report') {
       wx.redirectTo({
         url: `/pages/${value}/index`,
@@ -215,7 +260,9 @@ Page({
   },
 
   goProfile(e) {
-    const { key = '1' } = e.currentTarget.dataset || {};
+    const {
+      key = '1'
+    } = e.currentTarget.dataset || {};
     if (key === 'bill') {
       wx.redirectTo({
         url: `/pages/bill-center/index`,
@@ -240,7 +287,9 @@ Page({
   },
 
   onPickerChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     console.log(value);
     this.getReportStats(value.join(''), this.data.enterprise_id);
     this.setData({

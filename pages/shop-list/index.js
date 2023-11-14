@@ -1,5 +1,21 @@
 Page({
   data: {
+    tabBarValue: 'shop-list',
+    list: [{
+      value: 'data-show',
+      icon: 'chart-line-multi',
+      ariaLabel: '数据统计',
+    },
+    // {
+    //   value: 'submit-report',
+    //   icon: 'add-circle',
+    // },
+    {
+      value: 'shop-list',
+      icon: 'city-10',
+      ariaLabel: '商铺列表',
+    },
+  ],
     shopList: [
       {
         name: '金牛区第一家',
@@ -58,6 +74,31 @@ Page({
     this.setData({
       shopList1: filterArray,
     });
+  },
+
+  onTabBarChange(e) {
+    console.log(e);
+    const {
+      value
+    } = e.detail;
+    // this.setData({
+    //   tabBarValue: value,
+    // });
+    if (value === 'submit-report') {
+      wx.navigateTo({
+        url: `/pages/${value}/index`,
+      });
+    } else {
+      wx.navigateTo({
+        url: `/pages/${value}/index`,
+      });
+    }
+  },
+
+  handleGo() {
+    wx.redirectTo({
+      url: '/pages/enterprise-profile/index',
+    })
   },
 
   onCityPicker() {

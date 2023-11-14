@@ -114,49 +114,30 @@ Page({
   },
 
   async formSubmit() {
-    const {
-      isLegal,
-      tips
-    } = this.onVerifyInputLegal();
-    if (isLegal) {
-      const payload = {
-        ...this.data.enterpriseForm,
-        province: Number(this.data.areaValue[0]),
-        city: Number(this.data.areaValue[1]),
-        district: Number(this.data.areaValue[2]),
-        business_type: Number(this.data.businessTypeValue[0]),
-        legal_name: this.data.enterpriseForm.employee_name,
-      };
-      const upload = this.selectComponent('#upload');
-      const fileID = upload.data.fileList[0].fileID;
-      payload.business_license_image = fileID;
-      try {
-        const res = await app.call({
-          path: '/api/v1/program/enterprise',
-          method: 'PUT',
-          data: payload,
-        });
-        console.log(res);
-        if (res.statusCode === 200) {
-          wx.redirectTo({
-            url: '/pages/all-center/index',
-          });
-        } else {
-          Toast({
-            context: this,
-            selector: '#t-toast',
-            message: '创建出错，请检查填写是否正确',
-          });
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      Toast({
-        context: this,
-        selector: '#t-toast',
-        message: tips,
+    const enterpriseForm = wx.getStorageSync('licenseData')
+    const payload = {
+      ...enterpriseForm,
+      province: Number(this.data.areaValue[0]),
+      city: Number(this.data.areaValue[1]),
+      district: Number(this.data.areaValue[2]),
+      business_type: Number(this.data.businessTypeValue[0]),
+      employee_name: this.data.enterpriseForm.employee_name,
+      employee_mobile: this.data.enterpriseForm.employee_mobile,
+    };
+    try {
+      const res = await app.call({
+        path: '/api/v1/program/enterprise',
+        method: 'PUT',
+        data: payload,
       });
+      console.log(res);
+      if (res.data.code === 0) {
+        wx.redirectTo({
+          url: '/pages/all-center/index',
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   },
 

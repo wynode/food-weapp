@@ -10,6 +10,7 @@ Page({
     width2: 320,
     height2: 600,
     scale: 2,
+    has_template: false,
 
     style: 'border: 2rpx solid rgba(220,220,220,1);border-radius: 12rpx;',
     restaurantList: [],
@@ -140,6 +141,7 @@ Page({
           submitDisabled: false,
           checkPercentage: 100,
           computedColor: '',
+          has_template: true,
           reportType,
         });
         console.log(tempCheckListData);
@@ -157,6 +159,7 @@ Page({
           isRestaurant: business_type === 2,
           checkListData: tempCheckListData,
           reportType,
+          has_template: true,
         });
         console.log(tempCheckListData);
       }
@@ -345,9 +348,11 @@ Page({
         icon: 'success',
         duration: 2000,
       });
-      wx.redirectTo({
-        url: '/pages/all-center/index',
-      });
+      setTimeout(() => {
+        wx.redirectTo({
+          url: '/pages/all-center/index',
+        });
+      }, 1500)
     } catch (error) {
       console.log(error);
       wx.showToast({

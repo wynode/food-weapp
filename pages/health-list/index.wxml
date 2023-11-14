@@ -4,39 +4,21 @@
     <view class="cert-item" wx:for="{{dataList}}" wx:for-item="positem" wx:key="index">
       <view class="cert-title">
         <view>{{ positem.label }}</view>
-        <t-button class="cert-btn" theme="primary" size="small" data-item="{{positem}}" bind:tap="handleGoCreate"
-          >新增</t-button
-        >
+        <t-button class="cert-btn" theme="primary" size="small" data-item="{{positem}}" bind:tap="handleGoCreate">新增</t-button>
       </view>
       <view class="cert-list" wx:if="{{positem.list.length}}">
         <t-row gutter="15">
           <t-col span="8" wx:for="{{positem.list}}">
-            <t-image
-              class="cert-img"
-              src="{{item.url}}"
-              mode="aspectFill"
-              aria-label="任命书"
-              data-item="{{item}}"
-              bind:tap="handlePreview"
-            />
-            <view class="cert-info">
+            <t-image class="cert-img" src="{{item.url}}" mode="aspectFill" aria-label="任命书" data-item="{{item}}" bind:tap="handlePreview" />
+            <view class="cert-info" style="margin-bottom: 24rpx">
               <view class="cert-name">{{ item.employee_name }}</view>
-              <t-button
-                class="cert-btn"
-                theme="danger"
-                size="small"
-                icon="delete"
-                shape="square"
-                aria-label="删除"
-                data-item="{{item}}"
-                bind:tap="handleDelete"
-              ></t-button>
+              <t-button class="cert-btn" theme="danger" size="small" icon="delete" shape="square" aria-label="删除" data-item="{{item}}" bind:tap="handleDelete"></t-button>
             </view>
           </t-col>
         </t-row>
       </view>
       <view wx:else style="height: 160rpx; display: flex; align-items: center; justify-content: center; color: #666">
-        暂无相关任命书~ 请添加
+        暂无相关健康证~ 请添加
       </view>
     </view>
   </view>

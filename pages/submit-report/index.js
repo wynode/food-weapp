@@ -1,4 +1,6 @@
-import { formatTime } from '../../utils/util';
+import {
+  formatTime
+} from '../../utils/util';
 import Toast from 'tdesign-miniprogram/toast/index';
 const app = getApp();
 Page({
@@ -31,7 +33,9 @@ Page({
       if (res.statusCode !== 200) {
         throw error;
       }
-      const { waitlist } = res.data.data;
+      const {
+        waitlist
+      } = res.data.data;
       if (waitlist.length === 0) {
         throw error;
       }
@@ -48,9 +52,9 @@ Page({
         }
         const remainingMinutes = parseInt((diff % (1000 * 60 * 60)) / (1000 * 60));
         const date = String(item.date);
-        const text = remainingDays
-          ? `${Math.abs(remainingDays)}天${Math.abs(remainingHours)}小时`
-          : `${Math.abs(remainingHours)}小时${Math.abs(remainingMinutes)}分钟`;
+        const text = remainingDays ?
+          `${Math.abs(remainingDays)}天${Math.abs(remainingHours)}小时` :
+          `${Math.abs(remainingHours)}小时${Math.abs(remainingMinutes)}分钟`;
         return {
           ...item,
           showDate: date.slice(0, 4) + '年' + date.slice(4, 6) + '月' + date.slice(6, 8) + '日',
@@ -66,7 +70,7 @@ Page({
       const intervalId = setInterval(() => {
         this.updateTime(filterwait[0].deadline);
       }, 1000);
-      wx.setStorageSync('reportData', filterwait[0]);
+      wx.setStorageSync('reportData', filterwait[4]);
       this.setData({
         intervalId,
         waitlist: filterwait,
@@ -86,9 +90,16 @@ Page({
   },
 
   async goCreateReport() {
-    wx.navigateTo({
-      url: `/pages/create-report/index`,
-    });
+    const enterpriseData = wx.getStorageSync('enterpriseData')
+    if (enterpriseData.business_type === 2 && this.data.waitlist[4].report_type === 3) {
+      wx.navigateTo({
+        url: `/pages/create-report2/index`,
+      });
+    } else {
+      wx.navigateTo({
+        url: `/pages/create-report/index`,
+      });
+    }
   },
 
   goCreateReportQualify() {

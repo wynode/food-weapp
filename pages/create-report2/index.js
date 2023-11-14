@@ -1,5 +1,7 @@
 // pages/create-report2.js
-import { formatTime } from '../../utils/util';
+import {
+  formatTime
+} from '../../utils/util';
 import Signature from 'mini-smooth-signature';
 const app = getApp();
 Page({
@@ -12,8 +14,7 @@ Page({
     address: '',
     content: '',
     decision: '',
-    options: [
-      {
+    options: [{
         value: 1,
         label: '1.食品安全风险可控，无较大食品安全隐患',
       },
@@ -37,8 +38,12 @@ Page({
   onLoad() {
     const reportData = wx.getStorageSync('reportData');
     const enterpriseData = wx.getStorageSync('enterpriseData');
-    const { business_type } = enterpriseData;
-    const { report_type } = reportData;
+    const {
+      business_type
+    } = enterpriseData;
+    const {
+      report_type
+    } = reportData;
 
     this.setData({
       business_type,
@@ -47,31 +52,41 @@ Page({
   },
 
   onRadioChange(event) {
-    const { value } = event.detail;
+    const {
+      value
+    } = event.detail;
     this.setData({
       judgement: value,
     });
   },
   handleTextAreaChange(event) {
-    const { value } = event.detail;
+    const {
+      value
+    } = event.detail;
     this.setData({
       next_week_point: value,
     });
   },
   handleAddressChange(event) {
-    const { value } = event.detail;
+    const {
+      value
+    } = event.detail;
     this.setData({
       address: value,
     });
   },
   handleContentChange(event) {
-    const { value } = event.detail;
+    const {
+      value
+    } = event.detail;
     this.setData({
       content: value,
     });
   },
   handleDecisionChange(event) {
-    const { value } = event.detail;
+    const {
+      value
+    } = event.detail;
     this.setData({
       decision: value,
     });
@@ -79,7 +94,11 @@ Page({
 
   onReady() {
     try {
-      const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
+      const {
+        windowWidth,
+        windowHeight,
+        pixelRatio
+      } = wx.getSystemInfoSync();
       this.setData({
         width1: windowWidth - 30,
         height1: 200,
@@ -204,6 +223,9 @@ Page({
   },
   async handleFinal() {
     try {
+      if (!this.data.signUrl) {
+        throw '请先签名'
+      }
       wx.showLoading({
         title: '正在生成报告中，请耐心等待',
       });
@@ -216,9 +238,9 @@ Page({
         .split('/')
         .slice(-2)
         .join('/')}`;
-      const reportData = wx.getStorageSync('reportData');
-      const templateData = wx.getStorageSync('templateData');
-      const reportProfileData = wx.getStorageSync('reportProfileData');
+      const reportData = wx.getStorageSync('reportData') || {};
+      const templateData = wx.getStorageSync('templateData') || '';
+      const reportProfileData = wx.getStorageSync('reportProfileData') || {};
       const payload = {
         report_type: reportData.report_type,
         date: reportData.date,
@@ -239,6 +261,9 @@ Page({
           next_week_point: String(this.data.next_week_point),
         };
       } else if (this.data.business_type === 2 && this.data.report_type === 3) {
+        payload.params.template_id = ''
+        payload.params.passed_items = []
+        payload.params.unpassed_items = []
         payload.params.content = {
           content: String(this.data.content),
           address: String(this.data.address),
@@ -263,13 +288,15 @@ Page({
         icon: 'success',
         duration: 2000,
       });
-      wx.redirectTo({
-        url: '/pages/all-center/index',
-      });
+      setTimeout(() => {
+        wx.redirectTo({
+          url: '/pages/all-center/index',
+        });
+      }, 1500)
     } catch (error) {
       console.log(error);
       wx.showToast({
-        title: '生成报告失败',
+        title: `${error}`,
         icon: 'error',
         duration: 2000,
       });

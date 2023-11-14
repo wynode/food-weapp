@@ -8,7 +8,7 @@ Page({
       enterprise_name: '',
       address: '',
       business_license: '',
-      employee_name: '',
+      legal_name: '',
       employee_mobile: '',
     },
     submitActive: true,
@@ -114,50 +114,26 @@ Page({
   },
 
   async formSubmit() {
-    const {
-      isLegal,
-      tips
-    } = this.onVerifyInputLegal();
-    if (isLegal) {
-      const payload = {
-        ...this.data.enterpriseForm,
-        province: Number(this.data.areaValue[0]),
-        city: Number(this.data.areaValue[1]),
-        district: Number(this.data.areaValue[2]),
-        business_type: Number(this.data.businessTypeValue[0]),
-        legal_name: this.data.enterpriseForm.employee_name,
-      };
-      const upload = this.selectComponent('#upload');
-      const fileID = upload.data.fileList[0].fileID;
-      payload.business_license_image = fileID;
-      try {
-        const res = await app.call({
-          path: '/api/v1/program/enterprise',
-          method: 'PUT',
-          data: payload,
-        });
-        console.log(res);
-        if (res.statusCode === 200) {
-          wx.redirectTo({
-            url: '/pages/all-center/index',
-          });
-        } else {
-          Toast({
-            context: this,
-            selector: '#t-toast',
-            message: '创建出错，请检查填写是否正确',
-          });
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      Toast({
-        context: this,
-        selector: '#t-toast',
-        message: tips,
-      });
-    }
+    // const {
+    //   isLegal,
+    //   tips
+    // } = this.onVerifyInputLegal();
+    // if (isLegal) {
+    const payload = {
+      ...this.data.enterpriseForm,
+      // province: Number(this.data.areaValue[0]),
+      // city: Number(this.data.areaValue[1]),
+      // district: Number(this.data.areaValue[2]),
+      // business_type: Number(this.data.businessTypeValue[0]),
+      // legal_name: this.data.enterpriseForm.legal_name,
+    };
+    const upload = this.selectComponent('#upload');
+    const fileID = upload.data.fileList[0].fileID;
+    payload.business_license_image = fileID;
+    wx.setStorageSync('licenseData', payload)
+    wx.redirectTo({
+      url: '/pages/create-enterprise2/index',
+    });
   },
 
   onInputValue(e) {
@@ -260,7 +236,7 @@ Page({
       this.setData({
         'enterpriseForm.enterprise_name': company_name,
         'enterpriseForm.address': company_address,
-        'enterpriseForm.employee_name': legal_person,
+        'enterpriseForm.legal_name': legal_person,
         'enterpriseForm.business_license': license_no,
       });
     }

@@ -3,8 +3,7 @@ const app = getApp();
 Page({
   data: {
     fileList: [],
-    userPositionList: [
-      {
+    userPositionList: [{
         label: '企业负责人',
         value: '11',
       },
@@ -41,20 +40,23 @@ Page({
   },
 
   onLoad(options) {
-    let { file_type, type } = options || {};
+    let {
+      file_type,
+      type
+    } = options || {};
     let typeCn = '';
     let modelCn = '';
     const pos = this.data.userPositionList.filter((item1) => item1.value === file_type)[0] || {};
     const title = pos.label || '';
     let titleCn = '';
-    if (type === '1') {
+    if (type === '2') {
       wx.setNavigationBarTitle({
         title: '添加任命书',
       });
       typeCn = '请输入任命人姓名';
       titleCn = `请添加${title}任命书`;
       modelCn = '任命书';
-    } else {
+    } else if (type === '1') {
       wx.setNavigationBarTitle({
         title: '添加健康证',
       });
@@ -107,7 +109,7 @@ Page({
         });
       }
       wx.redirectTo({
-        url: this.data.ctype === '1' ? '/pages/appointment-list/index' : '/pages/health-list/index',
+        url: this.data.ctype === '2' ? '/pages/appointment-list/index' : '/pages/health-list/index',
       });
     } catch (error) {
       wx.showToast({
@@ -122,9 +124,14 @@ Page({
   },
 
   onPickerChange(e) {
-    const { key } = e.currentTarget.dataset;
+    const {
+      key
+    } = e.currentTarget.dataset;
 
-    const { value, label } = e.detail;
+    const {
+      value,
+      label
+    } = e.detail;
 
     this.setData({
       [`${key}Visible`]: false,
@@ -135,7 +142,9 @@ Page({
   },
 
   onPickerCancel(e) {
-    const { key } = e.currentTarget.dataset;
+    const {
+      key
+    } = e.currentTarget.dataset;
     this.setData({
       [`${key}Visible`]: false,
     });
@@ -153,8 +162,12 @@ Page({
   },
 
   handleAdd(e) {
-    const { fileList } = this.data;
-    const { files } = e.detail;
+    const {
+      fileList
+    } = this.data;
+    const {
+      files
+    } = e.detail;
     console.log(e.detail, 222);
 
     this.setData({
@@ -198,8 +211,12 @@ Page({
   },
 
   handleRemove(e) {
-    const { index } = e.detail;
-    const { fileList } = this.data;
+    const {
+      index
+    } = e.detail;
+    const {
+      fileList
+    } = this.data;
 
     fileList.splice(index, 1);
     this.setData({

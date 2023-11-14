@@ -39,4 +39,17 @@
       </view>
     </view>
   </view>
+  <t-tab-bar value="{{tabBarValue}}" bindchange="onTabBarChange" theme="tag" split="{{false}}">
+    <t-tab-bar-item
+      wx:for="{{list}}"
+      wx:key="index"
+      value="{{item.value}}"
+      icon="{{item.icon}}"
+      class="tab-bar-ico{{index}}"
+      ariaLabel="{{item.ariaLabel}}"
+      badge-props="{{item.badgeProps}}"
+    >
+      {{item.ariaLabel}}
+    </t-tab-bar-item>
+  </t-tab-bar>
 </view>

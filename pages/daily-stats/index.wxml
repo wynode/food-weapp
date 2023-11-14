@@ -80,6 +80,23 @@
         </view>
       </view>
     </view>
+
+    <view class="ds-list" style="margin-top: 20rpx;">
+      <view class="ds-item-top" style="background: #00a870;">
+          <view class="ds-item-top-left">
+            <t-icon name="check-circle"></t-icon>
+            {{passList.length}}项合格
+          </view>
+        </view>
+      <view class="ds-item" wx:for="{{passList}}" wx:key="index">
+        <view>
+          <view class="ds-item-content">
+            <view class="ds-item-label">{{item.title}}</view>
+            <view class="ds-item-reason" style="color: #00a870;">合格</view>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 
   <t-toast id="t-toast" />

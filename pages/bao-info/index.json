@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "企业信息",
+  "navigationBarTitleText": "包保信息",
   "usingComponents": {
     "t-toast": "tdesign-miniprogram/toast/toast",
     "t-image": "/components/webp-image/index",

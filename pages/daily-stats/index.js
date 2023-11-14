@@ -58,6 +58,7 @@ Page({
     report_type: '',
     profile: {},
     unPassList: [],
+    passList: [],
   },
 
   onLoad(options) {
@@ -97,7 +98,18 @@ Page({
       });
       const profile = reportProfileRes.data.data;
       const list = profile.unpassed_items;
+      const list2 = profile.passed_items
       const unPassList = list.map((item) => {
+        const items = profile.items.filter((item2) => item2.item_id === item.item_id)[0];
+        return {
+          ...item,
+          ...items,
+          spot_images: item.spot_images.map(
+            (url) => `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${url}`,
+          ),
+        };
+      });
+      const passList = list2.map((item) => {
         const items = profile.items.filter((item2) => item2.item_id === item.item_id)[0];
         return {
           ...item,
@@ -114,6 +126,7 @@ Page({
       this.setData({
         profile,
         unPassList,
+        passList,
       });
     } catch (error) {
       console.log(error);

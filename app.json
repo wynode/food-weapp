@@ -2,6 +2,7 @@
   "pages": [
     "pages/all-center/index",
     "pages/create-enterprise/index",
+    "pages/create-enterprise2/index",
     "pages/report-list/index",
     "pages/create-user/index",
     "pages/create-appointment/index",

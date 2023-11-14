@@ -17,22 +17,22 @@
       </view>
     </view>
     <view>
-      <t-button
+      <!-- <t-button
         theme="primary"
         icon="system-messages"
         variant="outline"
         content="发送整改通知"
         size="small"
-        style="margin-left: 20rpx"
-      ></t-button>
-      <t-button
+        style="margin-left: 14rpx"
+      ></t-button> -->
+      <!-- <t-button
         theme="primary"
         icon="city-10"
         variant="outline"
         content="企业信息"
         size="small"
-        style="margin-left: 20rpx"
-      ></t-button>
+        style="margin-left: 14rpx"
+      ></t-button> -->
       <t-button
         theme="primary"
         icon="call-forwarded"
@@ -45,7 +45,7 @@
     <view class="ei-center">
       <view class="rl-record">
         <view class="rlr-top">
-          <view class="rlr-top-left">本月记录</view>
+          <view class="rlr-top-left">{{ dateText }}月记录</view>
           <view class="rlr-top-right" bindtap="onSeasonPicker">
             <view>其他月份</view>
             <image
@@ -62,7 +62,6 @@
           cancelBtn="取消"
           confirmBtn="确认"
           bindchange="onPickerChange"
-          bindpick="onColumnChange"
           bindcancel="onPickerCancel"
         >
           <t-picker-item options="{{years}}"></t-picker-item>
@@ -72,15 +71,15 @@
           <t-progress color="#0B82FF" stroke-width="20" theme="circle" percentage="30" />
           <view class="rlr-record">
             <view class="rlr-record-item">
-              <view>本月日管控</view>
+              <view>{{ dateText }}月日管控</view>
               <view>7/30</view>
             </view>
             <view class="rlr-record-item">
-              <view>本月周排查</view>
+              <view>{{ dateText }}月周排查</view>
               <view>1/4</view>
             </view>
             <view class="rlr-record-item">
-              <view>本月月调度</view>
+              <view>{{ dateText }}月月调度</view>
               <view>0/1</view>
             </view>
           </view>

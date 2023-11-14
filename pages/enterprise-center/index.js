@@ -24,10 +24,19 @@ Page({
 
   onLoad(options) {},
 
-  goReportList() {
-    wx.navigateTo({
-      url: '/pages/daily-stats/index',
-    });
+  goReportList(e) {
+    const {
+      key = '1'
+    } = e.currentTarget.dataset || {};
+    if (key === 'bill') {
+      wx.redirectTo({
+        url: `/pages/bill-center/index`,
+      });
+    } else {
+      wx.navigateTo({
+        url: `/pages/report-list/index?reportType=${key}&month=${`${new Date().getFullYear()}${new Date().getMonth()+1}`}`,
+      });
+    }
   },
   goBillCenter() {
     wx.navigateTo({
@@ -77,7 +86,9 @@ Page({
 
   onTabBarChange(e) {
     console.log(e);
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     // this.setData({
     //   tabBarValue: value,
     // });
