@@ -17,7 +17,7 @@ Page({
 
   goNext(e) {
     wx.setStorageSync('shop_type', this.data.shop_type)
-    wx.redirectTo({
+    wx.navigateTo({
       url: `/pages/create-enterprise/index`,
     });
   },

@@ -151,7 +151,7 @@ Page({
           title: '添加成功',
         });
       }
-      wx.redirectTo({
+      wx.navigateTo({
         url: '/pages/staff-list/index',
       });
     } catch (error) {
@@ -161,7 +161,7 @@ Page({
         title: '添加员工失败，请联系管理员',
       });
     }
-    // wx.redirectTo({
+    // wx.navigateTo({
     //   url: '/pages/all-center/index',
     // });
     // } else {

@@ -155,15 +155,15 @@ Page({
       clientValue: value,
     });
     if (value[0] === '1') {
-      wx.redirectTo({
+      wx.navigateTo({
         url: '/pages/all-center/index',
       });
     } else if (value[0] === '2') {
-      wx.redirectTo({
+      wx.navigateTo({
         url: '/pages/shop-list/index',
       });
     } else if (value[0] === '3') {
-      wx.redirectTo({
+      wx.navigateTo({
         url: '/pages/bao-info/index',
       });
     }
@@ -218,7 +218,7 @@ Page({
         selector: '#t-toast',
         message: '您还未绑定企业，请先绑定',
       });
-      wx.redirectTo({
+      wx.navigateTo({
         url: `/pages/create-enterprise/index`,
       });
     }
@@ -250,7 +250,7 @@ Page({
       value
     } = e.detail;
     if (value === 'submit-report') {
-      wx.redirectTo({
+      wx.navigateTo({
         url: `/pages/${value}/index`,
       });
     }
@@ -264,24 +264,24 @@ Page({
       key = '1'
     } = e.currentTarget.dataset || {};
     if (key === 'bill') {
-      wx.redirectTo({
+      wx.navigateTo({
         url: `/pages/bill-center/index`,
       });
     } else {
-      wx.redirectTo({
+      wx.navigateTo({
         url: `/pages/report-list/index?reportType=${key}&month=${this.data.dateValue.join('')}`,
       });
     }
   },
 
   goLogList() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: `/pages/log-list/index`,
     });
   },
 
   goMonitor() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: `/pages/enterprise-profile/index`,
     });
   },

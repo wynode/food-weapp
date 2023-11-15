@@ -289,7 +289,7 @@ Page({
         duration: 2000,
       });
       setTimeout(() => {
-        wx.redirectTo({
+        wx.navigateTo({
           url: '/pages/all-center/index',
         });
       }, 1500)

@@ -29,7 +29,7 @@ Page({
       key = '1'
     } = e.currentTarget.dataset || {};
     if (key === 'bill') {
-      wx.redirectTo({
+      wx.navigateTo({
         url: `/pages/bill-center/index`,
       });
     } else {
@@ -97,7 +97,7 @@ Page({
         url: `/pages/${value}/index`,
       });
     } else {
-      wx.redirectTo({
+      wx.navigateTo({
         url: `/pages/${value}/index`,
       });
     }

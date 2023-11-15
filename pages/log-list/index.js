@@ -70,7 +70,7 @@ Page({
       wx.showToast({
         title: '获取详情失败，请联系管理员',
       });
-      wx.redirectTo({
+      wx.navigateTo({
         url: '/pages/all-center/index',
       });
     }

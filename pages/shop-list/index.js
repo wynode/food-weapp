@@ -96,7 +96,7 @@ Page({
   },
 
   handleGo() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/enterprise-profile/index',
     })
   },

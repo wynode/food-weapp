@@ -171,7 +171,7 @@ Page({
         message: '获取详情出错，请联系管理员',
       });
       setTimeout(() => {
-        wx.redirectTo({
+        wx.navigateTo({
           url: '/pages/all-center/index',
         });
       });
@@ -349,7 +349,7 @@ Page({
         duration: 2000,
       });
       setTimeout(() => {
-        wx.redirectTo({
+        wx.navigateTo({
           url: '/pages/all-center/index',
         });
       }, 1500)

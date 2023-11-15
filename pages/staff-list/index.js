@@ -72,14 +72,14 @@ Page({
   },
   onEdit(e) {
     const { item } = e.currentTarget.dataset;
-    wx.redirectTo({
+    wx.navigateTo({
       url: `/pages/create-user/index?edit=${JSON.stringify(item)}`,
     });
   },
 
   goCreateUser(e) {
     const { item } = e.currentTarget.dataset;
-    wx.redirectTo({
+    wx.navigateTo({
       url: `/pages/create-user/index?position=${item.value}`,
     });
   },

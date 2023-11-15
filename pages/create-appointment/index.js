@@ -108,7 +108,7 @@ Page({
           },
         });
       }
-      wx.redirectTo({
+      wx.navigateTo({
         url: this.data.ctype === '2' ? '/pages/appointment-list/index' : '/pages/health-list/index',
       });
     } catch (error) {

@@ -24,6 +24,7 @@
   color: rgb(50, 208, 186);
   border-radius: 20rpx;
   padding: 20rpx 40rpx;
+  margin-bottom: 20rpx;
 }
 .rpp-item-top {
   display: flex;

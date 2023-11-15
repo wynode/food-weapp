@@ -70,7 +70,7 @@ Page({
       const intervalId = setInterval(() => {
         this.updateTime(filterwait[0].deadline);
       }, 1000);
-      wx.setStorageSync('reportData', filterwait[4]);
+      wx.setStorageSync('reportData', filterwait[0]);
       this.setData({
         intervalId,
         waitlist: filterwait,
@@ -82,7 +82,7 @@ Page({
         message: '暂无需要提交的报告',
       });
       setTimeout(() => {
-        wx.redirectTo({
+        wx.navigateTo({
           url: `/pages/all-center/index`,
         });
       }, 1000);
@@ -91,7 +91,7 @@ Page({
 
   async goCreateReport() {
     const enterpriseData = wx.getStorageSync('enterpriseData')
-    if (enterpriseData.business_type === 2 && this.data.waitlist[4].report_type === 3) {
+    if (enterpriseData.business_type === 2 && this.data.waitlist[0].report_type === 3) {
       wx.navigateTo({
         url: `/pages/create-report2/index`,
       });

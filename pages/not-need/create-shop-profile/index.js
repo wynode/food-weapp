@@ -87,11 +87,11 @@ Page({
     if (isLegal) {
       wx.setStorageSync('shop_data', this.data);
       if (this.data.isEnter) {
-        wx.redirectTo({
+        wx.navigateTo({
           url: '/pages/enterprise-center/index',
         });
       } else {
-        wx.redirectTo({
+        wx.navigateTo({
           url: '/pages/create-user/index',
         });
       }

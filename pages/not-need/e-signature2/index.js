@@ -296,7 +296,7 @@ Page({
   //                 icon: 'none',
   //               });
   //               setTimeout(() => {
-  //                 wx.redirectTo({
+  //                 wx.navigateTo({
   //                   url: '/pages/all-center/index',
   //                 });
   //               }, 3000);
@@ -419,7 +419,7 @@ Page({
                 icon: 'none',
               });
               setTimeout(() => {
-                wx.redirectTo({
+                wx.navigateTo({
                   url: '/pages/all-center/index',
                 });
               }, 3000);
@@ -657,7 +657,7 @@ Page({
   //               icon: 'none',
   //             });
   //             // setTimeout(() => {
-  //             //   wx.redirectTo({
+  //             //   wx.navigateTo({
   //             //     url: '/pages/all-center/index',
   //             //   });
   //             // }, 3000);

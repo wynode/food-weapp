@@ -25,7 +25,7 @@ Page({
   },
 
   newEnterprise() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/create-enterprise/index',
     })
   }

@@ -19,7 +19,7 @@ Page({
                 icon: 'none',
               });
               setTimeout(() => {
-                wx.redirectTo({
+                wx.navigateTo({
                   url: '/pages/submit-report/index',
                 });
               }, 3000);

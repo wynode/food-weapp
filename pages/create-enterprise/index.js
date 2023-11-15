@@ -131,7 +131,7 @@ Page({
     const fileID = upload.data.fileList[0].fileID;
     payload.business_license_image = fileID;
     wx.setStorageSync('licenseData', payload)
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/create-enterprise2/index',
     });
   },
@@ -215,7 +215,7 @@ Page({
   },
 
   async scanAddIn() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/all-center/index',
     });
     // const res = await app.call({

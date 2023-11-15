@@ -3,7 +3,7 @@ Page({
 
   onLoad(options) {},
   goNext() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/week-check5/index',
     });
   },
