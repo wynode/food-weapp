@@ -11,7 +11,7 @@ Page({
       legal_name: '',
       employee_mobile: '',
     },
-    submitActive: true,
+    submitActive: false,
 
     businessTypeVisible: '',
     businessTypeValue: [],
@@ -225,8 +225,15 @@ Page({
     // console.log(this.selectComponent('#upload'));
   },
 
+  handleStartOCR() {
+    this.setData({
+      submitActive: false,
+    })
+  },
+
   handleOCRResult(e) {
     if (e.detail) {
+      // this.data.submitActive = true
       const {
         company_address,
         company_name,
@@ -234,6 +241,7 @@ Page({
         license_no
       } = e.detail.data;
       this.setData({
+        submitActive: true,
         'enterpriseForm.enterprise_name': company_name,
         'enterpriseForm.address': company_address,
         'enterpriseForm.legal_name': legal_person,

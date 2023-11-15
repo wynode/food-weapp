@@ -76,6 +76,7 @@ Component({
           wx.showLoading({
             title: '营业执照OCR中，请稍后',
           });
+          this.triggerEvent('start', '1');
           const ocrResult = await getApp().call({
             path: '/api/v1/program/utils/license/verify',
             method: 'POST',

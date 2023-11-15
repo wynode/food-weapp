@@ -6,7 +6,7 @@
     <view class="cs-form">
       <form class="cs-form-content">
         <view class="cs-upload-box">
-          <my-upload id="upload" uploadTitle="上传营业执照" uploadType="business_license" bindocr="handleOCRResult">
+          <my-upload id="upload" uploadTitle="上传营业执照" uploadType="business_license" bindocr="handleOCRResult" bind:start="handleStartOCR">
           </my-upload>
         </view>
         <view wx:if="{{enterpriseForm.enterprise_name}}">
