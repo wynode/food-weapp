@@ -1,0 +1,115 @@
+<view>
+  <background></background>
+  <view class="create-report">
+    <view class="cr-top-box">
+      <view class="cr-top">
+        <view class="cr-top-left">
+          必选项
+          <text style="{{computedColor1}}">{{checkedResultLength}}</text>/{{min_item_nums}}
+        </view>
+        <view class="cr-top-right">
+          <text>{{ currentDay }}</text>
+          {{reportType}}
+        </view>
+      </view>
+      <t-progress
+        class="cr-progress"
+        color="{{computedColor}}"
+        track-color="rgba(11,130,255,0.1)"
+        stroke-width="14"
+        theme="plump"
+        label="{{false}}"
+        percentage="{{checkPercentage}}"
+      />
+    </view>
+    <view class="cns-input" bind:tap="templateTypePicker">
+      <t-input
+        suffixIcon="caret-down-small"
+        value="{{ templateTypeText }}"
+        placeholder="请选择模板"
+        disabled
+      />
+    </view>
+    <t-picker
+      visible="{{templateTypeVisible}}"
+      value="{{templateTypeValue}}"
+      data-key="templateType"
+      title="{{templateTypeTitle}}"
+      cancelBtn="取消"
+      confirmBtn="确认"
+      bindchange="onPickerChange"
+      bindpick="onColumnChange"
+      bindcancel="onPickerCancel"
+    >
+      <t-picker-item options="{{templateTypeList}}"></t-picker-item>
+    </t-picker>
+
+    <view class="cr-list" wx:if="{{isRestaurant}}">
+      <t-checkbox-group value="{{checkList}}" bind:change="onCheckChange">
+        <t-checkbox
+          wx:for="{{checkListData}}"
+          wx:key="index"
+          value="{{index}}"
+          icon="rectangle"
+          content-disabled
+          max-label-row="10"
+          max-content-row="10"
+          class="cr-item"
+        >
+          <view slot="label" class="cr-item-label">{{ index + 1 }}. {{ item.title }} </view>
+        </t-checkbox>
+      </t-checkbox-group>
+    </view>
+    <view class="cr-list" wx:else>
+      <t-checkbox-group value="{{checkList}}" bind:change="onCheckChange">
+        <t-checkbox
+          wx:for="{{checkListData}}"
+          wx:key="index"
+          value="{{index}}"
+          icon="rectangle"
+          content-disabled
+          max-label-row="10"
+          max-content-row="10"
+          class="cr-item"
+        >
+          <view slot="label" class="cr-item-label">{{ index + 1 }}. {{ item.title }} </view>
+        </t-checkbox>
+      </t-checkbox-group>
+    </view>
+
+    <view class="cns-bbtn">
+      <t-button class="cr-submit-btn" size="large" disabled="{{submitDisabled}}" block bindtap="handleSubmit"
+        >确认选择</t-button
+      >
+    </view>
+  </view>
+  <t-toast id="t-toast" />
+</view>
+
+<view class="container2 {{ fullScreen ? '' : 'hidden-sign' }}">
+  <view class="actions2Wrap">
+    <view class="actions2">
+      <t-button bindtap="handleBack" size="large" variant="outline">返回</t-button>
+      <t-button bindtap="handleClear2" size="large" variant="outline" style="margin: 0 50rpx" theme="danger"
+        >清除</t-button
+      >
+      <!-- <t-button bindtap="handleClear2" size="large" variant="outline" theme="danger">清除</t-button>
+      <t-button bindtap="handleUndo2" size="large" variant="outline" style="margin: 0 50rpx">撤销</t-button> -->
+      <t-button theme="primary" size="large" block bind:tap="handlePreview2">确认签名</t-button>
+    </view>
+  </view>
+  <canvas
+    type="2d"
+    id="signature2"
+    class="signature2"
+    style="width:{{width2}}px;height:{{height2}}px;"
+    disable-scroll="{{true}}"
+    bindtouchstart="handleTouchStart2"
+    bindtouchmove="handleTouchMove2"
+    bindtouchcancel="handleTouchEnd2"
+    bindtouchend="handleTouchEnd2"
+  ></canvas>
+  <view style="position: fixed; left: -2000px; width: 0; height: 0; overflow: hidden">
+    <canvas canvas-id="signature3" style="width:{{height2}}px;height:{{height2}}px;" />
+  </view>
+</view>

@@ -121,9 +121,10 @@ Page({
     const enterpriseData = wx.getStorageSync('enterpriseData')
     if (this.data.status === '1') {
       await app.call({
-        path: '/api/v1/program/enterprise/relationship',
+        path: '/api/v1/program/enterprise/status',
+        method: 'POST',
         data: {
-          status: '0'
+          status: '127'
         },
         header: {
           'x-enterprise-id': enterpriseData.enterprise_id,
@@ -132,17 +133,18 @@ Page({
 
     } else {
       await app.call({
-        path: '/api/v1/program/enterprise/relationship',
+        path: '/api/v1/program/enterprise/status',
         data: {
           status: '1'
         },
+        method: 'POST',
         header: {
           'x-enterprise-id': enterpriseData.enterprise_id,
         },
       });
     }
     this.setData({
-      status: this.data.status === '1' ? '0' : '1'
+      status: this.data.status === '1' ? '127' : '1'
     })
   },
 
@@ -183,7 +185,7 @@ Page({
     try {
       console.log(111);
       const res = await app.call({
-        path: '/api/v1/program/enterprise/relationship',
+        path: '/api/v1/program/enterprise/attachment/9/url',
       });
       if (res.statusCode !== 200) {
         throw error;
@@ -191,7 +193,7 @@ Page({
       const {
         is_bind,
         enterprise_id,
-        enterprise_name
+        enterprise_name,
       } = res.data.data || {};
       if (!is_bind) {
         throw error;
@@ -205,10 +207,13 @@ Page({
       if (enterpriseRes.statusCode !== 200) {
         throw error;
       }
+      const status = enterpriseRes.data.data.status
+      console.log(status)
       wx.setStorageSync('enterpriseData', enterpriseRes.data.data);
       this.setData({
         enterprise_id,
         enterprise_name,
+        status,
       });
       this.getReportStats(this.data.dateValue.join(''), enterprise_id);
     } catch (error) {

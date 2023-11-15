@@ -1,6 +1,4 @@
-import {
-  formatTime
-} from '../../utils/util';
+import { formatTime } from '../../utils/util';
 import Toast from 'tdesign-miniprogram/toast/index';
 const app = getApp();
 Page({
@@ -33,9 +31,7 @@ Page({
       if (res.statusCode !== 200) {
         throw error;
       }
-      const {
-        waitlist
-      } = res.data.data;
+      const { waitlist } = res.data.data;
       if (waitlist.length === 0) {
         throw error;
       }
@@ -52,9 +48,9 @@ Page({
         }
         const remainingMinutes = parseInt((diff % (1000 * 60 * 60)) / (1000 * 60));
         const date = String(item.date);
-        const text = remainingDays ?
-          `${Math.abs(remainingDays)}天${Math.abs(remainingHours)}小时` :
-          `${Math.abs(remainingHours)}小时${Math.abs(remainingMinutes)}分钟`;
+        const text = remainingDays
+          ? `${Math.abs(remainingDays)}天${Math.abs(remainingHours)}小时`
+          : `${Math.abs(remainingHours)}小时${Math.abs(remainingMinutes)}分钟`;
         return {
           ...item,
           showDate: date.slice(0, 4) + '年' + date.slice(4, 6) + '月' + date.slice(6, 8) + '日',
@@ -90,22 +86,57 @@ Page({
   },
 
   async goCreateReport() {
-    const enterpriseData = wx.getStorageSync('enterpriseData')
+    const enterpriseData = wx.getStorageSync('enterpriseData');
+    const reportData = wx.getStorageSync('reportData');
+    const { business_type, enterprise_id } = enterpriseData;
+    const res = await app.call({
+      path: `/api/v1/program/enterprise/report/template?report_type=${reportData.report_type}&business_type=${business_type}`,
+      method: 'GET',
+      header: {
+        'x-enterprise-id': enterprise_id,
+      },
+    });
+    const { has_template } = res.data.data;
     if (enterpriseData.business_type === 2 && this.data.waitlist[0].report_type === 3) {
       wx.navigateTo({
         url: `/pages/create-report2/index`,
       });
     } else {
-      wx.navigateTo({
-        url: `/pages/create-report/index`,
-      });
+      console.log(has_template);
+      if (!has_template) {
+        wx.navigateTo({
+          url: `/pages/create-report/index`,
+        });
+      } else {
+        wx.navigateTo({
+          url: `/pages/create-report-pre/index`,
+        });
+      }
     }
   },
 
-  goCreateReportQualify() {
-    wx.navigateTo({
-      url: `/pages/create-report/index?allqualified=true`,
+  async goCreateReportQualify() {
+    const enterpriseData = wx.getStorageSync('enterpriseData');
+    const reportData = wx.getStorageSync('reportData');
+    const { business_type, enterprise_id } = enterpriseData;
+    const res = await app.call({
+      path: `/api/v1/program/enterprise/report/template?report_type=${reportData.report_type}&business_type=${business_type}`,
+      method: 'GET',
+      header: {
+        'x-enterprise-id': enterprise_id,
+      },
     });
+    const { has_template } = res.data.data;
+    console.log(has_template);
+    if (!has_template) {
+      wx.navigateTo({
+        url: `/pages/create-report/index?allqualified=true`,
+      });
+    } else {
+      wx.navigateTo({
+        url: `/pages/create-report-pre/index?allqualified=true`,
+      });
+    }
   },
 
   async onUnload() {
@@ -147,7 +178,7 @@ Page({
 
   updateTime(deadline) {
     const now = new Date();
-    const currentTime = formatTime(now, 'HH:mm');
+    const currentTime = formatTime(now.getTime(), 'HH:mm');
     const targetTime = new Date(formatTime(deadline, 'YYYY/MM/DD HH:mm:ss'));
     const diff = targetTime.getTime() - now.getTime();
     const remainingHours = Math.floor(diff / (1000 * 60 * 60));
