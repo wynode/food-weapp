@@ -1,35 +1,14 @@
 <view>
   <background isHighlight="true"></background>
   <view class="manager">
-    <view class="manager-title">食品主要负责人食品安全职责</view>
-    <view class="manager-content" wx:if="{{ day.url }}">
-      <t-image class="manager-img" src="/assets/image/word.png" />
-      <t-button theme="primary" data-id="21" size="small" bind:tap="handlePreview">预览</t-button>
-      <!-- <t-button theme="primary" data-id="21" size="small" bind:tap="handleDownload">下载</t-button> -->
-      <t-button theme="primary" data-id="21" size="small" bind:tap="handleReplace">替换</t-button>
-    </view>
-    <view wx:else class="manager-content">
-      <t-button theme="primary" data-id="21" size="small" bind:tap="handleUpload">上传文档</t-button>
-    </view>
-    <view class="manager-title">食品安全总监职责</view>
-    <view class="manager-content" wx:if="{{ week.url }}">
-      <t-image class="manager-img" src="/assets/image/word.png" />
-      <t-button theme="primary" data-id="22" size="small" bind:tap="handlePreview">预览</t-button>
-      <!-- <t-button theme="primary" data-id="22" size="small" bind:tap="handleDownload">下载</t-button> -->
-      <t-button theme="primary" data-id="22" size="small" bind:tap="handleReplace">替换</t-button>
-    </view>
-    <view wx:else class="manager-content">
-      <t-button theme="primary" data-id="22" size="small" bind:tap="handleUpload">上传文档</t-button>
-    </view>
-    <view class="manager-title">食品安全员守则</view>
-    <view class="manager-content" wx:if="{{ mouth.url }}">
-      <t-image class="manager-img" src="/assets/image/word.png" />
-      <t-button theme="primary" data-id="23" size="small" bind:tap="handlePreview">预览</t-button>
-      <!-- <t-button theme="primary" data-id="23" size="small" bind:tap="handleDownload">下载</t-button> -->
-      <t-button theme="primary" data-id="23" size="small" bind:tap="handleReplace">替换</t-button>
-    </view>
-    <view wx:else class="manager-content">
-      <t-button theme="primary" data-id="23" size="small" bind:tap="handleUpload">上传文档</t-button>
+
+    <view class="manager-item" wx:for="{{dataList}}" wx:key="index">
+      <view class="manager-title">{{item.name}}</view>
+      <view class="manager-content">
+        <t-image class="manager-img" src="/assets/image/word.png" />
+        <t-button theme="primary" data-id="{{item.id}}" size="small" bind:tap="handlePreview">预览</t-button>
+        <t-button theme="primary" data-id="{{item.id}}" size="small" bind:tap="handleReplace">替换</t-button>
+      </view>
     </view>
   </view>
   <view class="week-check-go" bind:tap="goNext"> </view>

@@ -90,6 +90,18 @@ Page({
     });
   },
 
+  async handleShowImage(e) {
+    const { date } = e.currentTarget.dataset;
+    const enterpriseData = wx.getStorageSync('enterpriseData');
+    const reportProfileRes = await app.call({
+      path: `/api/v1/program/enterprise/report/${date}/${this.data.reportType}/images`,
+      header: {
+        'x-enterprise-id': enterpriseData.enterprise_id,
+      },
+    });
+    console.log(reportProfileRes)
+  },
+
   async getReportProfileList(reportType, month) {
     try {
       this.setData({ reportProfileList: [] });

@@ -42,6 +42,10 @@ Page({
 
   async onLoad(options) {
     try {
+      let allCheck = [];
+      const {
+        checkList
+      } = options || {}
       const reportData = wx.getStorageSync('reportData');
       const reportTypeOptions = {
         1: '日管控',
@@ -54,77 +58,82 @@ Page({
         business_type,
         enterprise_id
       } = enterpriseData;
-      const res = await app.call({
-        path: `/api/v1/program/enterprise/report/template?report_type=${reportData.report_type}&business_type=${business_type}`,
-        method: 'GET',
-        header: {
-          'x-enterprise-id': enterprise_id,
-        },
-      });
-      if (res.statusCode !== 200) {
-        throw error;
-      }
-      const {
-        has_template
-      } = res.data.data;
-      let allCheck = [];
-      if (!has_template) {
-        const templateRes = await app.call({
-          path: `/api/v1/program/report/templates?report_type=${reportData.report_type}&business_type=${business_type}`,
-          method: 'GET',
-          header: {
-            'x-enterprise-id': enterprise_id,
-          },
-        });
-        if (templateRes.statusCode !== 200) {
-          throw error;
-        }
-        const {
-          list
-        } = templateRes.data.data;
-        const filterList = list.map((item) => {
-          return {
-            label: item.template_name,
-            value: item.template_id,
-          };
-        });
-        const profileRes = await app.call({
-          path: `/api/v1/program/report/template/${list[0].template_id}`,
-          method: 'GET',
-          header: {
-            'x-enterprise-id': enterprise_id,
-          },
-        });
-        if (profileRes.statusCode !== 200) {
-          throw error;
-        }
-        const {
-          items,
-          min_item_nums
-        } = profileRes.data.data;
-        wx.setStorageSync('templateData', profileRes.data.data);
-        allCheck = items;
-        this.setData({
-          templateTypeList: filterList,
-          templateTypeValue: [list[0].template_id],
-          templateTypeText: list[0].template_name,
-          min_item_nums,
-        });
+      if (checkList) {
+        const checkListData = wx.getStorageSync('checkListData')
+        allCheck = checkListData
       } else {
+        const res = await app.call({
+          path: `/api/v1/program/enterprise/report/template?report_type=${reportData.report_type}&business_type=${business_type}`,
+          method: 'GET',
+          header: {
+            'x-enterprise-id': enterprise_id,
+          },
+        });
+        if (res.statusCode !== 200) {
+          throw error;
+        }
         const {
-          all_items,
-          template
+          has_template
         } = res.data.data;
-        const {
-          items
-        } = template;
-        allCheck = items.concat(all_items);
+        if (!has_template) {
+          const templateRes = await app.call({
+            path: `/api/v1/program/report/templates?report_type=${reportData.report_type}&business_type=${business_type}`,
+            method: 'GET',
+            header: {
+              'x-enterprise-id': enterprise_id,
+            },
+          });
+          if (templateRes.statusCode !== 200) {
+            throw error;
+          }
+          const {
+            list
+          } = templateRes.data.data;
+          const filterList = list.map((item) => {
+            return {
+              label: item.template_name,
+              value: item.template_id,
+            };
+          });
+          const profileRes = await app.call({
+            path: `/api/v1/program/report/template/${list[0].template_id}`,
+            method: 'GET',
+            header: {
+              'x-enterprise-id': enterprise_id,
+            },
+          });
+          if (profileRes.statusCode !== 200) {
+            throw error;
+          }
+          const {
+            items,
+            min_item_nums
+          } = profileRes.data.data;
+          wx.setStorageSync('templateData', profileRes.data.data);
+          allCheck = items;
+          this.setData({
+            templateTypeList: filterList,
+            templateTypeValue: [list[0].template_id],
+            templateTypeText: list[0].template_name,
+            min_item_nums,
+          });
+        } else {
+          const {
+            all_items,
+            template
+          } = res.data.data;
+          const {
+            items
+          } = template;
+          allCheck = items.concat(all_items);
+        }
+        console.log(allCheck);
       }
-      console.log(allCheck);
+
       const {
-        allqualified = 0
+        allqualified = 'no'
       } = options || {};
-      if (allqualified) {
+      if (allqualified === 'yes') {
         const tempCheckListData = allCheck.map((item) => {
           return {
             ...item,

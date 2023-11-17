@@ -11,14 +11,7 @@ Page({
       32: '安全总监职责',
       33: '安全员守则',
     },
-    day: {
-      url: '/report_doc/%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3%E5%93%88.docx?sign=1a9cf9d60bdddf23987fb937bc982af5&t=1699187366',
-    },
-    week: {
-      document_id: 1,
-      url: '/report_doc/%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3%E5%93%88.docx?sign=1a9cf9d60bdddf23987fb937bc982af5&t=1699187366',
-    },
-    mouth: {},
+    dataList: [],
   },
 
   onLoad() {
@@ -28,74 +21,49 @@ Page({
   async fetchInstitutionList() {
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const res = await app.call({
-      path: `/api/v1/program/enterprise/management_regimes`,
+      path: `/api/v1/program/enterprise/attachments`,
       method: 'GET',
       header: {
         'x-enterprise-id': enterpriseData.enterprise_id,
       },
     });
-    console.log(res);
-    this.data.day =
-      res.data.data.filter((item) => {
-        item.file_type === '21';
-      })[0] || {};
-    this.data.week =
-      res.data.data.filter((item) => {
-        item.file_type === '22';
-      })[0] || {};
-    this.data.month =
-      res.data.data.filter((item) => {
-        item.file_type === '23';
-      })[0] || {};
+    this.setData({
+      dataList: res.data.data.list[0].files
+    })
   },
 
-  async uploadFn(id, tempFile, document_id) {
+  async uploadFn(id, tempFile) {
     try {
       wx.showLoading({
         title: '正在上传中',
       });
       const uploadResult = await getApp().cloud.uploadFile({
-        cloudPath: `report_doc/${tempFile.name}`,
+        cloudPath: `manage_doc/${tempFile.name}`,
         filePath: tempFile.path,
       });
       const enterpriseData = wx.getStorageSync('enterpriseData');
-      if (document_id) {
-        await app.call({
-          path: `/api/v1/program/enterprise/management_collection`,
-          method: 'POST',
-          header: {
-            'x-enterprise-id': enterpriseData.enterprise_id,
-          },
-          data: {
-            document_id,
-            url: `/${uploadResult.fileID.split('/').slice(-2).join('/')}`,
-          },
-        });
-      } else {
-        await app.call({
-          path: `/api/v1/program/enterprise/management_collection`,
-          method: 'PUT',
-          header: {
-            'x-enterprise-id': enterpriseData.enterprise_id,
-          },
-          data: {
-            type: 1,
-            file_type: id,
-            url: `/${uploadResult.fileID.split('/').slice(-2).join('/')}`,
-          },
-        });
-      }
+      await app.call({
+        path: `/api/v1/program/enterprise/attachment/${id}`,
+        method: 'POST',
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
+        data: {
+          user_uploaded_url: `${uploadResult.fileID.split('/').slice(-2).join('/')}`,
+        },
+      });
+
       wx.hideLoading();
       this.fetchInstitutionList();
       wx.showToast({
-        title: '上传成功',
+        title: '替换成功',
         icon: 'success',
       });
     } catch (error) {
       console.dir(error);
       wx.hideLoading();
       wx.showToast({
-        title: '上传出错',
+        title: '替换出错',
         icon: 'error',
       });
     }
@@ -103,7 +71,9 @@ Page({
 
   handleUpload(e) {
     try {
-      const { id } = e.currentTarget.dataset;
+      const {
+        id
+      } = e.currentTarget.dataset;
       const that = this;
       wx.chooseMessageFile({
         count: 1,
@@ -125,14 +95,9 @@ Page({
 
   handleReplace(e) {
     try {
-      const { id } = e.currentTarget.dataset;
-      const idMap = {
-        21: 'day',
-        22: 'week',
-        23: 'month',
-      };
-      const idToName = idMap[id];
-      const document_id = this.data[idToName].document_id;
+      const {
+        id
+      } = e.currentTarget.dataset;
       const that = this;
       wx.chooseMessageFile({
         count: 1,
@@ -141,7 +106,7 @@ Page({
         success(res) {
           // tempFilePath可以作为img标签的src属性显示图片
           const tempFile = res.tempFiles[0];
-          that.uploadFn(id, tempFile, document_id);
+          that.uploadFn(id, tempFile);
         },
       });
     } catch {
@@ -152,16 +117,22 @@ Page({
     }
   },
 
-  handlePreview(e) {
-    const { id } = e.currentTarget.dataset;
-    const idMap = {
-      21: 'day',
-      22: 'week',
-      23: 'month',
-    };
-    const idToName = idMap[id];
-    const url = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${this.data[idToName].url}`;
-    wx.showLoading();
+  async handlePreview(e) {
+    wx.showLoading()
+    const {
+      id
+    } = e.currentTarget.dataset;
+    const enterpriseData = wx.getStorageSync('enterpriseData');
+    const res = await app.call({
+      path: `/api/v1/program/enterprise/attachment/${id}/url`,
+      method: 'GET',
+      header: {
+        'x-enterprise-id': enterpriseData.enterprise_id,
+      },
+    });
+    const urlpre = res.data.data.user_uploaded_url
+
+    const url = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${urlpre}`;
     wx.downloadFile({
       url,
       success: function (res) {
@@ -178,6 +149,9 @@ Page({
           },
         });
       },
+      fail: function (res) {
+        wx.hideLoading()
+      }
     });
   },
 });

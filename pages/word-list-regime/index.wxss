@@ -1,6 +1,7 @@
 .manager {
   position: relative;
   padding: 30rpx;
+  padding-top: 1rpx;
 }
 
 .manager .manager-title:first-child {
@@ -12,9 +13,12 @@
   font-weight: bold;
   margin-top: 100rpx;
 }
+.manager-item {
+  margin-top: 30rpx;
+}
 
 .manager-content {
-  margin-top: 40rpx;
+  margin-top: 30rpx;
   display: flex;
   justify-content: center;
 }

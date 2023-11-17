@@ -81,6 +81,7 @@ Page({
       {
         value: 'submit-report',
         icon: 'add-circle',
+        ariaLabel: '立即填报',
       },
       {
         value: 'enterprise-center',
@@ -185,7 +186,7 @@ Page({
     try {
       console.log(111);
       const res = await app.call({
-        path: '/api/v1/program/enterprise/attachment/9/url',
+        path: '/api/v1/program/enterprise/relationship',
       });
       if (res.statusCode !== 200) {
         throw error;
@@ -207,7 +208,7 @@ Page({
       if (enterpriseRes.statusCode !== 200) {
         throw error;
       }
-      const status = enterpriseRes.data.data.status
+      const status = String(enterpriseRes.data.data.status)
       console.log(status)
       wx.setStorageSync('enterpriseData', enterpriseRes.data.data);
       this.setData({

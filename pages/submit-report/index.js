@@ -103,7 +103,7 @@ Page({
       });
     } else {
       console.log(has_template);
-      if (!has_template) {
+      if (has_template) {
         wx.navigateTo({
           url: `/pages/create-report/index`,
         });
@@ -127,14 +127,13 @@ Page({
       },
     });
     const { has_template } = res.data.data;
-    console.log(has_template);
-    if (!has_template) {
+    if (has_template) {
       wx.navigateTo({
-        url: `/pages/create-report/index?allqualified=true`,
+        url: `/pages/create-report/index?allqualified=yes`,
       });
     } else {
       wx.navigateTo({
-        url: `/pages/create-report-pre/index?allqualified=true`,
+        url: `/pages/create-report-pre/index?allqualified=yes`,
       });
     }
   },
