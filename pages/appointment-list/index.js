@@ -13,10 +13,10 @@ Page({
     },
 
     userPositionList: [
-      {
-        label: '企业负责人',
-        value: '11',
-      },
+      // {
+      //   label: '企业负责人',
+      //   value: '11',
+      // },
       {
         label: '食品总监职责  ',
         value: '12',

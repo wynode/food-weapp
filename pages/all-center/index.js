@@ -158,7 +158,7 @@ Page({
       clientValue: value,
     });
     if (value[0] === '1') {
-      wx.navigateTo({
+      wx.reLaunch({
         url: '/pages/all-center/index',
       });
     } else if (value[0] === '2') {
@@ -184,6 +184,7 @@ Page({
 
   async handelInit() {
     try {
+      wx.showLoading()
       console.log(111);
       const res = await app.call({
         path: '/api/v1/program/enterprise/relationship',
@@ -217,6 +218,7 @@ Page({
         status,
       });
       this.getReportStats(this.data.dateValue.join(''), enterprise_id);
+      wx.hideLoading()
     } catch (error) {
       console.dir(error);
       Toast({

@@ -61,6 +61,13 @@ Page({
     passList: [],
   },
 
+  goEditReport() {
+    const url = `/pages/edit-report/index?report_type=${this.data.report_type}&template_id=${this.data.profile.template_id}&date=${this.data.profile.date}`;
+    wx.reLaunch({
+      url,
+    });
+  },
+
   onLoad(options) {
     const { date, report_type = 'day' } = options || {};
     if (report_type === '2') {
@@ -87,6 +94,14 @@ Page({
     this.getProfileList(date, report_type);
   },
 
+  handlePreviewImage(e) {
+    const { item } = e.currentTarget.dataset;
+    console.log(item, e);
+    wx.previewImage({
+      urls: item,
+    });
+  },
+
   async getProfileList(date, report_type) {
     try {
       const enterpriseData = wx.getStorageSync('enterpriseData');
@@ -98,13 +113,16 @@ Page({
       });
       const profile = reportProfileRes.data.data;
       const list = profile.unpassed_items;
-      const list2 = profile.passed_items
+      const list2 = profile.passed_items;
       const unPassList = list.map((item) => {
         const items = profile.items.filter((item2) => item2.item_id === item.item_id)[0];
         return {
           ...item,
           ...items,
           spot_images: item.spot_images.map(
+            (url) => `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${url}`,
+          ),
+          rectification_images: item.rectification_images.map(
             (url) => `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${url}`,
           ),
         };

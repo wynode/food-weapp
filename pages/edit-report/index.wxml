@@ -23,7 +23,7 @@
       />
     </view>
     <view class="cns-input" bind:tap="templateTypePicker">
-      <t-input suffixIcon="caret-down-small" value="{{ templateTypeText }}" placeholder="请选择模板" wx:if="{{templateTypeList.length}}" disabled />
+      <t-input suffixIcon="caret-down-small" value="{{ templateTypeText }}" placeholder="请选择模板" disabled />
     </view>
     <t-picker
       visible="{{templateTypeVisible}}"

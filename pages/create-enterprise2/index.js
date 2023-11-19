@@ -132,7 +132,7 @@ Page({
       });
       console.log(res);
       if (res.data.code === 0) {
-        wx.navigateTo({
+        wx.reLaunch({
           url: '/pages/all-center/index',
         });
       }
@@ -220,7 +220,7 @@ Page({
   },
 
   async scanAddIn() {
-    wx.navigateTo({
+    wx.reLaunch({
       url: '/pages/all-center/index',
     });
     // const res = await app.call({

@@ -9,7 +9,9 @@ Page({
     height2: 600,
     scale: 2,
     has_template: false,
-    allqualified: 'no',
+    report_type: '',
+    template_id: '',
+
     style: 'border: 2rpx solid rgba(220,220,220,1);border-radius: 12rpx;',
     restaurantList: [],
     isRestaurant: false,
@@ -36,33 +38,35 @@ Page({
     currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
     checkListData: [],
     min_item_nums: 3,
+    date: '',
   },
 
   async onLoad(options) {
     try {
-      const { allqualified = 'no' } = options || {};
+      let allCheck = [];
+      const { report_type, template_id, date } = options || {};
       this.setData({
-        allqualified,
+        report_type,
+        date,
       });
-      const reportData = wx.getStorageSync('reportData');
+      const enterpriseData = wx.getStorageSync('enterpriseData');
+      const { business_type, enterprise_id } = enterpriseData;
       const reportTypeOptions = {
         1: '日管控',
         2: '周排查',
         3: '月调度',
       };
-      const reportType = reportTypeOptions[reportData.report_type];
-      const enterpriseData = wx.getStorageSync('enterpriseData');
-      const { business_type, enterprise_id } = enterpriseData;
+      const reportType = reportTypeOptions[report_type];
+      wx.setNavigationBarTitle({
+        title: `修改${reportType}`,
+      });
       const templateRes = await app.call({
-        path: `/api/v1/program/report/templates?report_type=${reportData.report_type}&business_type=${business_type}`,
+        path: `/api/v1/program/report/templates?report_type=${report_type}&business_type=${business_type}`,
         method: 'GET',
         header: {
           'x-enterprise-id': enterprise_id,
         },
       });
-      if (templateRes.statusCode !== 200) {
-        throw error;
-      }
       const { list } = templateRes.data.data;
       const filterList = list.map((item) => {
         return {
@@ -70,26 +74,64 @@ Page({
           value: item.template_id,
         };
       });
+
       const profileRes = await app.call({
-        path: `/api/v1/program/report/template/${list[0].template_id}`,
+        path: `/api/v1/program/report/template/${template_id}`,
         method: 'GET',
         header: {
           'x-enterprise-id': enterprise_id,
         },
       });
-      if (profileRes.statusCode !== 200) {
-        throw error;
-      }
       const { items, min_item_nums } = profileRes.data.data;
       wx.setStorageSync('templateData', profileRes.data.data);
-      const allCheck = items;
+      allCheck = items;
+      const foundItem = filterList.find((item) => item.value === template_id) || { label: '' };
       this.setData({
         templateTypeList: filterList,
-        templateTypeValue: [list[0].template_id],
-        templateTypeText: list[0].template_name,
+        templateTypeValue: [template_id],
+        templateTypeText: foundItem.label,
         min_item_nums,
       });
-      const tempCheckListData = allCheck.map((item) => {
+
+      console.log(allCheck);
+      const reportProfileRes = await app.call({
+        path: `/api/v1/program/enterprise/report/${date}/${report_type}`,
+        header: {
+          'x-enterprise-id': enterprise_id,
+        },
+      });
+      const reportProfile = reportProfileRes.data.data;
+      const passItems = reportProfile.passed_items.map((item) => item.item_id);
+      const unPassItems = reportProfile.unpassed_items.map((item) => item.item_id);
+      let checkList = [];
+      const tempCheckListData = allCheck.map((item, index) => {
+        if (passItems.includes(item.item_id)) {
+          checkList.push(index);
+          return {
+            ...item,
+            checked: true,
+            checkResult: 'success',
+            remark: '',
+            checkFileList: [],
+          };
+        } else if (unPassItems.includes(item.item_id)) {
+          checkList.push(index);
+          const unPassItem = reportProfile.unpassed_items.filter((unpass) => unpass.item_id === item.item_id)[0];
+          return {
+            ...item,
+            checked: true,
+            checkResult: 'fail',
+            remark: unPassItem.remark,
+            checkFileList: unPassItem.spot_images.map((image) => {
+              return {
+                url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
+                fileID: image,
+                name: image.split('/').slice(-1)[0],
+                type: 'image',
+              };
+            }),
+          };
+        }
         return {
           ...item,
           checked: false,
@@ -101,41 +143,50 @@ Page({
       this.setData({
         isRestaurant: business_type === 2,
         checkListData: tempCheckListData,
+        checkList,
         reportType,
         has_template: true,
+      });
+      let checkedResultLength = checkList.length;
+      const checkPercentage = (checkedResultLength / this.data.checkListData.length) * 100;
+      const submitDisabled = !(checkedResultLength >= this.data.min_item_nums);
+      this.setData({
+        checkedResultLength,
+        submitDisabled,
+        checkPercentage,
+        computedColor: submitDisabled ? '#FC5B5B' : '0B82FF',
+        computedColor1: submitDisabled ? 'color: #FC5B5B' : 'color: 0B82FF',
       });
       console.log(tempCheckListData);
     } catch (error) {
       console.log(error);
-      Toast({
-        context: this,
-        selector: '#t-toast',
-        message: '获取详情出错，请联系管理员',
+      wx.showToast({
+        title: '处理出错，请联系管理员',
       });
-      // setTimeout(() => {
-      //   wx.navigateTo({
-      //     url: '/pages/all-center/index',
-      //   });
-      // });
+      setTimeout(() => {
+        wx.reLaunch({
+          url: '/pages/all-center/index',
+        });
+      });
     }
   },
 
-  // onReady() {
-  //   try {
-  //     const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
-  //     this.setData({
-  //       width1: windowWidth - 30,
-  //       height1: 200,
-  //       width2: windowWidth - 80,
-  //       height2: windowHeight - 50,
-  //       scale: Math.max(pixelRatio || 1, 2),
-  //     });
-  //   } catch (e) {}
+  onReady() {
+    try {
+      const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
+      this.setData({
+        width1: windowWidth - 30,
+        height1: 200,
+        width2: windowWidth - 80,
+        height2: windowHeight - 50,
+        scale: Math.max(pixelRatio || 1, 2),
+      });
+    } catch (e) {}
 
-  //   setTimeout(() => {
-  //     this.initSignature2();
-  //   }, 2000);
-  // },
+    setTimeout(() => {
+      this.initSignature2();
+    }, 2000);
+  },
 
   handleBack() {
     this.setData({
@@ -233,11 +284,10 @@ Page({
         .split('/')
         .slice(-2)
         .join('/')}`;
-      const reportData = wx.getStorageSync('reportData');
       const templateData = wx.getStorageSync('templateData');
       const payload = {
-        report_type: reportData.report_type,
-        date: reportData.date,
+        report_type: this.data.report_type,
+        date: Number(this.data.date),
         params: {
           signer,
           template_id: templateData.template_id,
@@ -271,7 +321,7 @@ Page({
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const reportRes = await app.call({
         path: `/api/v1/program/enterprise/report`,
-        method: 'PUT',
+        method: 'POST',
         header: {
           'x-enterprise-id': enterpriseData.enterprise_id,
         },
@@ -282,7 +332,7 @@ Page({
       }
       wx.hideLoading();
       wx.showToast({
-        title: '生成报告成功',
+        title: '修改报告成功',
         icon: 'success',
         duration: 2000,
       });
@@ -294,7 +344,7 @@ Page({
     } catch (error) {
       console.log(error);
       wx.showToast({
-        title: '生成报告失败',
+        title: '修改报告失败',
         icon: 'error',
         duration: 2000,
       });
@@ -419,11 +469,40 @@ Page({
   },
 
   handleSubmit() {
-    const checkListData = this.data.checkListData.filter((item) => item.checked);
-    wx.setStorageSync('checkListData', checkListData);
-    wx.navigateTo({
-      url: `/pages/create-report/index?allqualified=${this.data.allqualified}&checkList=yes`,
-    });
+    if ((this.data.isRestaurant && this.data.report_type === 2) || this.data.report_type === 3) {
+      let payload = {};
+      let passed_items = [];
+      let unpassed_items = [];
+      this.data.checkListData.forEach((curr) => {
+        if (curr.checked && curr.checkResult === 'success') {
+          passed_items.push({
+            item_id: curr.item_id,
+            remark: curr.remark,
+            spot_images: curr.checkFileList.map((item) => item.fileID),
+            rectification_images: [],
+          });
+        }
+        if (curr.checked && curr.checkResult === 'fail') {
+          unpassed_items.push({
+            item_id: curr.item_id,
+            remark: curr.remark,
+            spot_images: curr.checkFileList.map((item) => item.fileID),
+            rectification_images: [],
+          });
+        }
+      });
+      payload.passed_items = passed_items;
+      payload.unpassed_items = unpassed_items;
+      payload.item_count = passed_items.length + unpassed_items.length;
+      wx.setStorageSync('reportProfileData', payload);
+      wx.navigateTo({
+        url: `/pages/create-report2/index`,
+      });
+    } else {
+      this.setData({
+        fullScreen: true,
+      });
+    }
   },
 
   async onPickerChange(e) {
@@ -469,17 +548,12 @@ Page({
 
   onCheckChange(e) {
     const { value } = e.detail;
-    let checkedResultLength = 0;
     const tempCheckListData = this.data.checkListData.map((item, index) => {
       if (value.includes(index)) {
-        checkedResultLength += 1;
         return {
           ...item,
           checked: true,
         };
-      }
-      if (item.checked) {
-        checkedResultLength += 1;
       }
       return {
         ...item,
@@ -489,19 +563,9 @@ Page({
         checkFileList: [],
       };
     });
-    console.log(tempCheckListData);
+    console.log(value);
     this.setData({
       checkList: value,
-      checkListData: tempCheckListData,
-    });
-    const checkPercentage = (checkedResultLength / this.data.checkListData.length) * 100;
-    const submitDisabled = !(checkedResultLength >= this.data.min_item_nums);
-    this.setData({
-      checkedResultLength,
-      submitDisabled,
-      checkPercentage,
-      computedColor: submitDisabled ? '#FC5B5B' : '0B82FF',
-      computedColor1: submitDisabled ? 'color: #FC5B5B' : 'color: 0B82FF',
       checkListData: tempCheckListData,
     });
   },

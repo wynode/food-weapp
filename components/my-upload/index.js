@@ -74,7 +74,7 @@ Component({
       try {
         if (uploadResult.fileID && this.properties.uploadType === 'business_license') {
           wx.showLoading({
-            title: '营业执照OCR中，请稍后',
+            title: '系统正在识别中，请稍后',
           });
           this.triggerEvent('start', '1');
           const ocrResult = await getApp().call({

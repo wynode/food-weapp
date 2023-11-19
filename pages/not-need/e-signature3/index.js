@@ -438,7 +438,7 @@ Page({
                 icon: 'none',
               });
               setTimeout(() => {
-                wx.navigateTo({
+                wx.reLaunch({
                   url: '/pages/all-center/index',
                 });
               }, 3000);

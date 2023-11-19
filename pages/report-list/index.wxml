@@ -10,11 +10,23 @@
           <view class="rp-record">
             <view class="rpr-top">
               <view class="rpr-top-left">{{dateValue[1]}}月{{dateType}}</view>
-              <view class="rpr-top-right" bindtap="onSeasonPicker">
+              <view class="rpr-top-right" data-key="detail" bindtap="onSeasonPicker">
                 <view>其他月份</view>
-                <image class="rpr-top-img" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+                <image
+                  class="rpr-top-img"
+                  src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+                ></image>
               </view>
-              <t-picker visible="{{dateVisible}}" value="{{dateValue}}" data-key="date" title="选择时间" cancelBtn="取消" confirmBtn="确认" bindchange="onPickerChange" bindcancel="onPickerCancel">
+              <t-picker
+                visible="{{dateVisible}}"
+                value="{{dateValue}}"
+                data-key="date"
+                title="选择时间"
+                cancelBtn="取消"
+                confirmBtn="确认"
+                bindchange="onPickerChange"
+                bindcancel="onPickerCancel"
+              >
                 <t-picker-item options="{{years}}"></t-picker-item>
                 <t-picker-item options="{{seasons}}"></t-picker-item>
               </t-picker>
@@ -38,11 +50,38 @@
             </view>
           </view>
           <view class="rp-list">
-            <view class="rp-item" date-key="{{reportItem.dateCn}}" wx:for="{{reportProfileList}}" data-item="{{reportItem}}" wx:key="index" wx:for-item="reportItem" bindtap="goDailyStats">
+            <view
+              class="rp-item"
+              date-key="{{reportItem.dateCn}}"
+              wx:for="{{reportProfileList}}"
+              data-item="{{reportItem}}"
+              wx:key="index"
+              wx:for-item="reportItem"
+              bindtap="goDailyStats"
+            >
               <view class="rp-item-left">
                 <view class="rpil-date">{{ reportItem.dateCn }}</view>
-                <t-button data-date="{{reportItem.date}}" bind:tap="handleShowImage" size="small" theme="light" variant="text" style="margin-top: -10rpx;">查看图片</t-button>
-                <t-button data-date="{{reportItem.date}}" bind:tap="handleEdit" size="small" theme="light" variant="text" style="margin-top: -20rpx;" wx:if="{{reportItem.unqualifiedTotal}}">整改</t-button>
+                <t-button
+                  data-date="{{reportItem.date}}"
+                  bind:tap="handleShowImage"
+                  size="small"
+                  theme="light"
+                  variant="text"
+                  style="margin-top: -14rpx; padding-left: 10rpx"
+                  bind:tap="handlePreviewCheckList"
+                  >查看图片</t-button
+                >
+                <t-button
+                  data-date="{{reportItem.date}}"
+                  bind:tap="handleEdit"
+                  size="small"
+                  theme="light"
+                  variant="text"
+                  style="margin-top: -20rpx"
+                  wx:if="{{reportItem.unqualifiedTotal}}"
+                  bind:tap="handleRectify"
+                  >整改</t-button
+                >
               </view>
               <view class="{{ reportItem.unqualifiedTotal ? 'rp-item-right-red' : 'rp-item-right'}}">
                 <view class="rpir-top">
@@ -66,13 +105,16 @@
         <view class="report-profile">
           <view class="rpr-top">
             <view class="rpr-top-left">{{dateValue[1]}}月</view>
-            <view class="rpr-top-right" bindtap="onSeasonPicker">
+            <view class="rpr-top-right" data-key="report" bindtap="onSeasonPicker">
               <view>其他月份</view>
-              <image class="rpr-top-img" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+              <image
+                class="rpr-top-img"
+                src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+              ></image>
             </view>
           </view>
           <view class="rp-list">
-            <view class="rpp-item" wx:for="{{reportList}}" wx:key="index" wx:for-item="item" data-item="{{item}}" bind:tap="handlePreview">
+            <view class="rpp-item" wx:for="{{reportList}}" wx:key="index" wx:for-item="item">
               <!-- checklist_path: ""
 checklist_picture_path: ""
 create_time: "2023-11-10T11:07:32.000Z"
@@ -85,9 +127,27 @@ report_type: 2 -->
                 <view>每{{item.showText}}食品安全检查记录表</view>
               </view>
               <view class="rpp-item-bottom">
-                <view class="rpp-word">word</view>
-                <view class="rpp-time">{{ item.submitTime }}</view>
-                <t-icon class="rpp-icon" name="task-visible"></t-icon>
+                <t-button
+                  theme="light"
+                  content="查看图片"
+                  size="small"
+                  class="margin"
+                  data-item="{{item}}"
+                  variant="text"
+                  bind:tap="handlePreviewDocument"
+                ></t-button>
+                <t-button
+                  style="margin-left: 20rpx;"
+                  theme="light"
+                  content="查看文档"
+                  size="small"
+                  class="margin"
+                  wx:if="{{item.document_path}}"
+                  data-item="{{item}}"
+                  variant="text"
+                  bind:tap="handleDownload"
+                ></t-button>
+                <!-- <t-icon class="rpp-icon" name="task-visible" data-item="{{item}}" bind:tap="handlePreview"  data-item="{{item}}" bind:tap="handleDownload"></t-icon> -->
               </view>
             </view>
           </view>

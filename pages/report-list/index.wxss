@@ -35,7 +35,12 @@
 .rpp-item-bottom {
   display: flex;
   margin-top: 20rpx;
-  justify-content: space-between;
+  justify-content: flex-end;
+}
+.rpp-item-bottom button {
+  margin: 0;
+  color: rgb(50, 208, 186) !important;
+  border: 1px solid rgb(50, 208, 186);
 }
 .rpp-time {
   margin-left: 20rpx;

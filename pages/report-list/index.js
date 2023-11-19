@@ -78,6 +78,7 @@ Page({
         value: '12',
       },
     ],
+    key: 'detail',
   },
 
   onLoad(options) {
@@ -99,7 +100,14 @@ Page({
         'x-enterprise-id': enterpriseData.enterprise_id,
       },
     });
-    console.log(reportProfileRes)
+    console.log(reportProfileRes);
+  },
+
+  handleRectify(e) {
+    const { date } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `/pages/rectify-list/index?date=${date}&report_type=${this.data.reportType}`,
+    });
   },
 
   async getReportProfileList(reportType, month) {
@@ -162,10 +170,12 @@ Page({
           showText: dateOptions[item.report_type],
         };
       });
+      console.log(list, reportList);
       this.setData({
         reportList,
       });
-    } catch {
+    } catch (error) {
+      console.log(error);
       wx.showToast({
         icon: 'error',
         title: '获取详情失败，请联系管理员',
@@ -182,7 +192,11 @@ Page({
 
   onPickerChange(e) {
     const { value } = e.detail;
-    this.getReportProfileList(this.data.reportType, value.join(''));
+    if (this.data.key === 'detail') {
+      this.getReportProfileList(this.data.reportType, value.join(''));
+    } else if (this.data.key === 'report') {
+      this.getReportList(this.data.reportType, value.join(''));
+    }
     this.setData({
       dateVisible: false,
       dateValue: value,
@@ -195,9 +209,11 @@ Page({
     });
   },
 
-  onSeasonPicker() {
+  onSeasonPicker(e) {
+    const { key } = e.currentTarget.dataset;
     this.setData({
       dateVisible: true,
+      key,
     });
   },
 
@@ -243,7 +259,55 @@ Page({
     this.getReportList(event.detail.value, this.data.dateValue.join(''));
   },
 
-  handlePreview(e) {
+  async handlePreviewCheckList(e) {
+    const { date } = e.currentTarget.dataset;
+    const enterpriseData = wx.getStorageSync('enterpriseData');
+    const reportProfileRes = await app.call({
+      path: `/api/v1/program/enterprise/report/${date}/${this.data.reportType}/images?type=checklist`,
+      header: {
+        'x-enterprise-id': enterpriseData.enterprise_id,
+      },
+    });
+    if (reportProfileRes.data.data.picture_path) {
+      const url = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${reportProfileRes.data.data.picture_path}`;
+      wx.previewImage({
+        current: url,
+        urls: [url], // 需要预览的图片http链接列表
+      });
+    }
+    console.log(reportProfileRes);
+  },
+
+  async handlePreviewDocument(e) {
+    wx.showLoading();
+    const { item } = e.currentTarget.dataset;
+    if (item.document_picture_path) {
+      const url = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${item.document_picture_path}`;
+      wx.previewImage({
+        current: url,
+        urls: [url], // 需要预览的图片http链接列表
+      });
+    } else {
+      const enterpriseData = wx.getStorageSync('enterpriseData');
+      const reportProfileRes = await app.call({
+        path: `/api/v1/program/enterprise/report/${item.date}/${this.data.reportType}/images?type=document`,
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
+      });
+      if (reportProfileRes.data.data.picture_path) {
+        const url = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${reportProfileRes.data.data.picture_path}`;
+        wx.previewImage({
+          current: url,
+          urls: [url], // 需要预览的图片http链接列表
+        });
+      }
+    }
+
+    wx.hideLoading();
+  },
+
+  handleDownload(e) {
     wx.showLoading({
       title: '下载文档中',
     });

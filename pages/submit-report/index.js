@@ -10,6 +10,7 @@ Page({
     remainingMinutes: '',
     progress: 0,
     switchValue: false,
+    showAllQualify: true,
     waitlist: [{}],
     reportTypeMap: {
       1: '日管控',
@@ -20,6 +21,7 @@ Page({
 
   async onLoad() {
     try {
+      wx.showLoading()
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const res = await app.call({
         path: '/api/v1/program/enterprise/report/waitlist',
@@ -32,8 +34,13 @@ Page({
         throw error;
       }
       const { waitlist } = res.data.data;
+      wx.hideLoading()
       if (waitlist.length === 0) {
-        throw error;
+        Toast({
+          context: this,
+          selector: '#t-toast',
+          message: '暂无需要提交的报告',
+        });
       }
       const filterwait = waitlist.map((item) => {
         const now = new Date();
@@ -67,9 +74,14 @@ Page({
         this.updateTime(filterwait[0].deadline);
       }, 1000);
       wx.setStorageSync('reportData', filterwait[0]);
+      let showAllQualify = true;
+      if (filterwait[0].report_type === 3) {
+        showAllQualify = false;
+      }
       this.setData({
         intervalId,
         waitlist: filterwait,
+        showAllQualify,
       });
     } catch {
       Toast({
@@ -78,11 +90,49 @@ Page({
         message: '暂无需要提交的报告',
       });
       setTimeout(() => {
-        wx.navigateTo({
+        wx.reLaunch({
           url: `/pages/all-center/index`,
         });
       }, 1000);
     }
+  },
+
+  handleClickWaitList(e) {
+    const { item } = e.currentTarget.dataset;
+    const data = this.data.waitlist;
+    // 使用findIndex找到要移动的项在数组中的索引
+    const index = data.findIndex((item1) => item1.report_id === item.report_id);
+
+    // 检查找到的索引是否有效
+    if (index !== -1) {
+      // 使用splice将该项移动到数组最前面
+      const itemToMove = data.splice(index, 1)[0];
+      data.unshift(itemToMove);
+
+      // 现在，data数组中的第一项就是刚刚移动的项
+      console.log(data);
+    } else {
+      console.log('未找到要移动的项');
+    }
+    if (item.remain.includes('已超时')) {
+      this.setData({
+        isOvertime: true,
+      });
+    }
+    this.updateTime(item.deadline);
+    const intervalId = setInterval(() => {
+      this.updateTime(item.deadline);
+    }, 1000);
+    wx.setStorageSync('reportData', item);
+    let showAllQualify = true;
+    if (item.report_type === 3) {
+      showAllQualify = false;
+    }
+    this.setData({
+      intervalId,
+      waitlist: data,
+      showAllQualify,
+    });
   },
 
   async goCreateReport() {

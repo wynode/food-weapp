@@ -1,0 +1,214 @@
+.create-report {
+  position: relative;
+  padding: 30rpx;
+}
+
+.cr-top-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 1000;
+  width: 100vw;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.cr-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cr-top-left {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #333333;
+  line-height: 45rpx;
+}
+
+.cr-top-left text {
+  color: #0B82FF;
+  margin-left: 6rpx;
+}
+
+.cr-top-right {
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #333333;
+  line-height: 45rpx;
+}
+
+.cr-top-right text {
+  color: #0B82FF;
+}
+
+.cr-progress {
+  margin-top: 20rpx;
+}
+
+.cr-list {
+  margin-bottom: 240rpx;
+}
+
+.cr-list .t-checkbox__border {
+  display: none;
+}
+
+.cr-list .t-checkbox {
+  background: #F2F4F7;
+  border-radius: 8rpx;
+  margin-top: 20rpx;
+}
+
+.cr-list .t-grid {
+  background: #F2F4F7;
+}
+
+.cr-list .t-grid-item__content {
+  border-radius: 8rpx;
+  background: transparent;
+}
+
+/* .cric-bad .cric-bad-input {
+  height: 90rpx;
+  box-sizing: border-box;
+} */
+
+.cric-bad .cric-bad-title {
+  font-size: 30rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #333333;
+  line-height: 42rpx;
+  margin: 40rpx 0 20rpx;
+}
+
+.cric-btns {
+  display: flex;
+  justify-content: space-between;
+  margin: 30rpx 0 40rpx;
+}
+
+.cric-btns .cric-btns-left {
+  width: 260rpx;
+  height: 70rpx;
+  margin: 0;
+}
+
+.cric-btns .cric-btns-right {
+  width: 260rpx;
+  height: 70rpx;
+  margin: 0;
+}
+
+.cr-list .t-checkbox {
+  padding: 20rpx;
+}
+
+.cr-item-label {
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #333333;
+  line-height: 50rpx;
+}
+
+.cns-input {
+  margin-top: 120rpx;
+}
+
+.cns-input .t-input {
+  background: #f2f4f7;
+  border-radius: 8rpx;
+  padding: 20rpx 30rpx;
+  margin-top: 20rpx;
+}
+
+.cns-input .t-input::after {
+  height: 0;
+}
+
+.cns-input .t-icon-caret-down-small {
+  color: rgba(11, 130, 255, 0.32);
+  font-size: 60rpx;
+  height: 60rpx;
+  width: 60rpx;
+}
+
+.cns-input .t-input__control--disabled {
+  -webkit-text-fill-color: #333333;
+}
+
+/* .cric-btns .t-button::after {
+  border: none;
+} */
+
+.cr-submit-btn {
+  /* margin-top: 40rpx; */
+  /* margin-bottom: 60rpx;
+  /* position: fixed;
+  top: 60rpx;
+  left: 0; */
+}
+
+.cns-bbtn {
+  position: fixed;
+  bottom: 20rpx;
+  width: 100vw;
+  padding: 30rpx;
+  box-sizing: border-box;
+  left: 0;
+}
+
+.container2 {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  background: #eee;
+  z-index: 10000;
+}
+
+.signature2 {
+  z-index: 10000;
+  background-color: #fff;
+}
+
+.hidden-sign {
+  display: none;
+}
+
+.actions2Wrap {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions2 {
+  margin-right: 10px;
+  white-space: nowrap;
+  transform: rotate(90deg);
+}
+
+.sign-title {
+  color: #333;
+  font-size: 30rpx;
+  font-weight: bold;
+  padding-top: 140rpx;
+  padding-bottom: 100rpx;
+}
+
+.actions2 button {
+  margin-left: 5px;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 5px;
+}

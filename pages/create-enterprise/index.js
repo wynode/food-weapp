@@ -16,7 +16,8 @@ Page({
     businessTypeVisible: '',
     businessTypeValue: [],
     businessTypeText: '',
-    businessTypeList: [{
+    businessTypeList: [
+      {
         label: '食品销售',
         value: '1',
       },
@@ -57,10 +58,7 @@ Page({
 
   onAreaColumnChange(e) {
     console.log('pick:', e.detail);
-    const {
-      column,
-      index
-    } = e.detail;
+    const { column, index } = e.detail;
 
     if (column === 0) {
       this.setCitiesFromProvinceIndex(index);
@@ -87,10 +85,7 @@ Page({
   },
 
   onAreaPickerChange(e) {
-    const {
-      value,
-      label
-    } = e.detail;
+    const { value, label } = e.detail;
 
     console.log('picker confirm:', e.detail);
     this.setData({
@@ -130,20 +125,17 @@ Page({
     const upload = this.selectComponent('#upload');
     const fileID = upload.data.fileList[0].fileID;
     payload.business_license_image = fileID;
-    wx.setStorageSync('licenseData', payload)
+    wx.setStorageSync('licenseData', payload);
     wx.navigateTo({
       url: '/pages/create-enterprise2/index',
     });
   },
 
   onInputValue(e) {
-    const {
-      value = ''
-    } = e.detail;
-    const {
-      item
-    } = e.currentTarget.dataset;
-    this.setData({
+    const { value = '' } = e.detail;
+    const { item } = e.currentTarget.dataset;
+    this.setData(
+      {
         [`enterpriseForm.${item}`]: value,
       },
       () => {
@@ -157,10 +149,7 @@ Page({
   },
 
   onVerifyInputLegal() {
-    const {
-      legal_name,
-      employee_mobile
-    } = this.data.enterpriseForm;
+    const { legal_name, employee_mobile } = this.data.enterpriseForm;
     const prefixPhoneReg = String(this.properties.phoneReg || innerPhoneReg);
     const prefixNameReg = String(this.properties.nameReg || innerNameReg);
     const nameRegExp = new RegExp(prefixNameReg);
@@ -184,13 +173,8 @@ Page({
   },
 
   onPickerChange(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
-    const {
-      label,
-      value
-    } = e.detail;
+    const { key } = e.currentTarget.dataset;
+    const { label, value } = e.detail;
 
     this.setData({
       businessTypeVisible: false,
@@ -200,9 +184,7 @@ Page({
   },
 
   onPickerCancel(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
+    const { key } = e.currentTarget.dataset;
     this.setData({
       [`${key}Visible`]: false,
     });
@@ -215,7 +197,7 @@ Page({
   },
 
   async scanAddIn() {
-    wx.navigateTo({
+    wx.reLaunch({
       url: '/pages/all-center/index',
     });
     // const res = await app.call({
@@ -228,25 +210,35 @@ Page({
   handleStartOCR() {
     this.setData({
       submitActive: false,
-    })
+    });
   },
 
-  handleOCRResult(e) {
+  async handleOCRResult(e) {
     if (e.detail) {
       // this.data.submitActive = true
-      const {
-        company_address,
-        company_name,
-        legal_person,
-        license_no
-      } = e.detail.data;
-      this.setData({
-        submitActive: true,
-        'enterpriseForm.enterprise_name': company_name,
-        'enterpriseForm.address': company_address,
-        'enterpriseForm.legal_name': legal_person,
-        'enterpriseForm.business_license': license_no,
+      const { company_address, company_name, legal_person, license_no } = e.detail.data;
+      const res = await app.call({
+        path: '/api/v1/program/enterprise/whitelist',
+        method: 'GET',
+        data: {
+          business_license: license_no,
+        },
       });
+      if (res.data.code === 0 && res.data.data.result) {
+        console.log(res);
+        this.setData({
+          submitActive: true,
+          'enterpriseForm.enterprise_name': company_name,
+          'enterpriseForm.address': company_address,
+          'enterpriseForm.legal_name': legal_person,
+          'enterpriseForm.business_license': license_no,
+        });
+      } else {
+        wx.showToast({
+          icon: 'none',
+          title: '当前企业暂无内测资格，请联系管理员申请。',
+        });
+      }
     }
   },
 });
