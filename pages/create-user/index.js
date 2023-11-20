@@ -9,19 +9,19 @@ Page({
     userPositionList: [
       {
         label: '企业负责人',
-        value: '11',
+        value: '1',
       },
       {
         label: '食品总监职责',
-        value: '12',
+        value: '2',
       },
       {
         label: '食品安全员',
-        value: '13',
+        value: '3',
       },
       {
         label: '企业员工',
-        value: '14',
+        value: '64',
       },
     ],
 
@@ -102,9 +102,11 @@ Page({
     // if (isLegal) {
     // wx.setStorageSync('user_data', this.data);
     try {
+      wx.showLoading();
       const enterpriseData = wx.getStorageSync('enterpriseData');
+      let res = {};
       if (this.data.editObj) {
-        const res = await app.call({
+        res = await app.call({
           path: `/api/v1/program/enterprise/employee`,
           method: 'POST',
           header: {
@@ -122,14 +124,8 @@ Page({
             permission: 7,
           },
         });
-        if (res.data.code === 400) {
-          throw '请求参数错误';
-        }
-        wx.showToast({
-          title: '修改成功',
-        });
       } else {
-        const res = await app.call({
+        res = await app.call({
           path: `/api/v1/program/enterprise/employee`,
           method: 'PUT',
           header: {
@@ -144,16 +140,15 @@ Page({
             permission: 7,
           },
         });
-        if (res.data.code === 400) {
-          throw '请求参数错误';
-        }
-        wx.showToast({
-          title: '添加成功',
-        });
       }
-      wx.navigateTo({
-        url: '/pages/staff-list/index',
-      });
+      wx.hideLoading();
+      if (res.data.code === 0) {
+        setTimeout(() => {
+          wx.redirectTo({
+            url: '/pages/staff-list/index',
+          });
+        }, 1500);
+      }
     } catch (error) {
       console.log(error);
       wx.showToast({

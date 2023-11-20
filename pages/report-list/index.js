@@ -260,6 +260,7 @@ Page({
   },
 
   async handlePreviewCheckList(e) {
+    wx.showLoading()
     const { date } = e.currentTarget.dataset;
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const reportProfileRes = await app.call({
@@ -275,6 +276,7 @@ Page({
         urls: [url], // 需要预览的图片http链接列表
       });
     }
+    wx.hideLoading()
     console.log(reportProfileRes);
   },
 

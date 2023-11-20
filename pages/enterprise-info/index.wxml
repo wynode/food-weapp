@@ -6,7 +6,7 @@
       <t-input value="{{profile.enterprise_name}}" bindblur="nameChange" placeholder="请填写负责人姓名" />
     </view>
     <view class="cns-input">
-      <t-input value="{{profile.address}}" bindblur="nameChange" placeholder="请填写负责人姓名" />
+      <t-textarea value="{{profile.address}}" bindblur="phoneChange" autosize />
     </view>
     <!-- <view class="cns-title">店铺类别</view>
     <view class="cns-input">
@@ -14,21 +14,21 @@
     </view> -->
     <view class="cns-title">法人信息</view>
     <view class="cns-input">
-      <t-input value="{{profile.personal}}" bindblur="phoneChange" placeholder="请填写负责人联系电话" />
+      <t-input value="{{profile.personal}}" bindblur="phoneChange" placeholder="请填写法人信息" />
     </view>
     <view class="cns-title">包保信息</view>
     <view class="cns-input">
       <!-- 姓名：周文 \n职务：社区书记 \n包保等级：D \n电话：15565345432 -->
-      <t-textarea value="{{profile.baobao}}" bindblur="phoneChange" autosize placeholder="请填写负责人联系电话" />
+      <t-textarea value="{{profile.baobao}}" bindblur="phoneChange" autosize placeholder="请填写包保信息" />
     </view>
     <view class="cns-license">
       <view class="cns-license1">
         <view class="cns-title">营业执照</view>
-        <t-image src="{{profile.business_license_image}}" mode="aspectFill" style="width: 200rpx;height: 200rpx;" />
+        <t-image src="{{profile.business_license_image}}" mode="aspectFill" bind:tap="handlePreviewB" />
       </view>
       <view class="cns-license2">
         <view class="cns-title">食品安全许可证</view>
-        <t-image src="{{profile.food_safety_license}}" mode="aspectFill" style="width: 200rpx;height: 200rpx;" />
+        <t-image src="{{profile.food_safety_license}}" mode="aspectFill" bind:tap="handlePreviewF" />
       </view>
     </view>
     <!-- <view class="cns-title">企业员工</view>

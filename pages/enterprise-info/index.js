@@ -1,5 +1,5 @@
 import Toast from 'tdesign-miniprogram/toast';
-
+const app = getApp();
 Page({
   data: {
     fileList: [],
@@ -41,26 +41,47 @@ Page({
     businessCode: '',
     personalPhone: '',
     isEnter: false,
+    profile: {},
   },
 
   onLoad(options) {
-    const { isEnter = false } = options || {};
-    if (isEnter) {
-      wx.setNavigationBarTitle({
-        title: '企业信息',
-      });
-      const shopData = wx.getStorageSync('shop_data');
-      if (shopData) {
-        this.setData({
-          businessTypeText: shopData.businessTypeText,
-          shopTemplateText: shopData.shopTemplateText,
-          personalName: shopData.personalName,
-          businessCode: shopData.businessCode,
-          personalPhone: shopData.personalPhone,
-          isEnter: true,
-        });
-      }
-    }
+    // const { isEnter = false } = options || {};
+    // if (isEnter) {
+    //   wx.setNavigationBarTitle({
+    //     title: '企业信息',
+    //   });
+    //   const shopData = wx.getStorageSync('shop_data');
+    //   if (shopData) {
+    //     this.setData({
+    //       businessTypeText: shopData.businessTypeText,
+    //       shopTemplateText: shopData.shopTemplateText,
+    //       personalName: shopData.personalName,
+    //       businessCode: shopData.businessCode,
+    //       personalPhone: shopData.personalPhone,
+    //       isEnter: true,
+    //     });
+    //   }
+    // }
+    const enterpriseData = wx.getStorageSync('enterpriseData');
+    const profile = { ...enterpriseData };
+    profile.personal = `${profile.legal_name}   ${profile.employee_mobile}`;
+    profile.business_license_image = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${profile.business_license_image}`;
+    profile.food_safety_license = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${profile.food_safety_license}`;
+    profile.baobao = '暂无';
+    this.setData({
+      profile,
+    });
+  },
+
+  handlePreviewF() {
+    wx.previewImage({
+      urls: [this.data.profile.food_safety_license],
+    });
+  },
+  handlePreviewB() {
+    wx.previewImage({
+      urls: [this.data.profile.business_license_image],
+    });
   },
 
   nameChange(e) {

@@ -12,6 +12,7 @@ Page({
     switchValue: false,
     showAllQualify: true,
     waitlist: [{}],
+    firstWait: {},
     reportTypeMap: {
       1: '日管控',
       2: '周排查',
@@ -21,7 +22,7 @@ Page({
 
   async onLoad() {
     try {
-      wx.showLoading()
+      wx.showLoading();
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const res = await app.call({
         path: '/api/v1/program/enterprise/report/waitlist',
@@ -34,7 +35,7 @@ Page({
         throw error;
       }
       const { waitlist } = res.data.data;
-      wx.hideLoading()
+      wx.hideLoading();
       if (waitlist.length === 0) {
         Toast({
           context: this,
@@ -80,6 +81,7 @@ Page({
       }
       this.setData({
         intervalId,
+        firstWait: filterwait[0],
         waitlist: filterwait,
         showAllQualify,
       });
@@ -130,7 +132,7 @@ Page({
     }
     this.setData({
       intervalId,
-      waitlist: data,
+      firstWait: data[0],
       showAllQualify,
     });
   },
@@ -147,7 +149,7 @@ Page({
       },
     });
     const { has_template } = res.data.data;
-    if (enterpriseData.business_type === 2 && this.data.waitlist[0].report_type === 3) {
+    if (enterpriseData.business_type === 2 && this.data.firstWait.report_type === 3) {
       wx.navigateTo({
         url: `/pages/create-report2/index`,
       });

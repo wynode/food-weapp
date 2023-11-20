@@ -19,6 +19,23 @@
   font-weight: bold;
 }
 
+.manager-content {
+  margin-top: 30rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.manager-content .t-button {
+  margin: 20rpx;
+}
+
+.manager-img {
+  width: 120rpx;
+  height: 120rpx;
+}
+
 .cert-content {
   margin-top: 40rpx;
   display: flex;

@@ -5,20 +5,20 @@ Page({
     userPositionList: [
       {
         label: '企业负责人',
-        value: '11',
+        value: '1',
       },
       {
         label: '食品总监职责  ',
-        value: '12',
+        value: '2',
       },
       {
         label: '食品安全员',
-        value: '13',
+        value: '3',
       },
-      {
-        label: '企业员工',
-        value: '14',
-      },
+      // {
+      //   label: '企业员工',
+      //   value: '64',
+      // },
     ],
     dataList: [],
   },
@@ -62,7 +62,7 @@ Page({
   async onDelete(e) {
     const { item } = e.currentTarget.dataset;
     await app.call({
-      path: `/api/v1/program/enterprise/employee?employee_id=${item.employee_id}`,
+      path: `/api/v1/program/enterprise/employee/${item.employee_id}`,
       method: 'DELETE',
     });
     wx.showToast({

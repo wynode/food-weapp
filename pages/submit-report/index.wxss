@@ -13,22 +13,32 @@
 }
 
 .sr-day-left {
-  width: 110rpx;
-  height: 110rpx;
-  background: #FC5B5B;
-  border-radius: 8rpx;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-grow: 0;
   flex-shrink: 0;
+  width: 110rpx;
+  height: 110rpx;
+  background: #FC5B5B;
+  border-radius: 8rpx;
+
   flex-basis: 110rpx 110rpx;
   margin: 10rpx 0;
+  border: 1px solid #FC5B5B;
 }
 
 .sr-day-left image {
   width: 70rpx;
   height: 70rpx;
+}
+
+.sr-day-left-image {
+  width: 70rpx;
+  height: 70rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sr-day-right {
@@ -153,6 +163,7 @@
   border-radius: 16rpx;
   margin-left: 30rpx;
 }
+
 .srb-btns {
   display: flex;
   justify-content: space-around;

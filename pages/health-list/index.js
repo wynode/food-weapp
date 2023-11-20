@@ -77,7 +77,7 @@ Page({
   async handleDelete(e) {
     const { item } = e.currentTarget.dataset;
     await app.call({
-      path: `/api/v1/program/enterprise/health_certificate?license_id=${item.license_id}`,
+      path: `/api/v1/program/enterprise/health_certificate/${item.license_id}`,
       method: 'DELETE',
       data: {
         license_id: item.license_id,
