@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "添加任命书",
+  "navigationBarTitleText": "添加健康证",
   "usingComponents": {
     "t-toast": "tdesign-miniprogram/toast/toast",
     "t-image": "/components/webp-image/index",

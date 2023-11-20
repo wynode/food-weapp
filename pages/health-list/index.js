@@ -2,10 +2,10 @@ const app = getApp();
 Page({
   data: {
     levelOptions: {
-      11: '企业负责人',
-      12: '食品总监职责',
-      13: '食品安全员',
-      14: '企业员工',
+      1: '企业负责人',
+      2: '食品总监职责',
+      3: '食品安全员',
+      64: '企业员工',
     },
     typeOptions: {
       1: '健康证',
@@ -15,19 +15,19 @@ Page({
     userPositionList: [
       {
         label: '企业负责人',
-        value: '11',
+        value: '1',
       },
       {
         label: '食品总监职责  ',
-        value: '12',
+        value: '2',
       },
       {
         label: '食品安全员',
-        value: '13',
+        value: '3',
       },
       {
         label: '企业员工',
-        value: '14',
+        value: '64',
       },
     ],
     dataList: [],
@@ -50,7 +50,7 @@ Page({
     const userPositionList = this.data.userPositionList.map((posItem) => {
       let result = { ...posItem, list: [] };
       list.forEach((item) => {
-        if (posItem.value === String(item.file_type)) {
+        if (posItem.value === String(item.position)) {
           result.list.push({
             ...item,
             url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${item.url}`,
@@ -70,7 +70,7 @@ Page({
   handleGoCreate(e) {
     const { item } = e.currentTarget.dataset;
     wx.navigateTo({
-      url: `/pages/create-appointment/index?type=1&file_type=${item.value}`,
+      url: `/pages/create-health/index?type=1&file_type=${item.value}`,
     });
   },
 

@@ -3,6 +3,7 @@ const app = getApp();
 Page({
   data: {
     fileList: [],
+    titleCn: '',
     userPositionList: [{
         label: '企业负责人',
         value: '1',
@@ -28,9 +29,6 @@ Page({
     employee_name: '',
     file_type: '',
     ctype: '',
-    typeCn: '',
-    titleCn: '',
-    modelCn: '',
   },
 
   onNameInput(e) {
@@ -42,33 +40,24 @@ Page({
   onLoad(options) {
     let {
       file_type,
-      type
+      type,
     } = options || {};
-    let typeCn = '';
-    let modelCn = '';
     const pos = this.data.userPositionList.filter((item1) => item1.value === file_type)[0] || {};
     const title = pos.label || '';
-    let titleCn = '';
 
-    typeCn = '请输入任命人姓名';
-    titleCn = `请添加${title}任命书`;
-
+    const titleCn = `请添加${title}健康证`;
     this.setData({
       file_type,
-      ctype: type,
-      title,
-      typeCn,
       titleCn,
-      modelCn,
+      ctype: type,
     });
   },
 
   async goCreate() {
     try {
       const enterpriseData = wx.getStorageSync('enterpriseData');
-
       const res = await app.call({
-        path: `/api/v1/program/enterprise/enterprise_appointment`,
+        path: `/api/v1/program/enterprise/health_certificate`,
         method: 'PUT',
         header: {
           'x-enterprise-id': enterpriseData.enterprise_id,
@@ -83,11 +72,10 @@ Page({
       if (res.data.code === 0) {
         setTimeout(() => {
           wx.redirectTo({
-            url: '/pages/appointment-list/index',
+            url: '/pages/health-list/index',
           })
         }, 1500)
       }
-
     } catch (error) {
       wx.showToast({
         title: String(error),

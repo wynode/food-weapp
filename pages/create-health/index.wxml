@@ -16,7 +16,7 @@
     </view>
 
     <view class="cu-input">
-      <t-input value="{{ employee_name }}" bindchange="onNameInput" placeholder="请输入任命书姓名（非必填）" />
+      <t-input value="{{ employee_name }}" bindchange="onNameInput" placeholder="请输入健康证姓名（非必填）" />
     </view>
 
     <!-- <view class="cu-business">
@@ -27,7 +27,6 @@
         <my-upload uploadTitle="点击上传健康证"> </my-upload>
       </view>
     </view> -->
-
     <view class="cu-submit">
       <t-button theme="primary" size="large" block bind:tap="goCreate">立即创建</t-button>
     </view>

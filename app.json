@@ -9,6 +9,7 @@
     "pages/report-list/index",
     "pages/create-user/index",
     "pages/create-appointment/index",
+    "pages/create-health/index",
     "pages/appointment-list/index",
     "pages/health-list/index",
     "pages/word-list/index",

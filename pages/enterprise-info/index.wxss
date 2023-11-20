@@ -50,3 +50,18 @@
   background: #0B82FF;
   border-radius: 16rpx;
 }
+
+.cns-license {
+  display: flex;
+  justify-content: space-between;
+}
+.cns-license1 {
+  flex-grow: 1;
+}
+.cns-license2 {
+  flex-grow: 1;
+}
+.cns-license image {
+  width: 200rpx;
+  height: 200rpx;
+}

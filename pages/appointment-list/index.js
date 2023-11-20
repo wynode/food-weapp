@@ -19,15 +19,15 @@ Page({
       // },
       {
         label: '食品总监职责  ',
-        value: '12',
+        value: '2',
       },
       {
         label: '食品安全员',
-        value: '13',
+        value: '3',
       },
       {
         label: '企业员工',
-        value: '14',
+        value: '64',
       },
     ],
     dataList: [],
@@ -50,7 +50,7 @@ Page({
     const userPositionList = this.data.userPositionList.map((posItem) => {
       let result = { ...posItem, list: [] };
       list.forEach((item) => {
-        if (posItem.value === String(item.file_type)) {
+        if (posItem.value === String(item.position)) {
           result.list.push({
             ...item,
             url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${item.url}`,
