@@ -6,8 +6,7 @@ Page({
     businessTypeValue: [],
     businessTypeTitle: '',
     businessTypeText: '',
-    businessTypeList: [
-      {
+    businessTypeList: [{
         label: '餐饮服务',
         value: '餐饮服务',
       },
@@ -19,8 +18,7 @@ Page({
     shopTemplateValue: [],
     shopTemplateTitle: '',
     shopTemplateText: '',
-    shopTemplateList: [
-      {
+    shopTemplateList: [{
         label: '（日周月）餐饮服务通用模板',
         value: '（日周月）餐饮服务通用模板',
       },
@@ -32,7 +30,7 @@ Page({
 
     gridConfig: {
       column: 1,
-      width: 300,
+      width: 340,
       height: 240,
     },
 
@@ -44,7 +42,7 @@ Page({
     profile: {},
   },
 
-  onLoad(options) {
+  async onLoad(options) {
     // const { isEnter = false } = options || {};
     // if (isEnter) {
     //   wx.setNavigationBarTitle({
@@ -63,10 +61,26 @@ Page({
     //   }
     // }
     const enterpriseData = wx.getStorageSync('enterpriseData');
-    const profile = { ...enterpriseData };
+    const enterpriseRes = await app.call({
+      path: '/api/v1/program/enterprise',
+      header: {
+        'x-enterprise-id': enterpriseData.enterprise_id,
+      },
+    });
+
+    wx.setStorageSync('enterpriseData', enterpriseRes.data.data);
+    const profile = {
+      ...enterpriseRes.data.data
+    };
     profile.personal = `${profile.legal_name}   ${profile.employee_mobile}`;
-    profile.business_license_image = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${profile.business_license_image}`;
-    profile.food_safety_license = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${profile.food_safety_license}`;
+    if (profile.business_license_image) {
+      profile.business_license_image = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${profile.business_license_image}`;
+    }
+
+    if (profile.food_security_license) {
+      profile.food_security_license = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${profile.food_security_license}`;
+    }
+
     profile.baobao = '暂无';
     this.setData({
       profile,
@@ -83,21 +97,32 @@ Page({
       urls: [this.data.profile.business_license_image],
     });
   },
+  goEditEnterprise() {
+    wx.navigateTo({
+      url: '/pages/edit-enterprise/index',
+    })
+  },
 
   nameChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     this.setData({
       personalName: value,
     });
   },
   phoneChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     this.setData({
       personalPhone: value,
     });
   },
   codeChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     this.setData({
       businessCode: value,
     });
@@ -130,8 +155,12 @@ Page({
   },
 
   onPickerChange(e) {
-    const { key } = e.currentTarget.dataset;
-    const { value } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
+    const {
+      value
+    } = e.detail;
 
     this.setData({
       [`${key}Visible`]: false,
@@ -141,7 +170,9 @@ Page({
   },
 
   onPickerCancel(e) {
-    const { key } = e.currentTarget.dataset;
+    const {
+      key
+    } = e.currentTarget.dataset;
     this.setData({
       [`${key}Visible`]: false,
     });
@@ -167,8 +198,12 @@ Page({
   },
 
   handleAdd(e) {
-    const { fileList } = this.data;
-    const { files } = e.detail;
+    const {
+      fileList
+    } = this.data;
+    const {
+      files
+    } = e.detail;
 
     this.setData({
       fileList: [...fileList, ...files], // 此时设置了 fileList 之后才会展示选择的图片
@@ -176,8 +211,12 @@ Page({
   },
 
   handleRemove(e) {
-    const { index } = e.detail;
-    const { fileList } = this.data;
+    const {
+      index
+    } = e.detail;
+    const {
+      fileList
+    } = this.data;
 
     fileList.splice(index, 1);
     this.setData({

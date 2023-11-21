@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/all-center/index",
+    "pages/staff-scan/index",
+    "pages/check-bao/index",
+    "pages/edit-enterprise/index",
     "pages/create-enterprise/index",
     "pages/edit-report/index",
     "pages/rectify-list/index",

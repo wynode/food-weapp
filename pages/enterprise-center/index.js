@@ -43,6 +43,16 @@ Page({
       url: '/pages/bill-center/index',
     });
   },
+  goQrCode() {
+    wx.navigateTo({
+      url: '/pages/staff-scan/index',
+    });
+  },
+  goBaoCheck() {
+    wx.navigateTo({
+      url: '/pages/check-bao/index',
+    });
+  },
   goStaffList() {
     wx.navigateTo({
       url: '/pages/staff-list/index',

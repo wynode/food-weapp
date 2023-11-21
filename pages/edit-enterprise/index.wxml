@@ -1,0 +1,49 @@
+<view>
+  <background></background>
+  <view class="create-new-shop">
+    <view class="cns-title">企业信息</view>
+    <view class="cns-input">
+      <t-input value="{{profile.enterprise_name}}" bindblur="nameChange" placeholder="请填写企业名称" />
+    </view>
+    <view class="cns-input">
+      <t-textarea style="height: 140rpx;" value="{{profile.address}}" bindblur="addressChange" autosize placeholder="请填写负责人地址" />
+    </view>
+
+    <view class="cns-title">法人姓名</view>
+    <view class="cns-input">
+      <t-input value="{{profile.legal_name}}" bindblur="legalNameChange" placeholder="请填写法人姓名" />
+    </view>
+    <view class="cns-title">负责人电话</view>
+    <view class="cns-input">
+      <t-input value="{{profile.employee_mobile}}" bindblur="phoneChange" placeholder="请填写负责人电话" />
+    </view>
+    <!-- <view class="cns-title">包保信息</view> -->
+    <!-- <view class="cns-input">
+      <t-textarea value="{{profile.baobao}}" bindblur="baoChange" autosize placeholder="请填写包保信息" />
+    </view> -->
+    <view class="cns-license">
+      <view class="cns-license1">
+        <view class="cns-title">营业执照</view>
+        <view>
+          <t-upload max="{{1}}" gridConfig="{{gridConfig}}" mediaType="{{['image']}}" max="{{1}}" files="{{fileList1}}" bind:add="handleAddB" bind:remove="handleRemoveB"></t-upload>
+        </view>
+      </view>
+      <view class="cns-license2">
+        <view class="cns-title">食品安全许可证</view>
+        <view>
+          <t-upload max="{{1}}" gridConfig="{{gridConfig}}" mediaType="{{['image']}}" max="{{1}}" files="{{fileList2}}" bind:add="handleAddS" bind:remove="handleRemoveS"></t-upload>
+        </view>
+      </view>
+    </view>
+    <view class="cns-title" style="margin-top: 30rpx;">营业执照号</view>
+    <view class="cns-input">
+      <t-input value="{{profile.business_license}}" bindblur="codeChange" placeholder="请填写营业执照号" />
+    </view>
+
+  </view>
+  <view style="margin: 0 30rpx;">
+    <t-button block size="large" bind:tap="handleEditEnterprise">确定修改</t-button>
+  </view>
+</view>
+
+<t-toast id="t-toast"></t-toast>

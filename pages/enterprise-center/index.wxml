@@ -3,6 +3,33 @@
   <view class="enterprise-center">
     <view class="ec-list">
       <view class="ec-title">
+        快捷操作
+      </view>
+      <t-row gutter="16">
+        <t-col span="12">
+          <view class="ec-item" data-key="1" bindtap="goQrCode">
+            <view class="ec-item-left ec-item-left1" style="background: #fa9550;">
+              <image src="/assets/image/qrcode.png"></image>
+            </view>
+            <view class="ec-item-right" >
+              <view class="ec-item-title"> 扫码加入 </view>
+              <view class="ec-item-info"> 员工扫码加入 </view>
+            </view>
+          </view>
+        </t-col>
+        <t-col span="12">
+          <view class="ec-item" data-key="2" bindtap="goBaoCheck">
+            <view class="ec-item-left ec-item-left1" style="background: #fa9550;">
+              <image src="/assets/image/check.png"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 包保检查 </view>
+              <!-- <view class="ec-item-info"> 134份 </view> -->
+            </view>
+          </view>
+        </t-col>
+      </t-row>
+      <view class="ec-title">
         报告管理
       </view>
       <t-row gutter="16">

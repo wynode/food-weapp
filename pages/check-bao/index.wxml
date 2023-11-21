@@ -1,0 +1,10 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="staff-scan">
+    <view class="scan-h1">包保干部请扫码查看记录详情</view>
+    <view class="scan-h2">第一次扫码进入需绑定企业的包保信息哦</view>
+    <view class="scan-image">
+      <t-image style="width: 620rpx; height: 620rpx;" src="{{scanImage}}" mode="" />
+    </view>
+  </view>
+</view>

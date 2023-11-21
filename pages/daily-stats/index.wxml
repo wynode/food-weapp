@@ -37,7 +37,7 @@
       >
     </view>
 
-    <view class="ds-list">
+    <view class="ds-list" wx:if="{{profile.unpassed_items.length}}">
       <view class="ds-item-top">
         <view class="ds-item-top-left">
           <t-icon name="error-circle"></t-icon>

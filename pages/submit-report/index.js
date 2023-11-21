@@ -1,4 +1,6 @@
-import { formatTime } from '../../utils/util';
+import {
+  formatTime
+} from '../../utils/util';
 import Toast from 'tdesign-miniprogram/toast/index';
 const app = getApp();
 Page({
@@ -11,7 +13,7 @@ Page({
     progress: 0,
     switchValue: false,
     showAllQualify: true,
-    waitlist: [{}],
+    waitlist: [],
     firstWait: {},
     reportTypeMap: {
       1: '日管控',
@@ -20,7 +22,11 @@ Page({
     },
   },
 
-  async onLoad() {
+  onLoad() {
+    this.getList()
+  },
+
+  async getList() {
     try {
       wx.showLoading();
       const enterpriseData = wx.getStorageSync('enterpriseData');
@@ -34,7 +40,9 @@ Page({
       if (res.statusCode !== 200) {
         throw error;
       }
-      const { waitlist } = res.data.data;
+      const {
+        waitlist
+      } = res.data.data;
       wx.hideLoading();
       if (waitlist.length === 0) {
         Toast({
@@ -42,6 +50,7 @@ Page({
           selector: '#t-toast',
           message: '暂无需要提交的报告',
         });
+        return
       }
       const filterwait = waitlist.map((item) => {
         const now = new Date();
@@ -56,9 +65,9 @@ Page({
         }
         const remainingMinutes = parseInt((diff % (1000 * 60 * 60)) / (1000 * 60));
         const date = String(item.date);
-        const text = remainingDays
-          ? `${Math.abs(remainingDays)}天${Math.abs(remainingHours)}小时`
-          : `${Math.abs(remainingHours)}小时${Math.abs(remainingMinutes)}分钟`;
+        const text = remainingDays ?
+          `${Math.abs(remainingDays)}天${Math.abs(remainingHours)}小时` :
+          `${Math.abs(remainingHours)}小时${Math.abs(remainingMinutes)}分钟`;
         return {
           ...item,
           showDate: date.slice(0, 4) + '年' + date.slice(4, 6) + '月' + date.slice(6, 8) + '日',
@@ -91,16 +100,49 @@ Page({
         selector: '#t-toast',
         message: '暂无需要提交的报告',
       });
-      setTimeout(() => {
-        wx.reLaunch({
-          url: `/pages/all-center/index`,
-        });
-      }, 1000);
+      // setTimeout(() => {
+      //   wx.reLaunch({
+      //     url: `/pages/all-center/index`,
+      //   });
+      // }, 1000);
+    }
+  },
+
+  async handleSkip(e) {
+    wx.showLoading()
+    const {
+      item
+    } = e.currentTarget.dataset
+    const enterpriseData = wx.getStorageSync('enterpriseData');
+    const res = await app.call({
+      path: '/api/v1/program/enterprise/report',
+      method: 'PUT',
+      header: {
+        'x-enterprise-id': enterpriseData.enterprise_id,
+      },
+      data: {
+        date: item.date,
+        report_type: item.report_type,
+        params: {
+          template_id: '',
+          item_count: 0,
+          passed_items: [],
+          unpassed_items: [],
+          signer: '',
+          content: {},
+          skip: true,
+        },
+      }
+    });
+    if (res.data.code === 0) {
+      this.getList()
     }
   },
 
   handleClickWaitList(e) {
-    const { item } = e.currentTarget.dataset;
+    const {
+      item
+    } = e.currentTarget.dataset;
     const data = this.data.waitlist;
     // 使用findIndex找到要移动的项在数组中的索引
     const index = data.findIndex((item1) => item1.report_id === item.report_id);
@@ -138,9 +180,13 @@ Page({
   },
 
   async goCreateReport() {
+    wx.showLoading()
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const reportData = wx.getStorageSync('reportData');
-    const { business_type, enterprise_id } = enterpriseData;
+    const {
+      business_type,
+      enterprise_id
+    } = enterpriseData;
     const res = await app.call({
       path: `/api/v1/program/enterprise/report/template?report_type=${reportData.report_type}&business_type=${business_type}`,
       method: 'GET',
@@ -148,7 +194,10 @@ Page({
         'x-enterprise-id': enterprise_id,
       },
     });
-    const { has_template } = res.data.data;
+    const {
+      has_template
+    } = res.data.data;
+    wx.hideLoading()
     if (enterpriseData.business_type === 2 && this.data.firstWait.report_type === 3) {
       wx.navigateTo({
         url: `/pages/create-report2/index`,
@@ -168,9 +217,13 @@ Page({
   },
 
   async goCreateReportQualify() {
+    wx.showLoading()
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const reportData = wx.getStorageSync('reportData');
-    const { business_type, enterprise_id } = enterpriseData;
+    const {
+      business_type,
+      enterprise_id
+    } = enterpriseData;
     const res = await app.call({
       path: `/api/v1/program/enterprise/report/template?report_type=${reportData.report_type}&business_type=${business_type}`,
       method: 'GET',
@@ -178,7 +231,10 @@ Page({
         'x-enterprise-id': enterprise_id,
       },
     });
-    const { has_template } = res.data.data;
+    const {
+      has_template
+    } = res.data.data;
+    wx.hideLoading()
     if (has_template) {
       wx.navigateTo({
         url: `/pages/create-report/index?allqualified=yes`,

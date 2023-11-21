@@ -1,6 +1,8 @@
 import Toast from 'tdesign-miniprogram/toast';
 import Signature from 'mini-smooth-signature';
-import { formatTime } from '../../utils/util';
+import {
+  formatTime
+} from '../../utils/util';
 const app = getApp();
 Page({
   data: {
@@ -41,7 +43,9 @@ Page({
   async onLoad(options) {
     try {
       let allCheck = [];
-      const { checkList } = options || {};
+      const {
+        checkList
+      } = options || {};
       const reportData = wx.getStorageSync('reportData');
       const reportTypeOptions = {
         1: '日管控',
@@ -49,8 +53,12 @@ Page({
         3: '月调度',
       };
       const reportType = reportTypeOptions[reportData.report_type];
+      wx.setNavigationBarTitle({ title: `提交新${reportType}`})
       const enterpriseData = wx.getStorageSync('enterpriseData');
-      const { business_type, enterprise_id } = enterpriseData;
+      const {
+        business_type,
+        enterprise_id
+      } = enterpriseData;
       if (checkList) {
         const checkListData = wx.getStorageSync('checkListData');
         allCheck = checkListData;
@@ -65,7 +73,9 @@ Page({
         if (res.statusCode !== 200) {
           throw error;
         }
-        const { has_template } = res.data.data;
+        const {
+          has_template
+        } = res.data.data;
         const templateRes = await app.call({
           path: `/api/v1/program/report/templates?report_type=${reportData.report_type}&business_type=${business_type}`,
           method: 'GET',
@@ -76,7 +86,9 @@ Page({
         if (templateRes.statusCode !== 200) {
           throw error;
         }
-        const { list } = templateRes.data.data;
+        const {
+          list
+        } = templateRes.data.data;
         const filterList = list.map((item) => {
           return {
             label: item.template_name,
@@ -97,7 +109,10 @@ Page({
           if (profileRes.statusCode !== 200) {
             throw error;
           }
-          const { items, min_item_nums } = profileRes.data.data;
+          const {
+            items,
+            min_item_nums
+          } = profileRes.data.data;
           wx.setStorageSync('templateData', profileRes.data.data);
           allCheck = items;
           this.setData({
@@ -107,8 +122,12 @@ Page({
             min_item_nums,
           });
         } else {
-          const { template } = res.data.data;
-          const { items } = template;
+          const {
+            template
+          } = res.data.data;
+          const {
+            items
+          } = template;
           allCheck = items;
           const profileRes = await app.call({
             path: `/api/v1/program/report/template/${template.report_template_id}`,
@@ -120,9 +139,13 @@ Page({
           if (profileRes.statusCode !== 200) {
             throw error;
           }
-          const { min_item_nums } = profileRes.data.data;
+          const {
+            min_item_nums
+          } = profileRes.data.data;
           wx.setStorageSync('templateData', profileRes.data.data);
-          const foundItem = filterList.find((item) => item.value === template.report_template_id) || { label: '' };
+          const foundItem = filterList.find((item) => item.value === template.report_template_id) || {
+            label: ''
+          };
           this.setData({
             templateTypeList: filterList,
             templateTypeValue: [template.report_template_id],
@@ -133,7 +156,9 @@ Page({
         console.log(allCheck);
       }
 
-      const { allqualified = 'no' } = options || {};
+      const {
+        allqualified = 'no'
+      } = options || {};
       console.log(allqualified);
       if (allqualified === 'yes') {
         const tempCheckListData = allCheck.map((item) => {
@@ -192,7 +217,11 @@ Page({
 
   onReady() {
     try {
-      const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
+      const {
+        windowWidth,
+        windowHeight,
+        pixelRatio
+      } = wx.getSystemInfoSync();
       this.setData({
         width1: windowWidth - 30,
         height1: 200,
@@ -320,17 +349,27 @@ Page({
           passed_items.push({
             item_id: curr.item_id,
             remark: curr.remark,
+            solution: '',
+            anaylise: '',
+            hidden_danger: '',
             spot_images: curr.checkFileList.map((item) => item.fileID),
             rectification_images: [],
           });
         }
         if (curr.checked && curr.checkResult === 'fail') {
-          unpassed_items.push({
+          const unpassPaylod = {
             item_id: curr.item_id,
             remark: curr.remark,
             spot_images: curr.checkFileList.map((item) => item.fileID),
             rectification_images: [],
-          });
+          }
+          const additional = ['solution', 'anaylise', 'hidden_danger']
+          additional.forEach((key) => {
+            if (curr[key]) {
+              unpassPaylod[key] = curr[key]
+            }
+          })
+          unpassed_items.push(unpassPaylod);
         }
       });
       payload.params.passed_items = passed_items;
@@ -385,8 +424,12 @@ Page({
   },
 
   handleAdd(e) {
-    const { files } = e.detail;
-    const { key } = e.currentTarget.dataset;
+    const {
+      files
+    } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
     files.forEach((file) => this.onUpload(file, key));
   },
   async onUpload(file, key) {
@@ -442,10 +485,16 @@ Page({
     }
   },
   handleRemove(e) {
-    const { index } = e.detail;
-    const { key } = e.currentTarget.dataset;
+    const {
+      index
+    } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
     const fileIndex = Number(key);
-    const { checkFileList } = this.data.checkListData[fileIndex];
+    const {
+      checkFileList
+    } = this.data.checkListData[fileIndex];
     const checkListData = this.data.checkListData.map((item, index1) => {
       if (index1 === fileIndex) {
         console.log(item, index1, index)
@@ -512,17 +561,27 @@ Page({
           passed_items.push({
             item_id: curr.item_id,
             remark: curr.remark,
+            solution: '',
+            anaylise: '',
+            hidden_danger: '',
             spot_images: curr.checkFileList.map((item) => item.fileID),
             rectification_images: [],
           });
         }
         if (curr.checked && curr.checkResult === 'fail') {
-          unpassed_items.push({
+          const unpassPaylod = {
             item_id: curr.item_id,
             remark: curr.remark,
             spot_images: curr.checkFileList.map((item) => item.fileID),
             rectification_images: [],
-          });
+          }
+          const additional = ['solution', 'anaylise', 'hidden_danger']
+          additional.forEach((key) => {
+            if (curr[key]) {
+              unpassPaylod[key] = curr[key]
+            }
+          })
+          unpassed_items.push(unpassPaylod);
         }
       });
       payload.passed_items = passed_items;
@@ -540,7 +599,10 @@ Page({
   },
 
   async onPickerChange(e) {
-    const { value, label } = e.detail;
+    const {
+      value,
+      label
+    } = e.detail;
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const profileRes = await app.call({
       path: `/api/v1/program/report/template/${value[0]}`,
@@ -549,7 +611,10 @@ Page({
         'x-enterprise-id': enterpriseData.enterprise_id,
       },
     });
-    const { items, min_item_nums } = profileRes.data.data;
+    const {
+      items,
+      min_item_nums
+    } = profileRes.data.data;
     wx.setStorageSync('templateData', profileRes.data.data);
     const tempCheckListData = items.map((item) => {
       return {
@@ -581,7 +646,9 @@ Page({
   },
 
   onCheckChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     const tempCheckListData = this.data.checkListData.map((item, index) => {
       if (value.includes(index)) {
         return {
@@ -604,7 +671,9 @@ Page({
   },
 
   onCheckResultChange(e) {
-    const { key = '0 0' } = e.currentTarget.dataset;
+    const {
+      key = '0 0'
+    } = e.currentTarget.dataset;
     const checkIndex = key.split(' ')[0];
     const checkResult = key.split(' ')[1];
     let checkedResultLength = 0;
@@ -636,13 +705,86 @@ Page({
   },
 
   handleReasonChange(e) {
-    const { key = '0' } = e.currentTarget.dataset;
-    const { value } = e.detail;
+    const {
+      key = '0'
+    } = e.currentTarget.dataset;
+    const {
+      value
+    } = e.detail;
     const tempCheckListData = this.data.checkListData.map((item, index) => {
       if (String(index) === String(key)) {
         return {
           ...item,
           remark: value,
+        };
+      }
+      return {
+        ...item,
+      };
+    });
+
+    this.setData({
+      checkListData: tempCheckListData,
+    });
+  },
+  handleHDChange(e) {
+    const {
+      key = '0'
+    } = e.currentTarget.dataset;
+    const {
+      value
+    } = e.detail;
+    const tempCheckListData = this.data.checkListData.map((item, index) => {
+      if (String(index) === String(key)) {
+        return {
+          ...item,
+          hidden_danger: value,
+        };
+      }
+      return {
+        ...item,
+      };
+    });
+
+    this.setData({
+      checkListData: tempCheckListData,
+    });
+  },
+  handleAAChange(e) {
+    const {
+      key = '0'
+    } = e.currentTarget.dataset;
+    const {
+      value
+    } = e.detail;
+    const tempCheckListData = this.data.checkListData.map((item, index) => {
+      if (String(index) === String(key)) {
+        return {
+          ...item,
+          anaylise: value,
+        };
+      }
+      return {
+        ...item,
+      };
+    });
+
+    this.setData({
+      checkListData: tempCheckListData,
+    });
+  },
+  handleSOChange(e) {
+    const {
+      key = '0'
+    } = e.currentTarget.dataset;
+    const {
+      value
+    } = e.detail;
+    const tempCheckListData = this.data.checkListData.map((item, index) => {
+      if (String(index) === String(key)) {
+        return {
+          ...item,
+          solution: value,
         };
       }
       return {

@@ -13,7 +13,7 @@
         <t-tag wx:else style="margin-left: 20rpx" class="margin-16" theme="warning" bind:tap="toggleStatus">暂停营业</t-tag>
       </view>
       <view class="rl-top-right">
-        <t-picker visible="{{clientVisible}}" value="{{clientValue}}" data-key="client" title="切换客户端" cancelBtn="取消" confirmBtn="确认" bindchange="onClientPickerChange" bindcancel="onClientPickerCancel">
+        <t-picker visible="{{clientVisible}}" value="{{clientValue}}" data-key="client" title="" cancelBtn="取消" confirmBtn="确认" bindchange="onClientPickerChange" bindcancel="onClientPickerCancel">
           <t-picker-item options="{{clientOptions}}"></t-picker-item>
         </t-picker>
         <!-- <t-button style="margin-right: 20rpx" bind:tap="goMonitor" theme="primary" size="small">监管版</t-button> -->

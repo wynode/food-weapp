@@ -137,9 +137,9 @@
   width: 60rpx;
 }
 
-.cns-input .t-input__control--disabled {
+/* .cns-input .t-input__control--disabled {
   -webkit-text-fill-color: #333333;
-}
+} */
 
 /* .cric-btns .t-button::after {
   border: none;

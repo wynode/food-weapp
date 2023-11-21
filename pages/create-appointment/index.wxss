@@ -94,9 +94,9 @@
   color: rgba(11, 130, 255, 0.32);
 }
 
-.cu-input .t-input__control--disabled {
+/* .cu-input .t-input__control--disabled {
   -webkit-text-fill-color: #333333;
-}
+} */
 
 .cu-submit {
   background: #0B82FF;

@@ -41,9 +41,9 @@
   color: rgba(11, 130, 255, 0.32);
 }
 
-.cns-input .t-input__control--disabled {
+/* .cns-input .t-input__control--disabled {
   -webkit-text-fill-color: #333333;
-}
+} */
 
 .cns-submit {
   background: #0B82FF;

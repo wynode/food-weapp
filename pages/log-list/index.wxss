@@ -31,7 +31,7 @@
 .ll-item {
   display: flex;
   margin-bottom: 30rpx;
-  min-height: 192rpx;
+  min-height: 146rpx;
 }
 
 .llir-top2 {

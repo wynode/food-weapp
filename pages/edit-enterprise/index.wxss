@@ -1,6 +1,6 @@
 .create-new-shop {
   padding: 32rpx 50rpx;
-  padding-bottom: 80rpx;
+  padding-bottom: 30rpx;
   position: relative;
 }
 
@@ -22,7 +22,16 @@
   border-radius: 8rpx;
   padding: 20rpx 30rpx;
   margin-top: 20rpx;
-  margin-bottom: 40rpx;
+  margin-bottom: 30rpx;
+}
+
+.cns-input .t-textarea {
+  background: #f2f4f7;
+  border-radius: 8rpx;
+  padding: 20rpx 30rpx;
+  margin-top: 20rpx;
+  margin-bottom: 30rpx;
+  height: 240rpx;
 }
 
 .cns-input .t-input::after {
@@ -42,7 +51,18 @@
   border-radius: 16rpx;
 }
 
-.bb-image {
+.cns-license {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 40rpx;
+}
+.cns-license1 {
+  flex-grow: 1;
+}
+.cns-license2 {
+  flex-grow: 1;
+}
+.cns-license image {
   width: 300rpx;
-  height: 240rpx;
+  height: 300rpx;
 }

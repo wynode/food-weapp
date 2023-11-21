@@ -1,0 +1,25 @@
+.staff-scan {
+  position: relative;
+  padding: 30rpx;
+  padding-top: 1rpx;
+}
+
+.scan-h1 {
+  font-size: 42rpx;
+  font-weight: bold;
+  color: #333;
+  margin-top: 40rpx;
+}
+
+.scan-h2 {
+  font-size: 32rpx;
+  color: #666;
+  margin-top: 40rpx;
+}
+
+.scan-image {
+  margin-top: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

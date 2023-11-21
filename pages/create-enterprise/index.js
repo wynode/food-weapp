@@ -197,8 +197,8 @@ Page({
   },
 
   async scanAddIn() {
-    wx.reLaunch({
-      url: '/pages/all-center/index',
+    wx.navigateTo({
+      url: '/pages/staff-scan/index',
     });
     // const res = await app.call({
     //   path: '/api/v1/program/enterprise',

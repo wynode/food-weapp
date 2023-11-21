@@ -38,6 +38,7 @@ Page({
 
   async getReportLogList(dateTime) {
     try {
+      wx.showLoading()
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const month = formatTime(dateTime, 'YYYYMM')
       const date = formatTime(dateTime, 'DD')
@@ -66,6 +67,7 @@ Page({
       this.setData({
         logList,
       });
+      wx.hideLoading()
     } catch {
       wx.showToast({
         title: '获取详情失败，请联系管理员',

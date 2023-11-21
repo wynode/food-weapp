@@ -81,10 +81,9 @@
                 data-key="{{index}}"
                 placeholder="无"
                 value="{{item.hidden_danger}}"
-                bind:change="handleReasonChange"
+                bind:change="handleHDChange"
                 bordered
                 autosize
-                disabled
                 disableDefaultPadding="{{true}}"
                 indicator
               />
@@ -95,10 +94,9 @@
                 data-key="{{index}}"
                 placeholder="无"
                 value="{{item.anaylise}}"
-                bind:change="handleReasonChange"
+                bind:change="handleAAChange"
                 bordered
                 autosize
-                disabled
                 disableDefaultPadding="{{true}}"
                 indicator
               />
@@ -108,11 +106,10 @@
                 t-class="external-class"
                 data-key="{{index}}"
                 value="{{item.solution}}"
-                bind:change="handleReasonChange"
+                bind:change="handleSOChange"
                 bordered
                 placeholder="无"
                 autosize
-                disabled
                 disableDefaultPadding="{{true}}"
                 indicator
               />

@@ -250,17 +250,27 @@ Page({
           passed_items.push({
             item_id: curr.item_id,
             remark: curr.remark,
+            solution: '',
+            anaylise: '',
+            hidden_danger: '',
             spot_images: curr.checkFileList.map((item) => item.fileID),
             rectification_images: [],
           });
         }
         if (curr.checked && curr.checkResult === 'fail') {
-          unpassed_items.push({
+          const unpassPaylod = {
             item_id: curr.item_id,
             remark: curr.remark,
             spot_images: curr.checkFileList.map((item) => item.fileID),
             rectification_images: [],
-          });
+          }
+          const additional = ['solution', 'anaylise', 'hidden_danger']
+          additional.forEach((key) => {
+            if (curr[key]) {
+              unpassPaylod[key] = curr[key]
+            }
+          })
+          unpassed_items.push(unpassPaylod);
         }
       });
       payload.params.passed_items = passed_items;

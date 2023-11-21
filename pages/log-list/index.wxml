@@ -21,12 +21,12 @@
           class="ll-item-right {{ logItem.logType === 'day' ? 'll-item-right-day' : '' }} {{ logItem.logType === 'bill' ? 'll-item-right-bill' : '' }}"
         >
           <view class="llir-top">
-            <view>{{ logItem.logTypeCN }}</view>
+            <view>{{ logItem.content }}</view>
           </view>
           <view class="llir-center">
-            {{ logItem.submitTime }} | {{ logItem.submitUser }} | {{ logItem.submitStatus }}</view
+            {{ logItem.submitTime }} | {{ logItem.submitUser }}</view
           >
-          <view class="llir-bottom"> {{ logItem.address }}</view>
+          <!-- <view class="llir-bottom"> {{ logItem.address }}</view> -->
         </view>
       </view>
     </view>

@@ -98,17 +98,17 @@ Page({
     clientVisible: false,
     clientValue: '1',
     clientOptions: [{
-        label: '商户端',
+        label: '包保检查',
         value: '1'
       },
       {
-        label: '监管端',
+        label: '员工扫码',
         value: '2'
       },
-      {
-        label: '包保端',
-        value: '3'
-      },
+      // {
+      //   label: '包保端',
+      //   value: '3'
+      // },
     ],
   },
 
@@ -158,12 +158,12 @@ Page({
       clientValue: value,
     });
     if (value[0] === '1') {
-      wx.reLaunch({
-        url: '/pages/all-center/index',
+      wx.navigateTo({
+        url: '/pages/check-bao/index',
       });
     } else if (value[0] === '2') {
       wx.navigateTo({
-        url: '/pages/shop-list/index',
+        url: '/pages/staff-scan/index',
       });
     } else if (value[0] === '3') {
       wx.navigateTo({
