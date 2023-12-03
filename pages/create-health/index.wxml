@@ -28,7 +28,7 @@
       </view>
     </view> -->
     <view class="cu-submit">
-      <t-button theme="primary" size="large" block bind:tap="goCreate">立即创建</t-button>
+      <t-button theme="primary" size="large" block bind:tap="goCreate" disabled="{{disabled}}">立即创建</t-button>
     </view>
   </view>
 </view>

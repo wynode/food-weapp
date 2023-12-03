@@ -15,7 +15,7 @@
         <view class="srdr-top">
           <view class="srdr-top-left"> 需提交{{ reportTypeMap[item.report_type] }} </view>
           <view class="srdr-top-right">
-            <t-button theme="primary" size="extra-small" variant="text" data-item="{{item}}" bind:tap="handleSkip">跳过</t-button>
+            <t-button theme="primary" size="extra-small" variant="text" data-item="{{item}}" bind:tap="showDialog">暂停营业</t-button>
           </view>
         </view>
         <view class="srdr-bottom">
@@ -47,6 +47,7 @@
       <t-button class="srb-btns-right" theme="primary" variant="outline" size="large" bindtap="goCreateMonth">生成月调度</t-button>
     </view>
   </view>
+  <t-dialog visible="{{showWarnConfirm}}" content="是否跳过当前选择报告" confirm-btn="{{ { content: '确认', variant: 'base', theme: 'danger' } }}" cancel-btn="取消" bind:confirm="handleSkip" bind:cancel="closeDialog" />
 </view>
 
 <t-toast id="t-toast"></t-toast>

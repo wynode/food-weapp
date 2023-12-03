@@ -135,9 +135,10 @@ Page({
     const url = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${urlpre}`;
     wx.downloadFile({
       url,
+      filePath: wx.env.USER_DATA_PATH + "/" + `${urlpre.split('/').pop()}`,
       success: function (res) {
         wx.hideLoading();
-        const filePath = res.tempFilePath;
+        const filePath = res.filePath;
         wx.openDocument({
           filePath: filePath,
           showMenu: true,

@@ -63,7 +63,6 @@
                 <view class="rpil-date">{{ reportItem.dateCn }}</view>
                 <t-button
                   data-date="{{reportItem.date}}"
-                  bind:tap="handleShowImage"
                   size="small"
                   theme="light"
                   variant="text"
@@ -89,7 +88,7 @@
                   <view wx:if="{{reportItem.unqualifiedTotal > 0}}">{{ reportItem.unqualifiedTotal }}项不合格</view>
                   <view wx:else>全部合格</view>
                 </view>
-                <view class="rpir-center"> {{ reportItem.submitTime }} | {{ reportItem.submitUser }} </view>
+                <view class="rpir-center"> 提交时间：{{ reportItem.submitTime }} | {{ reportItem.submitUser }} </view>
                 <view class="rpir-bottom"> {{ reportItem.address }}</view>
               </view>
             </view>

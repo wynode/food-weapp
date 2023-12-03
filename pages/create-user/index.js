@@ -6,6 +6,7 @@ Page({
     userPositionValue: [],
     userPositionTitle: '',
     userPositionText: '',
+    disabled: false,
     userPositionList: [
       {
         label: '企业负责人',
@@ -103,6 +104,7 @@ Page({
     // wx.setStorageSync('user_data', this.data);
     try {
       wx.showLoading();
+      this.setData({ disabled: true })
       const enterpriseData = wx.getStorageSync('enterpriseData');
       let res = {};
       if (this.data.editObj) {
@@ -142,12 +144,16 @@ Page({
         });
       }
       wx.hideLoading();
+      this.setData({ disabled: false })
       if (res.data.code === 0) {
+        wx.showToast({
+          title: '操作成功',
+        })
         setTimeout(() => {
-          wx.redirectTo({
+          wx.reLaunch({
             url: '/pages/staff-list/index',
           });
-        }, 1500);
+        }, 1000);
       }
     } catch (error) {
       console.log(error);
@@ -235,6 +241,8 @@ Page({
   async onUpload(file) {
     let compressResult = {};
     try {
+      wx.showLoading()
+      this.setData({ disabled: true })
       compressResult = await wx.compressImage({
         src: file.url, // 图片路径
         quality: 60, // 压缩质量
@@ -256,6 +264,8 @@ Page({
       this.setData({
         fileID: `/${uploadResult.fileID.split('/').slice(-2).join('/')}`,
       });
+      wx.hideLoading()
+      this.setData({ disabled: false })
     } catch {
       Toast({
         context: this,

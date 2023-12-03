@@ -39,6 +39,7 @@ Page({
           if (posItem.value === String(item.position)) {
             result.list.push({
               ...item,
+              fullName: item.name.slice(0, 2),
               avatar: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${item.avatar}`,
             });
           }

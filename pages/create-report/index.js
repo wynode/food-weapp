@@ -167,6 +167,7 @@ Page({
             checked: true,
             checkResult: 'success',
             checkFileList: [],
+            checkFileListR: [],
             remark: '',
           };
         });
@@ -190,6 +191,7 @@ Page({
             checkResult: '',
             remark: '',
             checkFileList: [],
+            checkFileListR: [],
           };
         });
         this.setData({
@@ -353,7 +355,7 @@ Page({
             anaylise: '',
             hidden_danger: '',
             spot_images: curr.checkFileList.map((item) => item.fileID),
-            rectification_images: [],
+            rectification_images: curr.checkFileListR.map((item) => item.fileID),
           });
         }
         if (curr.checked && curr.checkResult === 'fail') {
@@ -361,7 +363,7 @@ Page({
             item_id: curr.item_id,
             remark: curr.remark,
             spot_images: curr.checkFileList.map((item) => item.fileID),
-            rectification_images: [],
+            rectification_images: curr.checkFileListR.map((item) => item.fileID),
           }
           const additional = ['solution', 'anaylise', 'hidden_danger']
           additional.forEach((key) => {
@@ -515,6 +517,98 @@ Page({
     // });
   },
 
+  handleAddR(e) {
+    const {
+      files
+    } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
+    files.forEach((file) => this.onUploadR(file, key));
+  },
+  async onUploadR(file, key) {
+    const itemIndex = Number(key);
+    console.log(this.data);
+    const fileList = this.data.checkListData[itemIndex].checkFileListR;
+    const length = fileList.length;
+
+    this.setData({
+      [`checkListData[${itemIndex}].checkFileListR`]: [
+        ...fileList,
+        {
+          ...file,
+          status: 'loading',
+        },
+      ],
+    });
+    let compressResult = {};
+    try {
+      compressResult = await wx.compressImage({
+        src: file.url, // 图片路径
+        quality: 60, // 压缩质量
+      });
+    } catch {
+      Toast({
+        context: this,
+        selector: '#t-toast',
+        message: '压缩图片失败，请使用jpg格式图片',
+      });
+    }
+    let uploadResult = {};
+    try {
+      uploadResult = await getApp().cloud.uploadFile({
+        cloudPath: `report_image/${file.name}`,
+        filePath: compressResult.tempFilePath,
+      });
+      this.setData({
+        [`checkListData[${itemIndex}].checkFileListR[${length}].status`]: 'done',
+        [`checkListData[${itemIndex}].checkFileListR[${length}].fileID`]: `/${uploadResult.fileID
+          .split('/')
+          .slice(-2)
+          .join('/')}`,
+      });
+      setTimeout(() => {
+        console.log(this.data.checkListData);
+      }, 2000);
+    } catch {
+      Toast({
+        context: this,
+        selector: '#t-toast',
+        message: '上传图片出错，请联系管理员',
+      });
+    }
+  },
+  handleRemoveR(e) {
+    const {
+      index
+    } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
+    const fileIndex = Number(key);
+    const {
+      checkFileListR
+    } = this.data.checkListData[fileIndex];
+    const checkListData = this.data.checkListData.map((item, index1) => {
+      if (index1 === fileIndex) {
+        console.log(item, index1, index)
+        return {
+          ...item,
+          checkFileListR: checkFileListR.filter((item, index2) => index !== index2),
+        };
+      } else {
+        return item;
+      }
+    });
+    console.log(checkListData)
+    this.setData({
+      checkListData,
+    });
+    // this.setData({
+    //   [`checkListData[${index}].checkFileList`]: checkFileList,
+    // });
+  },
+
   // 样例2伪全屏输出旋转图片
   async getRotateImage() {
     const dataURL = this.signature2.toDataURL();
@@ -565,7 +659,7 @@ Page({
             anaylise: '',
             hidden_danger: '',
             spot_images: curr.checkFileList.map((item) => item.fileID),
-            rectification_images: [],
+            rectification_images: curr.checkFileListR.map((item) => item.fileID),
           });
         }
         if (curr.checked && curr.checkResult === 'fail') {
@@ -573,7 +667,7 @@ Page({
             item_id: curr.item_id,
             remark: curr.remark,
             spot_images: curr.checkFileList.map((item) => item.fileID),
-            rectification_images: [],
+            rectification_images: curr.checkFileListR.map((item) => item.fileID),
           }
           const additional = ['solution', 'anaylise', 'hidden_danger']
           additional.forEach((key) => {
@@ -623,6 +717,7 @@ Page({
         checkResult: '',
         remark: '',
         checkFileList: [],
+        checkFileListR: [],
       };
     });
     console.log(tempCheckListData);
@@ -662,6 +757,7 @@ Page({
         checkResult: '',
         remark: '',
         checkFileList: [],
+        checkFileListR: [],
       };
     });
     this.setData({

@@ -3,6 +3,7 @@ const app = getApp();
 Page({
   data: {
     fileList: [],
+    disabled: false,
     userPositionList: [{
         label: '企业负责人',
         value: '1',
@@ -65,6 +66,10 @@ Page({
 
   async goCreate() {
     try {
+      wx.showLoading()
+      this.setData({
+        disabled: true
+      })
       const enterpriseData = wx.getStorageSync('enterpriseData');
 
       const res = await app.call({
@@ -81,13 +86,23 @@ Page({
         },
       });
       if (res.data.code === 0) {
+        wx.hideLoading()
+        this.setData({
+          disabled: false
+        })
+        wx.showToast({
+          title: '新增成功',
+        })
         setTimeout(() => {
-          wx.redirectTo({
+          this.setData({
+            disabled: false
+          })
+          wx.reLaunch({
             url: '/pages/appointment-list/index',
           })
-        }, 1500)
+        }, 1000)
       }
-
+      wx.hideLoading()
     } catch (error) {
       wx.showToast({
         title: String(error),
@@ -155,6 +170,10 @@ Page({
   },
 
   async onUpload(file) {
+    wx.showLoading()
+    this.setData({
+      disabled: true
+    })
     let compressResult = {};
     try {
       compressResult = await wx.compressImage({
@@ -178,6 +197,10 @@ Page({
       this.setData({
         fileID: `/${uploadResult.fileID.split('/').slice(-2).join('/')}`,
       });
+      wx.hideLoading()
+      this.setData({
+        disabled: false
+      })
     } catch {
       Toast({
         context: this,

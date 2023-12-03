@@ -6,27 +6,13 @@
     <view class="cu-avatar-box">
       <view class="cu-avatar" bind:tap="handleEditAvatar">
         <image wx:if="{{fileList[0]}}" class="cu-avatar-img" src="{{fileList[0].url}}"> </image>
-        <image
-          wx:if="{{!fileList[0]}}"
-          class="cu-avatar-img"
-          src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop_user.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-        >
+        <image wx:if="{{!fileList[0]}}" class="cu-avatar-img" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/shop_user.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113">
         </image>
         <view class="cu-avatar-edit">
-          <image
-            class="cu-avatar-icon"
-            src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/avatar_edit.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-          ></image
-        ></view>
+          <image class="cu-avatar-icon" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/avatar_edit.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+        </view>
       </view>
-      <t-upload
-        id="avatar-upload"
-        files="{{fileList}}"
-        mediaType="{{['image']}}"
-        max="{{1}}"
-        bind:add="handleAdd"
-        style="display: none"
-      >
+      <t-upload id="avatar-upload" files="{{fileList}}" mediaType="{{['image']}}" max="{{1}}" bind:add="handleAdd" style="display: none">
       </t-upload>
     </view>
 
@@ -37,17 +23,7 @@
       <view class="cu-input" bind:tap="userPositionPicker" wx:if="{{editObj.position}}">
         <t-input suffixIcon="caret-down-small" value="{{ userPositionText }}" placeholder="请选择员工身份" disabled />
       </view>
-      <t-picker
-        visible="{{userPositionVisible}}"
-        value="{{userPositionValue}}"
-        data-key="userPosition"
-        title="{{userPositionTitle}}"
-        cancelBtn="取消"
-        confirmBtn="确认"
-        bindchange="onPickerChange"
-        bindpick="onColumnChange"
-        bindcancel="onPickerCancel"
-      >
+      <t-picker visible="{{userPositionVisible}}" value="{{userPositionValue}}" data-key="userPosition" title="{{userPositionTitle}}" cancelBtn="取消" confirmBtn="确认" bindchange="onPickerChange" bindpick="onColumnChange" bindcancel="onPickerCancel">
         <t-picker-item options="{{userPositionList}}"></t-picker-item>
       </t-picker>
     </view>
@@ -76,9 +52,7 @@
       hover
     /> -->
     <view class="cu-submit">
-      <t-button theme="primary" size="large" block bind:tap="goReportList"
-        >立即{{editObj.position ? '修改' : '创建'}}</t-button
-      >
+      <t-button theme="primary" size="large" block disabled="{{disabled}}" bind:tap="goReportList">立即{{editObj.position ? '修改' : '创建'}}</t-button>
     </view>
   </view>
 </view>

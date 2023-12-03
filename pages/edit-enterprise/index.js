@@ -123,7 +123,7 @@ Page({
     const payload = {
       enterprise_name: this.data.profile.enterprise_name,
       legal_name: this.data.profile.legal_name,
-      employee_mobile: this.data.profile.employee_mobile,
+      // employee_mobile: this.data.profile.employee_mobile,
       business_license: this.data.profile.business_license,
       address: this.data.profile.address,
       business_license_image: this.data.fileID1,
@@ -140,7 +140,7 @@ Page({
     });
     if (res.data.code === 0) {
       wx.showToast({
-        title: '修改企业信息成功',
+        title: '修改成功',
       })
       setTimeout(() => {
         wx.redirectTo({

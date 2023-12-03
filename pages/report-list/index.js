@@ -125,7 +125,7 @@ Page({
         return {
           ...item,
           dateCn: `${String(item.date).slice(-4, -2)}/${String(item.date).slice(-2)}`,
-          submitTime: formatTime(item.created_at, 'HH:mm'),
+          submitTime: formatTime(item.created_at, 'YYYY年MM月DD日 HH:mm:ss'),
           total: item.passed_count + item.unpassed_count,
           unqualifiedTotal: item.unpassed_count,
           submitUser: item.employee.name,
@@ -316,8 +316,9 @@ Page({
     const { item } = e.currentTarget.dataset;
     wx.downloadFile({
       url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${item.document_path}`,
+      filePath: wx.env.USER_DATA_PATH + "/" + `${item.document_path.split('/').pop()}`,
       success: function (res) {
-        const filePath = res.tempFilePath;
+        const filePath = res.filePath;
         wx.hideLoading();
         wx.openDocument({
           filePath: filePath,

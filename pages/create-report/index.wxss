@@ -137,6 +137,15 @@
   width: 60rpx;
 }
 
+.cr-list .cr-item-checked {
+  background: rgba(11, 130, 255, 0.05);
+  border: 1px solid rgb(11, 130, 255);
+}
+
+.cr-item-checked .t-grid__content{
+  background: rgba(11, 130, 255, 0.05);
+}
+
 /* .cns-input .t-input__control--disabled {
   -webkit-text-fill-color: #333333;
 } */

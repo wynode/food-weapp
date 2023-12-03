@@ -13,10 +13,10 @@
     <view class="cns-input">
       <t-input value="{{profile.legal_name}}" bindblur="legalNameChange" placeholder="请填写法人姓名" />
     </view>
-    <view class="cns-title">负责人电话</view>
+    <!-- <view class="cns-title">负责人电话</view>
     <view class="cns-input">
       <t-input value="{{profile.employee_mobile}}" bindblur="phoneChange" placeholder="请填写负责人电话" />
-    </view>
+    </view> -->
     <!-- <view class="cns-title">包保信息</view> -->
     <!-- <view class="cns-input">
       <t-textarea value="{{profile.baobao}}" bindblur="baoChange" autosize placeholder="请填写包保信息" />

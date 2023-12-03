@@ -120,25 +120,38 @@ Page({
       const passItems = reportProfile.passed_items.map((item) => item.item_id);
       const unPassItems = reportProfile.unpassed_items.map((item) => item.item_id);
       let checkList = [];
-      const tempCheckListData = allCheck.map((item, index) => {
+      let tempCheckListData = allCheck.map((item, index) => {
         if (passItems.includes(item.item_id)) {
-          checkList.push(index);
           return {
             ...item,
             checked: true,
             checkResult: 'success',
             remark: '',
+            solution: item.solution,
+            anaylise: item.anaylise,
+            hidden_danger: item.hidden_danger,
             checkFileList: [],
+            checkFileListR: [],
           };
         } else if (unPassItems.includes(item.item_id)) {
-          checkList.push(index);
           const unPassItem = reportProfile.unpassed_items.filter((unpass) => unpass.item_id === item.item_id)[0];
           return {
             ...item,
             checked: true,
             checkResult: 'fail',
+            solution: unPassItem.solution,
+            anaylise: unPassItem.anaylise,
+            hidden_danger: unPassItem.hidden_danger,
             remark: unPassItem.remark,
             checkFileList: unPassItem.spot_images.map((image) => {
+              return {
+                url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
+                fileID: image,
+                name: image.split('/').slice(-1)[0],
+                type: 'image',
+              };
+            }),
+            checkFileListR: unPassItem.rectification_images.map((image) => {
               return {
                 url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
                 fileID: image,
@@ -154,8 +167,22 @@ Page({
           checkResult: '',
           remark: '',
           checkFileList: [],
+          checkFileListR: [],
         };
       });
+      const checkedListData = []
+      const unCheckedListData = []
+      tempCheckListData.forEach((item) => {
+        if (item.checked) {
+          checkedListData.push(item)
+        } else {
+          unCheckedListData.push(item)
+        }
+      })
+      checkedListData.forEach((item, index) => {
+        checkList.push(index);
+      })
+      tempCheckListData = checkedListData.concat(unCheckedListData)
       this.setData({
         isRestaurant: business_type === 2,
         checkListData: tempCheckListData,
@@ -206,6 +233,99 @@ Page({
     setTimeout(() => {
       this.initSignature2();
     }, 2000);
+  },
+
+
+  handleAddR(e) {
+    const {
+      files
+    } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
+    files.forEach((file) => this.onUploadR(file, key));
+  },
+  async onUploadR(file, key) {
+    const itemIndex = Number(key);
+    console.log(this.data);
+    const fileList = this.data.checkListData[itemIndex].checkFileListR;
+    const length = fileList.length;
+
+    this.setData({
+      [`checkListData[${itemIndex}].checkFileListR`]: [
+        ...fileList,
+        {
+          ...file,
+          status: 'loading',
+        },
+      ],
+    });
+    let compressResult = {};
+    try {
+      compressResult = await wx.compressImage({
+        src: file.url, // 图片路径
+        quality: 60, // 压缩质量
+      });
+    } catch {
+      Toast({
+        context: this,
+        selector: '#t-toast',
+        message: '压缩图片失败，请使用jpg格式图片',
+      });
+    }
+    let uploadResult = {};
+    try {
+      uploadResult = await getApp().cloud.uploadFile({
+        cloudPath: `report_image/${file.name}`,
+        filePath: compressResult.tempFilePath,
+      });
+      this.setData({
+        [`checkListData[${itemIndex}].checkFileListR[${length}].status`]: 'done',
+        [`checkListData[${itemIndex}].checkFileListR[${length}].fileID`]: `/${uploadResult.fileID
+          .split('/')
+          .slice(-2)
+          .join('/')}`,
+      });
+      setTimeout(() => {
+        console.log(this.data.checkListData);
+      }, 2000);
+    } catch {
+      Toast({
+        context: this,
+        selector: '#t-toast',
+        message: '上传图片出错，请联系管理员',
+      });
+    }
+  },
+  handleRemoveR(e) {
+    const {
+      index
+    } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
+    const fileIndex = Number(key);
+    const {
+      checkFileListR
+    } = this.data.checkListData[fileIndex];
+    const checkListData = this.data.checkListData.map((item, index1) => {
+      if (index1 === fileIndex) {
+        console.log(item, index1, index)
+        return {
+          ...item,
+          checkFileListR: checkFileListR.filter((item, index2) => index !== index2),
+        };
+      } else {
+        return item;
+      }
+    });
+    console.log(checkListData)
+    this.setData({
+      checkListData,
+    });
+    // this.setData({
+    //   [`checkListData[${index}].checkFileList`]: checkFileList,
+    // });
   },
 
   handleBack() {
@@ -324,7 +444,7 @@ Page({
             anaylise: '',
             hidden_danger: '',
             spot_images: curr.checkFileList.map((item) => item.fileID),
-            rectification_images: [],
+            rectification_images: curr.checkFileListR.map((item) => item.fileID),
           });
         }
         if (curr.checked && curr.checkResult === 'fail') {
@@ -332,7 +452,7 @@ Page({
             item_id: curr.item_id,
             remark: curr.remark,
             spot_images: curr.checkFileList.map((item) => item.fileID),
-            rectification_images: [],
+            rectification_images: curr.checkFileListR.map((item) => item.fileID),
           }
           const additional = ['solution', 'anaylise', 'hidden_danger']
           additional.forEach((key) => {
@@ -367,9 +487,15 @@ Page({
         duration: 2000,
       });
       setTimeout(() => {
-        wx.reLaunch({
-          url: '/pages/all-center/index',
-        });
+        const pages = getCurrentPages();  //获取当前界面的所有信息
+        const prevPage = pages[pages.length-2];
+        prevPage.getProfileList(this.data.date, this.data.report_type)
+      }, 500)
+      setTimeout(() => {
+        wx.navigateBack()
+        // wx.reLaunch({
+        //   url: `/pages/daily-stats/index?date=${this.data.date}&report_type=${this.data.report_type}`,
+        // });
       }, 1500);
     } catch (error) {
       console.log(error);
@@ -593,7 +719,7 @@ Page({
             anaylise: '',
             hidden_danger: '',
             spot_images: curr.checkFileList.map((item) => item.fileID),
-            rectification_images: [],
+            rectification_images: curr.checkFileListR.map((item) => item.fileID),
           });
         }
         if (curr.checked && curr.checkResult === 'fail') {
@@ -601,7 +727,7 @@ Page({
             item_id: curr.item_id,
             remark: curr.remark,
             spot_images: curr.checkFileList.map((item) => item.fileID),
-            rectification_images: [],
+            rectification_images: curr.checkFileListR.map((item) => item.fileID),
           }
           const additional = ['solution', 'anaylise', 'hidden_danger']
           additional.forEach((key) => {
@@ -651,6 +777,7 @@ Page({
         checkResult: '',
         remark: '',
         checkFileList: [],
+        checkFileListR: [],
       };
     });
     console.log(tempCheckListData);
@@ -659,6 +786,7 @@ Page({
       min_item_nums,
       checkListData: tempCheckListData,
       checkList: [],
+      checkListR: [],
     });
     this.setData({
       templateTypeVisible: false,
@@ -690,6 +818,7 @@ Page({
         checkResult: '',
         remark: '',
         checkFileList: [],
+        checkFileListR: [],
       };
     });
     console.log(value);

@@ -63,7 +63,7 @@ Page({
 
   goEditReport() {
     const url = `/pages/edit-report/index?report_type=${this.data.report_type}&template_id=${this.data.profile.template_id}&date=${this.data.profile.date}`;
-    wx.reLaunch({
+    wx.navigateTo({
       url,
     });
   },

@@ -5,6 +5,7 @@ import Toast from 'tdesign-miniprogram/toast/index';
 const app = getApp();
 Page({
   data: {
+    dialoge: '',
     isOvertime: true,
     currentTime: '',
     intervalId: '',
@@ -45,12 +46,21 @@ Page({
       } = res.data.data;
       wx.hideLoading();
       if (waitlist.length === 0) {
+        if (this.data.showWarnConfirm) {
+          this.setData({ showWarnConfirm: false })
+          wx.reLaunch({
+            url: '/pages/submit-report/index',
+          })
+        }
         Toast({
           context: this,
           selector: '#t-toast',
           message: '暂无需要提交的报告',
         });
         return
+      }
+      if (this.data.showWarnConfirm) {
+        this.setData({ showWarnConfirm: false })
       }
       const filterwait = waitlist.map((item) => {
         const now = new Date();
@@ -108,30 +118,22 @@ Page({
     }
   },
 
-  async handleSkip(e) {
+  async handleSkip() {
     wx.showLoading()
     const {
       item
-    } = e.currentTarget.dataset
+    } = this.data.dialoge.currentTarget.dataset
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const res = await app.call({
-      path: '/api/v1/program/enterprise/report',
-      method: 'PUT',
+      path: '/api/v1/program/enterprise/report/skip',
+      method: 'POST',
       header: {
         'x-enterprise-id': enterpriseData.enterprise_id,
       },
+      showWarnConfirm: false,
       data: {
         date: item.date,
         report_type: item.report_type,
-        params: {
-          template_id: '',
-          item_count: 0,
-          passed_items: [],
-          unpassed_items: [],
-          signer: '',
-          content: {},
-          skip: true,
-        },
       }
     });
     if (res.data.code === 0) {
@@ -187,6 +189,21 @@ Page({
       business_type,
       enterprise_id
     } = enterpriseData;
+    if (reportData.report_type === 2) {
+      const ress = await app.call({
+        path: `/api/v1/program/enterprise/report/getWeeklyReportsStatus`,
+        method: 'GET',
+        header: {
+          'x-enterprise-id': enterprise_id,
+        },
+      });
+      if (!ress.data.data.result) {
+        wx.navigateTo({
+          url: `/pages/create-report2/index`,
+        });
+        return
+      }
+    }
     const res = await app.call({
       path: `/api/v1/program/enterprise/report/template?report_type=${reportData.report_type}&business_type=${business_type}`,
       method: 'GET',
@@ -248,6 +265,14 @@ Page({
 
   async onUnload() {
     clearInterval(this.data.intervalId);
+  },
+
+  showDialog(e) {
+    this.setData({ dialoge: e, showWarnConfirm: true });
+  },
+
+  closeDialog() {
+    this.setData({ showWarnConfirm: false });
   },
 
   goCreateWeek() {

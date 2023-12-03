@@ -13,7 +13,7 @@
           <t-col span="12" wx:for="{{positem.list}}">
             <view class="manager-content">
               <t-image class="manager-img" src="/assets/image/word.png" />
-              <view class="cert-name" style="margin-top: 6rpx;">{{ item.employee_name }}</view>
+              <view class="cert-name" style="margin-top: 6rpx;">{{ item.employee_name || '无' }}</view>
               <view>
                 <t-button theme="primary" data-item="{{item}}" size="small" bind:tap="handlePreview">预览</t-button>
                 <t-button theme="primary" data-item="{{item}}" size="small" bind:tap="handleReplace">替换</t-button>
