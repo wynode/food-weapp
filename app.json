@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/all-center/index",
+    "pages/log-list/index",
     "pages/staff-scan/index",
     "pages/check-bao/index",
     "pages/edit-enterprise/index",
@@ -18,7 +19,6 @@
     "pages/word-list/index",
     "pages/word-list-duty/index",
     "pages/word-list-regime/index",
-    "pages/log-list/index",
     "pages/create-report2/index",
     "pages/e-signature/index",
     "pages/enterprise-profile/index",

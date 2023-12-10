@@ -37,14 +37,15 @@ Page({
     checkPercentage: 0,
     currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
     checkListData: [],
-    min_item_nums: 3,
+    min_item_nums: 1,
   },
 
   async onLoad(options) {
     try {
       let allCheck = [];
       const {
-        checkList
+        checkList,
+        isCheckedFalse,
       } = options || {};
       const reportData = wx.getStorageSync('reportData');
       const reportTypeOptions = {
@@ -52,8 +53,14 @@ Page({
         2: '周排查',
         3: '月调度',
       };
+      const dateString = String(reportData.date)
+      this.setData({
+        currentDay: formatTime(`${dateString.slice(0,4)}-${dateString.slice(4,6)}-${dateString.slice(6,8)}`, 'YYYY.MM.DD')
+      })
       const reportType = reportTypeOptions[reportData.report_type];
-      wx.setNavigationBarTitle({ title: `提交新${reportType}`})
+      wx.setNavigationBarTitle({
+        title: `提交新${reportType}`
+      })
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const {
         business_type,
@@ -184,7 +191,7 @@ Page({
         });
         console.log(tempCheckListData);
       } else {
-        const tempCheckListData = allCheck.map((item) => {
+        let tempCheckListData = allCheck.map((item) => {
           return {
             ...item,
             checked: false,
@@ -194,6 +201,61 @@ Page({
             checkFileListR: [],
           };
         });
+        if (isCheckedFalse) {
+          let checkList = [];
+          const res = await app.call({
+            path: `/api/v1/program/enterprise/report/template?report_type=${Number(reportData.report_type) - 1}&business_type=${business_type}`,
+            method: 'GET',
+            header: {
+              'x-enterprise-id': enterprise_id,
+            },
+          });
+          const allItems = res.data.data.all_items
+          tempCheckListData = allCheck.map((unPassItem, index) => {
+            const items = allItems.filter((item) => item.item_id === unPassItem.item_id)[0];
+            return {
+              ...items,
+              checked: true,
+              checkResult: 'fail',
+              solution: unPassItem.solution,
+              anaylise: unPassItem.anaylise,
+              hidden_danger: unPassItem.hidden_danger,
+              remark: unPassItem.remark,
+              checkFileList: unPassItem.spot_images.map((image) => {
+                return {
+                  url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
+                  fileID: image,
+                  name: image.split('/').slice(-1)[0],
+                  type: 'image',
+                };
+              }),
+              checkFileListR: unPassItem.rectification_images.map((image) => {
+                return {
+                  url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
+                  fileID: image,
+                  name: image.split('/').slice(-1)[0],
+                  type: 'image',
+                };
+              }),
+            };
+          });
+          tempCheckListData.forEach((item, index) => {
+            checkList.push(index);
+          })
+          this.setData({
+            checkList
+          })
+          let checkedResultLength = checkList.length;
+          const checkPercentage = (checkedResultLength / tempCheckListData.length) * 100;
+          const submitDisabled = !(checkedResultLength >= this.data.min_item_nums);
+          this.setData({
+            checkedResultLength,
+            submitDisabled,
+            checkPercentage,
+            computedColor: submitDisabled ? '#FC5B5B' : '0B82FF',
+            computedColor1: submitDisabled ? 'color: #FC5B5B' : 'color: 0B82FF',
+          });
+        }
         this.setData({
           isRestaurant: business_type === 2,
           checkListData: tempCheckListData,
@@ -399,7 +461,7 @@ Page({
       });
       setTimeout(() => {
         wx.reLaunch({
-          url: '/pages/all-center/index',
+          url: `/pages/all-center/index?date=${reportData.date}`,
         });
       }, 1500);
     } catch (error) {

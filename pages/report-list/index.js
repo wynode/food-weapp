@@ -85,6 +85,14 @@ Page({
     const { reportType = '1', month = '' } = options || {};
     this.getReportProfileList(reportType, month);
     this.getReportList(reportType, month);
+    const dateOptions = {
+      1: '日管控',
+      2: '周排查',
+      3: '月调度',
+    };
+    this.setData({
+      dateType: dateOptions[reportType],
+    });
     this.setData({
       reportType,
       dateValue: [month.slice(0, 4), month.slice(-2)],
@@ -124,8 +132,9 @@ Page({
       const reportProfileList = list.map((item) => {
         return {
           ...item,
+          isDeadline: new Date(item.deadline).getTime() < new Date().getTime(),
           dateCn: `${String(item.date).slice(-4, -2)}/${String(item.date).slice(-2)}`,
-          submitTime: formatTime(item.created_at, 'YYYY年MM月DD日 HH:mm:ss'),
+          submitTime: item.submit_at ? formatTime(item.submit_at, 'YYYY年MM月DD日 HH:mm:ss') : '',
           total: item.passed_count + item.unpassed_count,
           unqualifiedTotal: item.unpassed_count,
           submitUser: item.employee.name,

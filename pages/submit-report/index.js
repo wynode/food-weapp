@@ -47,8 +47,10 @@ Page({
       wx.hideLoading();
       if (waitlist.length === 0) {
         if (this.data.showWarnConfirm) {
-          this.setData({ showWarnConfirm: false })
-          wx.reLaunch({
+          this.setData({
+            showWarnConfirm: false
+          })
+          wx.navigateTo({
             url: '/pages/submit-report/index',
           })
         }
@@ -60,7 +62,9 @@ Page({
         return
       }
       if (this.data.showWarnConfirm) {
-        this.setData({ showWarnConfirm: false })
+        this.setData({
+          showWarnConfirm: false
+        })
       }
       const filterwait = waitlist.map((item) => {
         const now = new Date();
@@ -98,6 +102,9 @@ Page({
       if (filterwait[0].report_type === 3) {
         showAllQualify = false;
       }
+      if (enterpriseData.business_type === 2 && filterwait[0].report_type === 2) {
+        showAllQualify = false;
+      }
       this.setData({
         intervalId,
         firstWait: filterwait[0],
@@ -111,7 +118,7 @@ Page({
         message: '暂无需要提交的报告',
       });
       // setTimeout(() => {
-      //   wx.reLaunch({
+      //   wx.navigateTo({
       //     url: `/pages/all-center/index`,
       //   });
       // }, 1000);
@@ -145,6 +152,7 @@ Page({
     const {
       item
     } = e.currentTarget.dataset;
+    const enterpriseData = wx.getStorageSync('enterpriseData')
     const data = this.data.waitlist;
     // 使用findIndex找到要移动的项在数组中的索引
     const index = data.findIndex((item1) => item1.report_id === item.report_id);
@@ -174,6 +182,9 @@ Page({
     if (item.report_type === 3) {
       showAllQualify = false;
     }
+    if (enterpriseData.business_type === 2 && item.report_type === 2) {
+      showAllQualify = false;
+    }
     this.setData({
       intervalId,
       firstWait: data[0],
@@ -189,15 +200,30 @@ Page({
       business_type,
       enterprise_id
     } = enterpriseData;
-    if (reportData.report_type === 2) {
+    if (enterpriseData.business_type === 2 && (reportData.report_type === 2 || reportData.report_type === 3)) {
       const ress = await app.call({
-        path: `/api/v1/program/enterprise/report/getWeeklyReportsStatus`,
+        path: `/api/v1/program/enterprise/report/getFailedReports?report_type=${reportData.report_type}`,
         method: 'GET',
         header: {
           'x-enterprise-id': enterprise_id,
         },
       });
-      if (!ress.data.data.result) {
+      if (ress.data.data.list && ress.data.data.list.length) {
+        const checkListDat = ress.data.data.list.reduce((acc, cur) => {
+          return acc.concat(cur.unpassed_items || [])
+        },[])
+        wx.setStorageSync('checkListData', checkListDat)
+        wx.navigateTo({
+          url: `/pages/create-report/index?checkList=yes&isCheckedFalse=yes`,
+        });
+        return
+      } else {
+        if (reportData.report_type === 2) {
+          wx.navigateTo({
+            url: `/pages/create-report/index`,
+          });
+          return
+        }
         wx.navigateTo({
           url: `/pages/create-report2/index`,
         });
@@ -215,21 +241,22 @@ Page({
       has_template
     } = res.data.data;
     wx.hideLoading()
-    if (enterpriseData.business_type === 2 && this.data.firstWait.report_type === 3) {
+    // if (enterpriseData.business_type === 2 && this.data.firstWait.report_type === 3) {
+    //   wx.navigateTo({
+    //     url: `/pages/create-report2/index`,
+    //   });
+    // } else {
+    //   console.log(has_template);
+
+    // }
+    if (has_template) {
       wx.navigateTo({
-        url: `/pages/create-report2/index`,
+        url: `/pages/create-report/index`,
       });
     } else {
-      console.log(has_template);
-      if (has_template) {
-        wx.navigateTo({
-          url: `/pages/create-report/index`,
-        });
-      } else {
-        wx.navigateTo({
-          url: `/pages/create-report-pre/index`,
-        });
-      }
+      wx.navigateTo({
+        url: `/pages/create-report-pre/index`,
+      });
     }
   },
 
@@ -268,11 +295,16 @@ Page({
   },
 
   showDialog(e) {
-    this.setData({ dialoge: e, showWarnConfirm: true });
+    this.setData({
+      dialoge: e,
+      showWarnConfirm: true
+    });
   },
 
   closeDialog() {
-    this.setData({ showWarnConfirm: false });
+    this.setData({
+      showWarnConfirm: false
+    });
   },
 
   goCreateWeek() {

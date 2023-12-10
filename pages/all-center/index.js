@@ -178,11 +178,19 @@ Page({
     });
   },
 
-  async onLoad() {
-    this.handelInit();
+  async onLoad(options) {
+    if (options && options.date) {
+      const date = String(options.date)
+      this.setData({
+        dateValue: [date.slice(0,4), date.slice(4, 6)]
+      })
+      this.handelInit([date.slice(0,4), date.slice(4, 6)]);
+    } else {
+      this.handelInit(this.data.dateValue);
+    }
   },
 
-  async handelInit() {
+  async handelInit(dateValue) {
     try {
       wx.showLoading()
       console.log(111);
@@ -217,7 +225,7 @@ Page({
         enterprise_name,
         status,
       });
-      this.getReportStats(this.data.dateValue.join(''), enterprise_id);
+      this.getReportStats(dateValue.join(''), enterprise_id);
       wx.hideLoading()
     } catch (error) {
       console.dir(error);
@@ -284,7 +292,7 @@ Page({
 
   goLogList() {
     wx.navigateTo({
-      url: `/pages/log-list/index`,
+      url: `/pages/log-list/index?date=${this.data.dateValue.join('')}`,
     });
   },
 

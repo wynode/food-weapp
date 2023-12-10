@@ -36,6 +36,10 @@ Page({
 
   onLoad() {
     const reportData = wx.getStorageSync('reportData');
+    const dateString = String(reportData.date)
+    this.setData({
+      currentDay: formatTime(`${dateString.slice(0,4)}-${dateString.slice(4,6)}-${dateString.slice(6,8)}`, 'YYYY.MM.DD')
+    })
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const { business_type } = enterpriseData;
     const { report_type } = reportData;
@@ -271,11 +275,11 @@ Page({
       });
       setTimeout(() => {
         wx.reLaunch({
-          url: '/pages/all-center/index',
+          url: `/pages/all-center/index?date=${reportData.date}`,
         });
       }, 1500);
     } catch (error) {
-      console.log(error);
+      console.dir(error);
       wx.showToast({
         title: `${error}`,
         icon: 'error',

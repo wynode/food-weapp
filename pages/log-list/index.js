@@ -4,7 +4,9 @@ import {
 const app = getApp()
 Page({
   data: {
+    showDotArray: [],
     visible: true,
+    month: '',
     calendarValue: new Date().getTime(),
     minDate: new Date(2023, 6, 12).getTime(),
     maxDate: new Date().getTime(),
@@ -32,8 +34,16 @@ Page({
     ],
   },
 
-  onLoad() {
-    this.getReportLogList(new Date().getTime());
+  onLoad(options) {
+    const {
+      date
+    } = options || {}
+    const year = String(date).slice(0, 4) || new Date().getFullYear
+    const month = String(date).slice(4, 6) || new Date().getMonth + 1
+    this.setData({
+      calendarValue: new Date(`${year}/${month}/1`).getTime()
+    })
+    this.getReportLogList(new Date(`${year}/${month}/1`).getTime());
   },
 
   async getReportLogList(dateTime) {
@@ -49,33 +59,57 @@ Page({
         },
       });
       const {
-        list
+        list,
+        month_logs,
+        month_finished,
+        week_finished,
       } = reportLogListRes.data.data;
+      const reportTypeOptions = {
+        1: '日管控',
+        2: '周排查',
+        3: '月调度',
+      };
       const logList = list.map((item) => {
         return {
           ...item,
-          date: formatTime(item.created_at, 'M.DD'),
+          date: formatTime(String(item.report_info ? item.report_info.date : item.date), 'M/DD'),
           dateType: '',
           logType: 'day',
+          logTypee: reportTypeOptions[item.report_info.report_type],
           logTypeCN: '提交日管控',
-          submitTime: formatTime(item.created_at, 'HH.mm'),
+          submitTime: item.created_at ? formatTime(item.created_at, 'YYYY年MM月DD日 HH:mm:ss') : '',
           submitUser: item.employee ? item.employee.name : '',
           submitStatus: item.action,
           title: item.content,
         }
       })
+
       this.setData({
         logList,
+        showDotArray: month_logs.map((item) => String(item)),
+        month: month.slice(-2),
+        monthFinished: month_finished ? '已完成' : '未完成',
+        weekFinished: week_finished ? '已完成' : '未完成'
       });
       wx.hideLoading()
     } catch {
       wx.showToast({
+        icon: 'none',
         title: '获取详情失败，请联系管理员',
       });
-      wx.reLaunch({
-        url: '/pages/all-center/index',
-      });
+      // wx.reLaunch({
+      //   url: '/pages/all-center/index',
+      // });
     }
+  },
+
+  // 自定义函数，用于为节点添加特定的 class
+  addSpecificClass: function (node, className) {
+    const currentClass = node.className || '';
+    // 使用 Set 数据结构确保不重复添加相同的 class
+    const classSet = new Set(currentClass.split(' '));
+    classSet.add(className);
+    node.className = [...classSet].join(' ');
   },
 
   getItemRightClass(value) {

@@ -116,3 +116,13 @@
   color: rgba(255, 255, 255, 0.9);
   line-height: 42rpx;
 }
+
+.my-log-item::after{
+  content: '';
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: #006c45;
+  position: absolute;
+  bottom: 6rpx;
+}

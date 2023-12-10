@@ -1,6 +1,6 @@
 <view>
   <background isHighlight="true"></background>
-  <view class="submit-report">
+  <view class="submit-report" style="padding-bottom: 180rpx;">
     <!-- <t-cell title="是否切换为餐饮" bordered="{{false}}" style="margin-bottom: 20rpx">
       <t-switch value="{{switchValue}}" bindchange="handleSwitchChange" slot="note" />
     </t-cell> -->
@@ -24,20 +24,20 @@
         </view>
       </view>
     </view>
-    <t-progress class="sr-progress" color="#FC5B5B" track-color="rgba(252,91,91,0.1)" stroke-width="20" theme="circle" percentage="100" wx:if="{{isOvertime}}">
+    <!-- <t-progress class="sr-progress" color="#FC5B5B" track-color="rgba(252,91,91,0.1)" stroke-width="20" theme="circle" percentage="100" wx:if="{{isOvertime}}">
+      <view slot="label">
+        <view class="sr-progress-time">{{ currentTime }}</view>
+        <view class="sr-progress-countdown">{{ firstWait.remain }}</view>
+      </view>
+    </t-progress> -->
+    <!-- <t-progress class="sr-progress" color="#0B82FF" track-color="rgba(11,130,255,0.1)" stroke-width="20" theme="circle" percentage="40" wx:else>
       <view slot="label">
         <view class="sr-progress-time">{{ currentTime }}</view>
         <view class="sr-progress-countdown">{{ firstWait.remain }}</view>
       </view>
     </t-progress>
-    <t-progress class="sr-progress" color="#0B82FF" track-color="rgba(11,130,255,0.1)" stroke-width="20" theme="circle" percentage="40" wx:else>
-      <view slot="label">
-        <view class="sr-progress-time">{{ currentTime }}</view>
-        <view class="sr-progress-countdown">{{ firstWait.remain }}</view>
-      </view>
-    </t-progress>
-    <view class="sr-tips"> 请尽快填写{{ reportTypeMap[firstWait.report_type] }}哦 </view>
-    <view class="sr-btns">
+    <view class="sr-tips"> 请尽快填写{{ reportTypeMap[firstWait.report_type] }}哦 </view> -->
+    <view class="sr-btns" style="height: 160rpx; padding-top: 20rpx; position: fixed; bottom: 0rpx; width: 100%;left: 0rpx; display: flex; justify-content: center;background: #fff;">
       <t-button class="sr-btns-left" theme="primary" size="large" bindtap="goCreateReport" disabled="{{!firstWait.date}}">逐一检查</t-button>
       <t-button class="sr-btns-right" theme="light" size="large" bindtap="goCreateReportQualify" disabled="{{!showAllQualify || !firstWait.date}}">一键合格</t-button>
     </view>

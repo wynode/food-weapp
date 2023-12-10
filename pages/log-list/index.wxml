@@ -2,30 +2,36 @@
   <background isHighlight="true"></background>
   <view class="log-list">
     <view class="ll-calendar">
-      <t-calendar
-        visible="{{visible}}"
-        minDate="{{minDate}}"
-        maxDate="{{maxDate}}"
-        value="{{calendarValue}}"
-        use-popup="{{false}}"
-        bind:select="handleSelect"
-      />
+      <t-calendar id="my-calendar" visible="{{visible}}" minDate="{{minDate}}" maxDate="{{maxDate}}" value="{{calendarValue}}" show-dot-array="{{showDotArray}}" use-popup="{{false}}" bind:select="handleSelect" />
+    </view>
+    <view style="display: flex; justify-content: space-between; padding: 20rpx 20rpx 0rpx;">
+      <view style="display: flex;">
+        <view style="margin-right: 8rpx;">所属周报</view>
+        <view style="{{weekFinished === '已完成' ? 'color: #008858' : 'color: #ad352f'}}">
+          {{weekFinished}}
+        </view>
+      </view>
+
+      <view style="display: flex;">
+        <view style="margin-right: 8rpx;">
+          {{month}}月月报
+        </view>
+        <view style="{{monthFinished === '已完成' ? 'color: #008858' : 'color: #ad352f'}}">{{monthFinished}}</view>
+      </view>
     </view>
     <view class="ll-list">
       <view class="ll-item" wx:for="{{logList}}" wx:key="index" wx:for-item="logItem">
         <view class="ll-item-left">
           <view class="llil-date">{{ logItem.date }}</view>
-          <view class="llil-type">{{ logItem.dateType }}</view>
+          <view class="llil-type">{{ logItem.logTypee }}</view>
         </view>
-        <view
-          class="ll-item-right {{ logItem.logType === 'day' ? 'll-item-right-day' : '' }} {{ logItem.logType === 'bill' ? 'll-item-right-bill' : '' }}"
-        >
+        <view class="ll-item-right {{ logItem.logType === 'day' ? 'll-item-right-day' : '' }} {{ logItem.logType === 'bill' ? 'll-item-right-bill' : '' }}">
           <view class="llir-top">
             <view>{{ logItem.content }}</view>
           </view>
           <view class="llir-center">
-            {{ logItem.submitTime }} | {{ logItem.submitUser }}</view
-          >
+            {{ logItem.submitTime }} | {{ logItem.submitUser }}
+          </view>
           <!-- <view class="llir-bottom"> {{ logItem.address }}</view> -->
         </view>
       </view>

@@ -31,7 +31,7 @@
                 <t-picker-item options="{{seasons}}"></t-picker-item>
               </t-picker>
             </view>
-            <view class="rpr-content">
+            <!-- <view class="rpr-content">
               <t-progress color="#FF3E3E" stroke-width="20" theme="circle" percentage="{{percentage}}" />
               <view class="rpr-record">
                 <view class="rpr-record-item">
@@ -47,7 +47,7 @@
                   <view class="text-red">{{reportProfileDetail.unpassed_days}}</view>
                 </view>
               </view>
-            </view>
+            </view> -->
           </view>
           <view class="rp-list">
             <view
@@ -66,7 +66,7 @@
                   size="small"
                   theme="light"
                   variant="text"
-                  style="margin-top: -14rpx; padding-left: 10rpx"
+                  style="margin-top: -10rpx; padding-left: 10rpx"
                   bind:tap="handlePreviewCheckList"
                   >查看图片</t-button
                 >
@@ -76,7 +76,7 @@
                   size="small"
                   theme="light"
                   variant="text"
-                  style="margin-top: -20rpx"
+                  style="margin-top: -10rpx"
                   wx:if="{{reportItem.unqualifiedTotal}}"
                   bind:tap="handleRectify"
                   >整改</t-button
@@ -85,6 +85,7 @@
               <view class="{{ reportItem.unqualifiedTotal ? 'rp-item-right-red' : 'rp-item-right'}}">
                 <view class="rpir-top">
                   <view>共{{ reportItem.total }}项</view>
+                  <view>{{ reportItem.isDeadline ? '超时' : ''}}</view>
                   <view wx:if="{{reportItem.unqualifiedTotal > 0}}">{{ reportItem.unqualifiedTotal }}项不合格</view>
                   <view wx:else>全部合格</view>
                 </view>
