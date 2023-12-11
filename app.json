@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/all-center/index",
+    "pages/enterprise/bind",
     "pages/log-list/index",
     "pages/staff-scan/index",
     "pages/check-bao/index",

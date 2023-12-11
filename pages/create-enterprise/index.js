@@ -16,8 +16,7 @@ Page({
     businessTypeVisible: '',
     businessTypeValue: [],
     businessTypeText: '',
-    businessTypeList: [
-      {
+    businessTypeList: [{
         label: '食品销售',
         value: '1',
       },
@@ -58,7 +57,10 @@ Page({
 
   onAreaColumnChange(e) {
     console.log('pick:', e.detail);
-    const { column, index } = e.detail;
+    const {
+      column,
+      index
+    } = e.detail;
 
     if (column === 0) {
       this.setCitiesFromProvinceIndex(index);
@@ -85,7 +87,10 @@ Page({
   },
 
   onAreaPickerChange(e) {
-    const { value, label } = e.detail;
+    const {
+      value,
+      label
+    } = e.detail;
 
     console.log('picker confirm:', e.detail);
     this.setData({
@@ -132,10 +137,13 @@ Page({
   },
 
   onInputValue(e) {
-    const { value = '' } = e.detail;
-    const { item } = e.currentTarget.dataset;
-    this.setData(
-      {
+    const {
+      value = ''
+    } = e.detail;
+    const {
+      item
+    } = e.currentTarget.dataset;
+    this.setData({
         [`enterpriseForm.${item}`]: value,
       },
       () => {
@@ -149,7 +157,10 @@ Page({
   },
 
   onVerifyInputLegal() {
-    const { legal_name, employee_mobile } = this.data.enterpriseForm;
+    const {
+      legal_name,
+      employee_mobile
+    } = this.data.enterpriseForm;
     const prefixPhoneReg = String(this.properties.phoneReg || innerPhoneReg);
     const prefixNameReg = String(this.properties.nameReg || innerNameReg);
     const nameRegExp = new RegExp(prefixNameReg);
@@ -173,8 +184,13 @@ Page({
   },
 
   onPickerChange(e) {
-    const { key } = e.currentTarget.dataset;
-    const { label, value } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
+    const {
+      label,
+      value
+    } = e.detail;
 
     this.setData({
       businessTypeVisible: false,
@@ -184,7 +200,9 @@ Page({
   },
 
   onPickerCancel(e) {
-    const { key } = e.currentTarget.dataset;
+    const {
+      key
+    } = e.currentTarget.dataset;
     this.setData({
       [`${key}Visible`]: false,
     });
@@ -197,9 +215,17 @@ Page({
   },
 
   async scanAddIn() {
-    wx.navigateTo({
-      url: '/pages/staff-scan/index',
-    });
+    // wx.navigateTo({
+    //   url: '/pages/staff-scan/index',
+    // });
+    // 允许从相机和相册扫码
+    wx.scanCode({
+      success(res) {
+        wx.redirectTo({
+          url: `/${res.path}`,
+        })
+      }
+    })
     // const res = await app.call({
     //   path: '/api/v1/program/enterprise',
     // });
@@ -216,7 +242,12 @@ Page({
   async handleOCRResult(e) {
     if (e.detail) {
       // this.data.submitActive = true
-      const { company_address, company_name, legal_person, license_no } = e.detail.data;
+      const {
+        company_address,
+        company_name,
+        legal_person,
+        license_no
+      } = e.detail.data;
       const res = await app.call({
         path: '/api/v1/program/enterprise/whitelist',
         method: 'GET',

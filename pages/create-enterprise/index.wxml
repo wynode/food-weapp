@@ -27,8 +27,9 @@
         <view class="cs-submit">
           <t-button theme="primary" style="margin-top: 40rpx;" block disabled="{{!submitActive}}" size="large" bind:tap="formSubmit">继续填写</t-button>
 
-          <!-- <t-button theme="primary" size="large" bind:tap="scanAddIn">扫码加入企业</t-button> -->
         </view>
+
+        <t-button style="margin-top: 40rpx;" theme="primary" block size="large" bind:tap="scanAddIn">扫码加入企业</t-button>
       </form>
     </view>
   </view>

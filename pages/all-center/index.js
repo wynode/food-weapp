@@ -5,6 +5,7 @@ Page({
     status: '1',
     enterprise_id: '',
     enterprise_name: '',
+    showWarnConfirm: false,
     dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1)],
     years: [{
         label: '2026年',
@@ -105,6 +106,10 @@ Page({
         label: '员工扫码',
         value: '2'
       },
+      {
+        label: '离开企业',
+        value: 'leave'
+      },
       // {
       //   label: '包保端',
       //   value: '3'
@@ -169,6 +174,48 @@ Page({
       wx.navigateTo({
         url: '/pages/bao-info/index',
       });
+    } else if (value[0] === 'leave') {
+      this.setData({
+        showWarnConfirm: true
+      })
+    }
+  },
+
+  closeDialog() {
+    this.setData({
+      showWarnConfirm: false
+    });
+  },
+
+  async confirmDialog() {
+    wx.showLoading()
+    const enterpriseData = wx.getStorageSync('enterpriseData')
+    const res = await app.call({
+      path: `/api/v1/program/enterprise/leave`,
+      header: {
+        'x-enterprise-id': enterpriseData.enterprise_id,
+      },
+      method: 'DELETE',
+      data: {
+        enterprise_id: enterpriseData.enterprise_id
+      }
+    });
+    console.log(res)
+    wx.hideLoading()
+    if (res.data.code !== 400 || res.data.code !== 500) {
+      wx.showToast({
+        title: '解除企业成功',
+      })
+      setTimeout(() => {
+        wx.reLaunch({
+          url: '/pages/create-enterprise/index',
+        })
+      }, 1000)
+    } else {
+      wx.showToast({
+        icon: 'error',
+        title: '解除企业失败',
+      })
     }
   },
 
@@ -182,9 +229,9 @@ Page({
     if (options && options.date) {
       const date = String(options.date)
       this.setData({
-        dateValue: [date.slice(0,4), date.slice(4, 6)]
+        dateValue: [date.slice(0, 4), date.slice(4, 6)]
       })
-      this.handelInit([date.slice(0,4), date.slice(4, 6)]);
+      this.handelInit([date.slice(0, 4), date.slice(4, 6)]);
     } else {
       this.handelInit(this.data.dateValue);
     }

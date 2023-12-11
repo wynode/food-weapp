@@ -24,6 +24,16 @@ Page({
 
   onLoad(options) {},
 
+  handleteach() {
+    wx.scanCode({
+      success(res) {
+        wx.redirectTo({
+          url: `/${res.path}`,
+        })
+      }
+    })
+  },
+
   goReportList(e) {
     const {
       key = '1'

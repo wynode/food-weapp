@@ -35,7 +35,7 @@
         <view class="cs-submit">
           <t-button theme="primary" disabled="{{!submitActive}}" size="large" bind:tap="formSubmit">立即创建</t-button>
 
-          <t-button theme="primary" size="large" bind:tap="scanAddIn">扫码加入企业</t-button>
+          <!-- <t-button theme="primary" size="large" bind:tap="scanAddIn">扫码加入企业</t-button> -->
         </view>
       </form>
     </view>
