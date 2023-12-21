@@ -202,7 +202,7 @@ Page({
     } = enterpriseData;
     if (enterpriseData.business_type === 2 && (reportData.report_type === 2 || reportData.report_type === 3)) {
       const ress = await app.call({
-        path: `/api/v1/program/enterprise/report/getFailedReports?report_type=${reportData.report_type}`,
+        path: `/api/v1/program/enterprise/report/getFailedReports?report_type=${reportData.report_type}&date=${reportData.date}`,
         method: 'GET',
         header: {
           'x-enterprise-id': enterprise_id,

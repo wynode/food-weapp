@@ -12,7 +12,8 @@
         <t-row gutter="15">
           <t-col span="12" wx:for="{{positem.list}}">
             <view class="manager-content">
-              <t-image class="manager-img" src="/assets/image/word.png" />
+              <t-image class="manager-img1" wx:if="{{item.imageUrl}}" src="{{item.imageUrl}}" ></t-image>
+              <t-image class="manager-img" wx:else src="/assets/image/word.png" />
               <view class="cert-name" style="margin-top: 6rpx;">{{ item.employee_name || '无' }}</view>
               <view>
                 <t-button theme="primary" data-item="{{item}}" size="small" bind:tap="handlePreview">预览</t-button>

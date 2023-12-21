@@ -101,3 +101,8 @@
 /* .tab-bar-icon1 .t-tab-bar-item__icon {
   height: 60rpx !important;
 } */
+
+.t-picker__main {
+  width: 100%;
+  box-sizing: border-box;
+}

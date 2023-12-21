@@ -6,7 +6,6 @@
       <t-upload
         class="image-upload"
         files="{{fileList}}"
-        mediaType="{{['image']}}"
         max="{{1}}"
         gridConfig="{{gridConfig}}"
         bind:add="handleAdd"

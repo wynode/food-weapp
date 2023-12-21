@@ -1,5 +1,7 @@
 // pages/create-report2.js
-import { formatTime } from '../../utils/util';
+import {
+  formatTime
+} from '../../utils/util';
 import Signature from 'mini-smooth-signature';
 const app = getApp();
 Page({
@@ -12,8 +14,7 @@ Page({
     address: '',
     content: '',
     decision: '',
-    options: [
-      {
+    options: [{
         value: 1,
         label: '1.食品安全风险可控，无较大食品安全隐患',
       },
@@ -41,8 +42,12 @@ Page({
       currentDay: formatTime(`${dateString.slice(0,4)}-${dateString.slice(4,6)}-${dateString.slice(6,8)}`, 'YYYY.MM.DD')
     })
     const enterpriseData = wx.getStorageSync('enterpriseData');
-    const { business_type } = enterpriseData;
-    const { report_type } = reportData;
+    const {
+      business_type
+    } = enterpriseData;
+    const {
+      report_type
+    } = reportData;
 
     this.setData({
       business_type,
@@ -51,31 +56,41 @@ Page({
   },
 
   onRadioChange(event) {
-    const { value } = event.detail;
+    const {
+      value
+    } = event.detail;
     this.setData({
       judgement: value,
     });
   },
   handleTextAreaChange(event) {
-    const { value } = event.detail;
+    const {
+      value
+    } = event.detail;
     this.setData({
       next_week_point: value,
     });
   },
   handleAddressChange(event) {
-    const { value } = event.detail;
+    const {
+      value
+    } = event.detail;
     this.setData({
       address: value,
     });
   },
   handleContentChange(event) {
-    const { value } = event.detail;
+    const {
+      value
+    } = event.detail;
     this.setData({
       content: value,
     });
   },
   handleDecisionChange(event) {
-    const { value } = event.detail;
+    const {
+      value
+    } = event.detail;
     this.setData({
       decision: value,
     });
@@ -83,7 +98,11 @@ Page({
 
   onReady() {
     try {
-      const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
+      const {
+        windowWidth,
+        windowHeight,
+        pixelRatio
+      } = wx.getSystemInfoSync();
       this.setData({
         width1: windowWidth - 30,
         height1: 200,
@@ -246,9 +265,9 @@ Page({
           next_week_point: String(this.data.next_week_point),
         };
       } else if (this.data.business_type === 2 && this.data.report_type === 3) {
-        payload.params.template_id = '0';
-        payload.params.passed_items = [];
-        payload.params.unpassed_items = [];
+        payload.params.template_id = templateData.template_id,
+        payload.params.passed_items = reportProfileData.passed_items || [];
+        payload.params.unpassed_items = reportProfileData.unpassed_items || [];
         payload.params.content = {
           content: String(this.data.content),
           address: String(this.data.address),
@@ -256,6 +275,7 @@ Page({
       }
       console.log(payload);
       const enterpriseData = wx.getStorageSync('enterpriseData');
+
       const reportRes = await app.call({
         path: `/api/v1/program/enterprise/report`,
         method: 'PUT',
@@ -264,8 +284,14 @@ Page({
         },
         data: payload,
       });
-      if (reportRes.statusCode !== 200) {
-        throw error;
+      if (reportRes.data.code !== 200 && reportRes.data.code !== 0) {
+        wx.hideLoading();
+        wx.showToast({
+          title: '生成报告失败',
+          icon: 'fail',
+          duration: 2000,
+        });
+        return
       }
       wx.hideLoading();
       wx.showToast({

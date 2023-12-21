@@ -77,9 +77,6 @@ Page({
             'x-enterprise-id': enterprise_id,
           },
         });
-        if (res.statusCode !== 200) {
-          throw error;
-        }
         const {
           has_template
         } = res.data.data;
@@ -201,27 +198,25 @@ Page({
             checkFileListR: [],
           };
         });
+        // 餐饮的周报和月报只有失败的
         if (isCheckedFalse) {
           let checkList = [];
-          const res = await app.call({
-            path: `/api/v1/program/enterprise/report/template?report_type=${Number(reportData.report_type) - 1}&business_type=${business_type}`,
+          const ress = await app.call({
+            path: `/api/v1/program/enterprise/report/getFailedReports?report_type=${reportData.report_type}&date=${reportData.date}`,
             method: 'GET',
             header: {
               'x-enterprise-id': enterprise_id,
             },
           });
-          const allItems = res.data.data.all_items
-          tempCheckListData = allCheck.map((unPassItem, index) => {
-            const items = allItems.filter((item) => item.item_id === unPassItem.item_id)[0];
+          const unPassItem = ress.data.data.list.reduce((acc, cur) => {
+            return acc.concat(cur.unpassed_items || [])
+          }, [])
+          tempCheckListData = unPassItem.map((item) => {
             return {
-              ...items,
+              ...item,
               checked: true,
               checkResult: 'fail',
-              solution: unPassItem.solution,
-              anaylise: unPassItem.anaylise,
-              hidden_danger: unPassItem.hidden_danger,
-              remark: unPassItem.remark,
-              checkFileList: unPassItem.spot_images.map((image) => {
+              checkFileList: item.spot_images.map((image) => {
                 return {
                   url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
                   fileID: image,
@@ -229,7 +224,7 @@ Page({
                   type: 'image',
                 };
               }),
-              checkFileListR: unPassItem.rectification_images.map((image) => {
+              checkFileListR: item.rectification_images.map((image) => {
                 return {
                   url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
                   fileID: image,
@@ -247,7 +242,7 @@ Page({
           })
           let checkedResultLength = checkList.length;
           const checkPercentage = (checkedResultLength / tempCheckListData.length) * 100;
-          const submitDisabled = !(checkedResultLength >= this.data.min_item_nums);
+          const submitDisabled = !(checkedResultLength >= 1);
           this.setData({
             checkedResultLength,
             submitDisabled,
@@ -412,6 +407,7 @@ Page({
         if (curr.checked && curr.checkResult === 'success') {
           passed_items.push({
             item_id: curr.item_id,
+            title: curr.title,
             remark: curr.remark,
             solution: '',
             anaylise: '',
@@ -423,6 +419,10 @@ Page({
         if (curr.checked && curr.checkResult === 'fail') {
           const unpassPaylod = {
             item_id: curr.item_id,
+            title: curr.title,
+            solution: curr.solution,
+            anaylise: curr.anaylise,
+            hidden_danger: curr.hidden_danger,
             remark: curr.remark,
             spot_images: curr.checkFileList.map((item) => item.fileID),
             rectification_images: curr.checkFileListR.map((item) => item.fileID),
@@ -716,6 +716,7 @@ Page({
         if (curr.checked && curr.checkResult === 'success') {
           passed_items.push({
             item_id: curr.item_id,
+            title: curr.title,
             remark: curr.remark,
             solution: '',
             anaylise: '',
@@ -727,7 +728,11 @@ Page({
         if (curr.checked && curr.checkResult === 'fail') {
           const unpassPaylod = {
             item_id: curr.item_id,
+            title: curr.title,
             remark: curr.remark,
+            solution: curr.solution,
+            anaylise: curr.anaylise,
+            hidden_danger: curr.hidden_danger,
             spot_images: curr.checkFileList.map((item) => item.fileID),
             rectification_images: curr.checkFileListR.map((item) => item.fileID),
           }
@@ -744,6 +749,7 @@ Page({
       payload.unpassed_items = unpassed_items;
       payload.item_count = passed_items.length + unpassed_items.length;
       wx.setStorageSync('reportProfileData', payload);
+      wx.setStorageSync('templateTypeValue', this.data.templateTypeValue)
       wx.navigateTo({
         url: `/pages/create-report2/index`,
       });

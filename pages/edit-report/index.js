@@ -69,59 +69,19 @@ Page({
       wx.setNavigationBarTitle({
         title: `修改${reportType}`,
       });
-      const templateRes = await app.call({
-        path: `/api/v1/program/report/templates?report_type=${report_type}&business_type=${business_type}`,
-        method: 'GET',
-        header: {
-          'x-enterprise-id': enterprise_id,
-        },
-      });
-      const {
-        list
-      } = templateRes.data.data;
-      const filterList = list.map((item) => {
-        return {
-          label: item.template_name,
-          value: item.template_id,
-        };
-      });
-
-      const profileRes = await app.call({
-        path: `/api/v1/program/report/template/${template_id}`,
-        method: 'GET',
-        header: {
-          'x-enterprise-id': enterprise_id,
-        },
-      });
-      const {
-        items,
-        min_item_nums
-      } = profileRes.data.data;
-      wx.setStorageSync('templateData', profileRes.data.data);
-      allCheck = items;
-      const foundItem = filterList.find((item) => item.value === template_id) || {
-        label: ''
-      };
-      this.setData({
-        templateTypeList: filterList,
-        templateTypeValue: [template_id],
-        templateTypeText: foundItem.label,
-        min_item_nums,
-      });
-
-      console.log(allCheck);
-      const reportProfileRes = await app.call({
-        path: `/api/v1/program/enterprise/report/${date}/${report_type}`,
-        header: {
-          'x-enterprise-id': enterprise_id,
-        },
-      });
-      const reportProfile = reportProfileRes.data.data;
-      const passItems = reportProfile.passed_items.map((item) => item.item_id);
-      const unPassItems = reportProfile.unpassed_items.map((item) => item.item_id);
-      let checkList = [];
-      let tempCheckListData = allCheck.map((item, index) => {
-        if (passItems.includes(item.item_id)) {
+      let tempCheckListData = []
+      let minItemNums = 1
+      let checkList = []
+      // 餐饮的周报和月报修改
+      if (Number(business_type) === 2 && (Number(report_type) === 2 || Number(report_type) === 3)) {
+        const reportProfileRes = await app.call({
+          path: `/api/v1/program/enterprise/report/${date}/${report_type}`,
+          header: {
+            'x-enterprise-id': enterprise_id,
+          },
+        });
+        const reportProfile = reportProfileRes.data.data;
+        const passItems = reportProfile.passed_items.map((item) => {
           return {
             ...item,
             checked: true,
@@ -133,17 +93,17 @@ Page({
             checkFileList: [],
             checkFileListR: [],
           };
-        } else if (unPassItems.includes(item.item_id)) {
-          const unPassItem = reportProfile.unpassed_items.filter((unpass) => unpass.item_id === item.item_id)[0];
+        });
+        const unPassItems = reportProfile.unpassed_items.map((item, index) => {
           return {
             ...item,
             checked: true,
             checkResult: 'fail',
-            solution: unPassItem.solution,
-            anaylise: unPassItem.anaylise,
-            hidden_danger: unPassItem.hidden_danger,
-            remark: unPassItem.remark,
-            checkFileList: unPassItem.spot_images.map((image) => {
+            solution: item.solution,
+            anaylise: item.anaylise,
+            hidden_danger: item.hidden_danger,
+            remark: item.remark,
+            checkFileList: item.spot_images.map((image) => {
               return {
                 url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
                 fileID: image,
@@ -151,7 +111,7 @@ Page({
                 type: 'image',
               };
             }),
-            checkFileListR: unPassItem.rectification_images.map((image) => {
+            checkFileListR: item.rectification_images.map((image) => {
               return {
                 url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
                 fileID: image,
@@ -160,16 +120,115 @@ Page({
               };
             }),
           };
-        }
-        return {
-          ...item,
-          checked: false,
-          checkResult: '',
-          remark: '',
-          checkFileList: [],
-          checkFileListR: [],
+        });
+        tempCheckListData = passItems.concat(unPassItems)
+        tempCheckListData.forEach((item, index) => {
+          checkList.push(index)
+        })
+      } else {
+        const templateRes = await app.call({
+          path: `/api/v1/program/report/templates?report_type=${report_type}&business_type=${business_type}`,
+          method: 'GET',
+          header: {
+            'x-enterprise-id': enterprise_id,
+          },
+        });
+        const {
+          list
+        } = templateRes.data.data;
+        const filterList = list.map((item) => {
+          return {
+            label: item.template_name,
+            value: item.template_id,
+          };
+        });
+  
+        const profileRes = await app.call({
+          path: `/api/v1/program/report/template/${template_id}`,
+          method: 'GET',
+          header: {
+            'x-enterprise-id': enterprise_id,
+          },
+        });
+        const {
+          items,
+          min_item_nums
+        } = profileRes.data.data;
+        minItemNums = min_item_nums
+        wx.setStorageSync('templateData', profileRes.data.data);
+        allCheck = items;
+        const foundItem = filterList.find((item) => item.value === template_id) || {
+          label: ''
         };
-      });
+        this.setData({
+          templateTypeList: filterList,
+          templateTypeValue: [template_id],
+          templateTypeText: foundItem.label,
+        });
+  
+        console.log(allCheck);
+        const reportProfileRes = await app.call({
+          path: `/api/v1/program/enterprise/report/${date}/${report_type}`,
+          header: {
+            'x-enterprise-id': enterprise_id,
+          },
+        });
+        const reportProfile = reportProfileRes.data.data;
+        const passItems = reportProfile.passed_items.map((item) => item.item_id);
+        const unPassItems = reportProfile.unpassed_items.map((item) => item.item_id);
+        tempCheckListData = allCheck.map((item, index) => {
+          if (passItems.includes(item.item_id)) {
+            checkList.push(index)
+            return {
+              ...item,
+              checked: true,
+              checkResult: 'success',
+              remark: '',
+              solution: item.solution,
+              anaylise: item.anaylise,
+              hidden_danger: item.hidden_danger,
+              checkFileList: [],
+              checkFileListR: [],
+            };
+          } else if (unPassItems.includes(item.item_id)) {
+            checkList.push(index);
+            const unPassItem = reportProfile.unpassed_items.filter((unpass) => unpass.item_id === item.item_id)[0];
+            return {
+              ...item,
+              checked: true,
+              checkResult: 'fail',
+              solution: unPassItem.solution,
+              anaylise: unPassItem.anaylise,
+              hidden_danger: unPassItem.hidden_danger,
+              remark: unPassItem.remark,
+              checkFileList: unPassItem.spot_images.map((image) => {
+                return {
+                  url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
+                  fileID: image,
+                  name: image.split('/').slice(-1)[0],
+                  type: 'image',
+                };
+              }),
+              checkFileListR: unPassItem.rectification_images.map((image) => {
+                return {
+                  url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
+                  fileID: image,
+                  name: image.split('/').slice(-1)[0],
+                  type: 'image',
+                };
+              }),
+            };
+          }
+          return {
+            ...item,
+            checked: false,
+            checkResult: '',
+            remark: '',
+            checkFileList: [],
+            checkFileListR: [],
+          };
+        });
+      }
       const checkedListData = []
       const unCheckedListData = []
       tempCheckListData.forEach((item) => {
@@ -179,20 +238,16 @@ Page({
           unCheckedListData.push(item)
         }
       })
-      checkedListData.forEach((item, index) => {
-        checkList.push(index);
-      })
-      tempCheckListData = checkedListData.concat(unCheckedListData)
       this.setData({
         isRestaurant: business_type === 2,
         checkListData: tempCheckListData,
         checkList,
         reportType,
-        has_template: true,
+        min_item_nums: minItemNums,
       });
       let checkedResultLength = checkList.length;
       const checkPercentage = (checkedResultLength / this.data.checkListData.length) * 100;
-      const submitDisabled = !(checkedResultLength >= this.data.min_item_nums);
+      const submitDisabled = !(checkedResultLength >= minItemNums);
       this.setData({
         checkedResultLength,
         submitDisabled,
@@ -200,16 +255,9 @@ Page({
         computedColor: submitDisabled ? '#FC5B5B' : '0B82FF',
         computedColor1: submitDisabled ? 'color: #FC5B5B' : 'color: 0B82FF',
       });
-      console.log(tempCheckListData);
     } catch (error) {
-      console.log(error);
       wx.showToast({
         title: '处理出错，请联系管理员',
-      });
-      setTimeout(() => {
-        wx.reLaunch({
-          url: '/pages/all-center/index',
-        });
       });
     }
   },
@@ -439,6 +487,7 @@ Page({
         if (curr.checked && curr.checkResult === 'success') {
           passed_items.push({
             item_id: curr.item_id,
+            title: curr.title,
             remark: curr.remark,
             solution: '',
             anaylise: '',
@@ -450,6 +499,7 @@ Page({
         if (curr.checked && curr.checkResult === 'fail') {
           const unpassPaylod = {
             item_id: curr.item_id,
+            title: curr.title,
             remark: curr.remark,
             spot_images: curr.checkFileList.map((item) => item.fileID),
             rectification_images: curr.checkFileListR.map((item) => item.fileID),
@@ -487,8 +537,8 @@ Page({
         duration: 2000,
       });
       setTimeout(() => {
-        const pages = getCurrentPages();  //获取当前界面的所有信息
-        const prevPage = pages[pages.length-2];
+        const pages = getCurrentPages(); //获取当前界面的所有信息
+        const prevPage = pages[pages.length - 2];
         prevPage.getProfileList(this.data.date, this.data.report_type)
       }, 500)
       setTimeout(() => {
@@ -714,6 +764,7 @@ Page({
         if (curr.checked && curr.checkResult === 'success') {
           passed_items.push({
             item_id: curr.item_id,
+            title: curr.title,
             remark: curr.remark,
             solution: '',
             anaylise: '',
@@ -725,6 +776,7 @@ Page({
         if (curr.checked && curr.checkResult === 'fail') {
           const unpassPaylod = {
             item_id: curr.item_id,
+            title: curr.title,
             remark: curr.remark,
             spot_images: curr.checkFileList.map((item) => item.fileID),
             rectification_images: curr.checkFileListR.map((item) => item.fileID),

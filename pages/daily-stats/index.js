@@ -3,56 +3,6 @@ Page({
   data: {
     qualifiedDay: '21',
     topTitle: '日报',
-    dateText: '',
-    dateValue: [2023, 8],
-    years: [
-      {
-        label: '2023年',
-        value: '2023',
-      },
-      {
-        label: '2022年',
-        value: '2022',
-      },
-      {
-        label: '2021年',
-        value: '2021',
-      },
-    ],
-    seasons: [
-      {
-        label: '1月',
-        value: '1',
-      },
-      {
-        label: '2月',
-        value: '2',
-      },
-      {
-        label: '3月',
-        value: '3',
-      },
-      {
-        label: '4月',
-        value: '4',
-      },
-      {
-        label: '5月',
-        value: '5',
-      },
-      {
-        label: '6月',
-        value: '6',
-      },
-      {
-        label: '7月',
-        value: '7',
-      },
-      {
-        label: '8月',
-        value: '8',
-      },
-    ],
     isRes: true,
     date: '',
     report_type: '',
