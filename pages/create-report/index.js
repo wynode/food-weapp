@@ -38,6 +38,7 @@ Page({
     currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
     checkListData: [],
     min_item_nums: 1,
+    isCheckedFalse: false,
   },
 
   async onLoad(options) {
@@ -47,6 +48,7 @@ Page({
         checkList,
         isCheckedFalse,
       } = options || {};
+      this.setData({ isCheckedFalse })
       const reportData = wx.getStorageSync('reportData');
       const reportTypeOptions = {
         1: '日管控',
@@ -515,7 +517,7 @@ Page({
     try {
       compressResult = await wx.compressImage({
         src: file.url, // 图片路径
-        quality: 60, // 压缩质量
+        quality: 40, // 压缩质量
       });
     } catch {
       Toast({
@@ -607,7 +609,7 @@ Page({
     try {
       compressResult = await wx.compressImage({
         src: file.url, // 图片路径
-        quality: 60, // 压缩质量
+        quality: 40, // 压缩质量
       });
     } catch {
       Toast({

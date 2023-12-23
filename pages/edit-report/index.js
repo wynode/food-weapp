@@ -312,7 +312,7 @@ Page({
     try {
       compressResult = await wx.compressImage({
         src: file.url, // 图片路径
-        quality: 60, // 压缩质量
+        quality: 40, // 压缩质量
       });
     } catch {
       Toast({
@@ -669,7 +669,7 @@ Page({
     try {
       compressResult = await wx.compressImage({
         src: file.url, // 图片路径
-        quality: 60, // 压缩质量
+        quality: 40, // 压缩质量
       });
     } catch {
       Toast({
