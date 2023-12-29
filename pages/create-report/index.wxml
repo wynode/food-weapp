@@ -8,135 +8,52 @@
           <text style="{{computedColor1}}">{{checkedResultLength}}</text>/{{min_item_nums}}
         </view>
         <view class="cr-top-right">
-          <text>{{ currentDay }}</text>
-          {{reportType}}
+          <view wx:if="{{reportType === '周排查'}}">
+            <text>{{ currentDaySub7 }}</text>-<text>{{ currentDay }}</text>
+            {{reportType}}
+          </view>
+          <view wx:else>
+            <text>{{ currentDay }}</text>
+            {{reportType}}
+          </view>
         </view>
       </view>
-      <t-progress
-        class="cr-progress"
-        color="{{computedColor}}"
-        track-color="rgba(11,130,255,0.1)"
-        stroke-width="14"
-        theme="plump"
-        label="{{false}}"
-        percentage="{{checkPercentage}}"
-      />
+      <t-progress class="cr-progress" color="{{computedColor}}" track-color="rgba(11,130,255,0.1)" stroke-width="14" theme="plump" label="{{false}}" percentage="{{checkPercentage}}" />
     </view>
     <view class="cns-input" bind:tap="templateTypePicker">
       <t-input suffixIcon="caret-down-small" value="{{ templateTypeText }}" placeholder="请选择模板" wx:if="{{templateTypeList.length}}" disabled />
     </view>
-    <t-picker
-      visible="{{templateTypeVisible}}"
-      value="{{templateTypeValue}}"
-      data-key="templateType"
-      title="{{templateTypeTitle}}"
-      cancelBtn="取消"
-      confirmBtn="确认"
-      bindchange="onPickerChange"
-      bindpick="onColumnChange"
-      bindcancel="onPickerCancel"
-    >
+    <t-picker visible="{{templateTypeVisible}}" value="{{templateTypeValue}}" data-key="templateType" title="{{templateTypeTitle}}" cancelBtn="取消" confirmBtn="确认" bindchange="onPickerChange" bindpick="onColumnChange" bindcancel="onPickerCancel">
       <t-picker-item options="{{templateTypeList}}"></t-picker-item>
     </t-picker>
 
     <view class="cr-list" wx:if="{{isRestaurant}}">
       <t-checkbox-group value="{{checkList}}" bind:change="onCheckChange">
-        <t-checkbox
-          wx:for="{{checkListData}}"
-          wx:key="index"
-          value="{{index}}"
-          icon="rectangle"
-          content-disabled
-          max-label-row="10"
-          max-content-row="10"
-          class="{{ item.checked ? 'cr-item cr-item-checked' : 'cr-item'}}"
-        >
+        <t-checkbox wx:for="{{checkListData}}" wx:key="index" value="{{index}}" icon="rectangle" content-disabled max-label-row="10" max-content-row="10" class="{{ item.checked ? 'cr-item cr-item-checked' : 'cr-item'}}">
           <view slot="label" class="cr-item-label">{{ index + 1 }}. {{ item.title }} </view>
           <view slot="content" class="cr-item-content">
             <view class="cric-btns" wx:if="{{ item.checked }}">
-              <t-button
-                class="cric-btns-left"
-                block
-                data-key="{{index}} fail"
-                theme="danger"
-                variant="{{item.checkResult === 'fail' ? '' : 'outline'}}"
-                bind:tap="onCheckResultChange"
-                >不合格</t-button
-              >
-              <t-button
-                class="cric-btns-right"
-                block
-                data-key="{{index}} success"
-                theme="primary"
-                variant="{{item.checkResult === 'success' ? '' : 'outline'}}"
-                bind:tap="onCheckResultChange"
-                >合格</t-button
-              >
+              <t-button class="cric-btns-left" block data-key="{{index}} fail" theme="danger" variant="{{item.checkResult === 'fail' ? '' : 'outline'}}" bind:tap="onCheckResultChange">不合格</t-button>
+              <t-button class="cric-btns-right" block data-key="{{index}} success" theme="primary" variant="{{item.checkResult === 'success' ? '' : 'outline'}}" bind:tap="onCheckResultChange">合格</t-button>
             </view>
             <view class="cric-bad" wx:if="{{item.checkResult === 'fail'}}">
               <view>可能存在的风险隐患</view>
               <!-- placeholder="请输入可能存在的风险隐患（非必填）"  -->
-              <t-textarea
-                t-class="external-class"
-                data-key="{{index}}"
-                placeholder="无"
-                value="{{item.hidden_danger}}"
-                bind:change="handleHDChange"
-                bordered
-                autosize
-                disableDefaultPadding="{{true}}"
-                indicator
-              />
+              <t-textarea t-class="external-class" data-key="{{index}}" placeholder="无" value="{{item.hidden_danger}}" bind:change="handleHDChange" bordered autosize disableDefaultPadding="{{true}}" indicator />
               <view style="margin-top: 10rpx">产生的原因分析</view>
               <!-- placeholder="请输入产生的原因分析（非必填）" -->
-              <t-textarea
-                t-class="external-class"
-                data-key="{{index}}"
-                placeholder="无"
-                value="{{item.anaylise}}"
-                bind:change="handleAAChange"
-                bordered
-                autosize
-                disableDefaultPadding="{{true}}"
-                indicator
-              />
+              <t-textarea t-class="external-class" data-key="{{index}}" placeholder="无" value="{{item.anaylise}}" bind:change="handleAAChange" bordered autosize disableDefaultPadding="{{true}}" indicator />
               <view style="margin-top: 10rpx">防范措施</view>
               <!-- placeholder="请输入防范措施（非必填）" -->
-              <t-textarea
-                t-class="external-class"
-                data-key="{{index}}"
-                value="{{item.solution}}"
-                bind:change="handleSOChange"
-                bordered
-                placeholder="无"
-                autosize
-                disableDefaultPadding="{{true}}"
-                indicator
-              />
+              <t-textarea t-class="external-class" data-key="{{index}}" value="{{item.solution}}" bind:change="handleSOChange" bordered placeholder="无" autosize disableDefaultPadding="{{true}}" indicator />
               <view class="cric-bad-title"> 现场照片 </view>
               <view class="wrapper">
-                <t-upload
-                  class="cric-bad-upload"
-                  media-type="{{['image']}}"
-                  data-key="{{index}}"
-                  files="{{item.checkFileList}}"
-                  gridConfig="{{gridConfig}}"
-                  bind:add="handleAdd"
-                  bind:remove="handleRemove"
-                >
+                <t-upload class="cric-bad-upload" media-type="{{['image']}}" data-key="{{index}}" files="{{item.checkFileList}}" gridConfig="{{gridConfig}}" bind:add="handleAdd" bind:remove="handleRemove">
                 </t-upload>
               </view>
               <view class="cric-bad-title" style="margin-top: 20rpx">整改后现场照片</view>
               <view class="wrapper">
-                <t-upload
-                  class="cric-bad-upload"
-                  media-type="{{['image']}}"
-                  data-key="{{index}}"
-                  files="{{item.checkFileListR}}"
-                  gridConfig="{{gridConfig}}"
-                  bind:add="handleAddR"
-                  bind:remove="handleRemoveR"
-                >
+                <t-upload class="cric-bad-upload" media-type="{{['image']}}" data-key="{{index}}" files="{{item.checkFileListR}}" gridConfig="{{gridConfig}}" bind:add="handleAddR" bind:remove="handleRemoveR">
                 </t-upload>
               </view>
             </view>
@@ -146,74 +63,23 @@
     </view>
     <view class="cr-list" wx:else>
       <t-checkbox-group value="{{checkList}}" bind:change="onCheckChange">
-        <t-checkbox
-          wx:for="{{checkListData}}"
-          wx:key="index"
-          value="{{index}}"
-          icon="rectangle"
-          content-disabled
-          max-label-row="10"
-          max-content-row="10"
-          class="cr-item"
-        >
+        <t-checkbox wx:for="{{checkListData}}" wx:key="index" value="{{index}}" icon="rectangle" content-disabled max-label-row="10" max-content-row="10" class="cr-item">
           <view slot="label" class="cr-item-label">{{ index + 1 }}. {{ item.title }} </view>
           <view slot="content" class="cr-item-content">
             <view class="cric-btns" wx:if="{{ item.checked }}">
-              <t-button
-                class="cric-btns-left"
-                block
-                data-key="{{index}} fail"
-                theme="danger"
-                variant="{{item.checkResult === 'fail' ? '' : 'outline'}}"
-                bind:tap="onCheckResultChange"
-                >不合格</t-button
-              >
-              <t-button
-                class="cric-btns-right"
-                block
-                data-key="{{index}} success"
-                theme="primary"
-                variant="{{item.checkResult === 'success' ? '' : 'outline'}}"
-                bind:tap="onCheckResultChange"
-                >合格</t-button
-              >
+              <t-button class="cric-btns-left" block data-key="{{index}} fail" theme="danger" variant="{{item.checkResult === 'fail' ? '' : 'outline'}}" bind:tap="onCheckResultChange">不合格</t-button>
+              <t-button class="cric-btns-right" block data-key="{{index}} success" theme="primary" variant="{{item.checkResult === 'success' ? '' : 'outline'}}" bind:tap="onCheckResultChange">合格</t-button>
             </view>
             <view class="cric-bad" wx:if="{{item.checkResult === 'fail'}}">
-              <t-textarea
-                t-class="external-class"
-                placeholder="请输入处理措施（非必填）"
-                data-key="{{index}}"
-                value="{{item.remark}}"
-                bind:change="handleReasonChange"
-                bordered
-                autosize
-                disableDefaultPadding="{{true}}"
-                indicator
-              />
+              <t-textarea t-class="external-class" placeholder="请输入处理措施（非必填）" data-key="{{index}}" value="{{item.remark}}" bind:change="handleReasonChange" bordered autosize disableDefaultPadding="{{true}}" indicator />
               <view class="cric-bad-title"> 现场照片 </view>
               <view class="wrapper">
-                <t-upload
-                  class="cric-bad-upload"
-                  media-type="{{['image']}}"
-                  data-key="{{index}}"
-                  files="{{item.checkFileList}}"
-                  gridConfig="{{gridConfig}}"
-                  bind:add="handleAdd"
-                  bind:remove="handleRemove"
-                >
+                <t-upload class="cric-bad-upload" media-type="{{['image']}}" data-key="{{index}}" files="{{item.checkFileList}}" gridConfig="{{gridConfig}}" bind:add="handleAdd" bind:remove="handleRemove">
                 </t-upload>
               </view>
               <view class="cric-bad-title" style="margin-top: 20rpx">整改后现场照片</view>
               <view class="wrapper">
-                <t-upload
-                  class="cric-bad-upload"
-                  media-type="{{['image']}}"
-                  data-key="{{index}}"
-                  files="{{item.checkFileListR}}"
-                  gridConfig="{{gridConfig}}"
-                  bind:add="handleAddR"
-                  bind:remove="handleRemoveR"
-                >
+                <t-upload class="cric-bad-upload" media-type="{{['image']}}" data-key="{{index}}" files="{{item.checkFileListR}}" gridConfig="{{gridConfig}}" bind:add="handleAddR" bind:remove="handleRemoveR">
                 </t-upload>
               </view>
             </view>
@@ -223,9 +89,7 @@
     </view>
 
     <view class="cns-bbtn">
-      <t-button class="cr-submit-btn" size="large" disabled="{{submitDisabled}}" block bindtap="handleSubmit"
-        >确认无误，生成报告</t-button
-      >
+      <t-button class="cr-submit-btn" size="large" disabled="{{submitDisabled}}" block bindtap="handleSubmit">确认无误，生成报告</t-button>
     </view>
   </view>
   <t-toast id="t-toast" />
@@ -235,25 +99,13 @@
   <view class="actions2Wrap">
     <view class="actions2">
       <t-button bindtap="handleBack" size="large" variant="outline">返回</t-button>
-      <t-button bindtap="handleClear2" size="large" variant="outline" style="margin: 0 50rpx" theme="danger"
-        >清除</t-button
-      >
+      <t-button bindtap="handleClear2" size="large" variant="outline" style="margin: 0 50rpx" theme="danger">清除</t-button>
       <!-- <t-button bindtap="handleClear2" size="large" variant="outline" theme="danger">清除</t-button>
       <t-button bindtap="handleUndo2" size="large" variant="outline" style="margin: 0 50rpx">撤销</t-button> -->
       <t-button theme="primary" size="large" block bind:tap="handlePreview2">确认签名</t-button>
     </view>
   </view>
-  <canvas
-    type="2d"
-    id="signature2"
-    class="signature2"
-    style="width:{{width2}}px;height:{{height2}}px;"
-    disable-scroll="{{true}}"
-    bindtouchstart="handleTouchStart2"
-    bindtouchmove="handleTouchMove2"
-    bindtouchcancel="handleTouchEnd2"
-    bindtouchend="handleTouchEnd2"
-  ></canvas>
+  <canvas type="2d" id="signature2" class="signature2" style="width:{{width2}}px;height:{{height2}}px;" disable-scroll="{{true}}" bindtouchstart="handleTouchStart2" bindtouchmove="handleTouchMove2" bindtouchcancel="handleTouchEnd2" bindtouchend="handleTouchEnd2"></canvas>
   <view style="position: fixed; left: -2000px; width: 0; height: 0; overflow: hidden">
     <canvas canvas-id="signature3" style="width:{{height2}}px;height:{{height2}}px;" />
   </view>

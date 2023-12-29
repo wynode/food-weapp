@@ -1,7 +1,8 @@
 import Toast from 'tdesign-miniprogram/toast';
 import Signature from 'mini-smooth-signature';
 import {
-  formatTime
+  formatTime,
+  sub7day
 } from '../../utils/util';
 const app = getApp();
 Page({
@@ -36,6 +37,7 @@ Page({
     checkedResultLength: 0,
     checkPercentage: 0,
     currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
+    currentDaySub7: '',
     checkListData: [],
     min_item_nums: 1,
     isCheckedFalse: false,
@@ -48,7 +50,9 @@ Page({
         checkList,
         isCheckedFalse,
       } = options || {};
-      this.setData({ isCheckedFalse })
+      this.setData({
+        isCheckedFalse
+      })
       const reportData = wx.getStorageSync('reportData');
       const reportTypeOptions = {
         1: '日管控',
@@ -56,8 +60,10 @@ Page({
         3: '月调度',
       };
       const dateString = String(reportData.date)
+      const normalData = `${dateString.slice(0,4)}-${dateString.slice(4,6)}-${dateString.slice(6,8)}`
       this.setData({
-        currentDay: formatTime(`${dateString.slice(0,4)}-${dateString.slice(4,6)}-${dateString.slice(6,8)}`, 'YYYY.MM.DD')
+        currentDay: formatTime(normalData, 'YYYY.MM.DD'),
+        currentDaySub7: sub7day(normalData),
       })
       const reportType = reportTypeOptions[reportData.report_type];
       wx.setNavigationBarTitle({
