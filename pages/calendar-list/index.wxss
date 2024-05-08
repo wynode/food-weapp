@@ -1,0 +1,232 @@
+.log-list {
+  padding: 30rpx;
+  position: relative;
+}
+
+.ll-list {
+  margin-top: 40rpx;
+}
+
+.ll-calendar {
+  max-height: 640rpx;
+}
+.rp-list {
+  margin-top: 40rpx;
+}
+
+.rp-item {
+  display: flex;
+  margin-bottom: 30rpx;
+}
+
+.rp-item-skip .rp-item-right {
+  background: #c6c6c6;
+}
+
+.rp-item-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 16rpx;
+}
+
+.rpil-date {
+  min-width: 134rpx;
+  font-size: 48rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #333333;
+  line-height: 67rpx;
+}
+
+.rpil-type {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 0.5);
+  line-height: 45rpx;
+  margin-top: 16rpx;
+}
+
+.rp-item-right {
+  background: #0B82FF;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  flex-grow: 1;
+  margin-left: 0rpx;
+}
+
+.rp-item-right-red {
+  background: #FC5B5B;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  flex-grow: 1;
+  margin-left: 0rpx;
+}
+
+.rpir-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 34rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 48rpx;
+}
+
+.rpir-center {
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 42rpx;
+}
+
+.rpir-bottom {
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 42rpx;
+}
+
+.ll-calendar .t-calendar {
+  max-height: 640rpx;
+  overflow: hidden;
+}
+
+.ll-calendar .t-calendar__title {
+  display: none;
+}
+
+.ll-calendar .t-calendar__dates-item {
+  margin-top: 0;
+}
+
+.ll-calendar .t-calendar__months {
+  max-height: 540rpx;
+}
+
+.ll-item {
+  display: flex;
+  margin-bottom: 30rpx;
+  min-height: 146rpx;
+}
+
+.llir-top2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100rpx;
+}
+
+.ll-item-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.llil-date {
+  min-width: 126rpx;
+  font-size: 48rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #333333;
+  line-height: 67rpx;
+}
+
+.llil-type {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 0.5);
+  line-height: 45rpx;
+  margin-top: 16rpx;
+}
+
+.ll-item-right {
+  background: #0B82FF;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  flex-grow: 1;
+  margin-left: 30rpx;
+}
+
+.ll-item .ll-item-right-day {
+  background: #00BACC;
+}
+
+.ll-item .ll-item-right-bill {
+  background: #11C067;
+}
+
+.ll-item-right-red {
+  background: #FC5B5B;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  flex-grow: 1;
+  margin-left: 30rpx;
+}
+
+.llir-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 34rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 48rpx;
+}
+
+.llir-center {
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 42rpx;
+}
+
+.llir-bottom {
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 42rpx;
+}
+
+.my-log-itemyes::after{
+  content: '';
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: #008858;
+  position: absolute;
+  bottom: 6rpx;
+}
+.my-log-itemno::after{
+  content: '';
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: #d54941;
+  position: absolute;
+  bottom: 6rpx;
+}
+
+.panel-item {
+  margin-bottom: 32rpx;
+}
+
+.my-log-itemskip::after{
+  content: '';
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: #c6c6c6;
+  position: absolute;
+  bottom: 6rpx;
+}

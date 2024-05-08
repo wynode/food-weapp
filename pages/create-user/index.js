@@ -13,7 +13,7 @@ Page({
         value: '1',
       },
       {
-        label: '食品总监职责',
+        label: '食品安全总监',
         value: '2',
       },
       {
@@ -121,7 +121,7 @@ Page({
             enterprise_id: enterpriseData.enterprise_id,
             avatar:
               this.data.fileID ||
-              this.data.editObj.avatar.replace('https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la', ''),
+              this.data.editObj.avatar.replace('https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la', ''),
             position: Number(this.data.position),
             permission: 7,
           },
@@ -150,9 +150,15 @@ Page({
           title: '操作成功',
         })
         setTimeout(() => {
-          wx.reLaunch({
-            url: '/pages/staff-list/index',
-          });
+          const pages = getCurrentPages(); //获取当前界面的所有信息
+          const prevPage = pages[pages.length - 2];
+          prevPage.getList()
+        }, 500)
+        setTimeout(() => {
+          // wx.reLaunch({
+          //   url: '/pages/staff-list/index',
+          // });
+          wx.navigateBack()
         }, 1000);
       }
     } catch (error) {

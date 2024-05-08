@@ -1,0 +1,101 @@
+.enterpirse-list {
+  position: relative;
+}
+
+.ep-list {
+  padding: 32rpx;
+}
+
+.ep-list-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.ep-top-title {
+  font-size: 34rpx;
+  max-width: 500rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* font-weight: bold; */
+}
+.ep-top-month {
+  font-size: 30rpx;
+}
+
+.ep-list-bottom {
+  padding: 32rpx;
+  margin-top: 32rpx;
+  /* border: 1px solid #ccc; */
+  border-radius: 32rpx;
+  background-color: #fff;
+  display: flex;
+  box-shadow: 1px 2px 4px 2px #eee;
+}
+
+.ep-bottom-right {
+  flex-grow: 1;
+  margin-left: 64rpx;
+  margin-right: 12rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 32rpx 0;
+}
+
+.ep-right-li {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .ds-list {
+  position: relative;
+  margin-bottom: 40rpx;
+}
+
+.ds-content {
+  padding: 20rpx;
+}
+
+.ds-list-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.ds-ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20rpx;
+}
+
+.ds-item-progress {
+  width: 178rpx;
+}
+
+.t-progress__canvas--circle {
+  width: 178rpx !important;
+  height: 178rpx !important;
+}
+
+.t-progress__canvas--inner {
+  width: 150rpx !important;
+  height: 150rpx !important;
+}
+
+.ds-item-title {
+  margin-bottom: 16rpx;
+  font-size: 26rpx;
+}
+
+.ds-item {
+  background-color: #fff;
+  border-radius: 14rpx;
+  padding: 20rpx;
+}
+
+.t-progress__canvas--inner {
+  display: flex !important;
+  flex-direction: column !important;
+} */

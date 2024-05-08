@@ -32,27 +32,40 @@ Page({
     provinces: [],
     cities: [],
     counties: [],
+    areaData: [],
   },
 
   onLoad() {
     this.getAreaData();
   },
 
-  getAreaData() {
-    const url =
-      'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/area_options_data.json?sign=8f3f994ed96184b3630ac913424df901&t=1697522987';
-    wx.request({
-      url: url,
-      method: 'GET',
-      success: (res) => {
-        this.areaData = res.data;
-        this.setData({
-          provinces: res.data,
-          cities: res.data[0].childs,
-          counties: res.data[0].childs[0].childs,
-        });
-      },
+  async getAreaData() {
+    const res = await app.call({
+      path: '/api/v1/program/utils/district',
+      method: 'POST',
     });
+    
+    const areaData = res.data.data.list;
+    this.setData({
+      areaData,
+      provinces: areaData,
+      cities: areaData[0].childs,
+      counties: areaData[0].childs[0].childs,
+    });
+    // const url =
+    //   'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/area_options_data.json?sign=8f3f994ed96184b3630ac913424df901&t=1697522987';
+    // wx.request({
+    //   url: url,
+    //   method: 'GET',
+    //   success: (res) => {
+    //     this.areaData = res.data;
+    //     this.setData({
+    //       provinces: res.data,
+    //       cities: res.data[0].childs,
+    //       counties: res.data[0].childs[0].childs,
+    //     });
+    //   },
+    // });
   },
 
   onAreaColumnChange(e) {
@@ -78,8 +91,8 @@ Page({
   },
 
   setCitiesFromProvinceIndex(provinceIndex) {
-    const cities = this.areaData[provinceIndex].childs;
-    const counties = this.areaData[provinceIndex].childs[0].childs;
+    const cities = this.data.areaData[provinceIndex].childs;
+    const counties = this.data.areaData[provinceIndex].childs[0].childs;
     this.setData({
       cities,
       counties,

@@ -3,11 +3,21 @@
   <view class="create-new-shop">
     <view class="cns-title">包保信息</view>
     <view class="cns-input">
-      <t-textarea
-        value="姓名：周文 \n职务：社区书记 \n包保等级：D \n电话：15565345432"
-        bindblur="phoneChange"
-        placeholder="请填写负责人联系电话"
-      />
+      <t-textarea value="{{baoInfo}}" style="height: 240rpx" bindblur="phoneChange" placeholder="暂无包保人" />
+    </view>
+    <view>
+      检查记录</view>
+    <view class="cns-input">
+      <view wx:if="{{logs.length}}">
+        <view wx:for="{{logs}}" wx:key="index">
+          <t-textarea value="{{item.value}}" style="height: 194rpx" bindblur="phoneChange" placeholder="暂无记录" />
+        </view>
+      </view>
+      <view wx:else style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 200rpx">
+        <t-image width="300" height="300" mode="aspectFill" src="/assets/image/no_data.png" alt="" />
+        <view style="color: #bbb; margin-top: 40rpx;">暂无数据</view>
+      </view>
+
     </view>
   </view>
 </view>

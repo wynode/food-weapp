@@ -2,7 +2,7 @@ Page({
   data: {
     tabBarValue: 'enterprise-center',
     dateVisible: false,
-    dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1)],
+    dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1).padStart(2, '0')],
     dateText: '本',
     years: [
       {
@@ -185,15 +185,14 @@ Page({
     // this.setData({
     //   tabBarValue: value,
     // });
-    if (value === 'submit-report') {
-      wx.navigateTo({
-        url: `/pages/${value}/index`,
-      });
-    } else {
-      wx.navigateTo({
+    if (value === 'all-center') {
+      wx.redirectTo({
         url: `/pages/${value}/index`,
       });
     }
+    wx.navigateTo({
+      url: `/pages/${value}/index`,
+    });
   },
 
   goEnterprise() {

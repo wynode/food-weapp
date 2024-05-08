@@ -1,13 +1,14 @@
 import Toast from 'tdesign-miniprogram/toast';
+import { formatTime } from '../../utils/util';
 
+const app = getApp()
 Page({
   data: {
     fileList: [],
     businessTypeValue: [],
     businessTypeTitle: '',
     businessTypeText: '',
-    businessTypeList: [
-      {
+    businessTypeList: [{
         label: '餐饮服务',
         value: '餐饮服务',
       },
@@ -19,8 +20,7 @@ Page({
     shopTemplateValue: [],
     shopTemplateTitle: '',
     shopTemplateText: '',
-    shopTemplateList: [
-      {
+    shopTemplateList: [{
         label: '（日周月）餐饮服务通用模板',
         value: '（日周月）餐饮服务通用模板',
       },
@@ -41,42 +41,75 @@ Page({
     businessCode: '',
     personalPhone: '',
     isEnter: false,
+    logs: [],
+
+    baoInfo: '',
   },
 
-  onLoad(options) {
-    const { isEnter = false } = options || {};
-    if (isEnter) {
-      wx.setNavigationBarTitle({
-        title: '企业信息',
+  async onLoad() {
+    try {
+      const enterpriseData = wx.getStorageSync('enterpriseData')
+      const enterpriseRes = await app.call({
+        path: '/api/v1/program/enterprise',
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
       });
-      const shopData = wx.getStorageSync('shop_data');
-      if (shopData) {
+      // const securitySponsionId = 5
+      // if (securitySponsionId === 0) {
+      //   return
+      // }
+      const baoRes = await app.call({
+        path: `/api/v1/program/enterprise/security_sponsion/logs`,
+        method: 'GET',
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
+      });
+      const baoInfo = enterpriseRes.data.data.security_sponsion || {}
+      this.setData({
+        logs: baoRes.data.data.map((item) => {
+          return {
+            value: `${formatTime(item.created_at, 'YYYY-MM-DD HH:mm:ss')} \n检查人姓名：${item.name}\n检查人联系方式: ${item.mobile}`
+          }
+        })
+      })
+      // 姓名：周文 \n职务：社区书记 \n包保等级：D \n电话：15565345432
+      if (baoInfo) {
         this.setData({
-          businessTypeText: shopData.businessTypeText,
-          shopTemplateText: shopData.shopTemplateText,
-          personalName: shopData.personalName,
-          businessCode: shopData.businessCode,
-          personalPhone: shopData.personalPhone,
-          isEnter: true,
-        });
+          baoInfo: `姓名：${baoInfo.name || ''} \n职务：${baoInfo.position || ''} \n包保等级：${baoInfo.level || ''} \n电话：${baoInfo.mobile || ''}`
+        })
       }
+    } catch (error) {
+      console.log(error)
+      Toast({
+        context: this,
+        selector: '#t-toast',
+        message: '请求失败！',
+      });
     }
   },
 
   nameChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     this.setData({
       personalName: value,
     });
   },
   phoneChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     this.setData({
       personalPhone: value,
     });
   },
   codeChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     this.setData({
       businessCode: value,
     });
@@ -109,8 +142,12 @@ Page({
   },
 
   onPickerChange(e) {
-    const { key } = e.currentTarget.dataset;
-    const { value } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
+    const {
+      value
+    } = e.detail;
 
     this.setData({
       [`${key}Visible`]: false,
@@ -120,7 +157,9 @@ Page({
   },
 
   onPickerCancel(e) {
-    const { key } = e.currentTarget.dataset;
+    const {
+      key
+    } = e.currentTarget.dataset;
     this.setData({
       [`${key}Visible`]: false,
     });
@@ -146,8 +185,12 @@ Page({
   },
 
   handleAdd(e) {
-    const { fileList } = this.data;
-    const { files } = e.detail;
+    const {
+      fileList
+    } = this.data;
+    const {
+      files
+    } = e.detail;
 
     this.setData({
       fileList: [...fileList, ...files], // 此时设置了 fileList 之后才会展示选择的图片
@@ -155,8 +198,12 @@ Page({
   },
 
   handleRemove(e) {
-    const { index } = e.detail;
-    const { fileList } = this.data;
+    const {
+      index
+    } = e.detail;
+    const {
+      fileList
+    } = this.data;
 
     fileList.splice(index, 1);
     this.setData({

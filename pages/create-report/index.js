@@ -46,9 +46,11 @@ Page({
   async onLoad(options) {
     try {
       let allCheck = [];
+      let isTemplate = false;
       const {
         checkList,
         isCheckedFalse,
+        mini,
       } = options || {};
       this.setData({
         isCheckedFalse
@@ -77,6 +79,9 @@ Page({
       if (checkList) {
         const checkListData = wx.getStorageSync('checkListData');
         allCheck = checkListData;
+        this.setData({
+          min_item_nums: mini,
+        })
       } else {
         const res = await app.call({
           path: `/api/v1/program/enterprise/report/template?report_type=${reportData.report_type}&business_type=${business_type}`,
@@ -140,6 +145,7 @@ Page({
           const {
             items
           } = template;
+          isTemplate = true;
           allCheck = items;
           const profileRes = await app.call({
             path: `/api/v1/program/report/template/${template.report_template_id}`,
@@ -159,6 +165,7 @@ Page({
             label: ''
           };
           this.setData({
+            checkList: allCheck.map((item, index) => index),
             templateTypeList: filterList,
             templateTypeValue: [template.report_template_id],
             templateTypeText: foundItem.label,
@@ -199,7 +206,7 @@ Page({
         let tempCheckListData = allCheck.map((item) => {
           return {
             ...item,
-            checked: false,
+            checked: isTemplate,
             checkResult: '',
             remark: '',
             checkFileList: [],
@@ -226,7 +233,7 @@ Page({
               checkResult: 'fail',
               checkFileList: item.spot_images.map((image) => {
                 return {
-                  url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
+                  url: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${image}`,
                   fileID: image,
                   name: image.split('/').slice(-1)[0],
                   type: 'image',
@@ -234,7 +241,7 @@ Page({
               }),
               checkFileListR: item.rectification_images.map((image) => {
                 return {
-                  url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
+                  url: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${image}`,
                   fileID: image,
                   name: image.split('/').slice(-1)[0],
                   type: 'image',
@@ -395,7 +402,7 @@ Page({
         filePath: getImgUrlRes,
       });
       console.log(uploadResult);
-      const signer = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${uploadResult.fileID
+      const signer = `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${uploadResult.fileID
         .split('/')
         .slice(-2)
         .join('/')}`;

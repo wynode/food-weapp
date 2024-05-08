@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "人工客服",
+  "usingComponents": {
+    "background": "/components/background/index",
+    "t-image": "tdesign-miniprogram/image/image",
+    "t-grid": "tdesign-miniprogram/grid/grid",
+    "cell": "plugin://materialPlugin/cell",
+    "t-grid-item": "tdesign-miniprogram/grid-item/grid-item",
+    "t-button": "tdesign-miniprogram/button/button"
+  }
+}

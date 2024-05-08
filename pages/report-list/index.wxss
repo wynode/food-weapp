@@ -10,6 +10,38 @@
   margin-bottom: 20rpx;
 }
 
+
+.llil-date {
+  min-width: 126rpx;
+  font-size: 48rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #333333;
+  line-height: 67rpx;
+}
+
+
+.ll-calendar {
+  max-height: 640rpx;
+}
+
+.ll-calendar .t-calendar {
+  max-height: 640rpx;
+  overflow: hidden;
+}
+
+.ll-calendar .t-calendar__title {
+  display: none;
+}
+
+.ll-calendar .t-calendar__dates-item {
+  margin-top: 0;
+}
+
+.ll-calendar .t-calendar__months {
+  max-height: 540rpx;
+}
+
 .rpr-top-left {
   font-size: 32rpx;
   font-family: PingFangSC-Semibold, PingFang SC;

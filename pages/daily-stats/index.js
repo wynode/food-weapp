@@ -1,4 +1,9 @@
+import {
+  formatTime,
+  sub7day
+} from '../../utils/util';
 const app = getApp();
+
 Page({
   data: {
     qualifiedDay: '21',
@@ -9,6 +14,8 @@ Page({
     profile: {},
     unPassList: [],
     passList: [],
+    currentDay: '',
+    currentDaySub7: '',
   },
 
   goEditReport() {
@@ -26,7 +33,7 @@ Page({
       });
       this.setData({
         qualifiedDay: '3',
-        topTitle: '周报',
+        topTitle: '周排查详情',
       });
     } else if (report_type === '3') {
       wx.setNavigationBarTitle({
@@ -34,7 +41,7 @@ Page({
       });
       this.setData({
         qualifiedDay: '21',
-        topTitle: '月报',
+        topTitle: '月调度详情',
       });
     }
     this.setData({
@@ -70,10 +77,10 @@ Page({
           ...items,
           ...item,
           spot_images: item.spot_images.map(
-            (url) => `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${url}`,
+            (url) => `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${url}`,
           ),
           rectification_images: item.rectification_images.map(
-            (url) => `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${url}`,
+            (url) => `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${url}`,
           ),
         };
       });
@@ -83,13 +90,19 @@ Page({
           ...items,
           ...item,
           spot_images: item.spot_images.map(
-            (url) => `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${url}`,
+            (url) => `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${url}`,
           ),
         };
       });
       profile.month = String(profile.date).slice(4, 6);
       profile.day = String(profile.date).slice(6, 8);
       profile.title = this.data.topTitle;
+      const dateString = String(profile.date)
+      const normalData = `${dateString.slice(0,4)}-${dateString.slice(4,6)}-${dateString.slice(6,8)}`
+      this.setData({
+        currentDay: formatTime(normalData, 'YYYY.MM.DD'),
+        currentDaySub7: sub7day(normalData),
+      })
 
       this.setData({
         profile,

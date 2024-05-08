@@ -1,0 +1,51 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="log-list">
+    <t-cell title="选择月份" hover note="{{monthText}}" arrow data-mode="month" bindtap="showPicker" t-class="panel-item" />
+
+    <!-- 年月 -->
+    <t-date-time-picker title="选择日期" visible="{{monthVisible}}" mode="month" value="{{month}}" format="YYYY-MM" bindchange="onConfirm" bindpick="onColumnChange" bindcancel="hidePicker" start="{{start}}" end="{{end}}" />
+    <view class="ll-calendar">
+      <t-calendar id="my-calendar" visible="{{visible}}" minDate="{{minDate}}" maxDate="{{maxDate}}" value="{{calendarValue}}" show-diff-dot-object="{{showDiffDotObject}}" use-popup="{{false}}" bind:select="handleSelect" />
+
+    </view>
+    <view style="display: flex; justify-content: space-between; padding: 20rpx 20rpx 0rpx;">
+      <view style="display: flex;">
+        <view style="margin-right: 8rpx;">所属周报</view>
+        <view style="{{weekFinished === '已完成' ? 'color: #008858' : 'color: #ad352f'}}">
+          {{weekFinished}}
+        </view>
+      </view>
+
+      <view style="display: flex;">
+        <view style="margin-right: 8rpx;">
+          {{monthSlice}}月月报
+        </view>
+        <view style="{{monthFinished === '已完成' ? 'color: #008858' : 'color: #ad352f'}}">{{monthFinished}}</view>
+      </view>
+    </view>
+    <view class="rp-list">
+      <view class="{{ reportItem.isSkip ? 'rp-item rp-item-skip' : 'rp-item'}}" date-key="{{reportItem.dateCn}}" wx:for="{{reportProfileList}}" data-item="{{reportItem}}" wx:key="index" wx:for-item="reportItem" bindtap="goDailyStats">
+        <view class="rp-item-left">
+          <view class="rpil-date">{{ reportItem.dateCn }}</view>
+          <t-button wx:if="{{!reportItem.isSkip}}" data-date="{{reportItem.date}}" size="small" theme="light" variant="text" style="margin-top: -10rpx; padding-left: 10rpx" bind:tap="handlePreviewCheckList">查看图片</t-button>
+          <t-button data-date="{{reportItem.date}}" size="small" theme="light" variant="text" style="margin-top: -10rpx" wx:if="{{reportItem.unqualifiedTotal}}" bind:tap="handleRectify">整改</t-button>
+        </view>
+        <view class="{{ reportItem.unqualifiedTotal ? 'rp-item-right-red' : 'rp-item-right'}}">
+          <view class="rpir-top">
+            <view>共{{ reportItem.total }}项</view>
+            <view>{{ reportItem.isDeadline ? '超时' : ''}}</view>
+            <view wx:if="{{reportItem.unqualifiedTotal > 0}}">{{ reportItem.unqualifiedTotal }}项不合格</view>
+            <view wx:if="{{reportItem.isSkip}}">暂停营业</view>
+            <view wx:if="{{reportItem.unqualifiedTotal === 0 && !reportItem.isSkip}}">全部合格</view>
+          </view>
+          <view class="rpir-center"> 提交时间：{{ reportItem.submitTime }} | {{ reportItem.submitUser }} </view>
+          <view class="rpir-bottom"> {{ reportItem.address }}</view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+  <t-toast id="t-toast" />
+</view>

@@ -4,7 +4,7 @@
     <view class="cr-top-box">
       <view class="cr-top">
         <view class="cr-top-left">
-          必选项
+          至少选择
           <text style="{{computedColor1}}">{{checkedResultLength}}</text>/{{min_item_nums}}
         </view>
         <view class="cr-top-right">

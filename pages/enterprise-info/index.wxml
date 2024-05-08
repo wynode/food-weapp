@@ -16,11 +16,10 @@
     <view class="cns-input">
       <t-input value="{{profile.personal}}" disabled bindblur="phoneChange" placeholder="请填写法人信息" />
     </view>
-    <view class="cns-title">包保信息</view>
+    <!-- <view class="cns-title">包保信息</view>
     <view class="cns-input">
-      <!-- 姓名：周文 \n职务：社区书记 \n包保等级：D \n电话：15565345432 -->
       <t-textarea style="height: 140rpx;" value="{{profile.baobao}}" disabled bindblur="phoneChange" autosize placeholder="请填写包保信息" />
-    </view>
+    </view> -->
     <view class="cns-license">
       <view class="cns-license1">
         <view class="cns-title">营业执照</view>
@@ -28,7 +27,7 @@
       </view>
       <view class="cns-license2">
         <view class="cns-title">食品安全许可证</view>
-        <t-image src="{{profile.food_security_license}}" mode="aspectFill" bind:tap="handlePreviewF" />
+        <t-image src="{{profile.food_security_license || 'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/no_image.png?sign=e3dec44b9dddabfca82478848fe8f3d2&t=1711211332'}}" mode="aspectFill" bind:tap="handlePreviewF" />
       </view>
     </view>
     <!-- <view class="cns-title">企业员工</view>
@@ -36,7 +35,7 @@
       <t-input value="食品安全员  周文   15565345432" bindblur="phoneChange" placeholder="请填写负责人联系电话" />
     </view>
     <view class="cns-input">
-      <t-input value="食品总监      周一文   15565345432" bindblur="phoneChange" placeholder="请填写负责人联系电话" />
+      <t-input value="食品安全总监      周一文   15565345432" bindblur="phoneChange" placeholder="请填写负责人联系电话" />
     </view>
     <view class="cns-input">
       <t-input value="企业负责人      周二文   15565345432" bindblur="phoneChange" placeholder="请填写负责人联系电话" />

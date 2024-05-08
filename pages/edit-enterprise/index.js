@@ -81,14 +81,14 @@ Page({
       fileID1 = profile.business_license_image
       fileList1 = [{
         name: 'xxx',
-        url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${profile.business_license_image}`
+        url: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${profile.business_license_image}`
       }];
     }
     if (profile.food_security_license) {
       fileID2 = profile.food_security_license
       fileList2 = [{
         name: 'xxx',
-        url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${profile.food_security_license}`
+        url: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${profile.food_security_license}`
       }]
     }
 
@@ -143,10 +143,18 @@ Page({
         title: '修改成功',
       })
       setTimeout(() => {
-        wx.redirectTo({
-          url: '/pages/enterprise-info/index',
-        })
-      }, 1500)
+        const pages = getCurrentPages(); //获取当前界面的所有信息
+        const prevPage = pages[pages.length - 2];
+        prevPage.onLoad()
+      }, 500)
+      setTimeout(() => {
+        wx.navigateBack()
+      }, 1000);
+      // setTimeout(() => {
+      //   wx.redirectTo({
+      //     url: '/pages/enterprise-info/index',
+      //   })
+      // }, 1500)
     }
 
     wx.hideLoading()

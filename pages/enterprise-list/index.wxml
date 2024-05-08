@@ -1,0 +1,47 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="enterpirse-list">
+    <view class="ep-content">
+      <view class="ep-list" wx:for="{{dataList}}" wx:key="index">
+        <view class="ep-list-top">
+          <view class="ep-top-title"> {{item.enterprise.enterprise_name}} </view>
+          <view class="ep-top-month"> {{monthCN}} </view>
+        </view>
+        <view class="ep-list-bottom" data-key="{{item}}" bind:tap="handleGoMainPage">
+          <view class="ep-bottom-progress">
+            <t-progress
+              class="ep-bottom-progress"
+              color="{{item.report_status[0].status === 'success' ? '#2BA471' :  '#0B82FF'}}"
+              track-color="rgba(11,130,255,0.1)"
+              stroke-width="10"
+              theme="circle"
+              percentage="{{item.report_status[0].progress}}"
+            >
+              <!-- <view slot="label"> {{item.total}} </view> -->
+            </t-progress>
+          </view>
+          <view class="ep-bottom-right">
+            <view class="ep-right-li">
+              <view> 每日检查报告 </view>
+              <view>
+                {{ item.report_status[0].submit_report_count }}/{{ item.report_status[0].total_report_count}}
+              </view>
+            </view>
+            <view class="ep-right-li">
+              <view> 每周检查报告 </view>
+              <view>
+                {{ item.report_status[1].submit_report_count }}/{{ item.report_status[1].total_report_count}}
+              </view>
+            </view>
+            <view class="ep-right-li">
+              <view> 检查报告 </view>
+              <view>
+                {{ item.report_status[2].submit_report_count }}/{{ item.report_status[2].total_report_count}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

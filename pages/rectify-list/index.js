@@ -1,4 +1,6 @@
-import { formatTime } from '../../utils/util';
+import {
+  formatTime
+} from '../../utils/util';
 import Signature from 'mini-smooth-signature';
 const app = getApp();
 // base64转本地
@@ -29,8 +31,7 @@ Page({
     topTitle: '日报',
     dateText: '',
     dateValue: [2023, 8],
-    years: [
-      {
+    years: [{
         label: '2023年',
         value: '2023',
       },
@@ -48,8 +49,7 @@ Page({
       width: 180,
       height: 180,
     },
-    seasons: [
-      {
+    seasons: [{
         label: '1月',
         value: '1',
       },
@@ -163,7 +163,7 @@ Page({
         cloudPath: `sign_image/${signUrl.slice(-10)}`,
         filePath: signUrl,
       });
-      const signer = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${uploadResult.fileID
+      const signer = `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${uploadResult.fileID
         .split('/')
         .slice(-2)
         .join('/')}`;
@@ -266,7 +266,11 @@ Page({
 
   onReady() {
     try {
-      const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
+      const {
+        windowWidth,
+        windowHeight,
+        pixelRatio
+      } = wx.getSystemInfoSync();
       this.setData({
         width1: windowWidth - 30,
         height1: 200,
@@ -282,8 +286,12 @@ Page({
   },
 
   handleAdd(e) {
-    const { files } = e.detail;
-    const { key } = e.currentTarget.dataset;
+    const {
+      files
+    } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
     files.forEach((file) => this.onUpload(file, key));
   },
   async onUpload(file, key) {
@@ -328,6 +336,12 @@ Page({
       setTimeout(() => {
         console.log(this.data.unPassList);
       }, 2000);
+      console.log(`/${uploadResult.fileID
+        .split('/')
+        .slice(-2)
+        .join('/')}`)
+      console.log(key)
+      console.log(this.data.unPassList[key])
     } catch (error) {
       console.log(error);
       wx.showToast({
@@ -343,11 +357,17 @@ Page({
     });
   },
   handleRemove(e) {
-    const { index } = e.detail;
-    const { key } = e.currentTarget.dataset;
+    const {
+      index
+    } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
     const fileIndex = Number(key);
     console.log(this.data.unPassList, fileIndex, index);
-    const { rectification_images } = this.data.unPassList[fileIndex];
+    const {
+      rectification_images
+    } = this.data.unPassList[fileIndex];
 
     rectification_images.splice(index, 1);
     this.setData({
@@ -356,7 +376,10 @@ Page({
   },
 
   onLoad(options) {
-    const { date, report_type = 'day' } = options || {};
+    const {
+      date,
+      report_type = 'day'
+    } = options || {};
     if (report_type === '2') {
       wx.setNavigationBarTitle({
         title: '周排查整改',
@@ -399,11 +422,11 @@ Page({
           ...item,
           ...items,
           spot_images: item.spot_images.map(
-            (url) => `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${url}`,
+            (url) => `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${url}`,
           ),
           rectification_images: item.rectification_images.map((url) => {
             return {
-              url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${url}`,
+              url: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${url}`,
               fileID: url,
               name: url.split('/').slice(-1)[0],
               type: 'image',
@@ -417,7 +440,7 @@ Page({
           ...item,
           ...items,
           spot_images: item.spot_images.map(
-            (url) => `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${url}`,
+            (url) => `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${url}`,
           ),
         };
       });
@@ -444,8 +467,12 @@ Page({
   },
 
   onPickerChange(e) {
-    const { key } = e.currentTarget.dataset;
-    const { value } = e.detail;
+    const {
+      key
+    } = e.currentTarget.dataset;
+    const {
+      value
+    } = e.detail;
 
     console.log('picker change:', e.detail);
     const tempDsList = this.data.dsList.map((item, index) => {
@@ -465,7 +492,9 @@ Page({
   },
 
   onPickerCancel(e) {
-    const { key } = e.currentTarget.dataset;
+    const {
+      key
+    } = e.currentTarget.dataset;
     console.log(e, '取消');
     console.log('picker1 cancel:');
     this.setData({

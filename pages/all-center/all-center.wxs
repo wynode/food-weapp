@@ -1,0 +1,11 @@
+function getDate(date) {
+  if (date[0] === '0') {
+    return date[1]
+  }
+  return date
+}
+
+
+module.exports = {
+  getDate: getDate,
+};

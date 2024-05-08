@@ -5,45 +5,29 @@ const app = getApp()
 Page({
   data: {
     showDotArray: [],
+    showDiffDotObject: { date: [], status: []},
     visible: true,
     month: '',
     calendarValue: new Date().getTime(),
     minDate: new Date(2023, 6, 12).getTime(),
     maxDate: new Date().getTime(),
-    logList: [
-      // {
-      //   date: formatTime(new Date(), 'M.DD'),
-      //   dateType: '下午',
-      //   logType: 'day',
-      //   logTypeCN: '提交日管控',
-      //   submitTime: '14:00',
-      //   submitUser: '花花',
-      //   submitStatus: '门店提交',
-      //   address: '成都市金牛区驷马桥街道横田大厦',
-      // },
-      // {
-      //   date: formatTime(new Date(), 'M.DD'),
-      //   dateType: '上午',
-      //   title: 'XXXXXXXXX企业进货单',
-      //   submitTime: '09:00',
-      //   submitUser: '花花',
-      //   logType: 'bill',
-      //   logTypeCN: '审批未通过',
-      //   rejectReason: '这是一条理由',
-      // },
-    ],
+    logList: [],
+    monthFinished: '',
+    weekFinished: '',
   },
 
   onLoad(options) {
-    const {
-      date
-    } = options || {}
-    const year = String(date).slice(0, 4) || new Date().getFullYear
-    const month = String(date).slice(4, 6) || new Date().getMonth + 1
+    // const {
+    //   date
+    // } = options || {}
+    // const year = String(date).slice(0, 4) || new Date().getFullYear
+    // const month = String(date).slice(4, 6) || new Date().getMonth + 1
+    // `${year}/${month}/1`
+    // `${year}/${month}/1`
     this.setData({
-      calendarValue: new Date(`${year}/${month}/1`).getTime()
+      calendarValue: new Date().getTime()
     })
-    this.getReportLogList(new Date(`${year}/${month}/1`).getTime());
+    this.getReportLogList(new Date().getTime());
   },
 
   async getReportLogList(dateTime) {
@@ -72,7 +56,7 @@ Page({
       const logList = list.map((item) => {
         return {
           ...item,
-          date: formatTime(String(item.report_info ? item.report_info.date : item.date), 'M/DD'),
+          date: formatTime(String(item.report_info ? item.report_info.date : item.date), 'MM/DD'),
           dateType: '',
           logType: 'day',
           logTypee: reportTypeOptions[item.report_info.report_type],
@@ -87,7 +71,7 @@ Page({
       this.setData({
         logList,
         showDotArray: month_logs.map((item) => String(item)),
-        month: month.slice(-2),
+        month: month.slice(-2).startsWith('0') ? month.slice(-1) : month.slice(-2),
         monthFinished: month_finished ? '已完成' : '未完成',
         weekFinished: week_finished ? '已完成' : '未完成'
       });

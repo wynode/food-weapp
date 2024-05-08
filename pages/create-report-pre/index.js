@@ -98,11 +98,12 @@ Page({
         min_item_nums
       } = profileRes.data.data;
       wx.setStorageSync('templateData', profileRes.data.data);
-      const allCheck = items;
+      let allCheck = []
+      // const allCheck = items;
       this.setData({
         templateTypeList: filterList,
-        templateTypeValue: [list[0].template_id],
-        templateTypeText: list[0].template_name,
+        // templateTypeValue: [list[0].template_id],
+        // templateTypeText: list[0].template_name,
         min_item_nums,
       });
       const tempCheckListData = allCheck.map((item) => {
@@ -245,7 +246,7 @@ Page({
         filePath: getImgUrlRes,
       });
       console.log(uploadResult);
-      const signer = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${uploadResult.fileID
+      const signer = `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${uploadResult.fileID
         .split('/')
         .slice(-2)
         .join('/')}`;
@@ -460,7 +461,7 @@ Page({
     const checkListData = this.data.checkListData.filter((item) => item.checked);
     wx.setStorageSync('checkListData', checkListData);
     wx.navigateTo({
-      url: `/pages/create-report/index?allqualified=${this.data.allqualified}&checkList=yes`,
+      url: `/pages/create-report/index?allqualified=${this.data.allqualified}&checkList=yes&mini=${this.data.min_item_nums}`,
     });
   },
 
@@ -518,14 +519,10 @@ Page({
     let checkedResultLength = 0;
     const tempCheckListData = this.data.checkListData.map((item, index) => {
       if (value.includes(index)) {
-        checkedResultLength += 1;
         return {
           ...item,
           checked: true,
         };
-      }
-      if (item.checked) {
-        checkedResultLength += 1;
       }
       return {
         ...item,
@@ -535,6 +532,7 @@ Page({
         checkFileList: [],
       };
     });
+    checkedResultLength = value.length
     console.log(tempCheckListData);
     this.setData({
       checkList: value,

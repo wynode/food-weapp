@@ -3,13 +3,16 @@ Page({
   data: {
     levelOptions: {
       1: '企业负责人',
-      2: '食品总监职责',
+      2: '食品安全总监',
       3: '食品安全员',
       64: '企业员工',
     },
     typeOptions: {
       1: '健康证',
       2: '任命书',
+    },
+    border: {
+      color: '#f6f6f6',
     },
 
     userPositionList: [
@@ -18,7 +21,7 @@ Page({
       //   value: '11',
       // },
       {
-        label: '食品总监职责  ',
+        label: '食品安全总监',
         value: '2',
       },
       {
@@ -59,7 +62,7 @@ Page({
         if (posItem.value === String(item.position)) {
           result.list.push({
             ...item,
-            imageUrl: supportedExtensions.some(extension => item.url.toLowerCase().endsWith(extension)) ? `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${item.url}` : ''
+            imageUrl: supportedExtensions.some(extension => item.pic_url.toLowerCase().endsWith(extension)) ? `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${item.pic_url}` : ''
           });
         }
       });
@@ -167,13 +170,16 @@ Page({
         item
       } = e.currentTarget.dataset;
       const that = this;
-      wx.chooseMessageFile({
+      wx.chooseMedia({
         count: 1,
-        type: 'file',
-        extension: ['doc', 'docx', 'txt'],
         success(res) {
           // tempFilePath可以作为img标签的src属性显示图片
-          const tempFile = res.tempFiles[0];
+          // debugger
+          const tempFile = {
+            name: res.tempFiles[0].tempFilePath.slice(-10) || 'upload_image.png',
+            path: res.tempFiles[0].tempFilePath
+          };
+          // const tempFile = res.tempFiles[0];
           that.uploadFn(item, tempFile);
         },
       });
@@ -182,6 +188,49 @@ Page({
       wx.showToast({
         title: '上传出错',
       });
+    }
+  },
+
+  handlePreviewImage(e) {
+    const {
+      item
+    } = e.currentTarget.dataset;
+    if (item.imageUrl) {
+      wx.previewImage({
+        urls: [item.imageUrl],
+      })
+    } else {
+      this.handlePreview(e)
+    }
+  },
+
+  async handlePreviewReset(e) {
+    const {
+      item
+    } = e.currentTarget.dataset;
+    try {
+      wx.showLoading()
+      const enterpriseData = wx.getStorageSync('enterpriseData');
+      const res = await app.call({
+        path: `/api/v1/program/enterprise/enterprise_appointment/template/${item.license_id}/rest`,
+        method: 'POST',
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
+      });
+      if (res.data.data) {
+        this.getList()
+        wx.hideLoading()
+        wx.showToast({
+          title: '重置成功',
+        })
+      }
+    } catch(error) {
+      wx.hideLoading()
+      wx.showToast({
+        icon: 'error',
+        title: '重置失败',
+      })
     }
   },
 
@@ -199,36 +248,30 @@ Page({
     //   },
     // });
     // const urlpre = res.data.data.user_uploaded_url;
-    if (item.imageUrl) {
-      wx.previewImage({
-        urls: [item.imageUrl],
-      })
-      wx.hideLoading()
-    } else {
-      const url = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${item.url}`;
-      wx.downloadFile({
-        url,
-        filePath: wx.env.USER_DATA_PATH + "/" + `${item.url.split('/').pop()}`,
-        success: function (res) {
-          wx.hideLoading();
-          const filePath = res.filePath;
-          wx.openDocument({
-            filePath: filePath,
-            showMenu: true,
-            success: function (res) {
-              console.log('打开文档成功');
-            },
-            fail: function () {
-              wx.hideLoading();
-            },
-          });
-        },
-        fail: function (res) {
-          wx.hideLoading();
-        },
-      });
-    }
+    const url = `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${item.url}`;
+    wx.downloadFile({
+      url,
+      filePath: wx.env.USER_DATA_PATH + "/" + `${item.url.split('/').pop()}`,
+      success: function (res) {
+        wx.hideLoading();
+        const filePath = res.filePath;
+        wx.openDocument({
+          filePath: filePath,
+          showMenu: true,
+          success: function (res) {
+            console.log('打开文档成功');
+          },
+          fail: function () {
+            wx.hideLoading();
+          },
+        });
+      },
+      fail: function (res) {
+        wx.hideLoading();
+      },
+    });
+  }
 
 
-  },
+
 });

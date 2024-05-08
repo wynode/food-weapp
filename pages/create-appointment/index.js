@@ -9,7 +9,7 @@ Page({
         value: '1',
       },
       {
-        label: '食品总监职责',
+        label: '食品安全总监',
         value: '2',
       },
       {

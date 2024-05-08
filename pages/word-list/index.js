@@ -1,3 +1,7 @@
+import {
+  formatTime
+} from '../../utils/util';
+
 const app = getApp();
 Page({
   data: {
@@ -28,9 +32,60 @@ Page({
       },
     });
     this.setData({
-      dataList: res.data.data.list[2].files
+      dataList: res.data.data.list[2].files.map((item) => {
+        return {
+          ...item,
+          template_up_at: item.template_up_at ? formatTime(item.template_up_at, '更新时间：YYYY-MM-DD HH:mm:ss') : '',
+        }
+      })
     })
   },
+
+
+  // handlePreviewImage(e) {
+  //   const {
+  //     item
+  //   } = e.currentTarget.dataset;
+  //   if (item.imageUrl) {
+  //     wx.previewImage({
+  //       urls: [item.imageUrl],
+  //     })
+  //   } else {
+  //     this.handlePreview(e)
+  //   }
+  // },
+
+  async handlePreviewReset(e) {
+    const {
+      id
+    } = e.currentTarget.dataset;
+    wx.showLoading()
+    try {
+      const enterpriseData = wx.getStorageSync('enterpriseData');
+      const res = await app.call({
+        path: `/api/v1/program/enterprise/attachment/${id}/reset`,
+        method: 'POST',
+        header: {
+          'x-enterprise-id': enterpriseData.enterprise_id,
+        },
+      });
+      if (res.data.data) {
+        this.fetchInstitutionList()
+        wx.hideLoading()
+        wx.showToast({
+          title: '重置成功',
+        })
+      }
+    } catch(error) {
+      console.log(error)
+      wx.hideLoading()
+      wx.showToast({
+        icon: 'error',
+        title: '重置失败',
+      })
+    }
+  },
+
 
   async uploadFn(id, tempFile) {
     try {
@@ -132,7 +187,7 @@ Page({
     });
     const urlpre = res.data.data.user_uploaded_url
 
-    const url = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${urlpre}`;
+    const url = `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${urlpre}`;
     wx.downloadFile({
       url,
       filePath: wx.env.USER_DATA_PATH + "/" + `${urlpre.split('/').pop()}`,

@@ -10,7 +10,7 @@ Page({
         value: '1',
       },
       {
-        label: '食品总监职责',
+        label: '食品安全总监',
         value: '2',
       },
       {
@@ -80,13 +80,21 @@ Page({
           title: '新增成功',
         })
         setTimeout(() => {
-          this.setData({
-            disabled: false
-          })
-          wx.reLaunch({
-            url: '/pages/health-list/index',
-          })
-        }, 1000)
+          const pages = getCurrentPages(); //获取当前界面的所有信息
+          const prevPage = pages[pages.length - 2];
+          prevPage.onLoad()
+        }, 500)
+        setTimeout(() => {
+          wx.navigateBack()
+        }, 1000);
+        // setTimeout(() => {
+        //   this.setData({
+        //     disabled: false
+        //   })
+        //   wx.reLaunch({
+        //     url: '/pages/health-list/index',
+        //   })
+        // }, 1000)
       }
       wx.hideLoading()
     } catch (error) {

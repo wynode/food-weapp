@@ -1,7 +1,8 @@
 import Toast from 'tdesign-miniprogram/toast';
 import Signature from 'mini-smooth-signature';
 import {
-  formatTime
+  formatTime,
+  sub7day,
 } from '../../utils/util';
 const app = getApp();
 Page({
@@ -22,6 +23,7 @@ Page({
     templateTypeText: '',
     templateTypeList: [],
     reportType: '',
+    reportProfile: {},
 
     submitDisabled: true,
     computedColor: '#FC5B5B',
@@ -38,6 +40,7 @@ Page({
     checkedResultLength: 0,
     checkPercentage: 0,
     currentDay: formatTime(new Date(), 'YYYY.MM.DD'),
+    currentDaySub7: '',
     checkListData: [],
     min_item_nums: 3,
     date: '',
@@ -65,6 +68,12 @@ Page({
         2: '周排查',
         3: '月调度',
       };
+      const dateString = String(date)
+      const normalData = `${dateString.slice(0,4)}-${dateString.slice(4,6)}-${dateString.slice(6,8)}`
+      this.setData({
+        currentDay: formatTime(normalData, 'YYYY.MM.DD'),
+        currentDaySub7: sub7day(normalData),
+      })
       const reportType = reportTypeOptions[report_type];
       wx.setNavigationBarTitle({
         title: `修改${reportType}`,
@@ -81,6 +90,9 @@ Page({
           },
         });
         const reportProfile = reportProfileRes.data.data;
+        this.setData({
+          reportProfile: reportProfile
+        })
         const passItems = reportProfile.passed_items.map((item) => {
           return {
             ...item,
@@ -105,7 +117,7 @@ Page({
             remark: item.remark,
             checkFileList: item.spot_images.map((image) => {
               return {
-                url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
+                url: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${image}`,
                 fileID: image,
                 name: image.split('/').slice(-1)[0],
                 type: 'image',
@@ -113,7 +125,7 @@ Page({
             }),
             checkFileListR: item.rectification_images.map((image) => {
               return {
-                url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
+                url: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${image}`,
                 fileID: image,
                 name: image.split('/').slice(-1)[0],
                 type: 'image',
@@ -142,7 +154,7 @@ Page({
             value: item.template_id,
           };
         });
-  
+
         const profileRes = await app.call({
           path: `/api/v1/program/report/template/${template_id}`,
           method: 'GET',
@@ -165,7 +177,7 @@ Page({
           templateTypeValue: [template_id],
           templateTypeText: foundItem.label,
         });
-  
+
         console.log(allCheck);
         const reportProfileRes = await app.call({
           path: `/api/v1/program/enterprise/report/${date}/${report_type}`,
@@ -174,6 +186,9 @@ Page({
           },
         });
         const reportProfile = reportProfileRes.data.data;
+        this.setData({
+          reportProfile,
+        })
         const passItems = reportProfile.passed_items.map((item) => item.item_id);
         const unPassItems = reportProfile.unpassed_items.map((item) => item.item_id);
         tempCheckListData = allCheck.map((item, index) => {
@@ -203,7 +218,7 @@ Page({
               remark: unPassItem.remark,
               checkFileList: unPassItem.spot_images.map((image) => {
                 return {
-                  url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
+                  url: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${image}`,
                   fileID: image,
                   name: image.split('/').slice(-1)[0],
                   type: 'image',
@@ -211,7 +226,7 @@ Page({
               }),
               checkFileListR: unPassItem.rectification_images.map((image) => {
                 return {
-                  url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${image}`,
+                  url: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${image}`,
                   fileID: image,
                   name: image.split('/').slice(-1)[0],
                   type: 'image',
@@ -468,7 +483,7 @@ Page({
         filePath: getImgUrlRes,
       });
       console.log(uploadResult);
-      const signer = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${uploadResult.fileID
+      const signer = `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${uploadResult.fileID
         .split('/')
         .slice(-2)
         .join('/')}`;
@@ -516,7 +531,9 @@ Page({
       payload.params.passed_items = passed_items;
       payload.params.unpassed_items = unpassed_items;
       payload.params.item_count = passed_items.length + unpassed_items.length;
-      payload.params.content = {};
+      // payload.params.content = {};
+      payload.params.content = this.data.reportProfile.content || {}
+      console.log(this.data)
       console.log(payload);
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const reportRes = await app.call({

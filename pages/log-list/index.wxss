@@ -48,7 +48,7 @@
 }
 
 .llil-date {
-  min-width: 100rpx;
+  min-width: 126rpx;
   font-size: 48rpx;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;

@@ -3,7 +3,7 @@ Page({
   data: {
     levelOptions: {
       1: '企业负责人',
-      2: '食品总监职责',
+      2: '食品安全总监',
       3: '食品安全员',
       64: '企业员工',
     },
@@ -18,7 +18,7 @@ Page({
         value: '1',
       },
       {
-        label: '食品总监职责  ',
+        label: '食品安全总监',
         value: '2',
       },
       {
@@ -53,7 +53,7 @@ Page({
         if (posItem.value === String(item.position)) {
           result.list.push({
             ...item,
-            url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${item.url}`,
+            url: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${item.pic_url}`,
           });
         }
       });

@@ -2,13 +2,26 @@
   <background isHighlight="true"></background>
   <view class="manager">
 
-    <view class="manager-item" wx:for="{{dataList}}" wx:key="index">
-      <view class="manager-title">{{item.name}}</view>
-      <view class="manager-content">
-        <t-image class="manager-img" src="/assets/image/word.png" />
-        <t-button theme="primary" data-id="{{item.id}}" size="small" bind:tap="handlePreview">预览</t-button>
-        <t-button theme="primary" data-id="{{item.id}}" size="small" bind:tap="handleReplace">替换</t-button>
+    <view wx:for="{{dataList}}" wx:key="index">
+      <!-- <view class="manager-title"></view> -->
+
+      <view style="display: flex; justify-content: space-between; background: #fff; padding: 20rpx 40rpx; margin-top: 20rpx; border-radius: 10rpx;">
+        <view style="display: flex; flex-direction: column; justify-content: center;" data-id="{{item.id}}" bind:tap="handlePreview">
+          <view style="font-size: 32rpx; white-space: nowrap;">
+            <t-image style="width: 40rpx; height: 40rpx;" src="/assets/image/word.png" />
+            {{item.name}}
+          </view>
+          <view style="margin-top: 26rpx; font-size: 30rpx; color: #ccc; white-space: nowrap;">
+            {{item.template_up_at || '默认生成'}}
+          </view>
+        </view>
+        <view style="display: flex; flex-direction: column;">
+          <t-button style="margin-bottom: 20rpx;" theme="primary" data-id="{{item.id}}" size="small" bind:tap="handlePreviewReset">重置</t-button>
+          <t-button theme="primary" data-id="{{item.id}}" size="small" bind:tap="handleReplace">替换</t-button>
+        </view>
       </view>
+
+
     </view>
   </view>
   <view class="week-check-go" bind:tap="goNext"> </view>

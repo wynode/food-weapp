@@ -85,7 +85,7 @@ Page({
         return {
           ...item,
           showDate: date.slice(0, 4) + '年' + date.slice(4, 6) + '月' + date.slice(6, 8) + '日',
-          remain: `${remainingHours > 0 ? '剩余' : '已超时'}${text}`,
+          remain: `${remainingHours >= 0 ? '剩余' : '已超时'}${text}`,
         };
       });
       if (filterwait[0].remain.includes('已超时')) {

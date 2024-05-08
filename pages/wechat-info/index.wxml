@@ -1,0 +1,16 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="staff-scan">
+    <view class="scan-h1">请扫描二维码或点击下方按钮</view>
+    <view class="scan-h1">添加人工客服</view>
+    <view class="scan-image" style="margin-bottom: 100rpx;">
+      <t-image style="width: 520rpx; height: 520rpx;" show-menu-by-longpress="{{true}}" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/wechat.jpg?sign=32c17def94cd0784da03f88837fed7f0&t=1711211003" mode="" />
+
+      <!-- <image show-menu-by-longpress="{{true}}" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/wechat.jpg?sign=32c17def94cd0784da03f88837fed7f0&t=1711211003" mode="" /> -->
+      <!-- <t-image show-menu-by-longpress="{{true}}" style="width: 620rpx; height: 620rpx;" src="/assets/image/wechat.jpg" mode="" /> -->
+    </view>
+    <view style="display: flex; align-items: center; justify-content: center;">
+      <cell style="width: 300rpx;" bind:startmessage='startmessage' bind:completemessage="completemessage" url='https://work.weixin.qq.com/gm/6924cf0283970b62081135f48c838051' />
+    </view>
+  </view>
+</view>

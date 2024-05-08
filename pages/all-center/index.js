@@ -3,10 +3,11 @@ const app = getApp();
 Page({
   data: {
     status: '1',
+    is_bind: false,
     enterprise_id: '',
     enterprise_name: '',
     showWarnConfirm: false,
-    dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1)],
+    dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1).padStart(2, '0')],
     years: [{
         label: '2026年',
         value: '2026',
@@ -200,7 +201,6 @@ Page({
         enterprise_id: enterpriseData.enterprise_id
       }
     });
-    console.log(res)
     wx.hideLoading()
     if (res.data.code !== 400 || res.data.code !== 500) {
       wx.showToast({
@@ -240,7 +240,6 @@ Page({
   async handelInit(dateValue) {
     try {
       wx.showLoading()
-      console.log(111);
       const res = await app.call({
         path: '/api/v1/program/enterprise/relationship',
       });
@@ -255,6 +254,9 @@ Page({
       if (!is_bind) {
         throw error;
       }
+      this.setData({
+        is_bind: true,
+      })
       const enterpriseRes = await app.call({
         path: '/api/v1/program/enterprise',
         header: {
@@ -265,7 +267,6 @@ Page({
         throw error;
       }
       const status = String(enterpriseRes.data.data.status)
-      console.log(status)
       wx.setStorageSync('enterpriseData', enterpriseRes.data.data);
       this.setData({
         enterprise_id,
@@ -275,7 +276,6 @@ Page({
       this.getReportStats(dateValue.join(''), enterprise_id);
       wx.hideLoading()
     } catch (error) {
-      console.dir(error);
       Toast({
         context: this,
         selector: '#t-toast',
@@ -312,8 +312,8 @@ Page({
     const {
       value
     } = e.detail;
-    if (value === 'submit-report') {
-      wx.navigateTo({
+    if (value === 'all-center') {
+      wx.redirectTo({
         url: `/pages/${value}/index`,
       });
     }
@@ -337,9 +337,9 @@ Page({
     }
   },
 
-  goLogList() {
+  goCalendarList() {
     wx.navigateTo({
-      url: `/pages/log-list/index?date=${this.data.dateValue.join('')}`,
+      url: `/pages/calendar-list/index?date=${this.data.dateValue.join('')}`,
     });
   },
 
@@ -353,7 +353,6 @@ Page({
     const {
       value
     } = e.detail;
-    console.log(value);
     this.getReportStats(value.join(''), this.data.enterprise_id);
     this.setData({
       dateVisible: false,

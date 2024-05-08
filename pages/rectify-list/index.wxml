@@ -80,7 +80,7 @@
         <view wx:else>
           <view class="ds-item-content">
             <view class="ds-item-label">{{item.title}}</view>
-            <view class="ds-item-reason">{{item.remark || '无'}}</view>
+            <view class="ds-item-reason">解决措施：{{item.remark || '无'}}</view>
             <view class="ds-item-photo">
               <view class="ds-item-photo-title">现场照片</view>
               <image

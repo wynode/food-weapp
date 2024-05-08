@@ -74,11 +74,11 @@ Page({
     };
     profile.personal = `${profile.legal_name}   ${profile.employee_mobile}`;
     if (profile.business_license_image) {
-      profile.business_license_image = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${profile.business_license_image}`;
+      profile.business_license_image = `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${profile.business_license_image}`;
     }
 
     if (profile.food_security_license) {
-      profile.food_security_license = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${profile.food_security_license}`;
+      profile.food_security_license = `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${profile.food_security_license}`;
     }
 
     profile.baobao = '暂无';

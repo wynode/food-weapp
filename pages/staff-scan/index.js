@@ -19,7 +19,7 @@ Page({
       },
     });
     this.setData({
-      scanImage: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${res.data.data.url}`
+      scanImage: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${res.data.data.url}`
     })
     wx.hideLoading()
   },

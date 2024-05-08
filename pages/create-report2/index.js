@@ -48,6 +48,11 @@ Page({
     const {
       report_type
     } = reportData;
+    if (report_type === 3) {
+      wx.setNavigationBarTitle({
+        title: '月调度详情',
+      });
+    }
 
     this.setData({
       business_type,
@@ -238,7 +243,7 @@ Page({
         filePath: this.data.signUrl,
       });
       console.log(uploadResult);
-      const signer = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${uploadResult.fileID
+      const signer = `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${uploadResult.fileID
         .split('/')
         .slice(-2)
         .join('/')}`;
@@ -270,7 +275,7 @@ Page({
         payload.params.unpassed_items = reportProfileData.unpassed_items || [];
         payload.params.content = {
           content: String(this.data.content),
-          address: String(this.data.address),
+          attendee: String(this.data.address),
         };
       }
       console.log(payload);

@@ -11,12 +11,14 @@ Page({
       legal_name: '',
       employee_mobile: '',
     },
+    isFood: false,
     submitActive: false,
 
     businessTypeVisible: '',
     businessTypeValue: [],
     businessTypeText: '',
-    businessTypeList: [{
+    businessTypeList: [
+      {
         label: '食品销售',
         value: '1',
       },
@@ -32,35 +34,45 @@ Page({
     provinces: [],
     cities: [],
     counties: [],
+    areaData: [],
   },
 
   onLoad() {
     this.getAreaData();
   },
 
-  getAreaData() {
-    const url =
-      'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/area_options_data.json?sign=8f3f994ed96184b3630ac913424df901&t=1697522987';
-    wx.request({
-      url: url,
-      method: 'GET',
-      success: (res) => {
-        this.areaData = res.data;
-        this.setData({
-          provinces: res.data,
-          cities: res.data[0].childs,
-          counties: res.data[0].childs[0].childs,
-        });
-      },
+  async getAreaData() {
+    const res = await app.call({
+      path: '/api/v1/program/utils/district',
+      method: 'POST',
     });
+
+    const areaData = res.data.data.list;
+    this.setData({
+      areaData,
+      provinces: areaData,
+      cities: areaData[0].childs,
+      counties: areaData[0].childs[0].childs,
+    });
+    // const url =
+    //   'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/area_options_data.json?sign=8f3f994ed96184b3630ac913424df901&t=1697522987';
+    // wx.request({
+    //   url: url,
+    //   method: 'GET',
+    //   success: (res) => {
+    //     this.areaData = res.data;
+    //     this.setData({
+    //       provinces: res.data,
+    //       cities: res.data[0].childs,
+    //       counties: res.data[0].childs[0].childs,
+    //     });
+    //   },
+    // });
   },
 
   onAreaColumnChange(e) {
     console.log('pick:', e.detail);
-    const {
-      column,
-      index
-    } = e.detail;
+    const { column, index } = e.detail;
 
     if (column === 0) {
       this.setCitiesFromProvinceIndex(index);
@@ -77,9 +89,15 @@ Page({
     }
   },
 
+  switchIsFood() {
+    this.setData({
+      isFood: !this.data.isFood,
+    });
+  },
+
   setCitiesFromProvinceIndex(provinceIndex) {
-    const cities = this.areaData[provinceIndex].childs;
-    const counties = this.areaData[provinceIndex].childs[0].childs;
+    const cities = this.data.areaData[provinceIndex].childs;
+    const counties = this.data.areaData[provinceIndex].childs[0].childs;
     this.setData({
       cities,
       counties,
@@ -87,10 +105,7 @@ Page({
   },
 
   onAreaPickerChange(e) {
-    const {
-      value,
-      label
-    } = e.detail;
+    const { value, label } = e.detail;
 
     console.log('picker confirm:', e.detail);
     this.setData({
@@ -137,13 +152,10 @@ Page({
   },
 
   onInputValue(e) {
-    const {
-      value = ''
-    } = e.detail;
-    const {
-      item
-    } = e.currentTarget.dataset;
-    this.setData({
+    const { value = '' } = e.detail;
+    const { item } = e.currentTarget.dataset;
+    this.setData(
+      {
         [`enterpriseForm.${item}`]: value,
       },
       () => {
@@ -157,10 +169,7 @@ Page({
   },
 
   onVerifyInputLegal() {
-    const {
-      legal_name,
-      employee_mobile
-    } = this.data.enterpriseForm;
+    const { legal_name, employee_mobile } = this.data.enterpriseForm;
     const prefixPhoneReg = String(this.properties.phoneReg || innerPhoneReg);
     const prefixNameReg = String(this.properties.nameReg || innerNameReg);
     const nameRegExp = new RegExp(prefixNameReg);
@@ -184,13 +193,8 @@ Page({
   },
 
   onPickerChange(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
-    const {
-      label,
-      value
-    } = e.detail;
+    const { key } = e.currentTarget.dataset;
+    const { label, value } = e.detail;
 
     this.setData({
       businessTypeVisible: false,
@@ -200,9 +204,7 @@ Page({
   },
 
   onPickerCancel(e) {
-    const {
-      key
-    } = e.currentTarget.dataset;
+    const { key } = e.currentTarget.dataset;
     this.setData({
       [`${key}Visible`]: false,
     });
@@ -223,9 +225,9 @@ Page({
       success(res) {
         wx.redirectTo({
           url: `/${res.path}`,
-        })
-      }
-    })
+        });
+      },
+    });
     // const res = await app.call({
     //   path: '/api/v1/program/enterprise',
     // });
@@ -242,34 +244,30 @@ Page({
   async handleOCRResult(e) {
     if (e.detail) {
       // this.data.submitActive = true
-      const {
-        company_address,
-        company_name,
-        legal_person,
-        license_no
-      } = e.detail.data;
-      const res = await app.call({
-        path: '/api/v1/program/enterprise/whitelist',
-        method: 'GET',
-        data: {
-          business_license: license_no,
-        },
+      const { company_address, company_name, legal_person, license_no } = e.detail.data;
+      this.setData({
+        submitActive: true,
+        'enterpriseForm.enterprise_name': company_name,
+        'enterpriseForm.address': company_address,
+        'enterpriseForm.legal_name': legal_person,
+        'enterpriseForm.business_license': license_no,
       });
-      if (res.data.code === 0 && res.data.data.result) {
-        console.log(res);
-        this.setData({
-          submitActive: true,
-          'enterpriseForm.enterprise_name': company_name,
-          'enterpriseForm.address': company_address,
-          'enterpriseForm.legal_name': legal_person,
-          'enterpriseForm.business_license': license_no,
-        });
-      } else {
-        wx.showToast({
-          icon: 'none',
-          title: '当前企业暂无内测资格，请联系管理员申请。',
-        });
-      }
+      // const res = await app.call({
+      //   path: '/api/v1/program/enterprise/whitelist',
+      //   method: 'GET',
+      //   data: {
+      //     business_license: license_no,
+      //   },
+      // });
+      // if (res.data.code === 0 && res.data.data.result) {
+      //   console.log(res);
+
+      // } else {
+      //   wx.showToast({
+      //     icon: 'none',
+      //     title: '当前企业暂无内测资格，请联系管理员申请。',
+      //   });
+      // }
     }
   },
 });

@@ -8,7 +8,7 @@ Page({
         value: '1',
       },
       {
-        label: '食品总监职责  ',
+        label: '食品安全总监',
         value: '2',
       },
       {
@@ -40,7 +40,8 @@ Page({
             result.list.push({
               ...item,
               fullName: item.name.slice(0, 2),
-              avatar: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la${item.avatar}`,
+              haveAvatar: item.avatar,
+              avatar: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la${item.avatar}`,
             });
           }
         });

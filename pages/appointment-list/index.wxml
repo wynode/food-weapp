@@ -2,25 +2,26 @@
   <background isHighlight="true"></background>
   <view class="cert">
     <view class="cert-item" wx:for="{{dataList}}" wx:for-item="positem" wx:key="index">
-      <view class="cert-title">
-        <view>{{ positem.label }}</view>
-        <!-- <t-button class="cert-btn" theme="primary" size="small" data-item="{{positem}}" bind:tap="handleGoCreate"
+      <view wx:if="{{positem.list.length}}">
+        <view class="cert-title">
+          <view>{{ positem.label }}</view>
+          <!-- <t-button class="cert-btn" theme="primary" size="small" data-item="{{positem}}" bind:tap="handleGoCreate"
           >新增</t-button
         > -->
-      </view>
-      <view class="cert-list" wx:if="{{positem.list.length}}">
-        <t-row gutter="15">
-          <t-col span="12" wx:for="{{positem.list}}">
-            <view class="manager-content">
-              <t-image class="manager-img1" wx:if="{{item.imageUrl}}" src="{{item.imageUrl}}" ></t-image>
-              <t-image class="manager-img" wx:else src="/assets/image/word.png" />
-              <view class="cert-name" style="margin-top: 6rpx;">{{ item.employee_name || '无' }}</view>
-              <view>
-                <t-button theme="primary" data-item="{{item}}" size="small" bind:tap="handlePreview">预览</t-button>
-                <t-button theme="primary" data-item="{{item}}" size="small" bind:tap="handleReplace">替换</t-button>
+        </view>
+        <view class="cert-list">
+          <t-grid class="block" border="{{border}}" column="{{2}}" theme="card" style="margin: 0">
+            <t-grid-item span="12" wx:for="{{positem.list}}" wx:key="index">
+              <view class="manager-content">
+                <t-image class="manager-img1" data-item="{{item}}" wx:if="{{item.imageUrl}}" bind:tap="handlePreviewImage" src="{{item.imageUrl}}"></t-image>
+                <t-image class="manager-img1" data-item="{{item}}" wx:else src="/assets/image/word.png" bind:tap="handlePreviewImage" />
+                <view class="cert-name" style="margin-top: 6rpx;">{{ item.employee_name || '无' }}</view>
+                <view>
+                  <t-button theme="primary" data-item="{{item}}" size="small" bind:tap="handlePreviewReset">重置</t-button>
+                  <t-button theme="primary" data-item="{{item}}" size="small" bind:tap="handleReplace">上传</t-button>
+                </view>
               </view>
-            </view>
-            <!-- <t-image
+              <!-- <t-image
               class="cert-img"
               src="{{item.url}}"
               mode="aspectFill"
@@ -42,12 +43,17 @@
                 bind:tap="handleDelete"
               ></t-button>
             </view> -->
-          </t-col>
-        </t-row>
-      </view>
-      <view wx:else style="height: 160rpx; display: flex; align-items: center; justify-content: center; color: #666">
-        暂无相关任命书~
+            </t-grid-item>
+          </t-grid>
+          <t-row gutter="15">
+
+          </t-row>
+        </view>
+        <!-- <view wx:else style="height: 160rpx; display: flex; align-items: center; justify-content: center; color: #666">
+          暂无相关任命书~
+        </view> -->
       </view>
     </view>
+
   </view>
 </view>

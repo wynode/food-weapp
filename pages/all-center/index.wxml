@@ -1,4 +1,6 @@
-<view>
+<wxs src="./all-center.wxs" module="utils" />
+
+<view wx:if="{{is_bind}}">
   <background isHighlight="true"></background>
   <view class="all-center">
     <view class="rl-top">
@@ -22,7 +24,7 @@
     </view>
     <view class="rl-record">
       <view class="rlr-top">
-        <view class="rlr-top-left">{{dateValue[1]}}月记录</view>
+        <view class="rlr-top-left">{{utils.getDate(dateValue[1])}}月记录</view>
         <view class="rlr-top-right" bindtap="onSeasonPicker">
           <view>其他月份</view>
           <image class="rlr-top-img" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
@@ -54,8 +56,8 @@
     <view class="rl-report">
       <view class="rlr-top">
         <view class="rlr-top-left">全部报告（{{reportStats.total || '0'}}）</view>
-        <view class="rlr-top-right" bindtap="goLogList">
-          <view>查看日志</view>
+        <view class="rlr-top-right" bindtap="goCalendarList">
+          <view>日历查看</view>
           <image class="rlr-top-img" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
         </view>
       </view>
@@ -143,17 +145,14 @@
     <t-toast id="t-toast" />
   </view>
 </view>
+<view wx:else style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 300rpx;">
+  <!-- <t-image src="/assets/image/no_data.png"></t-image> -->
+  <view style="font-size: 30rpx; color: #ccc; margin-top: 100rpx;">还未认证企业</view>
+</view>
 
-<t-dialog
-  visible="{{showWarnConfirm}}"
-  content="确定离开当前企业吗？"
-  confirm-btn="{{ { content: '确定', variant: 'base', theme: 'danger' } }}"
-  cancel-btn="取消"
-  bind:confirm="confirmDialog"
-  bind:cancel="closeDialog"
-/>
+<t-dialog visible="{{showWarnConfirm}}" content="确定离开当前企业吗？" confirm-btn="{{ { content: '确定', variant: 'base', theme: 'danger' } }}" cancel-btn="取消" bind:confirm="confirmDialog" bind:cancel="closeDialog" />
 
-<t-tab-bar value="{{tabBarValue}}" bindchange="onTabBarChange" theme="tag" split="{{false}}">
+<t-tab-bar wx:if="{{is_bind}}" value="{{tabBarValue}}" bindchange="onTabBarChange" theme="tag" split="{{false}}">
   <t-tab-bar-item wx:for="{{list}}" wx:key="index" value="{{item.value}}" icon="{{item.icon}}" class="tab-bar-icon{{index}}" ariaLabel="{{item.ariaLabel}}">
     {{item.ariaLabel}}
   </t-tab-bar-item>

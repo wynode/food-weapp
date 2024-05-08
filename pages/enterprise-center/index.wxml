@@ -31,7 +31,7 @@
       </t-row>
       <t-row gutter="16">
         <t-col span="12">
-          <view class="ec-item" data-key="2" bindtap="goBaoCheck">
+          <view class="ec-item" data-key="2" bindtap="goTeachVideo">
             <view class="ec-item-left ec-item-left1" style="background: #0B82FF;">
               <image src="/assets/image/video.png"></image>
             </view>
@@ -42,6 +42,28 @@
 
           </view>
         </t-col>
+        <t-col span="12">
+          <view class="ec-item" data-key="1" bindtap="goLogList">
+            <view class="ec-item-left ec-item-left1">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bggl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 操作日志 </view>
+              <!-- <view class="ec-item-info"> 134份 </view> -->
+            </view>
+          </view>
+        </t-col>
+        <t-col span="12">
+          <view class="ec-item" data-key="1" bindtap="goWechat">
+            <view class="ec-item-left ec-item-left1">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/rygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 人工客服 </view>
+              <!-- <view class="ec-item-info"> 134份 </view> -->
+            </view>
+          </view>
+        </t-col>
       </t-row>
       <view class="ec-title">
         报告管理
@@ -50,7 +72,7 @@
         <t-col span="12">
           <view class="ec-item" data-key="1" bindtap="goReportList">
             <view class="ec-item-left ec-item-left1">
-              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bggl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+              <image src="/assets/image/rbglicon.png"></image>
             </view>
             <view class="ec-item-right">
               <view class="ec-item-title"> 日报管理 </view>
@@ -60,8 +82,8 @@
         </t-col>
         <t-col span="12">
           <view class="ec-item" data-key="2" bindtap="goReportList">
-            <view class="ec-item-left ec-item-left1">
-              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bggl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            <view class="ec-item-left ec-item-left4">
+              <image src="/assets/image/zbglicon.png"></image>
             </view>
             <view class="ec-item-right">
               <view class="ec-item-title"> 周报管理 </view>
@@ -73,8 +95,8 @@
       <t-row gutter="16">
         <t-col span="12">
           <view class="ec-item" data-key="3" bindtap="goReportList">
-            <view class="ec-item-left ec-item-left1">
-              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/bggl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            <view class="ec-item-left ec-item-left5">
+              <image src="/assets/image/ybglicon.png"></image>
             </view>
             <view class="ec-item-right">
               <view class="ec-item-title"> 月报管理 </view>
@@ -98,6 +120,19 @@
           </view>
         </t-col>
         <t-col span="12">
+          <view class="ec-item" bindtap="goBaoInfo">
+            <view class="ec-item-left ec-item-left1">
+              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/qygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 包保信息 </view>
+              <!-- <view class="ec-item-info"> 10人 </view> -->
+            </view>
+          </view>
+        </t-col>
+      </t-row>
+      <t-row gutter="16">
+        <t-col span="12">
           <view class="ec-item" bindtap="goStaffList">
             <view class="ec-item-left ec-item-left3">
               <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/rygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
@@ -108,12 +143,10 @@
             </view>
           </view>
         </t-col>
-      </t-row>
-      <t-row gutter="16">
         <t-col span="12">
           <view class="ec-item" bindtap="goHealth">
             <view class="ec-item-left ec-item-left3">
-              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/rygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+              <image src="/assets/image/jkzicon.png"></image>
             </view>
             <view class="ec-item-right">
               <view class="ec-item-title"> 健康证管理 </view>
@@ -121,10 +154,13 @@
             </view>
           </view>
         </t-col>
+
+      </t-row>
+      <t-row gutter="16">
         <t-col span="12">
           <view class="ec-item" bindtap="goAppointment">
             <view class="ec-item-left ec-item-left3">
-              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/rygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+              <image src="/assets/image/rmsicon.png"></image>
             </view>
             <view class="ec-item-right">
               <view class="ec-item-title"> 任命书管理 </view>
@@ -138,7 +174,7 @@
         <t-col span="12">
           <view class="ec-item" bindtap="goRegime">
             <view class="ec-item-left ec-item-left4">
-              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/qygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+              <image src="/assets/image/glzdicon.png"></image>
             </view>
             <view class="ec-item-right">
               <view class="ec-item-title"> 管控制度 </view>
@@ -149,7 +185,7 @@
         <t-col span="12">
           <view class="ec-item" bindtap="goDuty">
             <view class="ec-item-left ec-item-left4">
-              <image src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/qygl.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
+              <image src="/assets/image/glzzicon.png"></image>
             </view>
             <view class="ec-item-right">
               <view class="ec-item-title"> 管理职责 </view>

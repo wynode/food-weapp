@@ -9,24 +9,12 @@
         <view class="report-profile">
           <view class="rp-record">
             <view class="rpr-top">
-              <view class="rpr-top-left">{{dateValue[1]}}月{{dateType}}</view>
+              <view class="rpr-top-left">（{{dateValue[1]}}月）{{dateType}}</view>
               <view class="rpr-top-right" data-key="detail" bindtap="onSeasonPicker">
                 <view>其他月份</view>
-                <image
-                  class="rpr-top-img"
-                  src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-                ></image>
+                <image class="rpr-top-img" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
               </view>
-              <t-picker
-                visible="{{dateVisible}}"
-                value="{{dateValue}}"
-                data-key="date"
-                title="选择时间"
-                cancelBtn="取消"
-                confirmBtn="确认"
-                bindchange="onPickerChange"
-                bindcancel="onPickerCancel"
-              >
+              <t-picker visible="{{dateVisible}}" value="{{dateValue}}" data-key="date" title="选择时间" cancelBtn="取消" confirmBtn="确认" bindchange="onPickerChange" bindcancel="onPickerCancel">
                 <t-picker-item options="{{years}}"></t-picker-item>
                 <t-picker-item options="{{seasons}}"></t-picker-item>
               </t-picker>
@@ -50,48 +38,28 @@
             </view> -->
           </view>
           <view class="rp-list">
-            <view
-              class="rp-item"
-              date-key="{{reportItem.dateCn}}"
-              wx:for="{{reportProfileList}}"
-              data-item="{{reportItem}}"
-              wx:key="index"
-              wx:for-item="reportItem"
-              bindtap="goDailyStats"
-            >
-              <view class="rp-item-left">
-                <view class="rpil-date">{{ reportItem.dateCn }}</view>
-                <t-button
-                  data-date="{{reportItem.date}}"
-                  size="small"
-                  theme="light"
-                  variant="text"
-                  style="margin-top: -10rpx; padding-left: 10rpx"
-                  bind:tap="handlePreviewCheckList"
-                  >查看图片</t-button
-                >
-                <t-button
-                  data-date="{{reportItem.date}}"
-                  bind:tap="handleEdit"
-                  size="small"
-                  theme="light"
-                  variant="text"
-                  style="margin-top: -10rpx"
-                  wx:if="{{reportItem.unqualifiedTotal}}"
-                  bind:tap="handleRectify"
-                  >整改</t-button
-                >
-              </view>
-              <view class="{{ reportItem.unqualifiedTotal ? 'rp-item-right-red' : 'rp-item-right'}}">
-                <view class="rpir-top">
-                  <view>共{{ reportItem.total }}项</view>
-                  <view>{{ reportItem.isDeadline ? '超时' : ''}}</view>
-                  <view wx:if="{{reportItem.unqualifiedTotal > 0}}">{{ reportItem.unqualifiedTotal }}项不合格</view>
-                  <view wx:else>全部合格</view>
+            <view wx:if="{{reportProfileList.length}}">
+              <view class="rp-item" date-key="{{reportItem.dateCn}}" wx:for="{{reportProfileList}}" data-item="{{reportItem}}" wx:key="index" wx:for-item="reportItem" bindtap="goDailyStats">
+                <view class="rp-item-left">
+                  <view class="rpil-date">{{ reportItem.dateCn }}</view>
+                  <t-button data-date="{{reportItem.date}}" size="small" theme="light" variant="text" style="margin-top: -10rpx; padding-left: 10rpx" bind:tap="handlePreviewCheckList">查看图片</t-button>
+                  <t-button data-date="{{reportItem.date}}" size="small" theme="light" variant="text" style="margin-top: -10rpx" wx:if="{{reportItem.unqualifiedTotal}}" bind:tap="handleRectify">整改</t-button>
                 </view>
-                <view class="rpir-center"> 提交时间：{{ reportItem.submitTime }} | {{ reportItem.submitUser }} </view>
-                <view class="rpir-bottom"> {{ reportItem.address }}</view>
+                <view class="{{ reportItem.unqualifiedTotal ? 'rp-item-right-red' : 'rp-item-right'}}">
+                  <view class="rpir-top">
+                    <view>共{{ reportItem.total }}项</view>
+                    <view>{{ reportItem.isDeadline ? '超时' : ''}}</view>
+                    <view wx:if="{{reportItem.unqualifiedTotal > 0}}">{{ reportItem.unqualifiedTotal }}项不合格</view>
+                    <view wx:else>全部合格</view>
+                  </view>
+                  <view class="rpir-center"> 提交时间：{{ reportItem.submitTime }} | {{ reportItem.submitUser }} </view>
+                  <view class="rpir-bottom"> {{ reportItem.address }}</view>
+                </view>
               </view>
+            </view>
+            <view wx:if="{{isEmpty}}" style="display: flex; flex-direction: column; justify-content: center; align-items: center;margin-top: 100rpx; margin-bottom: 100rpx;">
+              <t-image width="300" height="300" mode="aspectFill" src="/assets/image/no_data.png" alt="" />
+              <view style="color: #bbb; margin-top: 40rpx;">暂无数据</view>
             </view>
           </view>
         </view>
@@ -107,48 +75,33 @@
             <view class="rpr-top-left">{{dateValue[1]}}月</view>
             <view class="rpr-top-right" data-key="report" bindtap="onSeasonPicker">
               <view>其他月份</view>
-              <image
-                class="rpr-top-img"
-                src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-              ></image>
+              <image class="rpr-top-img" src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/right_icon.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"></image>
             </view>
           </view>
           <view class="rp-list">
-            <view class="rpp-item" wx:for="{{reportList}}" wx:key="index" wx:for-item="item">
-              <!-- checklist_path: ""
+            <view wx:if="{{reportList.length}}">
+              <view class="rpp-item" wx:for="{{reportList}}" wx:key="index" wx:for-item="item">
+                <!-- checklist_path: ""
 checklist_picture_path: ""
 create_time: "2023-11-10T11:07:32.000Z"
 date: 20231105
 document_path: "report_doc/2/20231105_2.docx"
 document_picture_path: ""
 report_type: 2 -->
-              <view class="rpp-item-top">
-                <view>{{ item.dateCn }}</view>
-                <view>每{{item.showText}}食品安全检查记录表</view>
+                <view class="rpp-item-top">
+                  <view>{{ item.dateCn }}</view>
+                  <view>每{{item.showText}}食品安全检查记录表</view>
+                </view>
+                <view class="rpp-item-bottom">
+                  <t-button theme="light" content="查看图片" size="small" class="margin" data-item="{{item}}" variant="text" bind:tap="handlePreviewDocument"></t-button>
+                  <t-button style="margin-left: 20rpx;" theme="light" content="查看文档" size="small" class="margin" wx:if="{{item.document_path}}" data-item="{{item}}" variant="text" bind:tap="handleDownload"></t-button>
+                  <!-- <t-icon class="rpp-icon" name="task-visible" data-item="{{item}}" bind:tap="handlePreview"  data-item="{{item}}" bind:tap="handleDownload"></t-icon> -->
+                </view>
               </view>
-              <view class="rpp-item-bottom">
-                <t-button
-                  theme="light"
-                  content="查看图片"
-                  size="small"
-                  class="margin"
-                  data-item="{{item}}"
-                  variant="text"
-                  bind:tap="handlePreviewDocument"
-                ></t-button>
-                <t-button
-                  style="margin-left: 20rpx;"
-                  theme="light"
-                  content="查看文档"
-                  size="small"
-                  class="margin"
-                  wx:if="{{item.document_path}}"
-                  data-item="{{item}}"
-                  variant="text"
-                  bind:tap="handleDownload"
-                ></t-button>
-                <!-- <t-icon class="rpp-icon" name="task-visible" data-item="{{item}}" bind:tap="handlePreview"  data-item="{{item}}" bind:tap="handleDownload"></t-icon> -->
-              </view>
+            </view>
+            <view wx:if="{{isEmpty}}" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+              <image width="300" height="300" mode="aspectFill" src="/assets/image/no_data.png" alt="" />
+              <view style="color: #bbb; margin-top: 40rpx;">暂无数据</view>
             </view>
           </view>
         </view>

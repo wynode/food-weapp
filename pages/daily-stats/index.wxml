@@ -2,7 +2,11 @@
   <background isHighlight="true"></background>
   <view class="daily-stats">
     <view class="ds-top">
-      <view class="ds-top-left">{{profile.month}}月{{profile.day}}日 {{profile.title}}</view>
+      <view class="ds-top-left">
+        <text wx:if="{{ report_type === '2' }}">{{ currentDaySub7 }} -</text>
+        <text>{{ currentDay }}</text>
+        {{profile.title}}
+      </view>
     </view>
 
     <view class="ds-stats">
@@ -10,9 +14,7 @@
         <view class="ds-stats-btn">{{profile.passed_items.length}}项合格</view>
         <view class="ds-stats-btn ds-btn-red">{{profile.unpassed_items.length}}项不合格</view>
       </view>
-      <t-button size="extra-small" theme="primary" icon="edit-1" style="margin-right: 4rpx" bind:tap="goEditReport"
-        >修改</t-button
-      >
+      <t-button size="extra-small" theme="primary" icon="edit-1" style="margin-right: 4rpx" bind:tap="goEditReport" wx:if="{{profile.can_edit}}">修改</t-button>
     </view>
 
     <view class="ds-list" wx:if="{{profile.unpassed_items.length}}">
@@ -35,57 +37,25 @@
             <view class="ds-item-reason2">{{item.solution || '无'}}</view>
             <view class="ds-item-photo">
               <view class="ds-item-photo-title">现场照片</view>
-              <image
-                class="ds-item-photo-image"
-                wx:for="{{item.spot_images}}"
-                wx:key="fileItem"
-                data-item="{{item.spot_images}}"
-                bind:tap="handlePreviewImage"
-                wx:for-item="fileItem"
-                src="{{fileItem}}"
-              ></image>
+              <image class="ds-item-photo-image" wx:for="{{item.spot_images}}" wx:key="fileItem" data-item="{{item.spot_images}}" bind:tap="handlePreviewImage" wx:for-item="fileItem" src="{{fileItem}}"></image>
             </view>
             <view class="ds-item-photo">
               <view class="ds-item-photo-title" wx:if="{{item.rectification_images.length}}">整改后现场照片</view>
-              <image
-                class="ds-item-photo-image"
-                wx:for="{{item.rectification_images}}"
-                wx:key="fileItem"
-                data-item="{{item.rectification_images}}"
-                bind:tap="handlePreviewImage"
-                wx:for-item="fileItem"
-                src="{{fileItem}}"
-              ></image>
+              <image class="ds-item-photo-image" wx:for="{{item.rectification_images}}" wx:key="fileItem" data-item="{{item.rectification_images}}" bind:tap="handlePreviewImage" wx:for-item="fileItem" src="{{fileItem}}"></image>
             </view>
           </view>
         </view>
         <view wx:else>
           <view class="ds-item-content">
             <view class="ds-item-label">{{item.title}}</view>
-            <view class="ds-item-reason">{{item.remark || '无'}}</view>
+            <view class="ds-item-reason">解决措施：{{item.remark || '无'}}</view>
             <view class="ds-item-photo">
               <view class="ds-item-photo-title">现场照片</view>
-              <image
-                class="ds-item-photo-image"
-                wx:for="{{item.spot_images}}"
-                wx:key="fileItem"
-                wx:for-item="fileItem"
-                data-item="{{item.spot_images}}"
-                bind:tap="handlePreviewImage"
-                src="{{fileItem}}"
-              ></image>
+              <image class="ds-item-photo-image" wx:for="{{item.spot_images}}" wx:key="fileItem" wx:for-item="fileItem" data-item="{{item.spot_images}}" bind:tap="handlePreviewImage" src="{{fileItem}}"></image>
             </view>
             <view class="ds-item-photo">
               <view class="ds-item-photo-title" wx:if="{{item.rectification_images.length}}">整改后现场照片</view>
-              <image
-                class="ds-item-photo-image"
-                wx:for="{{item.rectification_images}}"
-                wx:key="fileItem"
-                data-item="{{item.rectification_images}}"
-                bind:tap="handlePreviewImage"
-                wx:for-item="fileItem"
-                src="{{fileItem}}"
-              ></image>
+              <image class="ds-item-photo-image" wx:for="{{item.rectification_images}}" wx:key="fileItem" data-item="{{item.rectification_images}}" bind:tap="handlePreviewImage" wx:for-item="fileItem" src="{{fileItem}}"></image>
             </view>
           </view>
         </view>

@@ -4,7 +4,7 @@
     <view class="cr-top-box">
       <view class="cr-top">
         <view class="cr-top-left">
-          必选项
+          至少选择
           <text style="{{computedColor1}}">{{checkedResultLength}}</text>/{{min_item_nums}}
         </view>
         <view class="cr-top-right">
@@ -24,6 +24,7 @@
     </view>
     <view class="cns-input" bind:tap="templateTypePicker">
       <t-input
+        style="border: 1px solid #0B82FF;"
         suffixIcon="caret-down-small"
         value="{{ templateTypeText }}"
         placeholder="请选择模板"

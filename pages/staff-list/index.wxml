@@ -11,7 +11,7 @@
           <t-swipe-cell>
             <t-cell bordered="{{false}}">
               <view slot="image">
-                <view class="sl-item-avatar" wx:if="{{item.avatar}}">
+                <view class="sl-item-avatar" wx:if="{{item.haveAvatar}}">
                   <t-image mode="aspectFill" width="72" height="72" src="{{item.avatar}}"></t-image>
                 </view>
 
@@ -37,11 +37,11 @@
           </t-swipe-cell>
         </view>
       </view>
-      <view wx:else style="height: 160rpx; display: flex; align-items: center; justify-content: center; color: #666">
-        暂无相关人员~ 请添加
+      <view wx:else style="height: 160rpx; display: flex; align-items: center; justify-content: center; font-size: 28rpx;  font-weight: 400; color: #999">
+        暂无相关人员 请添加
       </view>
     </view>
 
-    <view class="sl-tips">左滑卡片进行编辑～</view>
+    <view class="sl-tips">左滑卡片进行编辑</view>
   </view>
 </view>

@@ -25,7 +25,7 @@
       <view class="final-food-month" wx:else>
         <view>会议日期：{{ currentDay }}</view>
         <view>
-          <t-input style="padding: 0; margin-top: 40rpx;" borderless="{{true}}" label="会议地址" placeholder="请输入会议地址" value="{{address}}" bindchange="handleAddressChange" />
+          <t-input style="padding: 0; margin-top: 40rpx;" borderless="{{true}}" label="出席人员" placeholder="请输入出席人员" value="{{address}}" bindchange="handleAddressChange" />
         </view>
         <view class="textarea-example">
           <text class="textarea-example__label">会议内容</text>

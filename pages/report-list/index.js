@@ -1,7 +1,17 @@
-import { formatTime } from '../../utils/util';
+import {
+  formatTime
+} from '../../utils/util';
 const app = getApp();
 Page({
   data: {
+    // showDotArray: [],
+    // visible: true,
+    // month: '',
+    // calendarValue: new Date().getTime(),
+    // minDate: new Date(2023, 6, 12).getTime(),
+    // maxDate: new Date().getTime(),
+    // logList: [],
+    isEmpty: false,
     percentage: 0,
     dateType: '日管控',
     reportType: '1',
@@ -9,9 +19,8 @@ Page({
     reportProfileDetail: {},
     reportList: [],
     dateVisible: false,
-    dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1)],
-    years: [
-      {
+    dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1).padStart(2, '0')],
+    years: [{
         label: '2026年',
         value: '2026',
       },
@@ -28,8 +37,7 @@ Page({
         value: '2023',
       },
     ],
-    seasons: [
-      {
+    seasons: [{
         label: '1月',
         value: '01',
       },
@@ -82,7 +90,9 @@ Page({
   },
 
   onLoad(options) {
-    const { reportType = '1', month = '' } = options || {};
+    const {
+      reportType = '1', month = ''
+    } = options || {};
     this.getReportProfileList(reportType, month);
     this.getReportList(reportType, month);
     const dateOptions = {
@@ -95,12 +105,14 @@ Page({
     });
     this.setData({
       reportType,
-      dateValue: [month.slice(0, 4), month.slice(-2)],
+      dateValue: [month.slice(0, 4), month.slice(-2).startsWith('0') ? month.slice(-1) : month.slice(-2)],
     });
   },
 
   async handleShowImage(e) {
-    const { date } = e.currentTarget.dataset;
+    const {
+      date
+    } = e.currentTarget.dataset;
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const reportProfileRes = await app.call({
       path: `/api/v1/program/enterprise/report/${date}/${this.data.reportType}/images`,
@@ -112,7 +124,9 @@ Page({
   },
 
   handleRectify(e) {
-    const { date } = e.currentTarget.dataset;
+    const {
+      date
+    } = e.currentTarget.dataset;
     wx.navigateTo({
       url: `/pages/rectify-list/index?date=${date}&report_type=${this.data.reportType}`,
     });
@@ -120,24 +134,34 @@ Page({
 
   async getReportProfileList(reportType, month) {
     try {
-      this.setData({ reportProfileList: [] });
+      wx.showLoading()
+      let tempMonth = month;
+      if (String(month).length === 5) {
+        tempMonth = String(month).slice(0, 4) + '0' + String(month).slice(4);
+      }
+      this.setData({
+        reportProfileList: []
+      });
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const reportProfileRes = await app.call({
-        path: `/api/v1/program/enterprise/report/stats/${month}/list?report_type=${reportType}`,
+        path: `/api/v1/program/enterprise/report/stats/${tempMonth}/list?report_type=${reportType}`,
         header: {
           'x-enterprise-id': enterpriseData.enterprise_id,
         },
       });
-      const { detail, list } = reportProfileRes.data.data;
-      const reportProfileList = list.map((item) => {
+      const {
+        detail,
+        list
+      } = reportProfileRes.data.data;
+      const reportProfileList = list.filter((item) => item.status !== 4).map((item) => {
         return {
           ...item,
-          isDeadline: new Date(item.deadline).getTime() < new Date().getTime(),
+          isDeadline: new Date(item.deadline).getTime() < new Date(item.created_at).getTime(),
           dateCn: `${String(item.date).slice(-4, -2)}/${String(item.date).slice(-2)}`,
           submitTime: item.submit_at ? formatTime(item.submit_at, 'YYYY年MM月DD日 HH:mm:ss') : '',
           total: item.passed_count + item.unpassed_count,
           unqualifiedTotal: item.unpassed_count,
-          submitUser: item.employee.name,
+          submitUser: item.employee ? item.employee.name : '',
         };
       });
 
@@ -145,9 +169,13 @@ Page({
       this.setData({
         reportProfileList: reportProfileList,
         reportProfileDetail: detail,
+        isEmpty: !reportProfileList.length,
         percentage,
       });
-    } catch {
+      wx.hideLoading()
+    } catch (error){
+      console.dir(error)
+      wx.hideLoading()
       wx.showToast({
         icon: 'error',
         title: '获取详情失败，请联系管理员',
@@ -157,15 +185,24 @@ Page({
 
   async getReportList(reportType, month) {
     try {
-      this.setData({ reportList: [] });
+      let tempMonth = month;
+      if (String(month).length === 5) {
+        tempMonth = String(month).slice(0, 4) + '0' + String(month).slice(4);
+      }
+      wx.showLoading()
+      this.setData({
+        reportList: []
+      });
       const enterpriseData = wx.getStorageSync('enterpriseData');
       const reportProfileRes = await app.call({
-        path: `/api/v1/program/enterprise/report/${month}/${reportType}/attachments`,
+        path: `/api/v1/program/enterprise/report/${tempMonth}/${reportType}/attachments`,
         header: {
           'x-enterprise-id': enterpriseData.enterprise_id,
         },
       });
-      const { list } = reportProfileRes.data.data;
+      const {
+        list
+      } = reportProfileRes.data.data;
       const dateOptions = {
         1: '日',
         2: '周',
@@ -182,9 +219,12 @@ Page({
       console.log(list, reportList);
       this.setData({
         reportList,
+        isEmpty: !reportList.length,
       });
+      wx.hideLoading()
     } catch (error) {
       console.log(error);
+      wx.hideLoading()
       wx.showToast({
         icon: 'error',
         title: '获取详情失败，请联系管理员',
@@ -193,14 +233,18 @@ Page({
   },
 
   goDailyStats(e) {
-    const { item } = e.currentTarget.dataset;
+    const {
+      item
+    } = e.currentTarget.dataset;
     wx.navigateTo({
       url: `/pages/daily-stats/index?date=${item.date}&report_type=${item.report_type}`,
     });
   },
 
   onPickerChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     if (this.data.key === 'detail') {
       this.getReportProfileList(this.data.reportType, value.join(''));
     } else if (this.data.key === 'report') {
@@ -208,7 +252,7 @@ Page({
     }
     this.setData({
       dateVisible: false,
-      dateValue: value,
+      dateValue: [value[0], value[1].startsWith('0') ? value[1].slice(-1) : value[1]],
     });
   },
 
@@ -219,7 +263,9 @@ Page({
   },
 
   onSeasonPicker(e) {
-    const { key } = e.currentTarget.dataset;
+    const {
+      key
+    } = e.currentTarget.dataset;
     this.setData({
       dateVisible: true,
       key,
@@ -227,7 +273,9 @@ Page({
   },
 
   onTabsChange(e) {
-    const { value } = e.detail;
+    const {
+      value
+    } = e.detail;
     if (value === '1') {
       this.getReportProfileList(this.data.reportType, this.data.dateValue.join(''));
     } else if (value === '2') {
@@ -270,7 +318,9 @@ Page({
 
   async handlePreviewCheckList(e) {
     wx.showLoading()
-    const { date } = e.currentTarget.dataset;
+    const {
+      date
+    } = e.currentTarget.dataset;
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const reportProfileRes = await app.call({
       path: `/api/v1/program/enterprise/report/${date}/${this.data.reportType}/images?type=checklist`,
@@ -279,7 +329,7 @@ Page({
       },
     });
     if (reportProfileRes.data.data.picture_path) {
-      const url = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${reportProfileRes.data.data.picture_path}`;
+      const url = `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${reportProfileRes.data.data.picture_path}`;
       wx.previewImage({
         current: url,
         urls: [url], // 需要预览的图片http链接列表
@@ -291,9 +341,11 @@ Page({
 
   async handlePreviewDocument(e) {
     wx.showLoading();
-    const { item } = e.currentTarget.dataset;
+    const {
+      item
+    } = e.currentTarget.dataset;
     if (item.document_picture_path) {
-      const url = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${item.document_picture_path}`;
+      const url = `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${item.document_picture_path}`;
       wx.previewImage({
         current: url,
         urls: [url], // 需要预览的图片http链接列表
@@ -307,7 +359,7 @@ Page({
         },
       });
       if (reportProfileRes.data.data.picture_path) {
-        const url = `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${reportProfileRes.data.data.picture_path}`;
+        const url = `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${reportProfileRes.data.data.picture_path}`;
         wx.previewImage({
           current: url,
           urls: [url], // 需要预览的图片http链接列表
@@ -322,9 +374,11 @@ Page({
     wx.showLoading({
       title: '下载文档中',
     });
-    const { item } = e.currentTarget.dataset;
+    const {
+      item
+    } = e.currentTarget.dataset;
     wx.downloadFile({
-      url: `https://7072-prod-2gdukdnr11f1f68a-1320540808.tcb.qcloud.la/${item.document_path}`,
+      url: `https://666f-food-security-prod-9dgw61d56a7e8-1320540808.tcb.qcloud.la/${item.document_path}`,
       filePath: wx.env.USER_DATA_PATH + "/" + `${item.document_path.split('/').pop()}`,
       success: function (res) {
         const filePath = res.filePath;

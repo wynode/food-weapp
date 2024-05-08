@@ -119,7 +119,7 @@
 }
 
 .sl-tips {
-  margin-top: 100rpx;
+  margin-top: 300rpx;
   text-align: center;
   color: #999;
 }

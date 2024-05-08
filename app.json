@@ -1,8 +1,11 @@
 {
   "pages": [
     "pages/all-center/index",
-    "pages/enterprise/bind",
+    "pages/enterprise-list/index",
+    "pages/scan-create-staff/index",
     "pages/log-list/index",
+    "pages/wechat-info/index",
+    "pages/teach-video/index",
     "pages/staff-scan/index",
     "pages/check-bao/index",
     "pages/edit-enterprise/index",
@@ -40,7 +43,8 @@
     "pages/daily-stats/index",
     "pages/message-notify/index",
     "pages/bill-center/index",
-    "pages/bao-info/index"
+    "pages/bao-info/index",
+    "pages/calendar-list/index"
   ],
   "requiredPrivateInfos": ["chooseAddress"],
   "lazyCodeLoading": "requiredComponents",
@@ -50,6 +54,12 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle": "black"
+  },
+  "plugins": {
+    "materialPlugin": {
+      "version": "1.0.5",
+      "provider": "wx4d2deeab3aed6e5a"
+    }
   },
   "sitemapLocation": "sitemap.json",
   "permission": {

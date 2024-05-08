@@ -41,7 +41,7 @@
   overflow: hidden;
   /* 隐藏溢出的文本 */
   text-overflow: ellipsis;
-  max-width: 500rpx;
+  max-width: 400rpx;
   /* 使用省略号来表示文本的溢出部分 */
 }
 

@@ -148,15 +148,14 @@ Page({
     // this.setData({
     //   tabBarValue: value,
     // });
-    if (value === 'submit-report') {
-      wx.navigateTo({
-        url: `/pages/${value}/index`,
-      });
-    } else {
-      wx.navigateTo({
+    if (value === 'all-center') {
+      wx.redirectTo({
         url: `/pages/${value}/index`,
       });
     }
+    wx.navigateTo({
+      url: `/pages/${value}/index`,
+    });
   },
 
   onCityPicker() {

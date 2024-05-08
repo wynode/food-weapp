@@ -1,3 +1,5 @@
+import { formatTime } from '../../utils/util';
+
 Page({
   data: {
     // tabBarValue: 'enterprise-center',
@@ -44,9 +46,27 @@ Page({
       });
     } else {
       wx.navigateTo({
-        url: `/pages/report-list/index?reportType=${key}&month=${`${new Date().getFullYear()}${new Date().getMonth()+1}`}`,
+        url: `/pages/report-list/index?reportType=${key}&month=${`${new Date().getFullYear()}${String(new Date().getMonth()+1).padStart(2, 0)}`}`,
       });
     }
+  },
+
+  goLogList() {
+    const date = formatTime(new Date(), 'YYYYMMDD')
+    wx.navigateTo({
+      url: `/pages/log-list/index?date=${date}`,
+    });
+  },
+
+  goBaoInfo() {
+    wx.navigateTo({
+      url: '/pages/bao-info/index',
+    });
+  },
+  goWechat() {
+    wx.navigateTo({
+      url: '/pages/wechat-info/index',
+    });
   },
   goBillCenter() {
     wx.navigateTo({
@@ -61,6 +81,11 @@ Page({
   goBaoCheck() {
     wx.navigateTo({
       url: '/pages/check-bao/index',
+    });
+  },
+  goTeachVideo() {
+    wx.navigateTo({
+      url: '/pages/teach-video/index',
     });
   },
   goStaffList() {
@@ -112,14 +137,13 @@ Page({
     // this.setData({
     //   tabBarValue: value,
     // });
-    if (value === 'submit-report') {
-      wx.navigateTo({
-        url: `/pages/${value}/index`,
-      });
-    } else {
-      wx.navigateTo({
+    if (value === 'all-center') {
+      wx.redirectTo({
         url: `/pages/${value}/index`,
       });
     }
+    wx.navigateTo({
+      url: `/pages/${value}/index`,
+    });
   },
 });

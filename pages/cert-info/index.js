@@ -2,12 +2,12 @@ import Toast from 'tdesign-miniprogram/toast';
 
 Page({
   data: {
-    yyzz: '/assets/image/shop.png',
-    spaq: '/assets/image/shop.png',
-    rgk: '/assets/image/shop.png',
-    zpc: '/assets/image/shop.png',
-    ydd: '/assets/image/shop.png',
-    jkz: '/assets/image/shop.png',
+    yyzz: '/assets/image/no_data.png',
+    spaq: '/assets/image/no_data.png',
+    rgk: '/assets/image/no_data.png',
+    zpc: '/assets/image/no_data.png',
+    ydd: '/assets/image/no_data.png',
+    jkz: '/assets/image/no_data.png',
     businessCode: '',
   },
 

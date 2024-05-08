@@ -87,6 +87,21 @@ Component({
             this.triggerEvent('ocr', ocrResult.data);
           }
         }
+        if (uploadResult.fileID && this.properties.uploadType === 'food_license') {
+          wx.showLoading({
+            title: '系统正在识别中，请稍后',
+          });
+          this.triggerEvent('start', '1');
+          const ocrResult = await getApp().call({
+            path: '/api/v1/program/utils/license/food_business_license',
+            method: 'POST',
+            data: { license: `/${uploadResult.fileID.split('/').slice(-2).join('/')}` },
+          });
+          wx.hideLoading();
+          if (ocrResult.data) {
+            this.triggerEvent('ocr', ocrResult.data);
+          }
+        }
       } catch {
         wx.hideLoading();
         Toast({
