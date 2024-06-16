@@ -14,6 +14,7 @@ App({
     updateManager();
   },
   async onLaunch() {
+    wx.setStorageSync('subEnterpriseId', '')
     const c1 = new wx.cloud.Cloud({
       resourceAppid: 'wx48a4230fe919bc57', // 环境所属的账号appid
       resourceEnv: 'food-security-prod-9dgw61d56a7e8', // 微信云托管的环境ID
@@ -39,12 +40,18 @@ App({
     }
     try {
       obj.header = obj.header || {};
+      const subEnterpriseId = wx.getStorageSync('subEnterpriseId');
+      const subHeader = { header: {} };
+      if (subEnterpriseId) {
+        subHeader.header['x-sub-enterprise-id'] = subEnterpriseId;
+      }
       const result = await that.cloud.callContainer({
         ...obj,
         path: obj.path, // 填入业务自定义路径和参数，根目录，就是 /
         method: obj.method || 'GET', // 按照自己的业务开发，选择对应的方法
         // dataType:'text', // 如果返回的不是json格式，需要添加此项
         header: {
+          ...subHeader.header,
           ...obj.header,
           'X-WX-SERVICE': 'koa-m716', // xxx中填入服务名称（微信云托管 - 服务管理 - 服务列表 - 服务名称）
           // 'x-wx-openid': 'wx48a4230fe919bc57',
@@ -59,7 +66,7 @@ App({
         wx.showToast({
           icon: 'none',
           title: result.data.message,
-        })
+        });
       }
       return result; // 业务数据在data中
     } catch (e) {

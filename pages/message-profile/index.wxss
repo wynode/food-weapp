@@ -1,0 +1,33 @@
+.send-message {
+  position: relative;
+  padding: 30rpx;
+}
+
+.sm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.sm-header-title {
+  font-size: 34rpx;
+  max-width: 500rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* font-weight: bold; */
+}
+
+.sm-content {
+  margin-bottom: 34rpx;
+}
+
+.sm-submit {
+  margin-top: 200rpx;
+}
+
+.external-class {
+  border: 1px solid #ccc;
+  border-radius: 24rpx;
+}

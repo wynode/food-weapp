@@ -1,6 +1,7 @@
 .enterprise-center {
   position: relative;
   padding: 30rpx;
+  padding-bottom: 100rpx;
   overflow-y: auto;
 }
 

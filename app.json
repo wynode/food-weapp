@@ -2,6 +2,8 @@
   "pages": [
     "pages/all-center/index",
     "pages/enterprise-list/index",
+    "pages/send-message/index",
+    "pages/message-profile/index",
     "pages/scan-create-staff/index",
     "pages/log-list/index",
     "pages/wechat-info/index",

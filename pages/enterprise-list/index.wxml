@@ -4,7 +4,10 @@
     <view class="ep-content">
       <view class="ep-list" wx:for="{{dataList}}" wx:key="index">
         <view class="ep-list-top">
-          <view class="ep-top-title"> {{item.enterprise.enterprise_name}} </view>
+          <view style="display: flex; align-items: center" data-key="{{item}}" bind:tap="handleSendMessage">
+            <view class="ep-top-title"> {{item.enterprise.enterprise_name}} </view>
+            <image class="ep-top-img" src="/assets/image/wechat.png" mode="" />
+          </view>
           <view class="ep-top-month"> {{monthCN}} </view>
         </view>
         <view class="ep-list-bottom" data-key="{{item}}" bind:tap="handleGoMainPage">

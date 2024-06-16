@@ -6,9 +6,11 @@ Page({
     dataList: [{ enterprise: {}, report_status: [{}] }],
     progress: 10,
     monthCN: '',
+    month: '',
   },
 
   async onLoad(options) {
+    wx.showLoading()
     const { month = formatTime(new Date(), 'YYYYMM') } = options || {};
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const { enterprise_id } = enterpriseData;
@@ -35,18 +37,30 @@ Page({
         }),
       };
     });
-    console.log(dataList);
+    wx.setStorageSync('childEnterprise', dataList)
     this.setData({
       dataList,
+      month,
       monthCN: `${month.slice(0, 4)}年${month.slice(4, 6)}月`,
     });
+    wx.hideLoading()
   },
 
   handleGoMainPage(e) {
     const { key } = e.currentTarget.dataset;
     wx.setStorageSync('enterpriseData', key.enterprise);
+    wx.setStorageSync('subEnterpriseId', key.enterprise.enterprise_id);
+    // const { enterprise_name, enterprise_id, status } = key.enterprise;
     wx.redirectTo({
-      url: '/pages/all-center/index',
+      url: `/pages/all-center/index`,
+    });
+  },
+
+  handleSendMessage(e) {
+    const { key } = e.currentTarget.dataset;
+    wx.setStorageSync('sendMessageEnterprise', key.enterprise)
+    wx.navigateTo({
+      url: `/pages/send-message/index`,
     });
   },
 });

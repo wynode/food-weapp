@@ -8,7 +8,8 @@ Page({
     enterprise_name: '',
     showWarnConfirm: false,
     dateValue: [String(new Date().getFullYear()), String(new Date().getMonth() + 1).padStart(2, '0')],
-    years: [{
+    years: [
+      {
         label: '2026年',
         value: '2026',
       },
@@ -25,7 +26,8 @@ Page({
         value: '2023',
       },
     ],
-    seasons: [{
+    seasons: [
+      {
         label: '1月',
         value: '01',
       },
@@ -75,7 +77,8 @@ Page({
       },
     ],
     tabBarValue: 'all-center',
-    list: [{
+    list: [
+      {
         value: 'all-center',
         icon: 'shop-5',
         ariaLabel: '工作台',
@@ -99,17 +102,18 @@ Page({
 
     clientVisible: false,
     clientValue: '1',
-    clientOptions: [{
+    clientOptions: [
+      {
         label: '包保检查',
-        value: '1'
+        value: '1',
       },
       {
         label: '员工扫码',
-        value: '2'
+        value: '2',
       },
       {
         label: '离开企业',
-        value: 'leave'
+        value: 'leave',
       },
       // {
       //   label: '包保端',
@@ -120,29 +124,28 @@ Page({
 
   handleClientPickerShow() {
     this.setData({
-      clientVisible: true
+      clientVisible: true,
     });
   },
 
   async toggleStatus() {
-    const enterpriseData = wx.getStorageSync('enterpriseData')
+    const enterpriseData = wx.getStorageSync('enterpriseData');
     if (this.data.status === '1') {
       await app.call({
         path: '/api/v1/program/enterprise/status',
         method: 'POST',
         data: {
-          status: '127'
+          status: '127',
         },
         header: {
           'x-enterprise-id': enterpriseData.enterprise_id,
         },
       });
-
     } else {
       await app.call({
         path: '/api/v1/program/enterprise/status',
         data: {
-          status: '1'
+          status: '1',
         },
         method: 'POST',
         header: {
@@ -151,14 +154,12 @@ Page({
       });
     }
     this.setData({
-      status: this.data.status === '1' ? '127' : '1'
-    })
+      status: this.data.status === '1' ? '127' : '1',
+    });
   },
 
   onClientPickerChange(e) {
-    const {
-      value
-    } = e.detail;
+    const { value } = e.detail;
     this.setData({
       clientVisible: false,
       clientValue: value,
@@ -176,21 +177,29 @@ Page({
         url: '/pages/bao-info/index',
       });
     } else if (value[0] === 'leave') {
+      const isTourists = wx.getStorageSync('isTourists');
+      if (isTourists) {
+        wx.setStorageSync('isTourists', false);
+        wx.navigateTo({
+          url: `/pages/create-enterprise/index`,
+        });
+        return;
+      }
       this.setData({
-        showWarnConfirm: true
-      })
+        showWarnConfirm: true,
+      });
     }
   },
 
   closeDialog() {
     this.setData({
-      showWarnConfirm: false
+      showWarnConfirm: false,
     });
   },
 
   async confirmDialog() {
-    wx.showLoading()
-    const enterpriseData = wx.getStorageSync('enterpriseData')
+    wx.showLoading();
+    const enterpriseData = wx.getStorageSync('enterpriseData');
     const res = await app.call({
       path: `/api/v1/program/enterprise/leave`,
       header: {
@@ -198,24 +207,24 @@ Page({
       },
       method: 'DELETE',
       data: {
-        enterprise_id: enterpriseData.enterprise_id
-      }
+        enterprise_id: enterpriseData.enterprise_id,
+      },
     });
-    wx.hideLoading()
+    wx.hideLoading();
     if (res.data.code !== 400 || res.data.code !== 500) {
       wx.showToast({
         title: '解除企业成功',
-      })
+      });
       setTimeout(() => {
         wx.reLaunch({
           url: '/pages/create-enterprise/index',
-        })
-      }, 1000)
+        });
+      }, 1000);
     } else {
       wx.showToast({
         icon: 'error',
         title: '解除企业失败',
-      })
+      });
     }
   },
 
@@ -226,12 +235,48 @@ Page({
   },
 
   async onLoad(options) {
-    if (options && options.date) {
-      const date = String(options.date)
+    const isTourists = wx.getStorageSync('isTourists');
+    if (isTourists) {
       this.setData({
-        dateValue: [date.slice(0, 4), date.slice(4, 6)]
-      })
+        is_bind: true,
+      });
+      return;
+    }
+    if (options && options.date) {
+      const date = String(options.date);
+      this.setData({
+        dateValue: [date.slice(0, 4), date.slice(4, 6)],
+      });
       this.handelInit([date.slice(0, 4), date.slice(4, 6)]);
+    } else if (options && options.enterprise_id && options.month) {
+      const date = String(options.month);
+      this.setData({
+        dateValue: [date.slice(0, 4), date.slice(4, 6)],
+      });
+      this.setData({
+        is_bind: true,
+      });
+      try {
+        wx.showLoading();
+        const { enterprise_id, enterprise_name, status } = wx.getStorageSync('enterpriseData');
+        wx.setStorageSync('subEnterpriseId', enterprise_id);
+        this.setData({
+          enterprise_id,
+          enterprise_name,
+          status: String(status),
+        });
+        this.getReportStats(date, enterprise_id);
+        wx.hideLoading();
+      } catch (error) {
+        Toast({
+          context: this,
+          selector: '#t-toast',
+          message: '您还未绑定企业，请先绑定',
+        });
+        wx.navigateTo({
+          url: `/pages/create-enterprise/index`,
+        });
+      }
     } else {
       this.handelInit(this.data.dateValue);
     }
@@ -239,24 +284,21 @@ Page({
 
   async handelInit(dateValue) {
     try {
-      wx.showLoading()
+      wx.showLoading();
+      // wx.setStorageSync('subEnterpriseId', '');
       const res = await app.call({
         path: '/api/v1/program/enterprise/relationship',
       });
       if (res.statusCode !== 200) {
         throw error;
       }
-      const {
-        is_bind,
-        enterprise_id,
-        enterprise_name,
-      } = res.data.data || {};
+      const { is_bind, enterprise_id, enterprise_name } = res.data.data || {};
       if (!is_bind) {
         throw error;
       }
       this.setData({
         is_bind: true,
-      })
+      });
       const enterpriseRes = await app.call({
         path: '/api/v1/program/enterprise',
         header: {
@@ -266,7 +308,17 @@ Page({
       if (enterpriseRes.statusCode !== 200) {
         throw error;
       }
-      const status = String(enterpriseRes.data.data.status)
+      const status = String(enterpriseRes.data.data.status);
+      const parent_enterprise_id = String(enterpriseRes.data.data.parent_enterprise_id);
+      const subEnterpriseId = wx.getStorageSync('subEnterpriseId');
+      if (parent_enterprise_id === '0') {
+        wx.setStorageSync('isParentEnterprise', true);
+      } else {
+        console.log(subEnterpriseId, 'xxx');
+        if (!subEnterpriseId) {
+          wx.setStorageSync('isParentEnterprise', false);
+        }
+      }
       wx.setStorageSync('enterpriseData', enterpriseRes.data.data);
       this.setData({
         enterprise_id,
@@ -274,7 +326,7 @@ Page({
         status,
       });
       this.getReportStats(dateValue.join(''), enterprise_id);
-      wx.hideLoading()
+      wx.hideLoading();
     } catch (error) {
       Toast({
         context: this,
@@ -295,6 +347,16 @@ Page({
       },
     });
     const reportStats = reportRes.data.data;
+    if (Object.keys(reportStats).length === 0) {
+      this.setData({
+        reportStats: {
+          daily: {},
+          weekly: {},
+          monthly: {},
+        },
+      });
+      return;
+    }
     reportStats.percentage = parseInt(
       (reportStats.daily.submit_report_count / reportStats.daily.total_report_count) * 100,
     );
@@ -309,9 +371,7 @@ Page({
   },
 
   onTabBarChange(e) {
-    const {
-      value
-    } = e.detail;
+    const { value } = e.detail;
     if (value === 'all-center') {
       wx.redirectTo({
         url: `/pages/${value}/index`,
@@ -323,9 +383,7 @@ Page({
   },
 
   goProfile(e) {
-    const {
-      key = '1'
-    } = e.currentTarget.dataset || {};
+    const { key = '1' } = e.currentTarget.dataset || {};
     if (key === 'bill') {
       wx.navigateTo({
         url: `/pages/bill-center/index`,
@@ -350,9 +408,7 @@ Page({
   },
 
   onPickerChange(e) {
-    const {
-      value
-    } = e.detail;
+    const { value } = e.detail;
     this.getReportStats(value.join(''), this.data.enterprise_id);
     this.setData({
       dateVisible: false,

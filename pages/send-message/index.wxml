@@ -1,0 +1,47 @@
+<view>
+  <background></background>
+  <view class="send-message">
+    <view class="sm-header">
+      <view class="sm-header-title">{{ shopText }}</view>
+      <t-button style="margin: 0" theme="primary" variant="text" bind:tap="onShopPicker">切换门店</t-button>
+      <t-picker
+        visible="{{shopVisible}}"
+        value="{{shopValue}}"
+        data-key="shop"
+        title="选择城市"
+        cancelBtn="取消"
+        confirmBtn="确认"
+        usingCustomNavbar
+        bindchange="onPickerChange"
+        bindpick="onColumnChange"
+        bindcancel="onPickerCancel"
+      >
+        <t-picker-item options="{{shops}}" />
+      </t-picker>
+    </view>
+    <view class="sm-content">
+      <t-textarea
+        t-class="external-class"
+        value="{{content}}"
+        bind:change="handleContentChange"
+        placeholder="请输入文字"
+        disableDefaultPadding="{{true}}"
+      />
+    </view>
+    <view class="sm-upload">
+      <view class="wrapper">
+        <t-upload
+          disabled
+          mediaType="{{['video','image']}}"
+          max="{{8}}"
+          files="{{fileList}}"
+          bind:add="handleAdd"
+          bind:remove="handleRemove"
+        >
+        </t-upload> </view
+    ></view>
+    <view class="sm-submit">
+      <t-button theme="primary" size="large" block bind:tap="handleSubmit">确定发送</t-button>
+    </view>
+  </view>
+</view>

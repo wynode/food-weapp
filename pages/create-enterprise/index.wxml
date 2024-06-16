@@ -37,6 +37,7 @@
       </form>
     </view>
     <t-button style="margin-top: 100rpx;" theme="primary" variant="text" block size="large" bind:tap="switchIsFood">切换为录入{{isFood ? '营业执照' : '食品经营许可证'}}</t-button>
+    <t-button style="margin-top: 60rpx;" theme="primary" variant="text" block size="large" bind:tap="handleTourists">以游客模式进入</t-button>
   </view>
 </view>
 

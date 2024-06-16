@@ -25,6 +25,17 @@
   font-weight: 400;
   color: #333333;
   line-height: 45rpx;
+  display: flex;
+  align-items: center;
+}
+
+.cr-top-left .t-checkbox {
+  padding: 0;
+  border: none;
+}
+
+.cr-top-left .t-checkbox__border {
+  display: none;
 }
 
 .cr-top-left text {

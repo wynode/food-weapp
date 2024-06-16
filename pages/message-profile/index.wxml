@@ -1,0 +1,39 @@
+<view>
+  <background></background>
+  <view class="send-message">
+    <t-image-viewer
+      deleteBtn="{{deleteBtn}}"
+      closeBtn="{{closeBtn}}"
+      showIndex="{{showIndex}}"
+      visible="{{visible}}"
+      images="{{images}}"
+      bind:change="onChange"
+      bind:delete="onDelete"
+      bind:close="onClose"
+    ></t-image-viewer>
+    <view class="sm-header">
+      <view class="sm-header-title">{{ messageInfo.date }}</view>
+    </view>
+    <view class="sm-header">
+      <view class="sm-header-title">{{ messageInfo.title }}</view>
+    </view>
+    <view style="margin-bottom: 20rpx;"> <view class="sm-header-title">通知人：{{ messageInfo.sendName }}</view></view>
+    <view class="sm-content">
+      <t-textarea
+        t-class="external-class"
+        disabled
+        value="{{messageInfo.content}}"
+        placeholder="请输入文字"
+        disableDefaultPadding="{{true}}"
+      />
+    </view>
+    <view style="margin-bottom: 24rpx" wx:for="{{messageInfo.links}}" wx:key="index">
+      <t-link size="small" theme="primary" content="{{item}}" suffixIcon="jump" hover
+    /></view>
+    <view class="sm-upload">
+      <view wx:for="{{messageInfo.images}}" wx:key="index" data-key="{{item}}" bind:tap="onClick">
+        <t-image src="{{item}}" mode="aspectFill" width="72" height="72" aria-label="一个放置在墙角的黄色行李箱" />
+      </view>
+    </view>
+  </view>
+</view>

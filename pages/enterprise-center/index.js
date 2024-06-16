@@ -1,7 +1,9 @@
 import { formatTime } from '../../utils/util';
-
+const app = getApp();
 Page({
   data: {
+    noReadCount: 0,
+    isTopShop: false,
     // tabBarValue: 'enterprise-center',
     // list: [
     //   {
@@ -24,35 +26,55 @@ Page({
     // ],
   },
 
-  onLoad(options) {},
+  async onLoad(options) {
+    try {
+      wx.showLoading();
+      const { enterprise_id } = wx.getStorageSync('enterpriseData');
+      const isParentEnterprise = wx.getStorageSync('isParentEnterprise');
+      this.setData({
+        isTopShop: isParentEnterprise,
+      });
+      const messageRes = await app.call({
+        path: `/api/v2/program/station/list?enterprise_id=${enterprise_id}`,
+      });
+      const noReadCount = messageRes.data.data.reduce((acc, cur) => {
+        return acc + Number(cur.is_read ? 0 : 1);
+      }, 0);
+      this.setData({
+        noReadCount,
+      });
+    } finally {
+      wx.hideLoading();
+    }
+  },
 
   handleteach() {
     wx.scanCode({
       success(res) {
         wx.redirectTo({
           url: `/${res.path}`,
-        })
-      }
-    })
+        });
+      },
+    });
   },
 
   goReportList(e) {
-    const {
-      key = '1'
-    } = e.currentTarget.dataset || {};
+    const { key = '1' } = e.currentTarget.dataset || {};
     if (key === 'bill') {
       wx.navigateTo({
         url: `/pages/bill-center/index`,
       });
     } else {
       wx.navigateTo({
-        url: `/pages/report-list/index?reportType=${key}&month=${`${new Date().getFullYear()}${String(new Date().getMonth()+1).padStart(2, 0)}`}`,
+        url: `/pages/report-list/index?reportType=${key}&month=${`${new Date().getFullYear()}${String(
+          new Date().getMonth() + 1,
+        ).padStart(2, 0)}`}`,
       });
     }
   },
 
   goLogList() {
-    const date = formatTime(new Date(), 'YYYYMMDD')
+    const date = formatTime(new Date(), 'YYYYMMDD');
     wx.navigateTo({
       url: `/pages/log-list/index?date=${date}`,
     });
@@ -66,6 +88,17 @@ Page({
   goWechat() {
     wx.navigateTo({
       url: '/pages/wechat-info/index',
+    });
+  },
+  goEnterpriseList() {
+    wx.setStorageSync('subEnterpriseId', '');
+    wx.reLaunch({
+      url: '/pages/enterprise-list/index',
+    });
+  },
+  goMessageList() {
+    wx.reLaunch({
+      url: '/pages//index',
     });
   },
   goBillCenter() {
@@ -131,9 +164,7 @@ Page({
 
   onTabBarChange(e) {
     console.log(e);
-    const {
-      value
-    } = e.detail;
+    const { value } = e.detail;
     // this.setData({
     //   tabBarValue: value,
     // });

@@ -89,7 +89,15 @@ Page({
     }
   },
 
+  handleTourists() {
+    wx.setStorageSync('isTourists', true);
+    wx.reLaunch({
+      url: '/pages/all-center/index',
+    });
+  },
+
   switchIsFood() {
+    wx.setStorageSync('isTourists', false);
     this.setData({
       isFood: !this.data.isFood,
     });
@@ -129,6 +137,7 @@ Page({
   },
 
   async formSubmit() {
+    wx.setStorageSync('isTourists', false);
     // const {
     //   isLegal,
     //   tips
@@ -217,6 +226,7 @@ Page({
   },
 
   async scanAddIn() {
+    wx.setStorageSync('isTourists', false);
     // wx.navigateTo({
     //   url: '/pages/staff-scan/index',
     // });

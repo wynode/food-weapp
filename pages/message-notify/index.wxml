@@ -8,14 +8,20 @@
         wx:for-item="childrenItem"
         wx:for-index="childrenIndex"
         wx:key="title"
+        data-key="{{childrenItem}}"
+        bind:tap="handleGoProfile"
         class="mn-children-item"
       >
-        <view class="mnci-left {{ childrenItem.messageType }}">
-          <image src="{{ childrenItem.image }}"></image>
+        <view class="mnci-left {{ childrenItem.messageType ||  'xttz'}}">
+          <image
+            src="{{ childrenItem.image || 'https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/xttz.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113' }}"
+          ></image>
         </view>
-        <view class="mnci-right">
-          <view class="mnci-top">
-            <view class="mnci-title">{{ childrenItem.title }}</view>
+        <view class="mnci-right" style="width: 100%;">
+          <view class="mnci-top" style="width: 100%;">
+            <view style="display: flex; justify-content: space-between;width: 100%;">
+              <view class="mnci-title">{{ childrenItem.title || '消息通知' }}</view>
+              <view style="color: #de1c24;margin-right: 20rpx; margin-bottom: 10rpx;" wx:if="{{!childrenItem.is_read}}">未读</view></view>
             <view
               wx:if="{{childrenItem.info.length > 34}}"
               class="mnci-dwck"
@@ -26,9 +32,12 @@
               <t-icon wx:else class="mnci-icon" name="caret-down-small" size="34rpx" />
             </view>
           </view>
-          <view class="mnci-info {{ childrenItem.showHidden ? '' : 'mnci-info-hidden'}}">{{ childrenItem.info }}</view>
+          <view class="mnci-info {{ childrenItem.showHidden ? '' : 'mnci-info-hidden'}}"
+            >{{ childrenItem.info || childrenItem.content}}</view
+          >
         </view>
       </view>
     </view>
+    <view wx:if="{{messageList.length === 0}}" style="text-align: center;margin-top: 100rpx;">暂无消息</view>
   </view>
 </view>

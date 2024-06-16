@@ -14,7 +14,7 @@
 
 .ep-top-title {
   font-size: 34rpx;
-  max-width: 500rpx;
+  max-width: 440rpx;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -22,6 +22,12 @@
 }
 .ep-top-month {
   font-size: 30rpx;
+}
+
+.ep-top-img {
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
 }
 
 .ep-list-bottom {
