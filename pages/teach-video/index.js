@@ -106,6 +106,11 @@ Page({
 
   async onLoad() {
     const enterpriseData = wx.getStorageSync('enterpriseData');
+    const isTourists = wx.getStorageSync('isTourists');
+    if (isTourists) {
+      this.setData({ showFood: true });
+      return
+    }
     if (enterpriseData.business_type === 2) {
       this.setData({ showFood: false });
     } else if (enterpriseData.business_type === 1) {

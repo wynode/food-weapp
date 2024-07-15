@@ -17,7 +17,7 @@ Page({
     const listRes = await app.call({
       path: '/api/v2/program/enterprise/getChildEnterprises',
       data: {
-        enterprise_id: 1,
+        enterprise_id,
         month,
       },
       header: {

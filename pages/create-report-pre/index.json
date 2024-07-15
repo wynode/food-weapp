@@ -14,6 +14,7 @@
     "t-textarea": "tdesign-miniprogram/textarea/textarea",
     "t-cell": "tdesign-miniprogram/cell/cell",
     "t-input": "tdesign-miniprogram/input/input",
+    "t-tag": "tdesign-miniprogram/tag/tag",
     "t-checkbox-group": "tdesign-miniprogram/checkbox-group/checkbox-group"
   }
 }

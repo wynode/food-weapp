@@ -1,0 +1,88 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="data-show">
+    <view class="ds-picker">
+      <t-cell class="mb-16" title="当前区域" arrow hover note="{{areaText}}" bind:click="onAreaPicker" />
+      <t-picker
+        keys="{{optionsKeys}}"
+        visible="{{areaVisible}}"
+        value="{{areaValue}}"
+        title="选择地区"
+        cancelBtn="取消"
+        confirmBtn="确认"
+        bindchange="onAreaPickerChange"
+        bindpick="onAreaColumnChange"
+        bindcancel="onAreaPickerCancel"
+      >
+        <t-picker-item options="{{provinces}}"></t-picker-item>
+        <t-picker-item options="{{cities}}"></t-picker-item>
+        <t-picker-item options="{{counties}}"></t-picker-item>
+      </t-picker>
+    </view>
+    <view>
+      <t-cell
+        title="当前月份"
+        hover
+        note="{{monthText}}"
+        arrow
+        data-mode="month"
+        bindtap="showPicker"
+        t-class="panel-item"
+      />
+      <!-- 年月 -->
+      <t-date-time-picker
+        title="选择日期"
+        visible="{{monthVisible}}"
+        mode="month"
+        value="{{month}}"
+        format="YYYY-MM"
+        bindchange="onConfirm"
+        bindpick="onColumnChange"
+        bindcancel="hidePicker"
+        start="{{start}}"
+        end="{{end}}"
+      />
+    </view>
+
+    <view class="ds-content">
+      <view class="ds-list" wx:for="{{dataList}}" wx:key="index">
+        <view class="ds-list-title"> {{item.title}} </view>
+        <view class="ds-ul">
+          <view
+            class="ds-item"
+            wx:for="{{item.childrenList}}"
+            wx:for-item="cItem"
+            wx:key="index"
+            data-item="{{cItem}}"
+          >
+            <view class="ds-item-title">{{cItem.title}}</view>
+            <view class="{{ cItem.isCount ? 'ds-item-progress no-info' : 'ds-item-progress'}}">
+              <t-progress
+                color="{{cItem.status === 'success' ? '#2BA471' : cItem.status === 'warning' ? '#D54941' : '#0B82FF'}}"
+                track-color="rgba(11,130,255,0.1)"
+                stroke-width="10"
+                theme="circle"
+                percentage="{{cItem.progress}}"
+              >
+                <view slot="label" style="font-size: 40rpx; font-weight: bold;"> {{cItem.total}} </view>
+              </t-progress>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- <t-tab-bar value="{{tabBarValue}}" bindchange="onTabBarChange" theme="tag" split="{{false}}">
+    <t-tab-bar-item
+      wx:for="{{list}}"
+      wx:key="index"
+      value="{{item.value}}"
+      icon="{{item.icon}}"
+      class="tab-bar-ico{{index}}"
+      ariaLabel="{{item.ariaLabel}}"
+      badge-props="{{item.badgeProps}}"
+    >
+      {{item.ariaLabel}}
+    </t-tab-bar-item>
+  </t-tab-bar> -->
+</view>

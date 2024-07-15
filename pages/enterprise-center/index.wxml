@@ -76,19 +76,7 @@
             </view>
           </view>
         </t-col> -->
-        <t-col span="12" wx:if="{{isTopShop}}">
-          <view class="ec-item" data-key="1" bindtap="goEnterpriseList">
-            <view class="ec-item-left ec-item-left1">
-              <image
-                src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/qyxx.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
-              ></image>
-            </view>
-            <view class="ec-item-right">
-              <view class="ec-item-title"> 店铺列表 </view>
-              <view class="ec-item-info"> 查看子店铺 </view>
-            </view>
-          </view>
-        </t-col>
+
         <t-col span="12">
           <view class="ec-item" bindtap="goMessageNotify">
             <view class="ec-item-left ec-item-left6">
@@ -104,10 +92,45 @@
             </view>
           </view>
         </t-col>
-      </t-row>
-      <t-row gutter="16">
 
+        <t-col span="12" wx:if="{{isShopOwner}}">
+          <view class="ec-item" bindtap="goChangeShopOwner">
+            <view class="ec-item-left ec-item-left1" style="background: #fa9550">
+              <image src="/assets/image/qrcode.png"></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 换绑店长 </view>
+              <!-- <view class="ec-item-info"> 换绑店铺店长 </view> -->
+            </view>
+          </view>
+        </t-col>
+        <t-col span="12" wx:if="{{isTopShop}}">
+          <view class="ec-item" data-key="1" bindtap="goEnterpriseList">
+            <view class="ec-item-left ec-item-left1">
+              <image
+                src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/qyxx.png?sign=ada09695e56c3586b37e808eac1157e7&t=1694003113"
+              ></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 店铺列表 </view>
+              <view class="ec-item-info"> 查看子店铺 </view>
+            </view>
+          </view>
+        </t-col>
+        <t-col span="12" wx:if="{{isTopShop}}">
+          <view class="ec-item" bindtap="goMendian">
+            <view class="ec-item-left ec-item-left6">
+              <image
+                src="https://prod-2gdukdnr11f1f68a-1320540808.tcloudbaseapp.com/image/datastatis.png?sign=018b19824d3ba27d561e868e5a8a9735&t=1718701037"
+              ></image>
+            </view>
+            <view class="ec-item-right">
+              <view class="ec-item-title"> 门店数据 </view>
+            </view>
+          </view>
+        </t-col>
       </t-row>
+      <t-row gutter="16"> </t-row>
       <view class="ec-title"> 报告管理 </view>
       <t-row gutter="16">
         <t-col span="12">

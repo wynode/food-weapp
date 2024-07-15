@@ -1,0 +1,10 @@
+<view>
+  <background isHighlight="true"></background>
+  <view class="staff-scan">
+    <view class="scan-h1">新店长请扫码绑定企业</view>
+    <!-- <view class="scan-h2">新员工进入需填写自己个人信息</view> -->
+    <view class="scan-image">
+      <t-image show-menu-by-longpress="{{true}}" style="width: 620rpx; height: 620rpx;" src="{{scanImage}}" mode="" />
+    </view>
+  </view>
+</view>

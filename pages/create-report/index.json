@@ -8,6 +8,8 @@
     "t-checkbox": "tdesign-miniprogram/checkbox/checkbox",
     "t-button": "tdesign-miniprogram/button/button",
     "t-picker": "tdesign-miniprogram/picker/picker",
+    "t-tag": "tdesign-miniprogram/tag/tag",
+    "t-check-tag": "tdesign-miniprogram/check-tag/check-tag",
     "t-picker-item": "tdesign-miniprogram/picker-item/picker-item",
     "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
     "t-upload": "tdesign-miniprogram/upload/upload",

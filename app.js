@@ -14,7 +14,8 @@ App({
     updateManager();
   },
   async onLaunch() {
-    wx.setStorageSync('subEnterpriseId', '')
+    wx.setStorageSync('subEnterpriseId', '');
+    wx.setStorageSync('isTourists', false);
     const c1 = new wx.cloud.Cloud({
       resourceAppid: 'wx48a4230fe919bc57', // 环境所属的账号appid
       resourceEnv: 'food-security-prod-9dgw61d56a7e8', // 微信云托管的环境ID
@@ -67,6 +68,20 @@ App({
           icon: 'none',
           title: result.data.message,
         });
+      }
+      if (
+        result.data.code &&
+        (result.data.code === '请先加入公司' || result.data.code === '401' || result.data.message === 2001)
+      ) {
+        wx.showToast({
+          icon: 'none',
+          title: '请先加入公司',
+        });
+        // setTimeout(() => {
+        //   wx.redirectTo({
+        //     url: '/pages/create-enterprise/index',
+        //   });
+        // }, 1500);
       }
       return result; // 业务数据在data中
     } catch (e) {

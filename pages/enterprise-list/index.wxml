@@ -45,6 +45,7 @@
           </view>
         </view>
       </view>
+      <view wx:if="{{dataList.length === 0}}" style="padding: 100rpx; text-align: center;">暂无子店铺</view>
     </view>
   </view>
 </view>

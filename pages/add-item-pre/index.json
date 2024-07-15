@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "店铺列表",
+  "navigationBarTitleText": "新增自定义选项",
   "usingComponents": {
     "t-divider": "tdesign-miniprogram/divider/divider",
     "t-toast": "tdesign-miniprogram/toast/toast",
@@ -14,6 +14,8 @@
     "t-picker": "tdesign-miniprogram/picker/picker",
     "t-picker-item": "tdesign-miniprogram/picker-item/picker-item",
     "t-progress": "tdesign-miniprogram/progress/progress",
+    "t-textarea": "tdesign-miniprogram/textarea/textarea",
+    "t-upload": "tdesign-miniprogram/upload/upload",
     "t-search": "tdesign-miniprogram/search/search",
     "t-grid": "tdesign-miniprogram/grid/grid",
     "t-grid-item": "tdesign-miniprogram/grid-item/grid-item"

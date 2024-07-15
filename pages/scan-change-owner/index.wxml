@@ -1,0 +1,9 @@
+<view>
+  <background></background>
+  <view class="create-user">
+    <!-- <view class="cu-top-title"> {{enterprise_name}} </view> -->
+    <view class="cu-top-title">换绑新店长</view>
+  </view>
+</view>
+
+<t-toast id="t-toast"></t-toast>

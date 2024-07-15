@@ -321,8 +321,8 @@ Page({
       }
       wx.setStorageSync('enterpriseData', enterpriseRes.data.data);
       this.setData({
-        enterprise_id,
-        enterprise_name,
+        enterprise_id: enterpriseRes.data.data.enterprise_id,
+        enterprise_name: enterpriseRes.data.data.enterprise_name,
         status,
       });
       this.getReportStats(dateValue.join(''), enterprise_id);
@@ -376,6 +376,16 @@ Page({
       wx.redirectTo({
         url: `/pages/${value}/index`,
       });
+      return
+    }
+    if (value === 'submit-report') {
+      const isTourists = wx.getStorageSync('isTourists');
+      if (isTourists) {
+        wx.navigateTo({
+          url: `/pages/create-report/index`,
+        });
+        return;
+      }
     }
     wx.navigateTo({
       url: `/pages/${value}/index`,

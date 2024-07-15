@@ -1,8 +1,6 @@
 import Toast from 'tdesign-miniprogram/toast';
 import Signature from 'mini-smooth-signature';
-import {
-  formatTime
-} from '../../utils/util';
+import { formatTime } from '../../utils/util';
 const app = getApp();
 Page({
   data: {
@@ -40,19 +38,42 @@ Page({
     min_item_nums: 3,
   },
 
+  handleAddItem() {
+    wx.navigateTo({
+      url: '/pages/add-item-pre/index',
+    });
+  },
+
+  addPreNewContent(payload) {
+    const tempCheckListData = payload.map((item) => {
+      return {
+        ...item,
+        checked: false,
+        checkResult: '',
+        remark: '',
+        checkFileList: [],
+      };
+    });
+    console.log(tempCheckListData);
+    this.setData({
+      checkListData: [ ...tempCheckListData, ...this.data.checkListData,],
+    });
+  },
+
   async onLoad(options) {
     try {
-      const {
-        allqualified = 'no'
-      } = options || {};
+      const { allqualified = 'no' } = options || {};
       this.setData({
         allqualified,
       });
       const reportData = wx.getStorageSync('reportData');
-      const dateString = String(reportData.date)
+      const dateString = String(reportData.date);
       this.setData({
-        currentDay: formatTime(`${dateString.slice(0,4)}-${dateString.slice(4,6)}-${dateString.slice(6,8)}`, 'YYYY.MM.DD')
-      })
+        currentDay: formatTime(
+          `${dateString.slice(0, 4)}-${dateString.slice(4, 6)}-${dateString.slice(6, 8)}`,
+          'YYYY.MM.DD',
+        ),
+      });
       const reportTypeOptions = {
         1: '日管控',
         2: '周排查',
@@ -60,10 +81,7 @@ Page({
       };
       const reportType = reportTypeOptions[reportData.report_type];
       const enterpriseData = wx.getStorageSync('enterpriseData');
-      const {
-        business_type,
-        enterprise_id
-      } = enterpriseData;
+      const { business_type, enterprise_id } = enterpriseData;
       const templateRes = await app.call({
         path: `/api/v1/program/report/templates?report_type=${reportData.report_type}&business_type=${business_type}`,
         method: 'GET',
@@ -74,9 +92,7 @@ Page({
       if (templateRes.statusCode !== 200) {
         throw error;
       }
-      const {
-        list
-      } = templateRes.data.data;
+      const { list } = templateRes.data.data;
       const filterList = list.map((item) => {
         return {
           label: item.template_name,
@@ -93,12 +109,9 @@ Page({
       if (profileRes.statusCode !== 200) {
         throw error;
       }
-      const {
-        items,
-        min_item_nums
-      } = profileRes.data.data;
+      const { items, min_item_nums } = profileRes.data.data;
       wx.setStorageSync('templateData', profileRes.data.data);
-      let allCheck = []
+      let allCheck = [];
       // const allCheck = items;
       this.setData({
         templateTypeList: filterList,
@@ -282,13 +295,13 @@ Page({
             remark: curr.remark,
             spot_images: curr.checkFileList.map((item) => item.fileID),
             rectification_images: [],
-          }
-          const additional = ['solution', 'anaylise', 'hidden_danger']
+          };
+          const additional = ['solution', 'anaylise', 'hidden_danger'];
           additional.forEach((key) => {
             if (curr[key]) {
-              unpassPaylod[key] = curr[key]
+              unpassPaylod[key] = curr[key];
             }
-          })
+          });
           unpassed_items.push(unpassPaylod);
         }
       });
@@ -344,12 +357,8 @@ Page({
   },
 
   handleAdd(e) {
-    const {
-      files
-    } = e.detail;
-    const {
-      key
-    } = e.currentTarget.dataset;
+    const { files } = e.detail;
+    const { key } = e.currentTarget.dataset;
     files.forEach((file) => this.onUpload(file, key));
   },
   async onUpload(file, key) {
@@ -405,16 +414,10 @@ Page({
     }
   },
   handleRemove(e) {
-    const {
-      index
-    } = e.detail;
-    const {
-      key
-    } = e.currentTarget.dataset;
+    const { index } = e.detail;
+    const { key } = e.currentTarget.dataset;
     const fileIndex = Number(key);
-    const {
-      checkFileList
-    } = this.data.checkListData[fileIndex];
+    const { checkFileList } = this.data.checkListData[fileIndex];
 
     checkFileList.splice(index, 1);
     this.setData({
@@ -466,10 +469,7 @@ Page({
   },
 
   async onPickerChange(e) {
-    const {
-      value,
-      label
-    } = e.detail;
+    const { value, label } = e.detail;
     const enterpriseData = wx.getStorageSync('enterpriseData');
     const profileRes = await app.call({
       path: `/api/v1/program/report/template/${value[0]}`,
@@ -478,11 +478,9 @@ Page({
         'x-enterprise-id': enterpriseData.enterprise_id,
       },
     });
-    const {
-      items,
-      min_item_nums
-    } = profileRes.data.data;
+    let { items, min_item_nums } = profileRes.data.data;
     wx.setStorageSync('templateData', profileRes.data.data);
+
     const tempCheckListData = items.map((item) => {
       return {
         ...item,
@@ -513,9 +511,7 @@ Page({
   },
 
   onCheckChange(e) {
-    const {
-      value
-    } = e.detail;
+    const { value } = e.detail;
     let checkedResultLength = 0;
     const tempCheckListData = this.data.checkListData.map((item, index) => {
       if (value.includes(index)) {
@@ -532,7 +528,7 @@ Page({
         checkFileList: [],
       };
     });
-    checkedResultLength = value.length
+    checkedResultLength = value.length;
     console.log(tempCheckListData);
     this.setData({
       checkList: value,
@@ -551,9 +547,7 @@ Page({
   },
 
   onCheckResultChange(e) {
-    const {
-      key = '0 0'
-    } = e.currentTarget.dataset;
+    const { key = '0 0' } = e.currentTarget.dataset;
     const checkIndex = key.split(' ')[0];
     const checkResult = key.split(' ')[1];
     let checkedResultLength = 0;
@@ -585,12 +579,8 @@ Page({
   },
 
   handleReasonChange(e) {
-    const {
-      key = '0'
-    } = e.currentTarget.dataset;
-    const {
-      value
-    } = e.detail;
+    const { key = '0' } = e.currentTarget.dataset;
+    const { value } = e.detail;
     const tempCheckListData = this.data.checkListData.map((item, index) => {
       if (String(index) === String(key)) {
         return {

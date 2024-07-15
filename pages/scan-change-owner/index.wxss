@@ -1,0 +1,99 @@
+.create-user {
+  padding: 32rpx 50rpx;
+  padding-bottom: 80rpx;
+  position: relative;
+}
+
+.cu-top-title {
+  text-align: center;
+  font-size: 44rpx;
+  font-family: SimSong-Bold, SimSong;
+  font-weight: bold;
+  color: #333333;
+  line-height: 80rpx;
+}
+
+.cu-avatar-box {
+  display: flex;
+  justify-content: center;
+  margin: 20rpx 0;
+  margin-bottom: 40rpx;
+}
+
+.cu-checkbox {
+  margin-bottom: 30rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .cu-checkbox-item {
+  margin-right: 40rpx;
+} */
+
+.cu-avatar {
+  width: 280rpx;
+  height: 280rpx;
+  position: relative;
+}
+
+.cu-avatar-img {
+  width: 280rpx;
+  height: 280rpx;
+  border-radius: 50%;
+}
+
+.cu-avatar-edit {
+  width: 68rpx;
+  height: 68rpx;
+  background: #0B82FF;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.cu-avatar-icon {
+  width: 28rpx;
+  height: 33rpx;
+}
+
+.cu-business {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+}
+
+.cu-title {
+  font-size: 34rpx;
+  color: #333333;
+  line-height: 48rpx;
+  margin-bottom: 20rpx;
+}
+
+.cu-input .t-input {
+  background: #f2f4f7;
+  border-radius: 8rpx;
+  padding: 20rpx 30rpx;
+  margin-top: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.cu-input .t-input::after {
+  height: 0;
+}
+
+.cu-input .t-icon-caret-down-small {
+  color: rgba(11, 130, 255, 0.32);
+}
+
+.cu-input .t-input__control--disabled {
+  -webkit-text-fill-color: #333333;
+}
+
+.cu-submit {
+  background: #0B82FF;
+  border-radius: 16rpx;
+}

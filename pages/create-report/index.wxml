@@ -53,6 +53,10 @@
       <t-picker-item options="{{templateTypeList}}"></t-picker-item>
     </t-picker>
 
+    <t-button wx:if="{{templateTypeList.length}}" theme="light" size="large" block style="margin-top: 12rpx" bind:tap="handleAddItem"
+      >如需添加自定义检查内容请点击此处</t-button
+    >
+
     <view class="cr-list" wx:if="{{isRestaurant}}">
       <t-checkbox-group value="{{checkList}}" bind:change="onCheckChange">
         <t-checkbox
@@ -65,6 +69,16 @@
           max-content-row="10"
           class="{{ item.checked ? 'cr-item cr-item-checked' : 'cr-item'}}"
         >
+          <view
+            style="display: flex; justify-content: space-between; margin-bottom: 12rpx"
+            wx:if="{{ item.enterprise_id !== '0' }}"
+          >
+            <t-tag class="margin-16" variant="light-outline" theme="success">自定义内容</t-tag>
+
+            <view style="color: #d54941" bind:tap="handleDeleteItem" data-key="{{item.item_id}}"
+              ><text>删除</text></view
+            >
+          </view>
           <view slot="label" class="cr-item-label">{{ index + 1 }}. {{ item.title }} </view>
           <view slot="content" class="cr-item-content">
             <view class="cric-btns" wx:if="{{ item.checked }}">
@@ -170,6 +184,16 @@
           max-content-row="10"
           class="cr-item"
         >
+          <view
+            style="display: flex; justify-content: space-between; margin-bottom: 12rpx"
+            wx:if="{{ item.enterprise_id !== '0' }}"
+          >
+            <t-tag class="margin-16" variant="light-outline" theme="success">自定义内容</t-tag>
+
+            <view style="color: #d54941" bind:tap="handleDeleteItem" data-key="{{item.item_id}}"
+              ><text>删除</text></view
+            >
+          </view>
           <view slot="label" class="cr-item-label">{{ index + 1 }}. {{ item.title }} </view>
           <view slot="content" class="cr-item-content">
             <view class="cric-btns" wx:if="{{ item.checked }}">
@@ -237,7 +261,12 @@
     </view>
 
     <view class="cns-bbtn">
-      <t-button class="cr-submit-btn" size="large" disabled="{{submitDisabled && !choiceUnqualified}}" block bindtap="handleSubmit"
+      <t-button
+        class="cr-submit-btn"
+        size="large"
+        disabled="{{submitDisabled && !choiceUnqualified}}"
+        block
+        bindtap="handleSubmit"
         >确认无误，生成报告</t-button
       >
     </view>

@@ -4,6 +4,7 @@ Page({
   data: {
     noReadCount: 0,
     isTopShop: false,
+    isShopOwner: false,
     // tabBarValue: 'enterprise-center',
     // list: [
     //   {
@@ -29,10 +30,11 @@ Page({
   async onLoad(options) {
     try {
       wx.showLoading();
-      const { enterprise_id } = wx.getStorageSync('enterpriseData');
+      const { enterprise_id, employee_position } = wx.getStorageSync('enterpriseData');
       const isParentEnterprise = wx.getStorageSync('isParentEnterprise');
       this.setData({
         isTopShop: isParentEnterprise,
+        isShopOwner: employee_position === 1,
       });
       const messageRes = await app.call({
         path: `/api/v2/program/station/list?enterprise_id=${enterprise_id}`,
@@ -111,6 +113,11 @@ Page({
       url: '/pages/staff-scan/index',
     });
   },
+  goChangeShopOwner() {
+    wx.navigateTo({
+      url: '/pages/change-owner-qr/index',
+    });
+  },
   goBaoCheck() {
     wx.navigateTo({
       url: '/pages/check-bao/index',
@@ -159,6 +166,11 @@ Page({
   goMessageNotify() {
     wx.navigateTo({
       url: '/pages/message-notify/index',
+    });
+  },
+  goMendian() {
+    wx.navigateTo({
+      url: '/pages/mendian-statis/index',
     });
   },
 

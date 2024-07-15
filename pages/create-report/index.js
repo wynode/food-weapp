@@ -1,6 +1,8 @@
 import Toast from 'tdesign-miniprogram/toast';
 import Signature from 'mini-smooth-signature';
 import { formatTime, sub7day } from '../../utils/util';
+import { foodItems } from '../../utils/mock';
+
 const app = getApp();
 Page({
   data: {
@@ -39,6 +41,8 @@ Page({
     checkListData: [],
     min_item_nums: 1,
     isCheckedFalse: false,
+    mini: '',
+    checkListBoolean: '',
   },
 
   handleChangeChoice() {
@@ -73,12 +77,50 @@ Page({
   },
 
   async onLoad(options) {
+    const isTourists = wx.getStorageSync('isTourists');
+    if (isTourists) {
+      this.setData({
+        templateTypeList: [
+          {
+            template_id: '7',
+            template_name: '食品销售通用模板',
+            business_type: 1,
+            report_type: 1,
+            min_item_nums: 3,
+          },
+        ],
+        templateTypeValue: ['7'],
+        templateTypeText: '食品销售通用模板',
+        min_item_nums: 3,
+        isRestaurant: false,
+        checkListData: foodItems.map((item) => {
+          return {
+            ...item,
+            checked: true,
+            checkResult: 'success',
+            checkFileList: [],
+            checkFileListR: [],
+            remark: '',
+          };
+        }),
+        checkedResultLength: foodItems.length,
+        checkList: Array.from(Array(foodItems.length).keys()),
+        submitDisabled: false,
+        checkPercentage: 100,
+        computedColor: '',
+        has_template: true,
+        reportType: '日管控',
+      });
+      return;
+    }
     try {
       let allCheck = [];
       let isTemplate = false;
       const { checkList, isCheckedFalse, mini } = options || {};
       this.setData({
         isCheckedFalse,
+        checkListBoolean: checkList,
+        mini,
       });
       const reportData = wx.getStorageSync('reportData');
       const reportTypeOptions = {
@@ -185,7 +227,10 @@ Page({
       }
 
       const { allqualified = 'no' } = options || {};
-      console.log(allqualified);
+      console.log(allqualified, '-----');
+      this.setData({
+        allqualified,
+      });
       if (allqualified === 'yes') {
         const tempCheckListData = allCheck.map((item) => {
           return {
@@ -296,6 +341,12 @@ Page({
     }
   },
 
+  handleAddItem() {
+    wx.navigateTo({
+      url: `/pages/add-report-item/index?allqualified=${this.data.allqualified}&checkList=${this.data.checkListBoolean}&mini=${this.data.mini}`,
+    });
+  },
+
   onReady() {
     try {
       const { windowWidth, windowHeight, pixelRatio } = wx.getSystemInfoSync();
@@ -393,6 +444,19 @@ Page({
         icon: 'none',
         title: '未签名',
       });
+      return;
+    }
+    const isTourists = wx.getStorageSync('isTourists');
+    if (isTourists) {
+      wx.showToast({
+        icon: 'none',
+        title: '请先进行注册',
+      });
+      setTimeout(() => {
+        wx.redirectTo({
+          url: '/pages/create-enterprise/index',
+        });
+      }, 1500);
       return;
     }
     try {
@@ -508,7 +572,24 @@ Page({
   handleAdd(e) {
     const { files } = e.detail;
     const { key } = e.currentTarget.dataset;
+    // console.log(e)
     files.forEach((file) => this.onUpload(file, key));
+  },
+  async handleDeleteItem(e) {
+    const { key } = e.currentTarget.dataset;
+
+    await app.call({
+      method: 'POST',
+      path: `/api/v1/program/report/template/item/${key}`,
+    });
+
+    wx.showToast({
+      title: '删除成功',
+    });
+
+    this.setData({
+      checkListData: this.data.checkListData.filter((item) => item.item_id !== key),
+    });
   },
   async onUpload(file, key) {
     const itemIndex = Number(key);
@@ -705,6 +786,11 @@ Page({
   },
 
   handleSubmit() {
+    const isTourists = wx.getStorageSync('isTourists');
+    if (isTourists) {
+      this.setData({ fullScreen: true });
+      return;
+    }
     if (this.data.choiceUnqualified) {
       this.setData(
         {
